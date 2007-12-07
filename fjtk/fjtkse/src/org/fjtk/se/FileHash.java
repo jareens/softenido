@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  */
 public class FileHash
 {
-
+    private static final String MD5 = "MD5";
     private File file;
     private byte[] fastHash = null;
     private byte[] fullHash = null;
@@ -94,7 +94,7 @@ public class FileHash
         FileInputStream fis = null;
         try
         {
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            MessageDigest md5 = MessageDigest.getInstance(MD5);
             if (file.length() > 0)
             {
                 byte[] buf = new byte[1024];
@@ -150,7 +150,7 @@ public class FileHash
         FileInputStream fis = null;
         try
         {
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            MessageDigest md5 = MessageDigest.getInstance(MD5);
             byte[] buf = new byte[bufSize];
             fis = new FileInputStream(file);
             int r;
