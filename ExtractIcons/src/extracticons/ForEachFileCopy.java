@@ -31,6 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import org.fjtk.ce.Forks;
 
 /**
  *
@@ -47,27 +48,27 @@ public class ForEachFileCopy extends ForEachFile
         return dst;
     }
     
-    public ForEachFileCopy(String src, String dst, FileFilter filter)
+//    public ForEachFileCopy(String src, String dst, FileFilter filter)
+//    {
+//        super(src, filter);
+//        this.dst = new File(dst);
+//    }
+//
+//    public ForEachFileCopy(String src, int recursive, String dst, FileFilter filter,Forks fork)
+//    {
+//        super(src, recursive, filter,fork);
+//        this.dst = new File(dst);
+//    }
+//
+//    public ForEachFileCopy(File src, File dst, FileFilter filter)
+//    {
+//        super(src, filter);
+//        this.dst = dst;
+//    }
+//
+    public ForEachFileCopy(File src, int recursive, File dst, FileFilter filter,Forks fork)
     {
-        super(src, filter);
-        this.dst = new File(dst);
-    }
-
-    public ForEachFileCopy(String src, int recursive, String dst, FileFilter filter)
-    {
-        super(src, recursive, filter);
-        this.dst = new File(dst);
-    }
-
-    public ForEachFileCopy(File src, File dst, FileFilter filter)
-    {
-        super(src, filter);
-        this.dst = dst;
-    }
-
-    public ForEachFileCopy(File src, int recursive, File dst, FileFilter filter)
-    {
-        super(src, recursive, filter);
+        super(src, recursive, filter,fork);
         this.dst = dst;
     }
 
@@ -99,6 +100,7 @@ public class ForEachFileCopy extends ForEachFile
                 }
                 Files.copy(file, fileDst);
                 addHash(fileDst);
+                System.out.printf("%s to %s\n", file.toString(), fileDst.toString());
                 System.gc();
             }
             catch (IOException ex)
@@ -119,7 +121,7 @@ public class ForEachFileCopy extends ForEachFile
         if(fileHashSet==null) 
         {
             fileHashSet = new HashSet<FileHash>();
-            ForEachFileHash taskHashMap = new ForEachFileHash(dst, getRecursive(), fileHashSet);
+            ForEachFileHash taskHashMap = new ForEachFileHash(dst, getRecursive(), fileHashSet,getFork());
             taskHashMap.run();
             taskHashMap = null;
         }

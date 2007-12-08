@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
+import org.fjtk.ce.Forks;
 
 /**
  *
@@ -39,7 +40,6 @@ import java.util.zip.ZipFile;
  */
 public abstract class ForEachFile implements Runnable
 {
-
     private static int bufSize = 64 * 1024;
     private File base;
     private int recursive = 0;
@@ -51,6 +51,7 @@ public abstract class ForEachFile implements Runnable
     private FileFilter filter = null;
     private int minSize = 0;
     private int maxSize = 0;
+    private Forks fork = null;
 
     public static int getBufSize()
     {
@@ -137,46 +138,17 @@ public abstract class ForEachFile implements Runnable
         return recursive;
     }
 
-    public ForEachFile(File file, int recursive, FileFilter filter)
+    protected final Forks getFork()
+    {
+        return fork;
+    }
+
+    public ForEachFile(File file, int recursive, FileFilter filter, Forks fork)
     {
         this.base = file;
         this.recursive = recursive;
         this.filter = filter;
-    }
-
-    public ForEachFile(File file, int recursive)
-    {
-        this(file, recursive, null);
-    }
-
-    public ForEachFile(File file, FileFilter filter)
-    {
-        this(file, 0, filter);
-    }
-
-    public ForEachFile(File file)
-    {
-        this(file, 0, null);
-    }
-
-    public ForEachFile(String filename, int recursive)
-    {
-        this(new File(filename), recursive, null);
-    }
-
-    public ForEachFile(String filename, int recursive, FileFilter filter)
-    {
-        this(new File(filename), recursive, filter);
-    }
-
-    public ForEachFile(String filename, FileFilter filter)
-    {
-        this(new File(filename), 0, filter);
-    }
-
-    public ForEachFile(String filename)
-    {
-        this(new File(filename), 0, null);
+        this.fork = (fork != null) ? fork : new Forks();
     }
 
     public void run()
@@ -184,7 +156,7 @@ public abstract class ForEachFile implements Runnable
         run(base, 0);
     }
 
-    private void run(File file, int level)
+    private void run(final File file, final int level)
     {
         if (level > recursive)
         {
@@ -197,7 +169,13 @@ public abstract class ForEachFile implements Runnable
                 (filter == null || filter.accept(file)) &&
                 acceptSize(file.length()))
         {
-            doForEeach(file, null);
+            fork.invoke(new Runnable()
+            {
+                public void run()
+                {
+                    doForEeach(file, null);
+                }
+            });
         }
         if ((level < recursive) && (this.hidden || !file.isHidden()))
         {
@@ -218,7 +196,13 @@ public abstract class ForEachFile implements Runnable
             String name = file.getName().toLowerCase();
             if ((this.zip && name.endsWith(".zip")) || (this.jar && name.endsWith(".jar")))
             {
-                runZip(file, level + 1);
+                fork.invoke(new Runnable()
+                {
+                    public void run()
+                    {
+                        runZip(file, level + 1);
+                    }
+                });
             }
         }
     }
@@ -247,8 +231,7 @@ public abstract class ForEachFile implements Runnable
                         doForEeach(zf, ze);
                     }
                 }
-            }
-            finally
+            } finally
             {
                 zf.close();
             }

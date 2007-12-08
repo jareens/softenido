@@ -23,7 +23,10 @@ package extracticons;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
+import org.fjtk.ce.Forks;
 
 /**
  *
@@ -32,7 +35,7 @@ import java.util.HashSet;
 public class ForEachImageCopy extends ForEachFileCopy
 {
 
-    private HashSet<ImageHash> imgHashSet = null;
+    private Set<ImageHash> imgHashSet = null;
     private int minHeight = 0;
     private int maxHeight = 0;
     private int minWidth = 0;
@@ -78,25 +81,25 @@ public class ForEachImageCopy extends ForEachFileCopy
         this.minWidth = minWidth;
     }
 
-    public ForEachImageCopy(File src, int recursive, File dst, FileFilter filter)
+    public ForEachImageCopy(File src, int recursive, File dst, FileFilter filter,Forks fork)
     {
-        super(src,recursive,dst,filter);
+        super(src,recursive,dst,filter,fork);
     }
-
-    public ForEachImageCopy(File src, File dst, FileFilter filter)
-    {
-        super(src,dst,filter);
-    }
-
-    public ForEachImageCopy(String src, int recursive, String dst, FileFilter filter)
-    {
-        super(src,recursive,dst,filter);
-    }
-
-    public ForEachImageCopy(String src, String dst, FileFilter filter)
-    {
-        super(src,dst,filter);
-    }
+//
+//    public ForEachImageCopy(File src, File dst, FileFilter filter)
+//    {
+//        super(src,dst,filter);
+//    }
+//
+//    public ForEachImageCopy(String src, int recursive, String dst, FileFilter filter)
+//    {
+//        super(src,recursive,dst,filter,null);
+//    }
+//
+//    public ForEachImageCopy(String src, String dst, FileFilter filter)
+//    {
+//        super(src,dst,filter);
+//    }
 
     @Override
     protected void addHash(File fileDst)
@@ -129,9 +132,10 @@ public class ForEachImageCopy extends ForEachFileCopy
     {
         if(imgHashSet==null) 
         {
-            imgHashSet = new HashSet<ImageHash>();
-            ForEachImageHash taskHashMap = new ForEachImageHash(getDst(), getRecursive(), imgHashSet);
+            imgHashSet =  Collections.synchronizedSet(new HashSet<ImageHash>());
+            ForEachImageHash taskHashMap = new ForEachImageHash(getDst(), getRecursive(), imgHashSet,getFork());
             taskHashMap.run();
+            getFork().waitForAll();
             taskHashMap = null;
         }
         super.run();

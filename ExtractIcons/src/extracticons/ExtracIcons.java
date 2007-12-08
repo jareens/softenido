@@ -23,6 +23,7 @@ package extracticons;
 
 import java.io.File;
 import java.io.FileFilter;
+import org.fjtk.ce.Forks;
 
 class FileFilterImg implements FileFilter
 {
@@ -183,9 +184,10 @@ public class ExtracIcons implements Runnable
 
     public void run()
     {
+        Forks fork = new Forks(5);
         if (imageAlgorithm)
         {
-            ForEachImageCopy taskImgCopy = new ForEachImageCopy(src, 999999, dst, new FileFilterImg());
+            ForEachImageCopy taskImgCopy = new ForEachImageCopy(src, 999999, dst, new FileFilterImg(),fork);
             taskImgCopy.setMinHeight(minHeight);
             taskImgCopy.setMaxHeight(maxHeight);
             taskImgCopy.setMinWidth(minWidth);
@@ -194,8 +196,7 @@ public class ExtracIcons implements Runnable
         }
         else
         {
-            taskCopy = new ForEachFileCopy(src, 999999, dst, new FileFilterImg());
-
+            taskCopy = new ForEachFileCopy(src, 999999, dst, new FileFilterImg(),fork);
         }
         taskCopy.setZip(zip);
         taskCopy.setMinSize(minSize);

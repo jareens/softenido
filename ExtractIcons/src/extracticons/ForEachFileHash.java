@@ -21,6 +21,8 @@
  */
 package extracticons;
 
+import java.io.FileFilter;
+import org.fjtk.ce.Forks;
 import org.fjtk.se.FileHash;
 import java.io.File;
 import java.util.HashSet;
@@ -36,28 +38,14 @@ public class ForEachFileHash extends ForEachFile
 {
     private HashSet<FileHash> hashSet;
 
-    public ForEachFileHash(String filename, HashSet<FileHash> hashSet)
+    ForEachFileHash(File file, int recursive, FileFilter filter, HashSet<FileHash> fileHashSet, Forks fork)
     {
-        super(filename);
-        this.hashSet = hashSet;
+        super(file, recursive, filter, fork);
+        this.hashSet = fileHashSet;
     }
-
-    public ForEachFileHash(String filename, int recursive, HashSet<FileHash> hashSet)
+    ForEachFileHash(File dst, int recursive, HashSet<FileHash> fileHashSet, Forks fork)
     {
-        super(filename,recursive);
-        this.hashSet = hashSet;
-    }
-
-    public ForEachFileHash(File file, HashSet<FileHash> hashSet)
-    {
-        super(file);
-        this.hashSet = hashSet;
-    }
-
-    public ForEachFileHash(File file, int recursive, HashSet<FileHash> hashSet)
-    {
-        super(file,recursive);
-        this.hashSet = hashSet;
+        this(dst,recursive,null,fileHashSet,fork);
     }
 
     @Override
