@@ -43,7 +43,7 @@ public class Forks
 
     public Forks()
     {
-        this(1);
+        this(0);
     }
 
     private Thread wrappTask(Runnable task)
@@ -58,8 +58,13 @@ public class Forks
         };
     }
 
-    private synchronized void invoke(Runnable task)
+    public synchronized void invoke(Runnable task)
     {
+        if(max<=0)
+        {
+            task.run();
+            return;
+        }
         // se espera ha tener espacio
         while (count >= max)
         {
