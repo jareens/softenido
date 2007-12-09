@@ -102,13 +102,14 @@ public class ForEachFileCopy extends ForEachFile
     {
         fileSet = Collections.synchronizedSet(new HashSet<FileHash>());
     }
+
     private void buildSet()
     {
         ForEachFileHash taskHashMap = new ForEachFileHash(dst, getRecursive(), fileSet, getFork());
         taskHashMap.run();
         taskHashMap = null;
     }
-    
+
     @Override
     public void run()
     {
@@ -135,7 +136,6 @@ public class ForEachFileCopy extends ForEachFile
 
     protected void doForRepeated(File file)
     {
-        System.out.printf("%s already exists\n", file.toString());
+//        System.out.printf("%s already exists\n", file.toString());
     }
-
 }

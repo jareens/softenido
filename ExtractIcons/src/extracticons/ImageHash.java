@@ -40,6 +40,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import org.fjtk.ce.Forks;
 
 /**
  *
@@ -51,20 +52,21 @@ public class ImageHash
     private int width = 0;
     private int height = 0;
     private byte[] imageHash = null;
-    private boolean ignoreAlpha =false;
-    private int round=0;
+    private boolean ignoreAlpha = false;
+    private int round = 0;
 
     private ImageHash(File file)
     {
         this.file = file;
     }
-    public ImageHash(File file,boolean ignoreAlpha,int percent)
+
+    public ImageHash(File file, boolean ignoreAlpha, int percent)
     {
         this.file = file;
         this.ignoreAlpha = ignoreAlpha;
-        if(percent<100)
+        if (percent < 100)
         {
-            this.round = (256*(100-percent))/100;
+            this.round = (256 * (100 - percent)) / 100;
         }
     }
 
@@ -106,7 +108,7 @@ public class ImageHash
         {
             return false;
         }
-        if (this.imageHash != other.imageHash && (this.imageHash == null || ! Arrays.equals(this.imageHash,other.imageHash)))
+        if (this.imageHash != other.imageHash && (this.imageHash == null || !Arrays.equals(this.imageHash, other.imageHash)))
         {
             return false;
         }
@@ -129,8 +131,8 @@ public class ImageHash
 
         try
         {
-
-            Image img = Toolkit.getDefaultToolkit().getImage(file.toString());
+            Image img;
+            img = Toolkit.getDefaultToolkit().getImage(file.toString());
             BufferedImage bufImg = toBufferedImage(img);
             img = null;
             if (bufImg != null)
@@ -142,21 +144,21 @@ public class ImageHash
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 byte[] rgbBytes = ArrayUtils.getByteArray(rgbArray);
                 rgbArray = null;
-                if(round>0)
+                if (round > 0)
                 {
-                    for(int i=0;i<rgbBytes.length;i++)
+                    for (int i = 0; i < rgbBytes.length; i++)
                     {
-                        if(rgbBytes[i]!=0)
+                        if (rgbBytes[i] != 0)
                         {
                             rgbBytes[i] -= rgbBytes[i] % round;
                         }
                     }
                 }
-                if(ignoreAlpha)
+                if (ignoreAlpha)
                 {
-                    for(int i=0;i<rgbBytes.length;i+=4)
+                    for (int i = 0; i < rgbBytes.length; i += 4)
                     {
-                        rgbBytes[i]=0;
+                        rgbBytes[i] = 0;
                     }
                 }
                 md5.update(rgbBytes);

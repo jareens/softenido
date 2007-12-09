@@ -208,7 +208,7 @@ public class ExtracIcons implements Runnable
 
     public void run()
     {
-        Forks fork = new Forks(forks);
+        Forks fork = new Forks(forks,true);
         if (imageAlgorithm)
         {
             ForEachImageCopy taskImgCopy = new ForEachImageCopy(src, 999999, dst, new FileFilterImg(),fork);

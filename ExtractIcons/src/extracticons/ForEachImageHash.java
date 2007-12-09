@@ -33,10 +33,10 @@ import org.fjtk.se.FileHash;
 public class ForEachImageHash extends ForEachFileHash
 {
     private Set<ImageHash> imageSet;
-    private boolean ignoreAlpha =false;
+    private boolean ignoreAlpha = false;
     private int percent = 100;
 
-    public ForEachImageHash(File file, int recursive, Set<FileHash> fileSet, Set<ImageHash> imageSet,boolean ignoreAlpha, int percent, Forks fork)
+    public ForEachImageHash(File file, int recursive, Set<FileHash> fileSet, Set<ImageHash> imageSet, boolean ignoreAlpha, int percent, Forks fork)
     {
         super(file, recursive, fileSet, fork);
         this.imageSet = imageSet;
@@ -49,7 +49,7 @@ public class ForEachImageHash extends ForEachFileHash
     {
         if (!super.addHash(file))
         {
-            return imageSet.add(new ImageHash(file, ignoreAlpha,percent));
+            return imageSet.add(new ImageHash(file, ignoreAlpha, percent));
         }
         return true;
     }

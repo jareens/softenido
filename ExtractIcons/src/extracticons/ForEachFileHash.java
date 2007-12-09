@@ -47,14 +47,16 @@ public class ForEachFileHash extends ForEachFile
     {
         this(dst, recursive, null, fileHashSet, fork);
     }
+
     protected boolean addHash(File file)
     {
         return hashSet.add(new FileHash(file));
     }
+
     @Override
     protected void doForEeach(File file, String name)
     {
-        if(!addHash(file))
+        if (!addHash(file))
         {
             doForRepeated(file);
         }
@@ -62,7 +64,7 @@ public class ForEachFileHash extends ForEachFile
 
     private void doForRepeated(File file)
     {
-        System.out.printf("%s\n", file.toString());
+    //System.out.printf("%s\n", file.toString());
     }
 
     @Override

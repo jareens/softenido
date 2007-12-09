@@ -169,7 +169,7 @@ public abstract class ForEachFile implements Runnable
                 (filter == null || filter.accept(file)) &&
                 acceptSize(file.length()))
         {
-            fork.invoke(new Runnable()
+            fork.invokeNow(new Runnable()
             {
                 public void run()
                 {

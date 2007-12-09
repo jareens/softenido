@@ -39,7 +39,7 @@ public class ForEachImageCopy extends ForEachFileCopy
     private int maxHeight = 0;
     private int minWidth = 0;
     private int maxWidth = 0;
-    private boolean ignoreAlpha=false;
+    private boolean ignoreAlpha = false;
     private int percent = 100;
 
     public int getMaxHeight()
@@ -121,7 +121,7 @@ public class ForEachImageCopy extends ForEachFileCopy
         {
             return false;
         }
-        ImageHash imgHash = new ImageHash(file, ignoreAlpha,percent);
+        ImageHash imgHash = new ImageHash(file, ignoreAlpha, percent);
         int height = imgHash.getHeight();
         int width = imgHash.getWidth();
         if (minHeight != 0 && (height < minHeight))
