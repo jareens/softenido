@@ -30,6 +30,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.fjtk.ce.Forks;
 
 /**
  *
@@ -41,7 +42,7 @@ public class FileHash
     private File file;
     private byte[] fastHash = null;
     private byte[] fullHash = null;
-    private static int bufSize = 64*1024;
+    private static int bufSize = 64 * 1024;
 
     public FileHash(File file)
     {
@@ -117,8 +118,7 @@ public class FileHash
         catch (NoSuchAlgorithmException ex)
         {
             Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
+        } finally
         {
             try
             {
@@ -154,12 +154,10 @@ public class FileHash
             byte[] buf = new byte[bufSize];
             fis = new FileInputStream(file);
             int r;
-
             while ((r = fis.read(buf)) > 0)
             {
                 md5.update(buf, 0, r);
             }
-
             fullHash = md5.digest();
         }
         catch (FileNotFoundException ex)
@@ -172,8 +170,7 @@ public class FileHash
         }
         catch (NoSuchAlgorithmException e)
         {
-        }
-        finally
+        } finally
         {
             try
             {
