@@ -244,7 +244,6 @@ public abstract class ForEachFile implements Runnable
         {
             doException(ex);
         }
-
     }
 
     protected File unZip(File file, ZipFile zf, ZipEntry ze) throws IOException

@@ -25,10 +25,9 @@ import java.io.FileFilter;
 import org.fjtk.ce.Forks;
 import org.fjtk.se.FileHash;
 import java.io.File;
-import java.util.HashSet;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
 
 /**
  *
@@ -36,29 +35,34 @@ import java.util.zip.ZipFile;
  */
 public class ForEachFileHash extends ForEachFile
 {
-    private HashSet<FileHash> hashSet;
+    private Set<FileHash> hashSet;
 
-    ForEachFileHash(File file, int recursive, FileFilter filter, HashSet<FileHash> fileHashSet, Forks fork)
+    ForEachFileHash(File file, int recursive, FileFilter filter, Set<FileHash> fileHashSet, Forks fork)
     {
         super(file, recursive, filter, fork);
         this.hashSet = fileHashSet;
     }
-    ForEachFileHash(File dst, int recursive, HashSet<FileHash> fileHashSet, Forks fork)
-    {
-        this(dst,recursive,null,fileHashSet,fork);
-    }
 
+    ForEachFileHash(File dst, int recursive, Set<FileHash> fileHashSet, Forks fork)
+    {
+        this(dst, recursive, null, fileHashSet, fork);
+    }
+    protected boolean addHash(File file)
+    {
+        return hashSet.add(new FileHash(file));
+    }
     @Override
-    protected void doForEeach(File file,String name)
+    protected void doForEeach(File file, String name)
     {
-        if (!hashSet.add(new FileHash(file)))
+        if(!addHash(file))
+        {
             doForRepeated(file);
+        }
     }
 
-    
     private void doForRepeated(File file)
     {
-        System.out.printf("%s\n",file.toString());
+        System.out.printf("%s\n", file.toString());
     }
 
     @Override

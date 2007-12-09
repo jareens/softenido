@@ -26,7 +26,9 @@ import org.fjtk.se.Files;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
@@ -39,53 +41,34 @@ import org.fjtk.ce.Forks;
  */
 public class ForEachFileCopy extends ForEachFile
 {
-
-    private HashSet<FileHash> fileHashSet = null;
+    protected Set<FileHash> fileSet = null;
     private File dst;
 
     public File getDst()
     {
         return dst;
     }
-    
-//    public ForEachFileCopy(String src, String dst, FileFilter filter)
-//    {
-//        super(src, filter);
-//        this.dst = new File(dst);
-//    }
-//
-//    public ForEachFileCopy(String src, int recursive, String dst, FileFilter filter,Forks fork)
-//    {
-//        super(src, recursive, filter,fork);
-//        this.dst = new File(dst);
-//    }
-//
-//    public ForEachFileCopy(File src, File dst, FileFilter filter)
-//    {
-//        super(src, filter);
-//        this.dst = dst;
-//    }
-//
-    public ForEachFileCopy(File src, int recursive, File dst, FileFilter filter,Forks fork)
+
+    public ForEachFileCopy(File src, int recursive, File dst, FileFilter filter, Forks fork)
     {
-        super(src, recursive, filter,fork);
+        super(src, recursive, filter, fork);
         this.dst = dst;
     }
 
     protected void addHash(File fileDst)
     {
-        fileHashSet.add(new FileHash(fileDst));
+        fileSet.add(new FileHash(fileDst));
     }
-    
+
     protected boolean acceptCopy(File file)
     {
-        return !fileHashSet.contains(new FileHash(file));
+        return !fileSet.contains(new FileHash(file));
     }
-   
+
     @Override
     protected void doForEeach(File file, String name)
     {
-        if(acceptCopy(file))
+        if (acceptCopy(file))
         {
             try
             {
@@ -115,17 +98,22 @@ public class ForEachFileCopy extends ForEachFile
 
     }
 
+    protected void initSet()
+    {
+        fileSet = Collections.synchronizedSet(new HashSet<FileHash>());
+    }
+    private void buildSet()
+    {
+        ForEachFileHash taskHashMap = new ForEachFileHash(dst, getRecursive(), fileSet, getFork());
+        taskHashMap.run();
+        taskHashMap = null;
+    }
+    
     @Override
     public void run()
     {
-        if(fileHashSet==null) 
-        {
-            fileHashSet = new HashSet<FileHash>();
-            ForEachFileHash taskHashMap = new ForEachFileHash(dst, getRecursive(), fileHashSet,getFork());
-            taskHashMap.run();
-            taskHashMap = null;
-        }
-        
+        buildSet();
+
         super.run();
     }
 
@@ -149,4 +137,5 @@ public class ForEachFileCopy extends ForEachFile
     {
         System.out.printf("%s already exists\n", file.toString());
     }
+
 }

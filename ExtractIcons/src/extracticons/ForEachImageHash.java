@@ -22,60 +22,35 @@
 package extracticons;
 
 import java.io.File;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import org.fjtk.ce.Forks;
-
+import org.fjtk.se.FileHash;
 
 /**
  *
  * @author franci
  */
-public class ForEachImageHash extends ForEachFile
+public class ForEachImageHash extends ForEachFileHash
 {
-    private Set<ImageHash> hashSet;
+    private Set<ImageHash> imageSet;
+    private boolean ignoreAlpha =false;
+    private int percent = 100;
 
-//    public ForEachImageHash(String filename, HashSet<ImageHash> hashSet)
-//    {
-//        super(filename);
-//        this.hashSet = hashSet;
-//    }
-//
-//    public ForEachImageHash(String filename, int recursive, HashSet<ImageHash> hashSet,Forks fork)
-//    {
-//        super(filename,recursive,fork);
-//        this.hashSet = hashSet;
-//    }
-//
-//    public ForEachImageHash(File file, HashSet<ImageHash> hashSet)
-//    {
-//        super(file);
-//        this.hashSet = hashSet;
-//    }
-//
-    public ForEachImageHash(File file, int recursive, Set<ImageHash> hashSet,Forks fork)
+    public ForEachImageHash(File file, int recursive, Set<FileHash> fileSet, Set<ImageHash> imageSet,boolean ignoreAlpha, int percent, Forks fork)
     {
-        super(file,recursive,null,fork);
-        this.hashSet = hashSet;
+        super(file, recursive, fileSet, fork);
+        this.imageSet = imageSet;
+        this.ignoreAlpha = ignoreAlpha;
+        this.percent = percent;
     }
 
     @Override
-    protected void doForEeach(File file,String name)
+    protected boolean addHash(File file)
     {
-        if (!hashSet.add(new ImageHash(file)))
-            doForRepeated(file);
-    }
-    
-    private void doForRepeated(File file)
-    {
-        System.out.printf("%s\n",file.toString());
-    }
-
-    @Override
-    protected void doForEeach(ZipFile zf, ZipEntry ze)
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (!super.addHash(file))
+        {
+            return imageSet.add(new ImageHash(file, ignoreAlpha,percent));
+        }
+        return true;
     }
 }

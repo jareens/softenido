@@ -34,12 +34,13 @@ import org.fjtk.ce.Forks;
  */
 public class ForEachImageCopy extends ForEachFileCopy
 {
-
-    private Set<ImageHash> imgHashSet = null;
+    private Set<ImageHash> imgSet = null;
     private int minHeight = 0;
     private int maxHeight = 0;
     private int minWidth = 0;
     private int maxWidth = 0;
+    private boolean ignoreAlpha=false;
+    private int percent = 100;
 
     public int getMaxHeight()
     {
@@ -81,64 +82,87 @@ public class ForEachImageCopy extends ForEachFileCopy
         this.minWidth = minWidth;
     }
 
-    public ForEachImageCopy(File src, int recursive, File dst, FileFilter filter,Forks fork)
+    public int getPercent()
     {
-        super(src,recursive,dst,filter,fork);
+        return percent;
     }
-//
-//    public ForEachImageCopy(File src, File dst, FileFilter filter)
-//    {
-//        super(src,dst,filter);
-//    }
-//
-//    public ForEachImageCopy(String src, int recursive, String dst, FileFilter filter)
-//    {
-//        super(src,recursive,dst,filter,null);
-//    }
-//
-//    public ForEachImageCopy(String src, String dst, FileFilter filter)
-//    {
-//        super(src,dst,filter);
-//    }
+
+    public void setPercent(int percent)
+    {
+        this.percent = percent;
+    }
+
+    public boolean isIgnoreAlpha()
+    {
+        return ignoreAlpha;
+    }
+
+    public void setIgnoreAlpha(boolean ignoreAlpha)
+    {
+        this.ignoreAlpha = ignoreAlpha;
+    }
+
+    public ForEachImageCopy(File src, int recursive, File dst, FileFilter filter, Forks fork)
+    {
+        super(src, recursive, dst, filter, fork);
+    }
 
     @Override
     protected void addHash(File fileDst)
     {
-        imgHashSet.add(new ImageHash(fileDst));
+        super.addHash(fileDst);
+        imgSet.add(new ImageHash(fileDst, ignoreAlpha, percent));
     }
 
     @Override
     protected boolean acceptCopy(File file)
     {
-        if(!super.acceptCopy(file))
+        if (!super.acceptCopy(file))
+        {
             return false;
-        ImageHash imgHash = new ImageHash(file);
-        int height =imgHash.getHeight();
-        int width =imgHash.getWidth();
-        if ( minHeight != 0 && (height < minHeight) )
+        }
+        ImageHash imgHash = new ImageHash(file, ignoreAlpha,percent);
+        int height = imgHash.getHeight();
+        int width = imgHash.getWidth();
+        if (minHeight != 0 && (height < minHeight))
+        {
             return false;
-        if ( maxHeight != 0 && (height > maxHeight) )
+        }
+        if (maxHeight != 0 && (height > maxHeight))
+        {
             return false;
-        if ( minWidth != 0 && (width < minWidth) )
+        }
+        if (minWidth != 0 && (width < minWidth))
+        {
             return false;
-        if ( maxWidth != 0 && (width > maxWidth) )
+        }
+        if (maxWidth != 0 && (width > maxWidth))
+        {
             return false;
-               
-        return !imgHashSet.contains(imgHash);
+        }
+        return !imgSet.contains(imgHash);
     }
-    
+
+    @Override
+    protected void initSet()
+    {
+        super.initSet();
+        imgSet = Collections.synchronizedSet(new HashSet<ImageHash>());
+    }
+
+    private void buildSet()
+    {
+        ForEachImageHash taskHashMap = new ForEachImageHash(getDst(), getRecursive(), fileSet, imgSet, ignoreAlpha, percent, getFork());
+        taskHashMap.run();
+        getFork().waitForAll();
+        taskHashMap = null;
+    }
+
     @Override
     public void run()
     {
-        if(imgHashSet==null) 
-        {
-            imgHashSet =  Collections.synchronizedSet(new HashSet<ImageHash>());
-            ForEachImageHash taskHashMap = new ForEachImageHash(getDst(), getRecursive(), imgHashSet,getFork());
-            taskHashMap.run();
-            getFork().waitForAll();
-            taskHashMap = null;
-        }
+        initSet();
+        buildSet();
         super.run();
     }
-    
 }

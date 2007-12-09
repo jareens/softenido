@@ -79,17 +79,31 @@ public class ExtracIcons implements Runnable
     private FileFilter filter = null;
     private int minSize = 0;
     private int maxSize = 0;
+    private int forks =0;
+    private boolean ignoreAlpha=false;
 
-    public ExtracIcons(File src, File dst, boolean imageAlgorithm)
+    public boolean isIgnoreAlpha()
+    {
+        return ignoreAlpha;
+    }
+
+    public void setIgnoreAlpha(boolean ignoreAlpha)
+    {
+        this.ignoreAlpha = ignoreAlpha;
+    }
+    private int percent=100;
+
+    public ExtracIcons(File src, File dst, boolean imageAlgorithm,int forks)
     {
         this.src = src;
         this.dst = dst;
         this.imageAlgorithm = imageAlgorithm;
+        this.forks = forks;
     }
 
-    public ExtracIcons(String src, String dst, boolean imageAlgorithm)
+    public ExtracIcons(String src, String dst, boolean imageAlgorithm,int forks)
     {
-        this(new File(src), new File(dst), imageAlgorithm);
+        this(new File(src), new File(dst), imageAlgorithm,forks);
     }
 
     public boolean isHidden()
@@ -182,9 +196,19 @@ public class ExtracIcons implements Runnable
         this.zip = zip;
     }
 
+    public int getPercent()
+    {
+        return percent;
+    }
+
+    public void setPercent(int percent)
+    {
+        this.percent = percent;
+    }
+
     public void run()
     {
-        Forks fork = new Forks(5);
+        Forks fork = new Forks(forks);
         if (imageAlgorithm)
         {
             ForEachImageCopy taskImgCopy = new ForEachImageCopy(src, 999999, dst, new FileFilterImg(),fork);
@@ -192,6 +216,8 @@ public class ExtracIcons implements Runnable
             taskImgCopy.setMaxHeight(maxHeight);
             taskImgCopy.setMinWidth(minWidth);
             taskImgCopy.setMaxWidth(maxWidth);
+            taskImgCopy.setIgnoreAlpha(ignoreAlpha);
+            taskImgCopy.setPercent(percent);
             taskCopy = taskImgCopy;
         }
         else
@@ -206,5 +232,6 @@ public class ExtracIcons implements Runnable
         taskCopy.setFile(true);
         taskCopy.setDirectory(false);
         taskCopy.run();
+        fork.waitForAll();
     }
 }

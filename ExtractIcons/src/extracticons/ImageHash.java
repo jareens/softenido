@@ -36,6 +36,7 @@ import java.awt.image.PixelGrabber;
 import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -46,15 +47,25 @@ import javax.swing.ImageIcon;
  */
 public class ImageHash
 {
-
     private File file;
     private int width = 0;
     private int height = 0;
     private byte[] imageHash = null;
+    private boolean ignoreAlpha =false;
+    private int round=0;
 
-    public ImageHash(File file)
+    private ImageHash(File file)
     {
         this.file = file;
+    }
+    public ImageHash(File file,boolean ignoreAlpha,int percent)
+    {
+        this.file = file;
+        this.ignoreAlpha = ignoreAlpha;
+        if(percent<100)
+        {
+            this.round = (256*(100-percent))/100;
+        }
     }
 
     public int getHeight()
@@ -95,7 +106,7 @@ public class ImageHash
         {
             return false;
         }
-        if (this.imageHash != other.imageHash && (this.imageHash == null || !this.imageHash.equals(other.imageHash)))
+        if (this.imageHash != other.imageHash && (this.imageHash == null || ! Arrays.equals(this.imageHash,other.imageHash)))
         {
             return false;
         }
@@ -106,29 +117,57 @@ public class ImageHash
     public int hashCode()
     {
         buildHash();
-        return width+height;
+        return width + height;
     }
-    
+
     private void buildHash()
     {
         if (imageHash != null)
         {
             return;
         }
-        
+
         try
         {
 
             Image img = Toolkit.getDefaultToolkit().getImage(file.toString());
             BufferedImage bufImg = toBufferedImage(img);
-            width = bufImg.getWidth();
-            height= bufImg.getHeight();
             img = null;
-            int[] rgbArray = new int[width * height];
-            bufImg.getRGB(0, 0, width, height, rgbArray, 0, 1);
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            md5.update(ArrayUtils.getByteArray(rgbArray));
-            imageHash = md5.digest();
+            if (bufImg != null)
+            {
+                width = bufImg.getWidth();
+                height = bufImg.getHeight();
+                int[] rgbArray = new int[width * height];
+                bufImg.getRGB(0, 0, width, height, rgbArray, 0, width);
+                MessageDigest md5 = MessageDigest.getInstance("MD5");
+                byte[] rgbBytes = ArrayUtils.getByteArray(rgbArray);
+                rgbArray = null;
+                if(round>0)
+                {
+                    for(int i=0;i<rgbBytes.length;i++)
+                    {
+                        if(rgbBytes[i]!=0)
+                        {
+                            rgbBytes[i] -= rgbBytes[i] % round;
+                        }
+                    }
+                }
+                if(ignoreAlpha)
+                {
+                    for(int i=0;i<rgbBytes.length;i+=4)
+                    {
+                        rgbBytes[i]=0;
+                    }
+                }
+                md5.update(rgbBytes);
+                imageHash = md5.digest();
+            }
+            else
+            {
+                width = 0;
+                height = 0;
+                imageHash = new byte[0];
+            }
         }
         catch (NoSuchAlgorithmException ex)
         {
@@ -165,6 +204,11 @@ public class ImageHash
             // Create the buffered image
             GraphicsDevice gs = ge.getDefaultScreenDevice();
             GraphicsConfiguration gc = gs.getDefaultConfiguration();
+
+            if (image.getWidth(null) < 0 || image.getHeight(null) < 0)
+            {
+                return null;
+            }
             bimage = gc.createCompatibleImage(image.getWidth(null), image.getHeight(null), transparency);
         }
         catch (HeadlessException e)
@@ -215,8 +259,10 @@ public class ImageHash
 
         // Get the image's color model
         ColorModel cm = pg.getColorModel();
-        if(cm==null)
+        if (cm == null)
+        {
             return false;
+        }
         return cm.hasAlpha();
     }
 }
