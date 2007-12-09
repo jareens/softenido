@@ -30,20 +30,26 @@ import java.util.logging.Logger;
  */
 public class Forks
 {
-
     private volatile int count = 0;
     private final int max;
-    private final Runnable[] tasks;
+    private final Thread[] tasks;
+    private final boolean priority;
+    
+    public Forks(int max, boolean priority)
+    {
+        this.max = max;
+        this.tasks = new Thread[max];
+        this.priority = priority;
+    }
 
     public Forks(int max)
     {
-        this.max = max;
-        this.tasks = new Runnable[max];
+        this(max, false);
     }
 
     public Forks()
     {
-        this(0);
+        this(0, false);
     }
 
     private Thread wrappTask(Runnable task)
@@ -60,7 +66,7 @@ public class Forks
 
     public synchronized void invoke(Runnable task)
     {
-        if(max<=0)
+        if (max <= 0)
         {
             task.run();
             return;
@@ -78,8 +84,34 @@ public class Forks
             }
         }
         Thread th = wrappTask(task);
+        if (priority)
+        {
+            th.setPriority(Math.max(Thread.NORM_PRIORITY - count, Thread.MIN_PRIORITY));
+        }
         tasks[count++] = th;
         th.start();
+    }
+
+    public synchronized void invokeNow(Runnable task)
+    {
+        if (count < max)
+        {
+            invoke(task);
+        }
+        else
+        {
+            task.run();
+        }
+    }
+
+    public synchronized boolean tryInvoke(Runnable task)
+    {
+        if (count < max)
+        {
+            invoke(task);
+            return true;
+        }
+        return false;
     }
 
     private synchronized void remove(Runnable task)
@@ -99,21 +131,15 @@ public class Forks
         {
             for (i++; i < max; i++)
             {
+                if (tasks[i] != null)
+                {
+                    tasks[i].setPriority(Math.max(Thread.NORM_PRIORITY - i + 1, Thread.MIN_PRIORITY));
+                }
                 tasks[i - 1] = tasks[i];
             }
             tasks[--count] = null;
             notifyAll();
         }
-    }
-
-    public synchronized boolean tryInvoke(Runnable task)
-    {
-        if (count < max)
-        {
-            invoke(task);
-            return true;
-        }
-        return false;
     }
 
     public int getCount()
@@ -144,7 +170,7 @@ public class Forks
             waitForOne();
         }
     }
-    
+
     protected void finalize() throws Throwable
     {
         waitForAll();
