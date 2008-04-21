@@ -23,6 +23,7 @@ package extracticons;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.concurrent.ThreadPoolExecutor;
 import org.fjtk.ce.Forks;
 
 class FileFilterImg implements FileFilter
@@ -41,6 +42,7 @@ class FileFilterImg implements FileFilter
         this.img = img;
     }
 
+    @Override
     public boolean accept(File pathname)
     {
         String name = pathname.getName().toLowerCase();
@@ -206,6 +208,7 @@ public class ExtracIcons implements Runnable
         this.percent = percent;
     }
 
+    @Override
     public void run()
     {
         Forks fork = new Forks(forks,true);
@@ -233,5 +236,7 @@ public class ExtracIcons implements Runnable
         taskCopy.setDirectory(false);
         taskCopy.run();
         fork.waitForAll();
+        
+        ThreadPoolExecutor a;
     }
 }

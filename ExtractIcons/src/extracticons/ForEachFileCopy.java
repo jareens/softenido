@@ -113,6 +113,7 @@ public class ForEachFileCopy extends ForEachFile
     @Override
     public void run()
     {
+        initSet();
         buildSet();
 
         super.run();

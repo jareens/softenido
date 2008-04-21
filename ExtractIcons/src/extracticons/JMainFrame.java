@@ -21,11 +21,16 @@
  */
 package extracticons;
 
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 import org.fjtk.ce.HumanMillisFormat;
 
 /**
@@ -88,7 +93,12 @@ public class JMainFrame extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jtfFrom.setText("/opt/nb6.1/nb6.0/");
+        jtfFrom.setText("/opt/nb6.1rc1/");
+        jtfFrom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfFromActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("From:");
 
@@ -117,6 +127,7 @@ public class JMainFrame extends javax.swing.JFrame
         });
         jScrollPane1.setViewportView(jList1);
 
+        jbExtract.setIcon(new javax.swing.ImageIcon(getClass().getResource("/extracticons/runProject16.png"))); // NOI18N
         jbExtract.setText("Extract");
         jbExtract.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -344,8 +355,8 @@ public class JMainFrame extends javax.swing.JFrame
                             .addComponent(jbFrom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
                             .addComponent(jbTo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jbExtract, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 397, Short.MAX_VALUE)
+                        .addComponent(jbExtract, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 336, Short.MAX_VALUE)
                         .addComponent(jbExit, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,7 +396,7 @@ public class JMainFrame extends javax.swing.JFrame
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbExit)
@@ -473,11 +484,42 @@ public class JMainFrame extends javax.swing.JFrame
 
     }//GEN-LAST:event_jcbImgAlgActionPerformed
 
+private void jtfFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfFromActionPerformed
+// TODO add your handling code here:
+}//GEN-LAST:event_jtfFromActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[])
     {
+        //LookAndFeelInfo[] laf = UIManager.getInstalledLookAndFeels();
+//        for(LookAndFeelInfo item: laf)
+//        {
+//            System.out.println(item.getName()+" "+item.getClassName());
+//        }
+        System.out.print(UIManager.getSystemLookAndFeelClassName());
+        try
+        {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(JMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (InstantiationException ex)
+        {
+            Logger.getLogger(JMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IllegalAccessException ex)
+        {
+            Logger.getLogger(JMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (UnsupportedLookAndFeelException ex)
+        {
+            Logger.getLogger(JMainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         java.awt.EventQueue.invokeLater(new Runnable()
         {
 

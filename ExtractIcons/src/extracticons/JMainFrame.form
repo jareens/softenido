@@ -46,8 +46,8 @@
                       </Group>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="jbExtract" min="-2" pref="82" max="-2" attributes="0"/>
-                      <EmptySpace pref="397" max="32767" attributes="0"/>
+                      <Component id="jbExtract" min="-2" pref="143" max="-2" attributes="0"/>
+                      <EmptySpace pref="336" max="32767" attributes="0"/>
                       <Component id="jbExit" min="-2" pref="88" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -101,7 +101,7 @@
                   <Component id="jPanel1" min="-2" max="-2" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="110" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="102" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jbExit" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -115,8 +115,11 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="jtfFrom">
       <Properties>
-        <Property name="text" type="java.lang.String" value="/opt/nb6.1/nb6.0/"/>
+        <Property name="text" type="java.lang.String" value="/opt/nb6.1rc1/"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jtfFromActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -173,6 +176,9 @@
     </Container>
     <Component class="javax.swing.JButton" name="jbExtract">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/extracticons/runProject16.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Extract"/>
       </Properties>
       <Events>
