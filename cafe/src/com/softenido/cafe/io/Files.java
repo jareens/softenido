@@ -145,8 +145,9 @@ public class Files
     /**
      * Returns an array of strings naming the files and directories in the
      * directory denoted by this abstract pathname that satisfy the specified
-     * filter.  The behavior of this method is the same as that of the
-     * <code>{@link #list()}</code> method, except that the strings in the
+     * filter following recursively those directories. The behavior of this
+     * method is the same as that of the <code>{@link #list()}</code> method,
+     * except that the strings in the
      * returned array must satisfy the filter.  If the given
      * <code>filter</code> is <code>null</code> then all names are accepted.
      * Otherwise, a name satisfies the filter if and only if the value
@@ -159,15 +160,11 @@ public class Files
      *
      * @return  An array of strings naming the files and directories in the
      *          directory denoted by this abstract pathname that were accepted
-     *          by the given <code>filter</code>.  The array will be empty if
+     *          by the given <code>filter</code> following recursively those directories.
+     *          The array will be empty if
      *          the directory is empty or if no names were accepted by the
      *          filter.  Returns <code>null</code> if this abstract pathname
      *          does not denote a directory, or if an I/O error occurs.
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          java.lang.SecurityManager#checkRead(java.lang.String)}</code>
-     *          method denies read access to the directory
      */
     public String[] list(FilenameFilter filter)
     {
@@ -189,12 +186,14 @@ public class Files
 
     /**
      * Returns an array of abstract pathnames denoting the files in the
-     * directory denoted by this abstract pathname.
+     * directory denoted by this abstract pathname
+     * following recursively those directories.
      *
      * <p> If this abstract pathname does not denote a directory, then this
      * method returns <code>null</code>.  Otherwise an array of
      * <code>File</code> objects is returned, one for each file or directory in
-     * the directory.  Pathnames denoting the directory itself and the
+     * the directory and following recursively those directories.
+     * Pathnames denoting the directory itself and the
      * directory's parent directory are not included in the result.  Each
      * resulting abstract pathname is constructed from this abstract pathname
      * using the <code>{@link #File(java.io.File, java.lang.String)
@@ -209,16 +208,10 @@ public class Files
      *
      * @return  An array of abstract pathnames denoting the files and
      *          directories in the directory denoted by this abstract
-     *          pathname.  The array will be empty if the directory is
+     *          pathname following recursively those directories.
+     *          The array will be empty if the directory is
      *          empty.  Returns <code>null</code> if this abstract pathname
      *          does not denote a directory, or if an I/O error occurs.
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          java.lang.SecurityManager#checkRead(java.lang.String)}</code>
-     *          method denies read access to the directory
-     *
-     * @since 1.2
      */
     public File[] listFiles()
     {
@@ -228,7 +221,8 @@ public class Files
     /**
      * Returns an array of abstract pathnames denoting the files and
      * directories in the directory denoted by this abstract pathname that
-     * satisfy the specified filter.  The behavior of this method is the
+     * satisfy the specified filter following recursively those directories.
+     * The behavior of this method is the
      * same as that of the <code>{@link #listFiles()}</code> method, except
      * that the pathnames in the returned array must satisfy the filter.
      * If the given <code>filter</code> is <code>null</code> then all
@@ -245,13 +239,6 @@ public class Files
      *          pathname.  The array will be empty if the directory is
      *          empty.  Returns <code>null</code> if this abstract pathname
      *          does not denote a directory, or if an I/O error occurs.
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          java.lang.SecurityManager#checkRead(java.lang.String)}</code>
-     *          method denies read access to the directory
-     *
-     * @since 1.2
      */
     public File[] listFiles(final FilenameFilter filter)
     {
@@ -281,7 +268,8 @@ public class Files
     /**
      * Returns an array of abstract pathnames denoting the files and
      * directories in the directory denoted by this abstract pathname that
-     * satisfy the specified filter.  The behavior of this method is the
+     * satisfy the specified filter following recursively those directories.
+     * The behavior of this method is the
      * same as that of the <code>{@link #listFiles()}</code> method, except
      * that the pathnames in the returned array must satisfy the filter.
      * If the given <code>filter</code> is <code>null</code> then all
@@ -294,16 +282,10 @@ public class Files
      *
      * @return  An array of abstract pathnames denoting the files and
      *          directories in the directory denoted by this abstract
-     *          pathname.  The array will be empty if the directory is
+     *          pathname  following recursively those directories.
+     *          The array will be empty if the directory is
      *          empty.  Returns <code>null</code> if this abstract pathname
      *          does not denote a directory, or if an I/O error occurs.
-     *
-     * @throws  SecurityException
-     *          If a security manager exists and its <code>{@link
-     *          java.lang.SecurityManager#checkRead(java.lang.String)}</code>
-     *          method denies read access to the directory
-     *
-     * @since 1.2
      */
     public File[] listFiles(FileFilter filter)
     {
