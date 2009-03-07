@@ -21,6 +21,7 @@
  */
 package com.softenido.cafe.io;
 
+import com.softenido.cafe.util.ArrayUtils;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -326,5 +327,101 @@ public class Files
     public static String normalize(String name)
     {
         return name.replace('\uFFFD', '.');
+    }
+
+    public static String[] getParents(File file, boolean includeFile)
+    {
+        File[] items = getParentFiles(file, includeFile);
+        String[] names = new String[items.length];
+        for (int i = 0; i < items.length; i++)
+        {
+            names[i] = items[i].toString();
+        }
+        return names;
+    }
+
+    public static String[] getParents(File file)
+    {
+        return getParents(file, false);
+    }
+
+    public static File[] getParentFiles(File file, boolean includeFile)
+    {
+        File item = file;
+        ArrayList<File> files = new ArrayList<File>();
+        if (includeFile)
+        {
+            files.add(item);
+        }
+        while ((item = item.getParentFile()) != null)
+        {
+            files.add(item);
+        }
+        return ArrayUtils.reverseCopyOf(files.toArray(new File[0]));
+    }
+
+    public static File[] getParentFiles(File file)
+    {
+        return getParentFiles(file, false);
+    }
+
+    public static String getCommonParent(File a, File b)
+    {
+        File parent = getCommonParentFile(a, b);
+        if (parent != null)
+        {
+            return parent.toString();
+        }
+        return null;
+    }
+
+    public static File getCommonParentFile(File a, File b)
+    {
+        File[] listA = getParentFiles(a, true);
+        File[] listB = getParentFiles(b, true);
+        int max = Math.min(listA.length, listB.length);
+        File common = null;
+        for (int i = 0; i < max && listA[i].equals(listB[i]); i++)
+        {
+            common = listA[i];
+        }
+        return common;
+    }
+
+    public static boolean haveCommonParent(File a, File b)
+    {
+        return (getCommonParentFile(a, b) != null);
+    }
+
+    public static boolean isParentOf(File parent, File child)
+    {
+        return (getCommonParentFile(parent, child) == parent);
+    }
+
+    public static File[] uniqueCopyOf(File[] list)
+    {
+        // se eliminan los duplicados
+        File[] unique = ArrayUtils.uniqueCopyOf(list);
+        for (int i = 0; i < unique.length; i++)
+        {
+            for (int j = i + 1; j < unique.length; j++)
+            {
+                if (unique[j].equals(unique[i]))
+                {
+                    continue;
+                }
+                if(isParentOf(unique[j], unique[i]))
+                {
+                    unique[i] = unique[j];
+                    continue;
+                }
+                if(isParentOf(unique[i], unique[j]))
+                {
+                    unique[j] = unique[i];
+                    continue;
+                }
+            }
+        }
+        return ArrayUtils.uniqueCopyOf(unique);
     }
 }

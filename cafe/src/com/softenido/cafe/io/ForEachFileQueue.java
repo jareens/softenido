@@ -1,5 +1,5 @@
 /*
- *  ForEachFile.java
+ *  ForEachFileQueue.java
  *
  *  Copyright (C) 2009  Francisco Gómez Carrasco
  *
@@ -36,20 +36,28 @@ import java.util.zip.ZipFile;
 public class ForEachFileQueue extends ForEachFile
 {
 
-    private final File eofFile;
-    private final String eofName;
+    private final File eof;
     private final BlockingQueue<File> fileQueue;
     private final BlockingQueue<String> nameQueue;
 
-    public ForEachFileQueue(File file, int recursive, FileFilter filter, BlockingQueue<File> fileQueue, BlockingQueue<String> nameQueue)
+    public ForEachFileQueue(File file, int recursive, FileFilter filter, BlockingQueue<File> fileQueue, BlockingQueue<String> nameQueue, File eof)
     {
         super(file, recursive, filter);
 
-        this.eofFile = file;
-        this.eofName = file.toString();
+        this.eof = eof;
 
         this.fileQueue = fileQueue;
         this.nameQueue = nameQueue;
+    }
+
+    public ForEachFileQueue(File file, int recursive, BlockingQueue<File> rawQueue, File eof)
+    {
+        this(file, recursive, null, rawQueue, eof);
+    }
+
+    public ForEachFileQueue(File file, int recursive, FileFilter filter, BlockingQueue<File> fileQueue, File eof)
+    {
+        this(file, recursive, filter, fileQueue, null, eof);
     }
 
     public ForEachFileQueue(File file, int recursive, FileFilter filter, BlockingQueue<File> fileQueue)
@@ -94,13 +102,16 @@ public class ForEachFileQueue extends ForEachFile
         super.run();
         try
         {
-            if (fileQueue != null)
+            if (eof != null)
             {
-                fileQueue.put(eofFile);
-            }
-            if (nameQueue != null)
-            {
-                nameQueue.put(eofName);
+                if (fileQueue != null)
+                {
+                    fileQueue.put(eof);
+                }
+                if (nameQueue != null)
+                {
+                    nameQueue.put(eof.toString());
+                }
             }
         }
         catch (InterruptedException ex)
@@ -111,12 +122,12 @@ public class ForEachFileQueue extends ForEachFile
 
     public File getEofFile()
     {
-        return eofFile;
+        return eof;
     }
 
     public String getEofName()
     {
-        return eofName;
+        return (eof==null)?null:eof.toString();
     }
 
     public BlockingQueue<File> getFileQueue()
@@ -128,5 +139,4 @@ public class ForEachFileQueue extends ForEachFile
     {
         return nameQueue;
     }
-
 }

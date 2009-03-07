@@ -37,16 +37,16 @@ import java.util.logging.Logger;
  */
 public class FileHash
 {
+
     private static final String MD5 = "MD5";
     private static final String SHA1 = "SHA-1";
-    
     private File file;
     private final long size;
-    private byte[] fastHash1 = null;
-    private byte[] fastHash2 = null;
-    private byte[] fullHash1 = null;
-    private byte[] fullHash2 = null;
-    private static int bufSize = 64*1024;
+    private byte[] fastMD5 = null;
+    private byte[] fastSHA1 = null;
+    private byte[] fullMD5 = null;
+    private byte[] fullSHA1 = null;
+    private static int bufSize = 64 * 1024;
 
     /**
      * Creates a new FileHash instance from a File object.
@@ -74,23 +74,19 @@ public class FileHash
         {
             return false;
         }
-        this.buildFastHash();
-        other.buildFastHash();
-        if (this.fastHash1 != other.fastHash1 && (this.fastHash1 == null || !Arrays.equals(this.fastHash1, other.fastHash1)))
+        if (!Arrays.equals(this.getFastMD5(), other.getFastMD5()))
         {
             return false;
         }
-        if (this.fastHash2 != other.fastHash2 && (this.fastHash2 == null || !Arrays.equals(this.fastHash2, other.fastHash2)))
+        if (!Arrays.equals(this.getFastSHA1(), other.getFastSHA1()))
         {
             return false;
         }
-        this.buildFullHash();
-        other.buildFullHash();
-        if (this.fullHash1 != other.fullHash1 && (this.fullHash1 == null || !Arrays.equals(this.fullHash1, other.fullHash1)))
+        if (!Arrays.equals(this.getFullMD5(), other.getFullMD5()))
         {
             return false;
         }
-        if (this.fullHash2 != other.fullHash2 && (this.fullHash2 == null || !Arrays.equals(this.fullHash2, other.fullHash2)))
+        if (!Arrays.equals(this.getFullSHA1(), other.getFullSHA1()))
         {
             return false;
         }
@@ -105,7 +101,7 @@ public class FileHash
 
     private synchronized void buildFastHash()
     {
-        if (fastHash1 != null && fastHash2 != null)
+        if (fastMD5 != null && fastSHA1 != null)
         {
             return;
         }
@@ -114,7 +110,7 @@ public class FileHash
         {
             MessageDigest md5 = MessageDigest.getInstance(MD5);
             MessageDigest sha1 = MessageDigest.getInstance(SHA1);
-            if (file.length() > 0)
+            if (size > 0)
             {
                 byte[] buf = new byte[1024];
                 fis = new FileInputStream(file);
@@ -124,8 +120,8 @@ public class FileHash
                 sha1.update(buf, 0, r);
             }
 
-            fastHash1 = md5.digest();
-            fastHash2 = sha1.digest();
+            fastMD5 = md5.digest();
+            fastSHA1 = sha1.digest();
         }
         catch (FileNotFoundException ex)
         {
@@ -157,15 +153,15 @@ public class FileHash
 
     private void buildFullHash()
     {
-        if (fullHash1 != null && fullHash2 != null)
+        if (fullMD5 != null && fullSHA1 != null)
         {
             return;
         }
 
-        if (file.length() <= 1024)
+        if (size <= 1024)
         {
-            fullHash1 = fastHash1;
-            fullHash2 = fastHash2;
+            fullMD5 = fastMD5;
+            fullSHA1 = fastSHA1;
             return;
         }
 
@@ -184,8 +180,8 @@ public class FileHash
                 sha1.update(buf, 0, r);
             }
 
-            fullHash1 = md5.digest();
-            fullHash2 = sha1.digest();
+            fullMD5 = md5.digest();
+            fullSHA1 = sha1.digest();
         }
         catch (FileNotFoundException ex)
         {
@@ -223,5 +219,40 @@ public class FileHash
     {
         return file;
     }
-    
+
+    public byte[] getFastMD5()
+    {
+        if (fastMD5 == null)
+        {
+            buildFastHash();
+        }
+        return fastMD5;
+    }
+
+    public byte[] getFastSHA1()
+    {
+        if (fastSHA1 == null)
+        {
+            buildFastHash();
+        }
+        return fastSHA1;
+    }
+
+    public byte[] getFullMD5()
+    {
+        if (fullMD5 == null)
+        {
+            buildFullHash();
+        }
+        return fullMD5;
+    }
+
+    public byte[] getFullSHA1()
+    {
+        if (fullSHA1 == null)
+        {
+            buildFullHash();
+        }
+        return fullSHA1;
+    }
 }
