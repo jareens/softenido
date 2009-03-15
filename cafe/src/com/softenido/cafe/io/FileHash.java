@@ -70,6 +70,10 @@ public class FileHash
             return false;
         }
         final FileHash other = (FileHash) obj;
+        if(file.equals(other.file))
+        {
+            return true;
+        }
         if (this.file.length() != other.file.length())
         {
             return false;
