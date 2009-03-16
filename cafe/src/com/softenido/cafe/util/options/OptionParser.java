@@ -36,8 +36,6 @@ public class OptionParser
     private static final String TWO_HYPHEN = "--";
     private boolean oneHyphen = true;
     private boolean twoHyphen = true;
-    private boolean oneHyphenMode = true;
-    private boolean alteLongMode = true;
     private boolean posixly = false;
     List<Option> optionList = new ArrayList<Option>();
     private final Option oneHyphenOption = new BooleanOption(ONE_HYPHEN);
@@ -53,65 +51,53 @@ public class OptionParser
         return item;
     }
 
-    public String[] parse(String[] args)
+    public String[] parse(String[] args) throws InvalidOptionException
     {
         Option[] rules = optionList.toArray(new Option[0]);
         String remainder[] = new String[args.length];
         int remainderSize = 0;
-argloop:for (int i = 0; i < args.length; i++)
+        boolean noMoreOptions = false;
+
+        for (int i = 0; i < args.length; i++)
         {
-            if (oneHyphen && args[i].equals(ONE_HYPHEN))
+            if (!noMoreOptions)
             {
-                // opcion - input by stdin
-                oneHyphenOption.addCount();
-                continue;
-            }
-            else if (twoHyphen && args[i].equals(TWO_HYPHEN))
-            {
-                // option -- no more options
-                twoHyphenOption.addCount();
-                continue;
-            }
-            else
-            {
-                // long options
-                for (int j = 0; j < rules.length; j++)
+                if (oneHyphen && args[i].equals(ONE_HYPHEN))
                 {
-                    int size = rules[j].parseLong(i, args);
+                    // opcion - input by stdin
+                    oneHyphenOption.addCount();
+                    continue;
+                }
+                else if (twoHyphen && args[i].equals(TWO_HYPHEN))
+                {
+                    // option -- no more options
+                    twoHyphenOption.addCount();
+                    noMoreOptions = true;
+                    continue;
+                }
+                else
+                {
+                    // long options
+                    int size = parseLong(i, args, rules);
+                    if (size == 0)
+                    {
+                        size = parseShort(i, args, rules);
+                    }
                     if (size > 0)
                     {
                         i += (size - 1);
-                        continue argloop;
+                        continue;
                     }
-                }
-                // sort options
-                if (args[i].startsWith(ONE_HYPHEN))
-                {
-                    int size = parseShort(i, args, rules);
-                    if (size > 0)
+
+                    if (posixly)
                     {
-                        i += (size - 1);
-                        continue argloop;
+                        noMoreOptions = true;
                     }
                 }
-                if (posixly)
-                {
-                    for(;i < args.length; i++)
-                    {
-                        remainder[remainderSize++] = args[i];
-                    }
-                    break;
-                }
-                remainder[remainderSize++] = args[i];
             }
+            remainder[remainderSize++] = args[i];
         }
         return Arrays.copyOf(remainder, remainderSize);
-    }
-
-    private int parseShort(int index, String[] args, Option[] rules)
-    {
-        int size = 0;
-        return 0;
     }
 
     public boolean isPosixly()
@@ -122,5 +108,43 @@ argloop:for (int i = 0; i < args.length; i++)
     public void setPosixly(boolean posixly)
     {
         this.posixly = posixly;
+    }
+
+    private int parseLong(int index, String[] args, Option[] rules)
+    {
+        int size = 0;
+        for (int i = 0; i < rules.length && size == 0; i++)
+        {
+            size = rules[i].parseLong(index, args);
+        }
+        return size;
+    }
+
+    private int parseShort(int index, String[] args, Option[] rules) throws InvalidOptionException
+    {
+        if (!args[index].startsWith(ONE_HYPHEN))
+        {
+            return 0;
+        }
+
+        int num = args[index].length();
+        for (int i = 1; i < num; i++)
+        {
+            int size = 0;
+            for (int j = 0; j < rules.length && size == 0; j++)
+            {
+                size = rules[j].parseShort(index, i, args);
+            }
+            if (size == 1)
+            {
+                continue;
+            }
+            if (size > 1)
+            {
+                return (size - 1);
+            }
+            throw new InvalidOptionException("Invalid option -- " + args[index].charAt(i));
+        }
+        return 1;
     }
 }

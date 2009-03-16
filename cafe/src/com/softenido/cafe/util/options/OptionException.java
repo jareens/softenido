@@ -25,7 +25,10 @@ package com.softenido.cafe.util.options;
  *
  * @author franci
  */
-public class OptionException extends RuntimeException
+public class OptionException extends Exception
 {
-
+    public OptionException(String message)
+    {
+        super(message);
+    }
 }

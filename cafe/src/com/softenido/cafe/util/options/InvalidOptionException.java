@@ -1,5 +1,5 @@
 /*
- *  Option.java
+ *  InvalidOptionException.java
  *
  *  Copyright (C) 2009  Francisco Gómez Carrasco
  *
@@ -25,22 +25,10 @@ package com.softenido.cafe.util.options;
  *
  * @author franci
  */
-public interface Option
+public class InvalidOptionException extends OptionException
 {
-
-    int getCount();
-
-    void addCount();
-
-    boolean isUsed();
-
-    String getLongName();
-
-    char getShortName();
-
-    int parseLong(int index, String[] args);
-
-    int parseShort(int argIndex, int charIndex, String[] args);
-
-    String getUsedName();
+    public InvalidOptionException(String message)
+    {
+        super(message);
+    }
 }

@@ -32,6 +32,7 @@ public class BooleanOption implements Option
     private final String longName;
     private final String _longName;
     private final String __longName;
+    private String usedName;
     private int count = 0;
     private boolean oneHyphen = true;
     private boolean twoHyphen = true;
@@ -40,13 +41,15 @@ public class BooleanOption implements Option
     {
         this.shortName = shortName;
         this.longName = longName;
-        this._longName = "-"+longName;
-        this.__longName = "--"+longName;
+        this._longName = "-" + longName;
+        this.__longName = "--" + longName;
     }
+
     public BooleanOption(String longName)
     {
-        this((char)0,longName);
+        this((char) 0, longName);
     }
+
     public String getLongName()
     {
         return longName;
@@ -61,27 +64,50 @@ public class BooleanOption implements Option
     {
         return count;
     }
+
     public void addCount()
     {
         count++;
     }
+
     public boolean isUsed()
     {
-        return (count>0);
+        return (count > 0);
     }
-    public int parseLong(int index,String[] args)
+
+    public int parseLong(int index, String[] args)
     {
         String option = args[index];
-        if(twoHyphen && option.equals(__longName))
+        if (twoHyphen && option.equals(__longName))
         {
             count++;
+            usedName = option;
             return 1;
         }
-        if(oneHyphen && option.equals(_longName))
+        if (oneHyphen && option.equals(_longName))
         {
             count++;
+            usedName = option;
             return 1;
         }
         return 0;
     }
+
+    public int parseShort(int argIndex, int charIndex, String[] args)
+    {
+        String option = args[argIndex];
+        if (option.charAt(charIndex) == shortName)
+        {
+            count++;
+            usedName = Character.toString(shortName);
+            return 1;
+        }
+        return 0;
+    }
+
+    public String getUsedName()
+    {
+        return usedName;
+    }
+
 }
