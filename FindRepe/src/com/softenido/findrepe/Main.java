@@ -198,6 +198,10 @@ public class Main
             {
                 System.out.printf("[%s] %s\n", (deleted[i] ? "-" : "" + i), files[i].toString());
             }
+            if(!delete)
+            {
+                return;
+            }
 
             System.out.printf("\nGroup %d, delete files [0 - %d]: ", groupId,files.length-1);
             String line = sc.nextLine();
