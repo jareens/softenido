@@ -160,13 +160,13 @@ public abstract class ForEachFile implements Runnable
 
         if ((this.directory || !file.isDirectory()) &&
                 (this.file || !file.isFile()) &&
-                (this.hidden || !file.isHidden()) &&
+                (this.hidden || (level==0) || !file.isHidden()) &&
                 (filter == null || filter.accept(file)) &&
                 acceptSize(file.length()))
         {
             doForEeach(file, null);
         }
-        if ((level < recursive) && (this.hidden || !file.isHidden()))
+        if ((level < recursive) && (this.hidden || (level==0) || !file.isHidden()))
         {
             if (file.isDirectory())
             {
