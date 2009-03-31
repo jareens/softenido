@@ -25,6 +25,7 @@ import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
 import com.softenido.cafe.util.options.Option;
 import com.softenido.cafe.util.options.OptionParser;
+import com.softenido.cafe.util.options.StringOption;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -38,8 +39,11 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe, a repeated file finder. Version 0.0.2 alfa\n" +
+            "findrepe, a repeated file finder. Version 0.0.3 alfa\n" +
             "Copyright (C) 2009  Francisco Gómez Carrasco\n";
+    private static final String REPORT_BUGS =
+            "Report bugs to <flikxxi@gmail.com>\n" +
+            "            or <http://code.google.com/p/softenido/issues>\n";
     private static final String LICENSE =
             VERSION +
             "\n" +
@@ -56,7 +60,7 @@ public class Main
             "You should have received a copy of the GNU General Public License\n" +
             "along with this program.  If not, see <http://www.gnu.org/licenses/>.\n" +
             "\n" +
-            "Report bugs to <flikxxi@gmail.com>.\n";
+            REPORT_BUGS;
     private static final String HELP =
             VERSION +
             "\n" +
@@ -76,14 +80,8 @@ public class Main
             //            " -f --omitfirst   \tomit the first file in each set of matches\n" +
             //            " -1 --sameline    \tlist each set of matches on a single line\n" +
             //            " -S --size        \tshow size of duplicate files\n" +
-            //            " -q --quiet       \thide progress indicator\n" +
-            //            "                  \tothers; important: under particular circumstances,\n" +
-            //            "                  \tdata may be lost when using this option together\n" +
-            //            "                  \twith -s or --symlinks, or when specifying a\n" +
-            //            "                  \tparticular directory more than once; refer to the\n" +
-            //            "                  \tfdupes documentation for additional information\n" +
             "\n" +
-            "Report bugs to <flikxxi@gmail.com>.\n";
+            REPORT_BUGS;
 
     /**
      * @param args the command line arguments
@@ -150,6 +148,9 @@ public class Main
             files[i] = new File(fileNames[i]);
         }
         FindRepe findTask = new FindRepe(files, bugs, queueSize);
+        
+        findTask.setHidden(true);
+
         if (noempty.isUsed())
         {
             findTask.setMinSize(1);

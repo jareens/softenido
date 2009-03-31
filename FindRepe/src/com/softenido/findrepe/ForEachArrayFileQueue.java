@@ -41,6 +41,8 @@ public class ForEachArrayFileQueue implements Runnable
     final BlockingQueue<File> fileQueue;
     final BlockingQueue<String> nameQueue;
     final File eof;
+    private boolean hidden = false;
+
 
     /**
      * 
@@ -77,6 +79,7 @@ public class ForEachArrayFileQueue implements Runnable
         for (File fd : files)
         {
             ForEachFileQueue fefq = new ForEachFileQueue(fd, recursive, filter, fileQueue, nameQueue, null);
+            fefq.setHidden(hidden);
             fefq.run();
         }
         if (eof != null)
@@ -91,4 +94,15 @@ public class ForEachArrayFileQueue implements Runnable
             }
         }
     }
+
+    public boolean isHidden()
+    {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden)
+    {
+        this.hidden = hidden;
+    }
+
 }

@@ -75,6 +75,7 @@ public class FindRepe implements Runnable
     private final FileHash[] emptyHash = new FileHash[0];   // elemento de muestra para crear arrays en los split
     private long minSize = 0L;
     private long maxSize = Long.MAX_VALUE;
+    private boolean hidden = true;
 
     public FindRepe(File[] file, boolean bugs, int bufSize)
     {
@@ -103,7 +104,9 @@ public class FindRepe implements Runnable
         {
             //obtener ficheros en bruto
             final BlockingQueue<File> fileQueue = new LinkedBlockingQueue<File>(bufSize);
-            new Thread(new ForEachArrayFileQueue(file, 999, fileQueue, fileEof)).start();
+            ForEachArrayFileQueue feafq = new ForEachArrayFileQueue(file, 999, fileQueue, fileEof);
+            feafq.setHidden(hidden);
+            new Thread(feafq).start();
             // envolver con FileHash y y detectar bugs en el nombre
             final BlockingQueue<FileHash> hashQueue = new LinkedBlockingQueue<FileHash>(bufSize);
             new Thread(new Runnable()
@@ -197,4 +200,15 @@ public class FindRepe implements Runnable
     {
         this.minSize = minSize;
     }
+
+    public boolean isHidden()
+    {
+        return hidden;
+    }
+
+    public void setHidden(boolean hidden)
+    {
+        this.hidden = hidden;
+    }
+
 }
