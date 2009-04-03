@@ -98,14 +98,15 @@ public class FindRepe implements Runnable
 
     public void run()
     {
-        final long minLen = minSize;
-        final long maxLen = maxSize;
         try
         {
             //obtener ficheros en bruto
             final BlockingQueue<File> fileQueue = new LinkedBlockingQueue<File>(bufSize);
             ForEachArrayFileQueue feafq = new ForEachArrayFileQueue(file, 999, fileQueue, fileEof);
             feafq.setHidden(hidden);
+            feafq.setMinSize(minSize);
+            feafq.setMaxSize(maxSize);
+
             new Thread(feafq).start();
             // envolver con FileHash y y detectar bugs en el nombre
             final BlockingQueue<FileHash> hashQueue = new LinkedBlockingQueue<FileHash>(bufSize);
@@ -121,10 +122,7 @@ public class FindRepe implements Runnable
                         {
                             if (item.exists())
                             {
-                                if(item.length()>=minLen && item.length()<=maxLen)
-                                {
-                                    hashQueue.put(new FileHash(item));
-                                }
+                                hashQueue.put(new FileHash(item));
                             }
                             else if (bugs)
                             {
@@ -146,6 +144,7 @@ public class FindRepe implements Runnable
             final BlockingQueue<FileHash[]> sizeQueue = new LinkedBlockingQueue<FileHash[]>(bufSize);
             final ProducerConsumer<FileHash[]> sizeProducer = IterableBuilder.build(sizeQueue, hashEofArray);
             new Thread(SplitEquals.buildSplit(hashConsumer, sizeProducer, cmp, emptyHash, hashEofArray)).start();
+
             // agrupar por contenido
             BlockingQueue<FileHash[]> equalQueue = new LinkedBlockingQueue<FileHash[]>(bufSize);
             final ProducerConsumer<FileHash[]> equalProducer = IterableBuilder.build(equalQueue, hashEofArray);
@@ -210,5 +209,4 @@ public class FindRepe implements Runnable
     {
         this.hidden = hidden;
     }
-
 }

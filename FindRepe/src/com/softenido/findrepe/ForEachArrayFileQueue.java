@@ -42,6 +42,8 @@ public class ForEachArrayFileQueue implements Runnable
     final BlockingQueue<String> nameQueue;
     final File eof;
     private boolean hidden = false;
+    private long minSize = 0L;
+    private long maxSize = Long.MAX_VALUE;
 
 
     /**
@@ -80,6 +82,8 @@ public class ForEachArrayFileQueue implements Runnable
         {
             ForEachFileQueue fefq = new ForEachFileQueue(fd, recursive, filter, fileQueue, nameQueue, null);
             fefq.setHidden(hidden);
+            fefq.setMinSize(minSize);
+            fefq.setMaxSize(maxSize);
             fefq.run();
         }
         if (eof != null)
@@ -103,6 +107,26 @@ public class ForEachArrayFileQueue implements Runnable
     public void setHidden(boolean hidden)
     {
         this.hidden = hidden;
+    }
+
+    public long getMaxSize()
+    {
+        return maxSize;
+    }
+
+    public void setMaxSize(long maxSize)
+    {
+        this.maxSize = maxSize;
+    }
+
+    public long getMinSize()
+    {
+        return minSize;
+    }
+
+    public void setMinSize(long minSize)
+    {
+        this.minSize = minSize;
     }
 
 }

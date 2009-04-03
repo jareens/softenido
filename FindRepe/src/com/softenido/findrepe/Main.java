@@ -21,6 +21,7 @@
  */
 package com.softenido.findrepe;
 
+import com.softenido.cafe.util.SizeUnits;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
 import com.softenido.cafe.util.options.Option;
@@ -39,7 +40,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe, a repeated file finder. Version 0.0.3 alfa\n" +
+            "findrepe, a repeated file finder. Version 0.1.0 alfa (2009-04-03)\n" +
             "Copyright (C) 2009  Francisco Gómez Carrasco\n";
     private static final String REPORT_BUGS =
             "Report bugs to <flikxxi@gmail.com>\n" +
@@ -64,13 +65,24 @@ public class Main
     private static final String HELP =
             VERSION +
             "\n" +
-            "    usage: findrepe [flags and directories in any order]\n" +
+            "  usage: findrepe [flags and directories in any order]\n" +
+            "         java -jar FindRepe.jar [flags and directories in any order]\n" +
             "\n" +
-            "   -h --help     print this message\n" +
-            "   -L --license  display software license\n" +
-            "   -v --version  display software version\n" +
-            "   -d --delete   prompt user for files to delete\n" +
-            "   -n --noempty  exclude zero-length files from consideration\n" +
+            "  -h --help            print this message\n" +
+            "  -L --license         display software license\n" +
+            "  -v --version         display software version\n" +
+            "  -d --delete          prompt user for files to delete\n" +
+            "  -n --noempty         exclude zero-length files\n" +
+            "  -m --min-size=size   minimum file size[bkmgt], exclude shorters\n" +
+            "  -M --max-size=size   maximun file size[bkmgt], exclude largers\n" +
+            //            "  -w --min-wasted=size minimun wasted size, exclude shorters wasted=size*(n-1)\n" +
+            "\n" +
+            "  size units:\n" +
+            "\n" +
+            "  b bytes     (defaul)\n" +
+            "  k kilobytes (1024 bytes)     g gigabytes (1024 megabytes)\n" +
+            "  m megabytes (1024 kilobytes) t terabytes (1024 gigabytes)\n" +
+            "\n" +
             //            " -r --recurse     \tinclude files residing in subdirectories\n" +
             //            " -s --symlinks    \tfollow symlinks\n" +
             //            " -H --hardlinks   \tnormally, when two or more files point to the same\n" +
@@ -95,7 +107,9 @@ public class Main
         }
         boolean bugs = true;
         boolean fixBugs = false;
-        int queueSize = 100;
+        int queueSize = 10000;
+
+        SizeUnits sizeParser = new SizeUnits();
 
         OptionParser options = new OptionParser();
 
@@ -104,6 +118,10 @@ public class Main
         Option license = options.add(new BooleanOption('L', "license"));
         BooleanOption delete = options.add(new BooleanOption('d', "delete"));
         BooleanOption noempty = options.add(new BooleanOption('n', "noempty"));
+
+        StringOption minSize = options.add(new StringOption('m', "min-size"));
+        StringOption maxSize = options.add(new StringOption('M', "max-size"));
+//        StringOption minWasted = options.add(new StringOption('w', "min-wasted"));
 
 //        StringOption recurse = options.add(new StringOption('r', "recurse"));
 //        StringOption symlinks = options.add(new StringOption("s", "symlinks"));
@@ -148,13 +166,50 @@ public class Main
             files[i] = new File(fileNames[i]);
         }
         FindRepe findTask = new FindRepe(files, bugs, queueSize);
-        
+
         findTask.setHidden(true);
 
         if (noempty.isUsed())
         {
             findTask.setMinSize(1);
         }
+        
+        String optName = null;
+        String optVal = null;
+        try
+        {
+            if (minSize.isUsed())
+            {
+                optName = minSize.getUsedName();
+                optVal  = minSize.getValue();
+                long size = sizeParser.parse(optVal);
+                findTask.setMinSize(size);
+            }
+            if (maxSize.isUsed())
+            {
+                optName = maxSize.getUsedName();
+                optVal  = maxSize.getValue();
+                long size = sizeParser.parse(optVal);
+                findTask.setMaxSize(size);
+            }
+        }
+        catch (NumberFormatException ex)
+        {
+            if (optVal == null)
+            {
+                System.err.println("findrepe: missing argument to '"+optName +"'");
+            }
+            else
+            {
+                System.err.println("findrepe: invalid argument '"+optVal+"' to '"+optName +"'");
+            }
+            return;
+        }
+//        if(minWasted.isUsed())
+//        {
+//            long size = sizeParser.parse(minWasted.getValue());
+//            findTask.setMinWasted(size);
+//        }
 
         new Thread(findTask).start();
 
@@ -181,13 +236,13 @@ public class Main
         {
             if (group.length > 1)
             {
-                showOneGroup(groupId,group, delete);
+                showOneGroup(groupId, group, delete);
                 groupId++;
             }
         }
     }
 
-    private static void showOneGroup(int groupId,File files[], boolean delete)
+    private static void showOneGroup(int groupId, File files[], boolean delete)
     {
         boolean[] deleted = new boolean[files.length];
         Arrays.fill(deleted, false);
@@ -199,12 +254,12 @@ public class Main
             {
                 System.out.printf("[%s] %s\n", (deleted[i] ? "-" : "" + i), files[i].toString());
             }
-            if(!delete)
+            if (!delete)
             {
                 return;
             }
 
-            System.out.printf("\nGroup %d, delete files [0 - %d]: ", groupId,files.length-1);
+            System.out.printf("\nGroup %d, delete files [0 - %d]: ", groupId, files.length - 1);
             String line = sc.nextLine();
             if (line.isEmpty())
             {
@@ -212,16 +267,16 @@ public class Main
             }
             Scanner scLine = new Scanner(line);
 
-            while(scLine.hasNextInt())
+            while (scLine.hasNextInt())
             {
                 int index = scLine.nextInt();
-                if (index >= 0 && index<files.length)
+                if (index >= 0 && index < files.length)
                 {
                     deleted[index] = true;
                 }
                 else
                 {
-                    System.out.printf("%d ignored\n",index);
+                    System.out.printf("%d ignored\n", index);
                 }
             }
         }
@@ -236,9 +291,9 @@ public class Main
             }
             System.out.printf("  [%s] %s\n", (deleted[i] ? "-" : "+"), files[i].toString());
         }
-        if(deletedCount>0)
+        if (deletedCount > 0)
         {
-            System.out.printf("\n  files deleted: %d\n\n",deletedCount);
+            System.out.printf("\n  files deleted: %d\n\n", deletedCount);
         }
     }
 }
