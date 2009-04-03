@@ -36,7 +36,7 @@ public class AlwaysBlockingQueue<E> implements BlockingQueue<E>
 {
     final BlockingQueue<E> queue;
 
-    public AlwaysBlockingQueue(BlockingQueue queue)
+    public AlwaysBlockingQueue(BlockingQueue<E> queue)
     {
         this.queue = queue;
     }

@@ -1,5 +1,5 @@
 /*
- *  Option.java
+ *  SizeUnits.java
  *
  *  Copyright (C) 2009  Francisco Gómez Carrasco
  *
@@ -19,30 +19,30 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.util.options;
+package com.softenido.cafe.util;
 
 /**
  *
  * @author franci
  */
-public interface Option
+public class SizeUnits extends AbstractUnits
 {
 
-    int getCount();
+    final static long[] VALUES = new long[]
+    {
+        1, 1024, 1024 * 1024, 1024 * 1024 * 1024, 1024 * 1024 * 1024 * 1024
+    };
+    final static String[] SHORT_NAMES = new String[]
+    {
+        "b", "k", "m", "g", "t"
+    };
+    final static String[] LONG_NAMES = new String[]
+    {
+        "", "kilo", "mega", "giga", "tera"
+    };
 
-    void addCount();
-
-    boolean isUsed();
-
-    int getLastUsed();
-
-    String getLongName();
-
-    char getShortName();
-
-    int parseLong(int index, String[] args);
-
-    int parseShort(int argIndex, int charIndex, String[] args);
-
-    String getUsedName();
+    public SizeUnits()
+    {
+        super(VALUES, SHORT_NAMES, LONG_NAMES);
+    }
 }

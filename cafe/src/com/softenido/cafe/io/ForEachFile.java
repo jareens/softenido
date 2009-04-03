@@ -48,8 +48,8 @@ public abstract class ForEachFile implements Runnable
     private boolean zip = false;
     private boolean jar = false;
     private FileFilter filter = null;
-    private int minSize = 0;
-    private int maxSize = 0;
+    private long minSize = 0;
+    private long maxSize = Long.MAX_VALUE;
 
     public static int getBufSize()
     {
@@ -111,22 +111,22 @@ public abstract class ForEachFile implements Runnable
         this.hidden = hidden;
     }
 
-    public int getMaxSize()
+    public long getMaxSize()
     {
         return maxSize;
     }
 
-    public void setMaxSize(int maxSize)
+    public void setMaxSize(long maxSize)
     {
         this.maxSize = maxSize;
     }
 
-    public int getMinSize()
+    public long getMinSize()
     {
         return minSize;
     }
 
-    public void setMinSize(int minSize)
+    public void setMinSize(long minSize)
     {
         this.minSize = minSize;
     }
@@ -192,7 +192,7 @@ public abstract class ForEachFile implements Runnable
 
     private boolean acceptSize(long size)
     {
-        return ((minSize == 0 || size >= minSize) && (maxSize == 0 || size <= maxSize));
+        return (size >= minSize) && (size <= maxSize);
     }
 
     private void runZip(File file, int level)
@@ -202,7 +202,7 @@ public abstract class ForEachFile implements Runnable
             ZipFile zf = new ZipFile(file);
             try
             {
-                Enumeration<ZipEntry> entries = (Enumeration<ZipEntry>) zf.entries();
+                Enumeration<? extends ZipEntry> entries = (Enumeration<? extends ZipEntry>) zf.entries();
                 while (entries.hasMoreElements())
                 {
                     ZipEntry ze = entries.nextElement();

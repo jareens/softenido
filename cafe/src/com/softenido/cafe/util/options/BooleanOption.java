@@ -29,13 +29,14 @@ public class BooleanOption implements Option
 {
 
     private final char shortName;
-    private final String longName;
-    private final String _longName;
-    private final String __longName;
-    private String usedName;
-    private int count = 0;
-    private boolean oneHyphen = true;
-    private boolean twoHyphen = true;
+    protected final String longName;
+    protected final String _longName;
+    protected final String __longName;
+    protected String usedName;
+    protected int count = 0;
+    protected int lastUsed = 0;           //index of the last item using this option
+    protected boolean oneHyphen = true;
+    protected boolean twoHyphen = true;
 
     public BooleanOption(char shortName, String longName)
     {
@@ -75,18 +76,25 @@ public class BooleanOption implements Option
         return (count > 0);
     }
 
+    public int getLastUsed()
+    {
+        return lastUsed;
+    }
+
     public int parseLong(int index, String[] args)
     {
         String option = args[index];
         if (twoHyphen && option.equals(__longName))
         {
             count++;
+            lastUsed = index;
             usedName = option;
             return 1;
         }
         if (oneHyphen && option.equals(_longName))
         {
             count++;
+            lastUsed = index;
             usedName = option;
             return 1;
         }
@@ -99,6 +107,7 @@ public class BooleanOption implements Option
         if (option.charAt(charIndex) == shortName)
         {
             count++;
+            lastUsed = argIndex;
             usedName = Character.toString(shortName);
             return 1;
         }

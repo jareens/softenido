@@ -39,7 +39,7 @@ public class QueueProducerConsumer<E> implements ProducerConsumer<E>, Iterator<E
     private boolean alive = true;
     private E cache = null;
 
-    public QueueProducerConsumer(BlockingQueue queue, E poison)
+    public QueueProducerConsumer(BlockingQueue<E> queue, E poison)
     {
         this.queue = queue;
         this.poison = poison;

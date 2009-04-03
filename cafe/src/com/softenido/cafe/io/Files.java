@@ -123,7 +123,7 @@ public class Files
 
     public String[] list()
     {
-        final ArrayList v = new ArrayList();
+        final ArrayList<String> v = new ArrayList<String>();
 
         ForEachFile fef = new ForEachFile(file, 99999, null)
         {
@@ -174,7 +174,7 @@ public class Files
         {
             return names;
         }
-        ArrayList v = new ArrayList();
+        ArrayList<String> v = new ArrayList<String>();
         for (int i = 0; i < names.length; i++)
         {
             if (filter.accept(file, names[i]))
