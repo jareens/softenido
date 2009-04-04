@@ -40,7 +40,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe, a repeated file finder. Version 0.1.0 alfa (2009-04-03)\n" +
+            "findrepe, a repeated file finder. Version 0.1.1 alfa (2009-04-04)\n" +
             "Copyright (C) 2009  Francisco Gómez Carrasco\n";
     private static final String REPORT_BUGS =
             "Report bugs to <flikxxi@gmail.com>\n" +
@@ -160,37 +160,27 @@ public class Main
             return;
         }
 
-        File[] files = new File[fileNames.length];
-        for (int i = 0; i < files.length; i++)
-        {
-            files[i] = new File(fileNames[i]);
-        }
-        FindRepe findTask = new FindRepe(files, bugs, queueSize);
-
-        findTask.setHidden(true);
-
-        if (noempty.isUsed())
-        {
-            findTask.setMinSize(1);
-        }
-        
         String optName = null;
         String optVal = null;
+        boolean minSizeUsed = false;
+        boolean maxSizeUsed = false;
+        long minSizeValue = 0;
+        long maxSizeValue = Long.MAX_VALUE;
         try
         {
             if (minSize.isUsed())
             {
+                minSizeUsed = true;
                 optName = minSize.getUsedName();
                 optVal  = minSize.getValue();
-                long size = sizeParser.parse(optVal);
-                findTask.setMinSize(size);
+                minSizeValue = sizeParser.parse(optVal);
             }
             if (maxSize.isUsed())
             {
+                maxSizeUsed = true;
                 optName = maxSize.getUsedName();
                 optVal  = maxSize.getValue();
-                long size = sizeParser.parse(optVal);
-                findTask.setMaxSize(size);
+                maxSizeValue = sizeParser.parse(optVal);
             }
         }
         catch (NumberFormatException ex)
@@ -210,6 +200,34 @@ public class Main
 //            long size = sizeParser.parse(minWasted.getValue());
 //            findTask.setMinWasted(size);
 //        }
+
+        if(fileNames.length==0)
+        {
+            System.err.println("findrepe: no directories specified");
+            return;
+        }
+
+        File[] files = new File[fileNames.length];
+        for (int i = 0; i < files.length; i++)
+        {
+            files[i] = new File(fileNames[i]);
+        }
+        FindRepe findTask = new FindRepe(files, bugs, queueSize);
+
+        findTask.setHidden(true);
+
+        if (noempty.isUsed())
+        {
+            findTask.setMinSize(1);
+        }
+        if(minSizeUsed)
+        {
+            findTask.setMinSize(minSizeValue);
+        }
+        if(maxSizeUsed)
+        {
+            findTask.setMaxSize(maxSizeValue);
+        }
 
         new Thread(findTask).start();
 
