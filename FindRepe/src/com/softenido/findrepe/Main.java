@@ -27,6 +27,7 @@ import com.softenido.cafe.util.options.InvalidOptionException;
 import com.softenido.cafe.util.options.Option;
 import com.softenido.cafe.util.options.OptionParser;
 import com.softenido.cafe.util.options.StringOption;
+import com.softenido.cafe.util.launcher.LauncherBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -40,7 +41,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe, a repeated file finder. Version 0.1.1 alfa (2009-04-04)\n" +
+            "findrepe, a repeated file finder. Version 0.2.0 alfa (2009-04-09)\n" +
             "Copyright (C) 2009  Francisco Gómez Carrasco\n";
     private static final String REPORT_BUGS =
             "Report bugs to <flikxxi@gmail.com>\n" +
@@ -83,6 +84,11 @@ public class Main
             "  k kilobytes (1024 bytes)     g gigabytes (1024 megabytes)\n" +
             "  m megabytes (1024 kilobytes) t terabytes (1024 gigabytes)\n" +
             "\n" +
+            "     --install        install findrepe launcher\n" +
+            "     --install-java[=path]  \n" +
+            "                      install findrepe launcher using 'java' command\n" +
+            "     --install-home[=path] \n" +
+            "                      install findrepe launcher using 'java.home' property\n" +
             //            " -r --recurse     \tinclude files residing in subdirectories\n" +
             //            " -s --symlinks    \tfollow symlinks\n" +
             //            " -H --hardlinks   \tnormally, when two or more files point to the same\n" +
@@ -135,12 +141,22 @@ public class Main
         String[] fileNames;
         try
         {
+            LauncherBuilder builder = LauncherBuilder.getBuilder();
+            args = builder.parse(args);
+            if(builder.isInstall())
+            {
+                if(builder.buildLauncher("findrepe"))
+                {
+                    System.out.println("findrepe: '"+builder.getFileName()+"' created");
+                }
+                return;
+            }
             fileNames = options.parse(args);
         }
         catch (InvalidOptionException ex)
         {
             System.err.println(ex);
-            System.err.println("Try --help for more information");
+            System.err.println("findrepe: Try --help for more information");
             return;
         }
 
@@ -249,7 +265,7 @@ public class Main
     private static void showGroups(Iterable<File[]> groupsList, boolean delete)
     {
         int groupId = 0;
-        // se obtienen listas de ficheros del mismo tamaño y se calcula el MD5 de 1KB
+        
         for (File[] group : groupsList)
         {
             if (group.length > 1)
