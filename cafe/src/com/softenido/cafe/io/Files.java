@@ -424,4 +424,11 @@ public class Files
         }
         return ArrayUtils.uniqueCopyOf(unique);
     }
+    public static boolean isLink(File f) throws IOException
+    {
+        String canonical = f.getCanonicalPath();
+        String absolute  = f.getAbsolutePath();
+        return !canonical.equals(absolute);
+    }
+
 }

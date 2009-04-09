@@ -35,15 +35,15 @@ public class StringOption extends BooleanOption
     public StringOption(char shortName, String longName)
     {
         super(shortName, longName);
-        _longName_ = _longName+"=";
-        __longName_= __longName+"=";
+        _longName_ =  _longName  + "=";
+        __longName_ = __longName + "=";
     }
 
     public StringOption(String longName)
     {
         super(longName);
-        _longName_ = _longName+"=";
-        __longName_= __longName+"=";
+        _longName_  = _longName  + "=";
+        __longName_ = __longName + "=";
     }
 
     @Override
@@ -63,7 +63,7 @@ public class StringOption extends BooleanOption
                 count++;
                 lastUsed = index;
                 usedName = __longName;
-                value = option.substring(__longName_.length());
+                value = rest(option,__longName_);
                 return 1;
             }
             if (twoHyphen && option.startsWith(__longName))
@@ -71,7 +71,7 @@ public class StringOption extends BooleanOption
                 count++;
                 lastUsed = index;
                 usedName = __longName;
-                value = option.substring(__longName.length());
+                value = rest(option,__longName);
                 return 1;
             }
             if (oneHyphen && option.startsWith(_longName_))
@@ -79,7 +79,7 @@ public class StringOption extends BooleanOption
                 count++;
                 lastUsed = index;
                 usedName = _longName;
-                value = option.substring(_longName_.length());
+                value = rest(option,_longName_);
                 return 1;
             }
             if (oneHyphen && option.startsWith(_longName))
@@ -87,7 +87,7 @@ public class StringOption extends BooleanOption
                 count++;
                 lastUsed = index;
                 usedName = _longName;
-                value = option.substring(_longName.length());
+                value = rest(option,_longName);
                 return 1;
             }
             return 0;
@@ -121,5 +121,12 @@ public class StringOption extends BooleanOption
     public String getValue()
     {
         return value;
+    }
+
+    private String rest(String src, String prefix)
+    {
+        int size = src.length();
+        int index = prefix.length();
+        return (size > index) ? src.substring(index) : null;
     }
 }
