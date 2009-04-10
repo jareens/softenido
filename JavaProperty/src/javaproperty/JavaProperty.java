@@ -21,6 +21,7 @@
  */
 package javaproperty;
 
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -38,13 +39,20 @@ public class JavaProperty
     {
         if (args.length > 0)
         {
+            System.out.println("--System.getProperties--");
             for (String item : args)
             {
                 System.out.println(item + "=" + System.getProperty(item.toString()));
             }
+            System.out.println("--System.getenv--");
+            for (String item : args)
+            {
+                System.out.println(item + "=" + System.getenv(item.toString()));
+            }
         }
         else
         {
+            System.out.println("--System.getProperties--");
             Properties prop = System.getProperties();
             Set<Object> set = prop.keySet();
             for (Object item : set)
@@ -52,6 +60,14 @@ public class JavaProperty
                 String key = item.toString();
                 System.out.println(key + "=" + prop.getProperty(key.toString()));
             }
+            System.out.println("--System.getenv--");
+            Map<String, String> env = System.getenv();
+            for(String item : env.values())
+            {
+                String key = item.toString();
+                System.out.println(key + "=" + env.get(key.toString()));
+            }
+
         }
     }
 }
