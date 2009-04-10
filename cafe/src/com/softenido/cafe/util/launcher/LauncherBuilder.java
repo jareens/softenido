@@ -21,6 +21,7 @@
  */
 package com.softenido.cafe.util.launcher;
 
+import com.softenido.cafe.io.Files;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
 import com.softenido.cafe.util.options.OptionParser;
@@ -103,9 +104,11 @@ public abstract class LauncherBuilder
         {
             javaPath = "java";
         }
+        javaPath = Files.escape(javaPath);
 
-        String jar = System.getProperty(JAVA_CLASS_PATH);
-
+        String jar = new File(System.getProperty(JAVA_CLASS_PATH)).getAbsolutePath().toString();
+        jar = Files.escape(jar);
+        
         return buildLauncher(fileName, fileStmt, javaPath, jar, "");
     }
 
@@ -128,10 +131,12 @@ public abstract class LauncherBuilder
     public String[] parse(String[] args) throws InvalidOptionException
     {
         OptionParser parser = new OptionParser();
+        
         BooleanOption installAuto = parser.add(new BooleanOption("install"));
         StringOption installJava = parser.add(new StringOption("install-java"));
         StringOption installHome = parser.add(new StringOption("install-home"));
 
+        parser.setIgnoreShort(true);// no short options parsed in this parser
         args = parser.parse(args);
 
         auto = installAuto.isUsed();

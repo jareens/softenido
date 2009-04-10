@@ -34,6 +34,7 @@ public class OptionParser
 
     private static final String ONE_HYPHEN = "-";
     private static final String TWO_HYPHEN = "--";
+    private boolean ignoreShort = false;
     private boolean oneHyphen = true;
     private boolean twoHyphen = true;
     private boolean posixly = false;
@@ -44,7 +45,6 @@ public class OptionParser
     public OptionParser()
     {
     }
-
     public <T extends Option> T add(T item)
     {
         optionList.add(item);
@@ -79,7 +79,7 @@ public class OptionParser
                 {
                     // long options
                     int size = parseLong(i, args, rules);
-                    if (size == 0)
+                    if (size == 0 && !ignoreShort)
                     {
                         size = parseShort(i, args, rules);
                     }
@@ -147,4 +147,15 @@ public class OptionParser
         }
         return 1;
     }
+
+    public boolean isIgnoreShort()
+    {
+        return ignoreShort;
+    }
+
+    public void setIgnoreShort(boolean ignoreShort)
+    {
+        this.ignoreShort = ignoreShort;
+    }
+
 }
