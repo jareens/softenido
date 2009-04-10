@@ -41,8 +41,9 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe, a repeated file finder. Version 0.2.0 alfa (2009-04-09)\n" +
-            "Copyright (C) 2009  Francisco Gómez Carrasco\n";
+            "findrepe  version 0.2.0 alfa  (2009-04-10)\n" +
+            "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
+            "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
             "Report bugs to <flikxxi@gmail.com>\n" +
             "            or <http://code.google.com/p/softenido/issues>\n";
@@ -66,29 +67,34 @@ public class Main
     private static final String HELP =
             VERSION +
             "\n" +
-            "  usage: findrepe [flags and directories in any order]\n" +
-            "         java -jar FindRepe.jar [flags and directories in any order]\n" +
+            "findrepe comes with ABSOLUTELY NO WARRANTY. This is free software, and you\n" +
+            "are welcome to redistribute it under certain conditions. See the GNU\n" +
+            "General Public Licence version 3 for details.\n" +
             "\n" +
-            "  -h --help            print this message\n" +
-            "  -L --license         display software license\n" +
-            "  -v --version         display software version\n" +
-            "  -d --delete          prompt user for files to delete\n" +
-            "  -n --noempty         exclude zero-length files\n" +
-            "  -m --min-size=size   minimum file size[bkmgt], exclude shorters\n" +
-            "  -M --max-size=size   maximun file size[bkmgt], exclude largers\n" +
+            "findrepe searches the given path for repeated files by content (not name). Such\n"+
+            "files are found by comparing file sizes and MD5+SHA1 signatures.\n" +
+            "\n" +
+            "usage: findrepe [flags and directories in any order]\n" +
+            "       java -jar FindRepe.jar [flags and directories in any order]\n" +
+            "\n" +
+            "(-h) --help                  show this help (-h works with no other options)\n" +
+            " -L, --license               display software license\n" +
+            " -v, --version               display software version\n" +
+            " -d, --delete                prompt user for files to delete\n" +
+            " -n, --noempty               exclude zero-length files\n" +
+            " -m, --min-size=size         minimum file size[bkmgt], exclude shorters\n" +
+            " -M, --max-size=size         maximun file size[bkmgt], exclude largers\n" +
+            "     --install               install a launcher\n" +
+            "     --install-java[=path]   install a launcher using 'java' command\n" +
+            "     --install-home[=path]   install a launcher using 'java.home' property\n" +
             //            "  -w --min-wasted=size minimun wasted size, exclude shorters wasted=size*(n-1)\n" +
             "\n" +
-            "  size units:\n" +
+            "size units:\n" +
             "\n" +
-            "  b bytes     (defaul)\n" +
-            "  k kilobytes (1024 bytes)     g gigabytes (1024 megabytes)\n" +
-            "  m megabytes (1024 kilobytes) t terabytes (1024 gigabytes)\n" +
+            " b bytes     (defaul)\n" +
+            " k kilobytes (1024 bytes)     g gigabytes (1024 megabytes)\n" +
+            " m megabytes (1024 kilobytes) t terabytes (1024 gigabytes)\n" +
             "\n" +
-            "     --install        install findrepe launcher\n" +
-            "     --install-java[=path]  \n" +
-            "                      install findrepe launcher using 'java' command\n" +
-            "     --install-home[=path] \n" +
-            "                      install findrepe launcher using 'java.home' property\n" +
             //            " -r --recurse     \tinclude files residing in subdirectories\n" +
             //            " -s --symlinks    \tfollow symlinks\n" +
             //            " -H --hardlinks   \tnormally, when two or more files point to the same\n" +
