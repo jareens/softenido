@@ -74,8 +74,8 @@ public class Main
             "findrepe searches the given path for repeated files by content (not name). Such\n"+
             "files are found by comparing file sizes and MD5+SHA1 signatures.\n" +
             "\n" +
-            "usage: findrepe [OPTION]... [DIRECTORY]...\n" +
-            "       java -jar FindRepe.jar [OPTION]... [DIRECTORY]...\n" +
+            "usage: findrepe [options] [directories]\n" +
+            "       java -jar FindRepe.jar [options] [directories]\n" +
             "\n" +
             "Options:\n" +
             "(-h) --help                  show this help (-h works with no other options)\n" +
@@ -95,6 +95,17 @@ public class Main
             " b bytes     (defaul)\n" +
             " k kilobytes (1024 bytes)     g gigabytes (1024 megabytes)\n" +
             " m megabytes (1024 kilobytes) t terabytes (1024 gigabytes)\n" +
+            "\n" +
+            "examples of findrepe usage:\n" +
+            "\n" +
+            " java -jar FindRepe.jar --install\n" +
+            " sudo java -jar FindRepe.jar --install\n" +
+            " sudo /opt/jdk1.6/bin/java -jar FindRepe.jar --install-home\n" +
+            " findrepe backup\n" +
+            " findrepe -d backup\n" +
+            " findrepe -d --min-size=1m c:\\backup e:\\img\n" +
+            " findrepe -nd c:\\backup e:\\img\n" +
+            " findrepe -n /opt/ /backup/tools \n" +
             "\n" +
             //            " -r --recurse     \tinclude files residing in subdirectories\n" +
             //            " -s --symlinks    \tfollow symlinks\n" +
