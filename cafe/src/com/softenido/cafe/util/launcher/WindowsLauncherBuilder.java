@@ -21,6 +21,8 @@
  */
 package com.softenido.cafe.util.launcher;
 
+import java.io.File;
+
 /**
  *
  * @author franci
@@ -30,18 +32,19 @@ public class WindowsLauncherBuilder extends LauncherBuilder
     private static final String WINDOWS_STATEMENT =
             "@echo off\n" +
             "set ARGS=\n" +
-            ":buildargs" +
+            ":buildargs\n" +
             "if \"\"%1\"\"==\"\"\"\" goto done\n" +
             "set ARGS=%ARGS% %1\n" +
             "shift\n" +
             "goto buildargs\n" +
             ":done\n" +
-            "call {$java} -jar {$jar} {$opt} %ARGS%\n";
+            "call \"{$java}\" -jar \"{$jar}\" {$opt} %ARGS%\n";
 
     @Override
     public String getLauncherFile(String name)
     {
-        return WINDOWS_STATEMENT;
+        String windir = System.getenv("windir");
+        return new File(windir,name+".bat").toString();
     }
 
     @Override
