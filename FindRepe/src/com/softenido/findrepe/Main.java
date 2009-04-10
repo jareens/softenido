@@ -74,9 +74,10 @@ public class Main
             "findrepe searches the given path for repeated files by content (not name). Such\n"+
             "files are found by comparing file sizes and MD5+SHA1 signatures.\n" +
             "\n" +
-            "usage: findrepe [flags and directories in any order]\n" +
-            "       java -jar FindRepe.jar [flags and directories in any order]\n" +
+            "usage: findrepe [OPTION]... [DIRECTORY]...\n" +
+            "       java -jar FindRepe.jar [OPTION]... [DIRECTORY]...\n" +
             "\n" +
+            "Options:\n" +
             "(-h) --help                  show this help (-h works with no other options)\n" +
             " -L, --license               display software license\n" +
             " -v, --version               display software version\n" +
