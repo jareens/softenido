@@ -38,7 +38,7 @@ public class WindowsLauncherBuilder extends LauncherBuilder
             "shift\n" +
             "goto buildargs\n" +
             ":done\n" +
-            "call \"{$java}\" -jar \"{$jar}\" {$opt} %ARGS%\n";
+            "call {$java} -jar {$jar} {$opt} %ARGS%\n";
 
     @Override
     public String getLauncherFile(String name)
@@ -53,4 +53,9 @@ public class WindowsLauncherBuilder extends LauncherBuilder
         return WINDOWS_STATEMENT;
     }
 
+    @Override
+    protected String escape(String fileName)
+    {
+        return "\""+fileName+"\"";
+    }
 }

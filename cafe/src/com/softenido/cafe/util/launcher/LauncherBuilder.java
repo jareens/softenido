@@ -104,10 +104,10 @@ public abstract class LauncherBuilder
         {
             javaPath = "java";
         }
-        javaPath = Files.escape(javaPath);
+        javaPath = escape(javaPath);
 
         String jar = new File(System.getProperty(JAVA_CLASS_PATH)).getAbsolutePath().toString();
-        jar = Files.escape(jar);
+        jar = escape(jar);
         
         return buildLauncher(fileName, fileStmt, javaPath, jar, "");
     }
@@ -219,5 +219,9 @@ public abstract class LauncherBuilder
     public String getFileName()
     {
         return fileName;
+    }
+    protected String escape(String fileName)
+    {
+        return Files.escape(fileName);
     }
 }

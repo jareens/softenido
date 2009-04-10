@@ -314,7 +314,10 @@ public class Files
     {
         for (String[] item : escapeCharacters)
         {
-            name = name.replace(item[0], item[1]);
+            if(!File.separator.equals(item[0]))
+            {
+                name = name.replace(item[0], item[1]);
+            }
         }
         return name;
     }
