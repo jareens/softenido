@@ -62,7 +62,7 @@ public class JavaProperty
             }
             System.out.println("--System.getenv--");
             Map<String, String> env = System.getenv();
-            for(String item : env.values())
+            for(String item : env.keySet())
             {
                 String key = item.toString();
                 System.out.println(key + "=" + env.get(key.toString()));
