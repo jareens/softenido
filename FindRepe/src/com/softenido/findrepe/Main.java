@@ -83,6 +83,7 @@ public class Main
             " -v, --version               display software version\n" +
             " -d, --delete                prompt user for files to delete\n" +
             " -n, --noempty               exclude zero-length files\n" +
+            " -s --symlinks               follow symlinks\n" +
             " -m, --min-size=size         minimum file size[bkmgt], exclude shorters\n" +
             " -M, --max-size=size         maximun file size[bkmgt], exclude largers\n" +
             "     --install               install a launcher\n" +
@@ -108,7 +109,6 @@ public class Main
             " findrepe -n /opt/ /backup/tools \n" +
             "\n" +
             //            " -r --recurse     \tinclude files residing in subdirectories\n" +
-            //            " -s --symlinks    \tfollow symlinks\n" +
             //            " -H --hardlinks   \tnormally, when two or more files point to the same\n" +
             //            "                  \tdisk area they are treated as non-duplicates; this\n" +
             //            "                  \toption will change this behavior\n" +
@@ -145,10 +145,12 @@ public class Main
 
         StringOption minSize = options.add(new StringOption('m', "min-size"));
         StringOption maxSize = options.add(new StringOption('M', "max-size"));
+
+        BooleanOption symlinks = options.add(new BooleanOption('s', "symlinks"));
+
 //        StringOption minWasted = options.add(new StringOption('w', "min-wasted"));
 
 //        StringOption recurse = options.add(new StringOption('r', "recurse"));
-//        StringOption symlinks = options.add(new StringOption("s", "symlinks"));
 //        StringOption hardlinks = options.add(new StringOption("H", "hardlinks"));
 
 //        StringOption omitfirst = options.add(new StringOption("f", "omitfirst"));
@@ -249,6 +251,7 @@ public class Main
         FindRepe findTask = new FindRepe(files, bugs, queueSize);
 
         findTask.setHidden(true);
+        findTask.setLink(symlinks.isUsed());
 
         if (noempty.isUsed())
         {

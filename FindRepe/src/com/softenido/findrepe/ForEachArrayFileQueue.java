@@ -44,6 +44,7 @@ public class ForEachArrayFileQueue implements Runnable
     private boolean hidden = false;
     private long minSize = 0L;
     private long maxSize = Long.MAX_VALUE;
+    private boolean link = false;
 
 
     /**
@@ -84,6 +85,7 @@ public class ForEachArrayFileQueue implements Runnable
             fefq.setHidden(hidden);
             fefq.setMinSize(minSize);
             fefq.setMaxSize(maxSize);
+            fefq.setLink(link);
             fefq.run();
         }
         if (eof != null)
@@ -127,6 +129,16 @@ public class ForEachArrayFileQueue implements Runnable
     public void setMinSize(long minSize)
     {
         this.minSize = minSize;
+    }
+
+    public boolean isLink()
+    {
+        return link;
+    }
+
+    public void setLink(boolean link)
+    {
+        this.link = link;
     }
 
 }

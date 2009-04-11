@@ -76,6 +76,7 @@ public class FindRepe implements Runnable
     private long minSize = 0L;
     private long maxSize = Long.MAX_VALUE;
     private boolean hidden = true;
+    private boolean link = false;
 
     public FindRepe(File[] file, boolean bugs, int bufSize)
     {
@@ -106,6 +107,7 @@ public class FindRepe implements Runnable
             feafq.setHidden(hidden);
             feafq.setMinSize(minSize);
             feafq.setMaxSize(maxSize);
+            feafq.setLink(link);
 
             new Thread(feafq).start();
             // envolver con FileHash y y detectar bugs en el nombre
@@ -209,4 +211,15 @@ public class FindRepe implements Runnable
     {
         this.hidden = hidden;
     }
+
+    public boolean isLink()
+    {
+        return link;
+    }
+
+    public void setLink(boolean link) {
+        this.link = link;
+    }
+
+
 }
