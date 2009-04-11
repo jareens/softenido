@@ -47,6 +47,7 @@ public abstract class ForEachFile implements Runnable
     private boolean file = true;
     private boolean zip = false;
     private boolean jar = false;
+    private boolean link= false;//says if link directories should by followed
     private FileFilter filter = null;
     private long minSize = 0;
     private long maxSize = Long.MAX_VALUE;
@@ -111,6 +112,16 @@ public abstract class ForEachFile implements Runnable
         this.hidden = hidden;
     }
 
+    public boolean isLink()
+    {
+        return link;
+    }
+
+    public void setLink(boolean link)
+    {
+        this.link = link;
+    }
+
     public long getMaxSize()
     {
         return maxSize;
@@ -168,19 +179,26 @@ public abstract class ForEachFile implements Runnable
         }
         if ((level < recursive) && (this.hidden || (level==0) || !file.isHidden()))
         {
-            if (file.isDirectory())
+            try 
             {
-                File childs[] = file.listFiles();
-                if (childs == null)
+                if (file.isDirectory() && (this.link || !Files.isLink(file)))
                 {
-                    System.err.printf("%d %s error\n", level, file);
+                    File[] childs = file.listFiles();
+                    if (childs == null)
+                    {
+                        System.err.printf("%d %s error\n", level, file);
+                        return;
+                    }
+                    for (File child : childs)
+                    {
+                        run(child, level + 1);
+                    }
                     return;
                 }
-                for (File child : childs)
-                {
-                    run(child, level + 1);
-                }
-                return;
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(ForEachFile.class.getName()).log(Level.SEVERE, null, ex);
             }
             String name = file.getName().toLowerCase();
             if ((this.zip && name.endsWith(".zip")) || (this.jar && name.endsWith(".jar")))
