@@ -78,6 +78,19 @@ public class FileHash
         {
             return false;
         }
+        try
+        {
+            //to determine if both points to the same taget
+            if (this.file.getCanonicalPath().equals(other.file.getCanonicalPath()))
+            {
+                return true;
+            }
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
         if (!Arrays.equals(this.getFastMD5(), other.getFastMD5()))
         {
             return false;

@@ -47,7 +47,8 @@ public abstract class ForEachFile implements Runnable
     private boolean file = true;
     private boolean zip = false;
     private boolean jar = false;
-    private boolean link= false;//says if link directories should by followed
+    private boolean linkDir = false;//says if link directories should by followed
+    private boolean linkFile = false;//says if link Files (or directories) could be target
     private FileFilter filter = null;
     private long minSize = 0;
     private long maxSize = Long.MAX_VALUE;
@@ -112,14 +113,24 @@ public abstract class ForEachFile implements Runnable
         this.hidden = hidden;
     }
 
-    public boolean isLink()
+    public boolean isLinkDir()
     {
-        return link;
+        return linkDir;
     }
 
-    public void setLink(boolean link)
+    public void setLinkDir(boolean link)
     {
-        this.link = link;
+        this.linkDir = link;
+    }
+
+    public boolean isLinkFile()
+    {
+        return linkFile;
+    }
+
+    public void setLinkFile(boolean linkFile)
+    {
+        this.linkFile = linkFile;
     }
 
     public long getMaxSize()
@@ -146,10 +157,12 @@ public abstract class ForEachFile implements Runnable
     {
         return recursive;
     }
+
     public ForEachFile(File file, int recursive)
     {
-        this(file,recursive,null);
+        this(file, recursive, null);
     }
+
     public ForEachFile(File file, int recursive, FileFilter filter)
     {
         this.base = file;
@@ -168,20 +181,22 @@ public abstract class ForEachFile implements Runnable
         {
             return;
         }
-
-        if ((this.directory || !file.isDirectory()) &&
-                (this.file || !file.isFile()) &&
-                (this.hidden || (level==0) || !file.isHidden()) &&
-                (filter == null || filter.accept(file)) &&
-                acceptSize(file.length()))
+        try
         {
-            doForEeach(file, null);
-        }
-        if ((level < recursive) && (this.hidden || (level==0) || !file.isHidden()))
-        {
-            try 
+            if ((this.directory || !file.isDirectory()) && (this.file || !file.isFile()) && (this.hidden || (level == 0) || !file.isHidden()) && (filter == null || filter.accept(file)) && acceptSize(file.length()) && (this.linkFile || !Files.isLink(file)))
             {
-                if (file.isDirectory() && (this.link || !Files.isLink(file)))
+                doForEeach(file, null);
+            }
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(ForEachFile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if ((level < recursive) && (this.hidden || (level == 0) || !file.isHidden()))
+        {
+            try
+            {
+                if (file.isDirectory() && file.canRead() && ((level == 0) || (this.linkDir && !Files.isCyclicLink(file)) || !(Files.isLink(file))))
                 {
                     File[] childs = file.listFiles();
                     if (childs == null)
@@ -232,7 +247,8 @@ public abstract class ForEachFile implements Runnable
                         doForEeach(zf, ze);
                     }
                 }
-            } finally
+            }
+            finally
             {
                 zf.close();
             }

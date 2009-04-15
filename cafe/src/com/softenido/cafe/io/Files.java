@@ -398,7 +398,7 @@ public class Files
 
     public static boolean isParentOf(File parent, File child)
     {
-        return (getCommonParentFile(parent, child) == parent);
+        return parent.equals(getCommonParentFile(parent, child));
     }
 
     public static File[] uniqueCopyOf(File[] list)
@@ -413,12 +413,12 @@ public class Files
                 {
                     continue;
                 }
-                if(isParentOf(unique[j], unique[i]))
+                if (isParentOf(unique[j], unique[i]))
                 {
                     unique[i] = unique[j];
                     continue;
                 }
-                if(isParentOf(unique[i], unique[j]))
+                if (isParentOf(unique[i], unique[j]))
                 {
                     unique[j] = unique[i];
                     continue;
@@ -427,11 +427,41 @@ public class Files
         }
         return ArrayUtils.uniqueCopyOf(unique);
     }
-    public static boolean isLink(File f) throws IOException
+
+    public static boolean isLink(String name) throws IOException
     {
-        String canonical = f.getCanonicalPath();
-        String absolute  = f.getAbsolutePath();
-        return !canonical.equals(absolute);
+        return isLink(new File(name));
     }
 
+    public static boolean isLink(File file) throws IOException
+    {
+        if (file.exists())
+        {
+            String canonical = file.getCanonicalPath();
+            String absolute = file.getAbsolutePath();
+            return !canonical.equals(absolute);
+        }
+        return false;
+    }
+
+    public static boolean isCyclicLink(File file) throws IOException
+    {
+        if (file.exists() && file.isDirectory())
+        {
+            File canonical = file.getCanonicalFile();
+            File absolute = file.getAbsoluteFile();
+            if (!canonical.equals(absolute))
+            {
+                File[] parents = getParentFiles(absolute, false);
+                for (int i = 0; i < parents.length; i++)
+                {
+                    if (canonical.equals(parents[i].getCanonicalFile()))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
