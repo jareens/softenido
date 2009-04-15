@@ -41,7 +41,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe  version 0.2.0 alfa  (2009-04-10)\n" +
+            "findrepe  version 0.3.0 alfa  (2009-04-15)\n" +
             "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -78,9 +78,8 @@ public class Main
             "       java -jar FindRepe.jar [options] [directories]\n" +
             "\n" +
             "Options:\n" +
-            "(-h) --help                  show this help (-h works with no other options)\n" +
+            " -v, --verbose               increase verbosity\n" +
             " -L, --license               display software license\n" +
-            " -v, --version               display software version\n" +
             " -d, --delete                prompt user for files to delete\n" +
             " -n, --noempty               exclude zero-length files\n" +
             " -s --symlinks               follow symlinks\n" +
@@ -89,6 +88,8 @@ public class Main
             "     --install               install a launcher\n" +
             "     --install-java[=path]   install a launcher using 'java' command\n" +
             "     --install-home[=path]   install a launcher using 'java.home' property\n" +
+            "     --version               print version number\n" +
+            "(-h) --help                  show this help (-h works with no other options)\n" +
             //            "  -w --min-wasted=size minimun wasted size, exclude shorters wasted=size*(n-1)\n" +
             "\n" +
             "size units:\n" +
@@ -137,8 +138,8 @@ public class Main
 
         OptionParser options = new OptionParser();
 
-        Option help = options.add(new BooleanOption('h', "help"));
-        Option version = options.add(new BooleanOption('v', "version"));
+        BooleanOption verbose = options.add(new BooleanOption('v', "verbose"));
+
         Option license = options.add(new BooleanOption('L', "license"));
         BooleanOption delete = options.add(new BooleanOption('d', "delete"));
         BooleanOption noempty = options.add(new BooleanOption('n', "noempty"));
@@ -147,6 +148,9 @@ public class Main
         StringOption maxSize = options.add(new StringOption('M', "max-size"));
 
         BooleanOption symlinks = options.add(new BooleanOption('s', "symlinks"));
+
+        Option version = options.add(new BooleanOption("version"));
+        Option help = options.add(new BooleanOption('h', "help"));
 
 //        StringOption minWasted = options.add(new StringOption('w', "min-wasted"));
 

@@ -107,7 +107,7 @@ public class FindRepe implements Runnable
             feafq.setHidden(hidden);
             feafq.setMinSize(minSize);
             feafq.setMaxSize(maxSize);
-            feafq.setLink(link);
+            feafq.setLinkDir(link);
 
             new Thread(feafq).start();
             // envolver con FileHash y y detectar bugs en el nombre
@@ -124,7 +124,11 @@ public class FindRepe implements Runnable
                         {
                             if (item.exists())
                             {
-                                hashQueue.put(new FileHash(item));
+                                // ignoring unreadable files
+                                if(item.canRead())
+                                {
+                                    hashQueue.put(new FileHash(item));
+                                }
                             }
                             else if (bugs)
                             {
@@ -217,7 +221,8 @@ public class FindRepe implements Runnable
         return link;
     }
 
-    public void setLink(boolean link) {
+    public void setLink(boolean link)
+    {
         this.link = link;
     }
 
