@@ -21,8 +21,10 @@
  */
 package extracticons;
 
-import org.fjtk.se.FileHash;
-import org.fjtk.se.Files;
+import com.softenido.cafe.io.FileHash;
+import com.softenido.cafe.io.Files;
+import com.softenido.cafe.io.ForEachFile;
+import com.softenido.cafe.io.ForEachFileOptions;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -49,9 +51,9 @@ public class ForEachFileCopy extends ForEachFile
         return dst;
     }
 
-    public ForEachFileCopy(File src, int recursive, File dst, FileFilter filter, Forks fork)
+    public ForEachFileCopy(File src, File dst, FileFilter filter, Forks fork, ForEachFileOptions opt)
     {
-        super(src, recursive, filter, fork);
+        super(src, filter,opt);
         this.dst = dst;
     }
 
@@ -105,7 +107,7 @@ public class ForEachFileCopy extends ForEachFile
 
     private void buildSet()
     {
-        ForEachFileHash taskHashMap = new ForEachFileHash(dst, getRecursive(), fileSet, getFork());
+        ForEachFileHash taskHashMap = new ForEachFileHash(dst, fileSet,null);
         taskHashMap.run();
         taskHashMap = null;
     }

@@ -1,7 +1,7 @@
 /*
  *  ExtracIcons.java
  *
- *  Copyright (C) 2007  Francisco Gómez Carrasco
+ *  Copyright (C) 2007-2009  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
  */
 package extracticons;
 
+import com.softenido.cafe.io.ForEachFileOptions;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -214,26 +215,29 @@ public class ExtracIcons implements Runnable
         Forks fork = new Forks(forks,true);
         if (imageAlgorithm)
         {
-            ForEachImageCopy taskImgCopy = new ForEachImageCopy(src, 999999, dst, new FileFilterImg(),fork);
-            taskImgCopy.setMinHeight(minHeight);
-            taskImgCopy.setMaxHeight(maxHeight);
-            taskImgCopy.setMinWidth(minWidth);
-            taskImgCopy.setMaxWidth(maxWidth);
-            taskImgCopy.setIgnoreAlpha(ignoreAlpha);
-            taskImgCopy.setPercent(percent);
+            ForEachImageOptions opt = new ForEachImageOptions();
+            opt.setMinHeight(minHeight);
+            opt.setMaxHeight(maxHeight);
+            opt.setMinWidth(minWidth);
+            opt.setMaxWidth(maxWidth);
+            opt.setIgnoreAlpha(ignoreAlpha);
+            opt.setPercent(percent);
+            ForEachImageCopy taskImgCopy = new ForEachImageCopy(src, dst, new FileFilterImg(),fork,opt);
             taskCopy = taskImgCopy;
         }
         else
         {
-            taskCopy = new ForEachFileCopy(src, 999999, dst, new FileFilterImg(),fork);
+            taskCopy = new ForEachFileCopy(src, dst, new FileFilterImg(),fork,null);
         }
-        taskCopy.setZip(zip);
-        taskCopy.setMinSize(minSize);
-        taskCopy.setMaxSize(maxSize);
-        taskCopy.setJar(jar);
-        taskCopy.setHidden(hidden);
-        taskCopy.setFile(true);
-        taskCopy.setDirectory(false);
+        final ForEachFileOptions options = new ForEachFileOptions();
+        options.setZip(zip);
+        options.setMinSize(minSize);
+        options.setMaxSize(maxSize);
+        options.setJar(jar);
+        options.setHidden(hidden);
+        options.setFile(true);
+        options.setDirectory(false);
+        taskCopy.setOptions(options);
         taskCopy.run();
         fork.waitForAll();
         

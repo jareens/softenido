@@ -1,7 +1,7 @@
 /*
  *  ImageHash.java
  *
- *  Copyright (C) 2007  Francisco Gómez Carrasco
+ *  Copyright (C) 2007-2009  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  */
 package extracticons;
 
-import org.fjtk.ce.ArrayUtils;
+import com.softenido.cafe.util.ArrayUtils;
 import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -40,7 +40,6 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import org.fjtk.ce.Forks;
 
 /**
  *

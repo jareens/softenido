@@ -1,7 +1,7 @@
 /*
  *  ForEachImageHash.java
  *
- *  Copyright (C) 2007  Francisco Gómez Carrasco
+ *  Copyright (C) 2007-2009  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,10 +21,9 @@
  */
 package extracticons;
 
+import com.softenido.cafe.io.FileHash;
 import java.io.File;
 import java.util.Set;
-import org.fjtk.ce.Forks;
-import org.fjtk.se.FileHash;
 
 /**
  *
@@ -36,9 +35,9 @@ public class ForEachImageHash extends ForEachFileHash
     private boolean ignoreAlpha = false;
     private int percent = 100;
 
-    public ForEachImageHash(File file, int recursive, Set<FileHash> fileSet, Set<ImageHash> imageSet, boolean ignoreAlpha, int percent, Forks fork)
+    public ForEachImageHash(File file, Set<FileHash> fileSet, Set<ImageHash> imageSet, boolean ignoreAlpha, int percent, ForEachImageOptions opt)
     {
-        super(file, recursive, fileSet, fork);
+        super(file, fileSet, opt);
         this.imageSet = imageSet;
         this.ignoreAlpha = ignoreAlpha;
         this.percent = percent;

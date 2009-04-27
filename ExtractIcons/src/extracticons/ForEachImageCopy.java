@@ -1,7 +1,7 @@
 /*
  *  ForEachImageCopy.java
  *
- *  Copyright (C) 2007  Francisco Gómez Carrasco
+ *  Copyright (C) 2007-2009  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
  */
 package extracticons;
 
+import com.softenido.cafe.io.ForEachFileOptions;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Collections;
@@ -102,9 +103,9 @@ public class ForEachImageCopy extends ForEachFileCopy
         this.ignoreAlpha = ignoreAlpha;
     }
 
-    public ForEachImageCopy(File src, int recursive, File dst, FileFilter filter, Forks fork)
+    public ForEachImageCopy(File src, File dst, FileFilter filter, Forks fork, ForEachFileOptions opt)
     {
-        super(src, recursive, dst, filter, fork);
+        super(src, dst, filter, fork,opt);
     }
 
     @Override
@@ -152,9 +153,8 @@ public class ForEachImageCopy extends ForEachFileCopy
 
     private void buildSet()
     {
-        ForEachImageHash taskHashMap = new ForEachImageHash(getDst(), getRecursive(), fileSet, imgSet, ignoreAlpha, percent, getFork());
+        ForEachImageHash taskHashMap = new ForEachImageHash(getDst(), fileSet, imgSet, ignoreAlpha, percent,null);
         taskHashMap.run();
-        getFork().waitForAll();
         taskHashMap = null;
     }
 
