@@ -125,7 +125,7 @@ public class Files
     {
         final ArrayList<String> v = new ArrayList<String>();
 
-        ForEachFile fef = new ForEachFile(file, 99999, null)
+        ForEachFile fef = new ForEachFile(file, null,null)
         {
 
             @Override
@@ -245,7 +245,7 @@ public class Files
     {
         final ArrayList<File> v = new ArrayList<File>();
 
-        ForEachFile fef = new ForEachFile(file, 99999, null)
+        ForEachFile fef = new ForEachFile(file, null,null)
         {
 
             @Override
@@ -292,7 +292,7 @@ public class Files
     {
         final ArrayList<File> v = new ArrayList<File>();
 
-        ForEachFile fef = new ForEachFile(file, 99999, filter)
+        ForEachFile fef = new ForEachFile(file, filter,null)
         {
 
             @Override

@@ -40,34 +40,32 @@ public class ForEachFileQueue extends ForEachFile
     private final BlockingQueue<File> fileQueue;
     private final BlockingQueue<String> nameQueue;
 
-    public ForEachFileQueue(File file, int recursive, FileFilter filter, BlockingQueue<File> fileQueue, BlockingQueue<String> nameQueue, File eof)
+    public ForEachFileQueue(File file, FileFilter filter, BlockingQueue<File> fileQueue, BlockingQueue<String> nameQueue, File eof,ForEachFileOptions opt)
     {
-        super(file, recursive, filter);
-
+        super(file, filter,opt);
         this.eof = eof;
-
         this.fileQueue = fileQueue;
         this.nameQueue = nameQueue;
     }
 
-    public ForEachFileQueue(File file, int recursive, BlockingQueue<File> rawQueue, File eof)
+    public ForEachFileQueue(File file, BlockingQueue<File> rawQueue, File eof)
     {
-        this(file, recursive, null, rawQueue, eof);
+        this(file, null, rawQueue, null, eof,null);
     }
 
-    public ForEachFileQueue(File file, int recursive, FileFilter filter, BlockingQueue<File> fileQueue, File eof)
+    public ForEachFileQueue(File file, FileFilter filter, BlockingQueue<File> fileQueue, File eof)
     {
-        this(file, recursive, filter, fileQueue, null, eof);
+        this(file, filter, fileQueue, null, eof,null);
     }
 
-    public ForEachFileQueue(File file, int recursive, FileFilter filter, BlockingQueue<File> fileQueue)
+    public ForEachFileQueue(File file, FileFilter filter, BlockingQueue<File> fileQueue)
     {
-        this(file, recursive, filter, fileQueue, null);
+        this(file, filter, fileQueue, null, null,null);
     }
 
     public ForEachFileQueue(File file, int recursive, BlockingQueue<File> fileQueue)
     {
-        this(file, recursive, null, fileQueue, null);
+        this(file, null, fileQueue, null, null,null);
     }
 
     @Override

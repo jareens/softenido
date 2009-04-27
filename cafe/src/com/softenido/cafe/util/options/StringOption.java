@@ -52,7 +52,7 @@ public class StringOption extends BooleanOption
         int size = super.parseLong(index, args);
         if ((size > 0) && (index + size < args.length))
         {
-            value = args[index + size];
+            setValue(args[index + size]);
             size++;
         }
         else
@@ -63,7 +63,7 @@ public class StringOption extends BooleanOption
                 count++;
                 lastUsed = index;
                 usedName = __longName;
-                value = rest(option,__longName_);
+                setValue(rest(option, __longName_));
                 return 1;
             }
             if (twoHyphen && option.startsWith(__longName))
@@ -71,7 +71,7 @@ public class StringOption extends BooleanOption
                 count++;
                 lastUsed = index;
                 usedName = __longName;
-                value = rest(option,__longName);
+                setValue(rest(option, __longName));
                 return 1;
             }
             if (oneHyphen && option.startsWith(_longName_))
@@ -79,7 +79,7 @@ public class StringOption extends BooleanOption
                 count++;
                 lastUsed = index;
                 usedName = _longName;
-                value = rest(option,_longName_);
+                setValue(rest(option, _longName_));
                 return 1;
             }
             if (oneHyphen && option.startsWith(_longName))
@@ -87,7 +87,7 @@ public class StringOption extends BooleanOption
                 count++;
                 lastUsed = index;
                 usedName = _longName;
-                value = rest(option,_longName);
+                setValue(rest(option, _longName));
                 return 1;
             }
             return 0;
@@ -105,12 +105,12 @@ public class StringOption extends BooleanOption
         {
             if (args[argIndex].length() > charIndex + size)
             {
-                value = args[argIndex].substring(charIndex + size);
+                setValue(args[argIndex].substring(charIndex + size));
                 size = 2;
             }
             else if (argIndex < args.length)
             {
-                value = args[argIndex + 1];
+                setValue(args[argIndex + 1]);
                 size = 3;
             }
 
@@ -128,5 +128,13 @@ public class StringOption extends BooleanOption
         int size = src.length();
         int index = prefix.length();
         return (size > index) ? src.substring(index) : null;
+    }
+
+    /**
+     * @param value the value to set
+     */
+    public void setValue(String value)
+    {
+        this.value = value;
     }
 }
