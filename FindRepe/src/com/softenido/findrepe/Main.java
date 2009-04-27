@@ -21,6 +21,8 @@
  */
 package com.softenido.findrepe;
 
+import com.softenido.cafe.io.ForEachFileOptions;
+import com.softenido.cafe.util.OSName;
 import com.softenido.cafe.util.SizeUnits;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
@@ -28,6 +30,7 @@ import com.softenido.cafe.util.options.Option;
 import com.softenido.cafe.util.options.OptionParser;
 import com.softenido.cafe.util.options.StringOption;
 import com.softenido.cafe.util.launcher.LauncherBuilder;
+import com.softenido.cafe.util.options.ArrayStringOption;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -41,7 +44,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe  version 0.3.0 alfa  (2009-04-17)\n" +
+            "findrepe  version 0.3.0.1 beta  (2009-04-24)\n" +
             "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -71,7 +74,7 @@ public class Main
             "are welcome to redistribute it under certain conditions. See the GNU\n" +
             "General Public Licence version 3 for details.\n" +
             "\n" +
-            "findrepe searches the given path for repeated files by content (not name). Such\n"+
+            "findrepe searches the given path for repeated files by content (not name). Such\n" +
             "files are found by comparing file sizes and MD5+SHA1 signatures.\n" +
             "\n" +
             "usage: findrepe [options] [directories]\n" +
@@ -88,6 +91,15 @@ public class Main
             "     --install               install a launcher\n" +
             "     --install-java[=path]   install a launcher using 'java' command\n" +
             "     --install-home[=path]   install a launcher using 'java.home' property\n" +
+            
+//            "     --unique                list only unique files\n" +
+//            "     --count=N               list files repeated N times  \n" +
+//            "     --min-count=N           list files repated at least N times\n" +
+//            "     --max-count=N           list files repated no more than N times\n" +
+
+            "     --noautoexclude         don't autoexclude some paths (/dev, /proc, ...)\n" +
+            "     --exclude=path          don't follow path\n" +
+
             "     --version               print version number\n" +
             "(-h) --help                  show this help (-h works with no other options)\n" +
             //            "  -w --min-wasted=size minimun wasted size, exclude shorters wasted=size*(n-1)\n" +
@@ -147,6 +159,15 @@ public class Main
         StringOption minSize = options.add(new StringOption('m', "min-size"));
         StringOption maxSize = options.add(new StringOption('M', "max-size"));
 
+//        BooleanOption unique  = options.add(new BooleanOption("unique"));
+//        StringOption count    = options.add(new StringOption("count"));
+//        StringOption minCount = options.add(new StringOption("max-count"));
+//        StringOption maxCount = options.add(new StringOption("max-count"));
+
+
+        BooleanOption noautoexclude  = options.add(new BooleanOption("noautoexclude"));
+        ArrayStringOption exclude          = options.add(new ArrayStringOption("exclude",':'));
+  
         BooleanOption symlinks = options.add(new BooleanOption('s', "symlinks"));
 
         Option version = options.add(new BooleanOption("version"));
@@ -167,11 +188,11 @@ public class Main
         {
             LauncherBuilder builder = LauncherBuilder.getBuilder();
             args = builder.parse(args);
-            if(builder.isInstall())
+            if (builder.isInstall())
             {
-                if(builder.buildLauncher("findrepe"))
+                if (builder.buildLauncher("findrepe"))
                 {
-                    System.out.println("findrepe: '"+builder.getFileName()+"' created");
+                    System.out.println("findrepe: '" + builder.getFileName() + "' created");
                 }
                 return;
             }
@@ -212,14 +233,14 @@ public class Main
             {
                 minSizeUsed = true;
                 optName = minSize.getUsedName();
-                optVal  = minSize.getValue();
+                optVal = minSize.getValue();
                 minSizeValue = sizeParser.parse(optVal);
             }
             if (maxSize.isUsed())
             {
                 maxSizeUsed = true;
                 optName = maxSize.getUsedName();
-                optVal  = maxSize.getValue();
+                optVal = maxSize.getValue();
                 maxSizeValue = sizeParser.parse(optVal);
             }
         }
@@ -227,11 +248,11 @@ public class Main
         {
             if (optVal == null)
             {
-                System.err.println("findrepe: missing argument to '"+optName +"'");
+                System.err.println("findrepe: missing argument to '" + optName + "'");
             }
             else
             {
-                System.err.println("findrepe: invalid argument '"+optVal+"' to '"+optName +"'");
+                System.err.println("findrepe: invalid argument '" + optVal + "' to '" + optName + "'");
             }
             return;
         }
@@ -241,7 +262,7 @@ public class Main
 //            findTask.setMinWasted(size);
 //        }
 
-        if(fileNames.length==0)
+        if (fileNames.length == 0)
         {
             System.err.println("findrepe: no directories specified");
             return;
@@ -252,23 +273,36 @@ public class Main
         {
             files[i] = new File(fileNames[i]);
         }
-        FindRepe findTask = new FindRepe(files, bugs, queueSize);
+        ForEachFileOptions opt = new ForEachFileOptions();
 
-        findTask.setHidden(true);
-        findTask.setLink(symlinks.isUsed());
+        opt.setHidden(true);
+        opt.setLinkDir(symlinks.isUsed());
 
         if (noempty.isUsed())
         {
-            findTask.setMinSize(1);
+            opt.setMinSize(1);
         }
-        if(minSizeUsed)
+        if (minSizeUsed)
         {
-            findTask.setMinSize(minSizeValue);
+            opt.setMinSize(minSizeValue);
         }
-        if(maxSizeUsed)
+        if (maxSizeUsed)
         {
-            findTask.setMaxSize(maxSizeValue);
+            opt.setMaxSize(maxSizeValue);
         }
+        if(noautoexclude.isUsed())
+        {
+            opt.setAutoOmit(false);
+        }
+        if(exclude.isUsed())
+        {
+            String[] paths = exclude.getValues();
+            for(String item : paths)
+            {
+                opt.addOmitedPath(new File(item));
+            }
+        }
+        FindRepe findTask = new FindRepe(files, bugs, queueSize,opt);
 
         new Thread(findTask).start();
 
@@ -290,7 +324,7 @@ public class Main
     private static void showGroups(Iterable<File[]> groupsList, boolean delete)
     {
         int groupId = 0;
-        
+
         for (File[] group : groupsList)
         {
             if (group.length > 1)

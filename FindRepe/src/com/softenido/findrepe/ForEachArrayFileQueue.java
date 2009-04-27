@@ -22,6 +22,7 @@
 package com.softenido.findrepe;
 
 import com.softenido.cafe.io.Files;
+import com.softenido.cafe.io.ForEachFileOptions;
 import com.softenido.cafe.io.ForEachFileQueue;
 import java.io.File;
 import java.io.FileFilter;
@@ -35,19 +36,15 @@ import java.util.concurrent.BlockingQueue;
 public class ForEachArrayFileQueue implements Runnable
 {
 
-    final File[] files;
-    final int recursive;
+    private final File[] files;
+
     final FileFilter filter;
     final BlockingQueue<File> fileQueue;
     final BlockingQueue<String> nameQueue;
     final File eof;
-    private boolean hidden = false;
-    private long minSize = 0L;
-    private long maxSize = Long.MAX_VALUE;
-    private boolean linkDir  = false;
-    private boolean linkFile = false;
-
-
+    
+    private ForEachFileOptions options = null;;
+    
     /**
      * 
      * @param files array of directories to be enqueued
@@ -57,37 +54,47 @@ public class ForEachArrayFileQueue implements Runnable
      * @param nameQueue
      * @param eof
      */
-    public ForEachArrayFileQueue(File[] files, int recursive, FileFilter filter, BlockingQueue<File> fileQueue, BlockingQueue<String> nameQueue, File eof) throws IOException
+    public ForEachArrayFileQueue(File[] files, FileFilter filter, BlockingQueue<File> fileQueue, BlockingQueue<String> nameQueue, File eof) throws IOException
     {
         files = Files.uniqueCopyOf(files);
-        for(int i=0;i<files.length;i++)
+        for (int i = 0; i < files.length; i++)
         {
             files[i] = files[i].getCanonicalFile();
         }
         this.files = Files.uniqueCopyOf(files);
 
-        this.recursive = recursive;
         this.filter = filter;
         this.fileQueue = fileQueue;
         this.nameQueue = nameQueue;
         this.eof = eof;
     }
 
-    public ForEachArrayFileQueue(File[] file, int recursive, BlockingQueue<File> fileQueue, File eof) throws IOException
+    public ForEachArrayFileQueue(File[] file, BlockingQueue<File> fileQueue, File eof) throws IOException
     {
-        this(file,recursive,null,fileQueue,null,eof);
+        this(file, null, fileQueue, null, eof);
+    }
+
+    public void setOptions(ForEachFileOptions opt)
+    {
+        this.options = new ForEachFileOptions(opt);
     }
 
     public void run()
     {
         for (File fd : files)
         {
-            ForEachFileQueue fefq = new ForEachFileQueue(fd, recursive, filter, fileQueue, nameQueue, null);
-            fefq.setHidden(hidden);
-            fefq.setMinSize(minSize);
-            fefq.setMaxSize(maxSize);
-            fefq.setLinkDir(linkDir);
-            fefq.setLinkFile(linkFile);
+            ForEachFileOptions opt = new ForEachFileOptions(options);
+            for (File omited : files)
+            {
+                if (!omited.equals(fd))
+                {
+                    opt.addOmitedPath(omited);
+                }
+            }
+
+            // sacar una copia de optiones para cada busqueda, han de excluir al resto
+            ForEachFileQueue fefq = new ForEachFileQueue(fd, filter, fileQueue, nameQueue, null,opt);
+            // excluidos el resto de rutas
             fefq.run();
         }
         if (eof != null)
@@ -102,56 +109,4 @@ public class ForEachArrayFileQueue implements Runnable
             }
         }
     }
-
-    public boolean isHidden()
-    {
-        return hidden;
-    }
-
-    public void setHidden(boolean hidden)
-    {
-        this.hidden = hidden;
-    }
-
-    public long getMaxSize()
-    {
-        return maxSize;
-    }
-
-    public void setMaxSize(long maxSize)
-    {
-        this.maxSize = maxSize;
-    }
-
-    public long getMinSize()
-    {
-        return minSize;
-    }
-
-    public void setMinSize(long minSize)
-    {
-        this.minSize = minSize;
-    }
-
-    public boolean isLinkDir()
-    {
-        return linkDir;
-    }
-
-    public void setLinkDir(boolean linkDir)
-    {
-        this.linkDir = linkDir;
-    }
-
-    public boolean isLinkFile()
-    {
-        return linkFile;
-    }
-
-    public void setLinkFile(boolean linkFile)
-    {
-        this.linkFile = linkFile;
-    }
-
-
 }
