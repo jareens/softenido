@@ -86,16 +86,24 @@ public abstract class ForEachFile implements Runnable
         {
             autoOmitPaths.add(new File(File.separator+"dev"));
         }
-        if(OSName.os.isLinux())
+        if(OSName.os.isLinux() || OSName.os.isSolaris())
         {
             autoOmitPaths.add(new File(File.separator+"proc"));
+        }
+        if(OSName.os.isLinux())
+        {
             autoOmitPaths.add(new File(File.separator+"sys"));
         }
-        else
+        if(OSName.os.isSolaris())
         {
-            options.autoOmit = false;//nothing to AutoOmit
+            autoOmitPaths.add(new File(File.separator+"/devices"));
         }
-        this.options = opt==null ? new ForEachFileOptions(): new ForEachFileOptions(opt);
+        
+        options = opt==null ? new ForEachFileOptions(): new ForEachFileOptions(opt);
+        if(autoOmitPaths.isEmpty())
+        {
+            options.autoOmit = false;
+        }
     }
 
     public void run()
