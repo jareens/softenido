@@ -37,16 +37,16 @@ import java.util.logging.Logger;
  */
 public class FileHash
 {
-
     private static final String MD5 = "MD5";
     private static final String SHA1 = "SHA-1";
+    private static int bufSize = 64 * 1024;
     private File file;
     private final long size;
     private byte[] fastMD5 = null;
     private byte[] fastSHA1 = null;
     private byte[] fullMD5 = null;
     private byte[] fullSHA1 = null;
-    private static int bufSize = 64 * 1024;
+    private boolean exception = false;
 
     /**
      * Creates a new FileHash instance from a File object.
@@ -80,6 +80,12 @@ public class FileHash
         }
         try
         {
+            // exception
+            if(this.exception || other.exception)
+            {
+                return false;
+            }
+
             //to determine if both points to the same taget
             if (this.file.getCanonicalPath().equals(other.file.getCanonicalPath()))
             {
@@ -122,6 +128,7 @@ public class FileHash
         {
             return;
         }
+        boolean error = true;
         FileInputStream fis = null;
         try
         {
@@ -139,6 +146,7 @@ public class FileHash
 
             fastMD5 = md5.digest();
             fastSHA1 = sha1.digest();
+            error = false;
         }
         catch (NoSuchAlgorithmException ex)
         {
@@ -146,6 +154,10 @@ public class FileHash
         }
         finally
         {
+            if (error)
+            {
+                this.exception = true;
+            }
             try
             {
                 if (fis != null)
@@ -173,7 +185,7 @@ public class FileHash
             fullSHA1 = fastSHA1;
             return;
         }
-
+        boolean error = true;
         FileInputStream fis = null;
         try
         {
@@ -191,6 +203,7 @@ public class FileHash
 
             fullMD5 = md5.digest();
             fullSHA1 = sha1.digest();
+            error = false;
         }
         catch (NoSuchAlgorithmException ex)
         {
@@ -198,6 +211,10 @@ public class FileHash
         }
         finally
         {
+            if (error)
+            {
+                this.exception = true;
+            }
             try
             {
                 if (fis != null)
