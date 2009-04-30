@@ -44,7 +44,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe  version 0.3.0.1 beta  (2009-04-24)\n" +
+            "findrepe  version 0.3.0.2 beta  (2009-04-30)\n" +
             "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -85,7 +85,7 @@ public class Main
             " -L, --license               display software license\n" +
             " -d, --delete                prompt user for files to delete\n" +
             " -n, --noempty               exclude zero-length files\n" +
-            " -s --symlinks               follow symlinks\n" +
+            " -s, --symlinks              follow symlinks\n" +
             " -m, --min-size=size         minimum file size[bkmgt], exclude shorters\n" +
             " -M, --max-size=size         maximun file size[bkmgt], exclude largers\n" +
             "     --install               install a launcher\n" +
