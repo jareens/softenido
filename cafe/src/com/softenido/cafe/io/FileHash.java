@@ -85,26 +85,26 @@ public class FileHash
             {
                 return true;
             }
+            if (!Arrays.equals(this.getFastMD5(), other.getFastMD5()))
+            {
+                return false;
+            }
+            if (!Arrays.equals(this.getFastSHA1(), other.getFastSHA1()))
+            {
+                return false;
+            }
+            if (!Arrays.equals(this.getFullMD5(), other.getFullMD5()))
+            {
+                return false;
+            }
+            if (!Arrays.equals(this.getFullSHA1(), other.getFullSHA1()))
+            {
+                return false;
+            }
         }
         catch (IOException ex)
         {
             Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-        if (!Arrays.equals(this.getFastMD5(), other.getFastMD5()))
-        {
-            return false;
-        }
-        if (!Arrays.equals(this.getFastSHA1(), other.getFastSHA1()))
-        {
-            return false;
-        }
-        if (!Arrays.equals(this.getFullMD5(), other.getFullMD5()))
-        {
-            return false;
-        }
-        if (!Arrays.equals(this.getFullSHA1(), other.getFullSHA1()))
-        {
             return false;
         }
         return true;
@@ -116,7 +116,7 @@ public class FileHash
         return (int) (file.length() % Integer.MAX_VALUE);
     }
 
-    private synchronized void buildFastHash()
+    private synchronized void buildFastHash() throws FileNotFoundException, IOException
     {
         if (fastMD5 != null && fastSHA1 != null)
         {
@@ -140,14 +140,6 @@ public class FileHash
             fastMD5 = md5.digest();
             fastSHA1 = sha1.digest();
         }
-        catch (FileNotFoundException ex)
-        {
-            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex)
-        {
-            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
-        }
         catch (NoSuchAlgorithmException ex)
         {
             Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
@@ -168,7 +160,7 @@ public class FileHash
         }
     }
 
-    private void buildFullHash()
+    private void buildFullHash() throws FileNotFoundException, IOException
     {
         if (fullMD5 != null && fullSHA1 != null)
         {
@@ -200,16 +192,9 @@ public class FileHash
             fullMD5 = md5.digest();
             fullSHA1 = sha1.digest();
         }
-        catch (FileNotFoundException ex)
+        catch (NoSuchAlgorithmException ex)
         {
             Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex)
-        {
-            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (NoSuchAlgorithmException e)
-        {
         }
         finally
         {
@@ -237,7 +222,7 @@ public class FileHash
         return file;
     }
 
-    public byte[] getFastMD5()
+    public byte[] getFastMD5() throws FileNotFoundException, IOException
     {
         if (fastMD5 == null)
         {
@@ -246,7 +231,7 @@ public class FileHash
         return fastMD5;
     }
 
-    public byte[] getFastSHA1()
+    public byte[] getFastSHA1() throws FileNotFoundException, IOException
     {
         if (fastSHA1 == null)
         {
@@ -255,7 +240,7 @@ public class FileHash
         return fastSHA1;
     }
 
-    public byte[] getFullMD5()
+    public byte[] getFullMD5() throws FileNotFoundException, IOException
     {
         if (fullMD5 == null)
         {
@@ -264,7 +249,7 @@ public class FileHash
         return fullMD5;
     }
 
-    public byte[] getFullSHA1()
+    public byte[] getFullSHA1() throws FileNotFoundException, IOException
     {
         if (fullSHA1 == null)
         {
