@@ -22,7 +22,6 @@
 package com.softenido.findrepe;
 
 import com.softenido.cafe.io.ForEachFileOptions;
-import com.softenido.cafe.util.OSName;
 import com.softenido.cafe.util.SizeUnits;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
@@ -44,7 +43,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe  version 0.3.0.2 beta  (2009-04-30)\n" +
+            "findrepe  version 0.4.0 beta  (2009-05-01)\n" +
             "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
