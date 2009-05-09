@@ -96,7 +96,7 @@ public abstract class ForEachFile implements Runnable
         }
         if(OSName.os.isSolaris())
         {
-            autoOmitPaths.add(new File(File.separator+"/devices"));
+            autoOmitPaths.add(new File(File.separator+"devices"));
         }
         
         options = opt==null ? new ForEachFileOptions(): new ForEachFileOptions(opt);
