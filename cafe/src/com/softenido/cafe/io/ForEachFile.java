@@ -27,7 +27,6 @@ import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.logging.Level;
@@ -121,7 +120,10 @@ public abstract class ForEachFile implements Runnable
         {
             if ((options.directory || !file.isDirectory()) && (options.file || !file.isFile()) && (options.hidden || (level == 0) || !file.isHidden()) && (filter == null || filter.accept(file)) && acceptSize(file.length()) && (options.linkFile || !Files.isLink(file)))
             {
-                doForEeach(file, null);
+                if (!isOmitedFile(file))
+                {
+                    doForEeach(file, null);
+                }
             }
         }
         catch (IOException ex)
@@ -255,10 +257,39 @@ public abstract class ForEachFile implements Runnable
         }
         return false;
     }
+    private boolean isOmitedDirName(final File file)
+    {
+        if(options.hasOmitedDirNames)
+        {
+            File name = new File(file.getName());
+            if(options.omitedDirNames.contains(name))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private boolean isOmitedFile(final File file)
     {
-        return options.hasOmitedFiles && !options.omitedFiles.isEmpty() && options.omitedFiles.contains(file);
+        if(options.hasOmitedFiles)
+        {
+            if( options.omitedFiles.contains(file) )
+            {
+                return true;
+            }
+        }
+        
+        if(options.hasOmitedFileNames)
+        {
+            File name = new File(file.getName());
+            if(options.omitedFileNames.contains(name))
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
 //        si un directorio no es padre de una ruta excluida no hay que comparar si no es un link
@@ -277,6 +308,10 @@ public abstract class ForEachFile implements Runnable
                 return false;
             }
             if (!file.canRead())
+            {
+                return false;
+            }
+            if( isOmitedDirName(file))
             {
                 return false;
             }
@@ -314,4 +349,5 @@ public abstract class ForEachFile implements Runnable
         }
         return false;
     }
+
 }

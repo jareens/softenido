@@ -49,6 +49,11 @@ public class ForEachFileOptions
     boolean hasOmitedFiles;
     HashSet<File> omitedFiles;
 
+    boolean hasOmitedDirNames;
+    HashSet<File> omitedDirNames;
+    boolean hasOmitedFileNames;
+    HashSet<File> omitedFileNames;
+
     public ForEachFileOptions()
     {
         recursive = 99999;
@@ -68,6 +73,11 @@ public class ForEachFileOptions
         omitedPaths = new HashSet<File>();
         hasOmitedFiles = false;
         omitedFiles = new HashSet<File>();
+        
+        hasOmitedDirNames = false;
+        omitedDirNames = new HashSet<File>();
+        hasOmitedFileNames = false;
+        omitedFileNames = new HashSet<File>();
     }
 
     public ForEachFileOptions(ForEachFileOptions val)
@@ -90,6 +100,11 @@ public class ForEachFileOptions
         this.hasOmitedFiles = val.hasOmitedFiles;
         this.omitedFiles = new HashSet<File>(val.omitedFiles);
 
+        this.hasOmitedDirNames = val.hasOmitedDirNames;
+        this.omitedDirNames = new HashSet<File>(val.omitedDirNames);
+
+        this.hasOmitedFileNames = val.hasOmitedFileNames;
+        this.omitedFileNames = new HashSet<File>(val.omitedFileNames);
     }
 
     public boolean isAutoOmit()
@@ -234,5 +249,24 @@ public class ForEachFileOptions
             omitedPaths.add(item);
         }
         hasOmitedPaths = hasOmitedPaths || (!omitedPaths.isEmpty());
+    }
+
+    public void addOmitedDirName(File dir)
+    {
+        omitedDirNames.add(dir);
+        hasOmitedDirNames = true;
+    }
+    public void addOmitedDirName(String dir)
+    {
+        addOmitedDirName(new File(dir));
+    }
+    public void addOmitedFileName(File fileName)
+    {
+        omitedFileNames.add(fileName);
+        hasOmitedFileNames = true;
+    }
+    public void addOmitedFileName(String fileName)
+    {
+        addOmitedFileName(new File(fileName));
     }
 }
