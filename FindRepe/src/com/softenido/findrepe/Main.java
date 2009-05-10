@@ -43,7 +43,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe  version 0.4.0 beta  (2009-05-01)\n" +
+            "findrepe  version 0.4.0.1 beta  (2009-05-10)\n" +
             "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -66,6 +66,7 @@ public class Main
             "along with this program.  If not, see <http://www.gnu.org/licenses/>.\n" +
             "\n" +
             REPORT_BUGS;
+
     private static final String HELP =
             VERSION +
             "\n" +
@@ -99,7 +100,16 @@ public class Main
             "     --noautoexclude         don't autoexclude some paths (/dev, /proc, ...)\n" +
             "     --exclude=path          don't follow path\n" +
 
+            "     --exclude-rc            don't follow revision control directories\n" +
+            "     --exclude-svn           don't follow subversion directories (.svn)\n" +
+            "     --exclude-cvs           don't follow cvs directories (CVS)\n" +
+            "     --exclude-hg            don't follow mercurial directories and files(.hg and .hgignore)\n" +
+
+            "     --exclude-dir=name      don't follow directories named name\n" +
+            "     --exclude-file=name     ignore files named name\n" +
+
             "     --version               print version number\n" +
+            "     --examples              print some useful examples\n" +
             "(-h) --help                  show this help (-h works with no other options)\n" +
             //            "  -w --min-wasted=size minimun wasted size, exclude shorters wasted=size*(n-1)\n" +
             "\n" +
@@ -108,17 +118,6 @@ public class Main
             " b bytes     (defaul)\n" +
             " k kilobytes (1024 bytes)     g gigabytes (1024 megabytes)\n" +
             " m megabytes (1024 kilobytes) t terabytes (1024 gigabytes)\n" +
-            "\n" +
-            "examples of findrepe usage:\n" +
-            "\n" +
-            " java -jar FindRepe.jar --install\n" +
-            " sudo java -jar FindRepe.jar --install\n" +
-            " sudo /opt/jdk1.6/bin/java -jar FindRepe.jar --install-home\n" +
-            " findrepe backup\n" +
-            " findrepe -d backup\n" +
-            " findrepe -d --min-size=1m c:\\backup e:\\img\n" +
-            " findrepe -nd c:\\backup e:\\img\n" +
-            " findrepe -n /opt/ /backup/tools \n" +
             "\n" +
             //            " -r --recurse     \tinclude files residing in subdirectories\n" +
             //            " -H --hardlinks   \tnormally, when two or more files point to the same\n" +
@@ -130,6 +129,21 @@ public class Main
             //            " -S --size        \tshow size of duplicate files\n" +
             "\n" +
             REPORT_BUGS;
+
+    private static final String EXAMPLES =
+            VERSION+
+            "\n"+
+            "examples of findrepe usage:\n" +
+            "\n" +
+            " java -jar FindRepe.jar --install\n" +
+            " sudo java -jar FindRepe.jar --install\n" +
+            " sudo /opt/jdk1.6/bin/java -jar FindRepe.jar --install-home\n" +
+            " findrepe backup\n" +
+            " findrepe -d backup\n" +
+            " findrepe -d --min-size=1m c:\\backup e:\\img\n" +
+            " findrepe -nd c:\\backup e:\\img\n" +
+            " findrepe -n /opt/ /backup/tools \n";
+
 
     /**
      * @param args the command line arguments
@@ -163,14 +177,24 @@ public class Main
 //        StringOption minCount = options.add(new StringOption("max-count"));
 //        StringOption maxCount = options.add(new StringOption("max-count"));
 
+        BooleanOption excludeRc  = options.add(new BooleanOption("exclude-rc"));
+        BooleanOption excludeSvn = options.add(new BooleanOption("exclude-svn"));
+        BooleanOption excludeCvs = options.add(new BooleanOption("exclude-cvs"));
+        BooleanOption excludeHg  = options.add(new BooleanOption("exclude-hg"));
+
+        ArrayStringOption excludeDirName  = options.add(new ArrayStringOption("exclude-dir",':'));
+        ArrayStringOption excludeFileName = options.add(new ArrayStringOption("exclude-file",':'));
 
         BooleanOption noautoexclude  = options.add(new BooleanOption("noautoexclude"));
-        ArrayStringOption exclude          = options.add(new ArrayStringOption("exclude",':'));
+        ArrayStringOption exclude    = options.add(new ArrayStringOption("exclude",':'));
   
         BooleanOption symlinks = options.add(new BooleanOption('s', "symlinks"));
 
         Option version = options.add(new BooleanOption("version"));
         Option help = options.add(new BooleanOption('h', "help"));
+
+        BooleanOption examples = options.add(new BooleanOption("examples"));
+
 
 //        StringOption minWasted = options.add(new StringOption('w', "min-wasted"));
 
@@ -217,6 +241,11 @@ public class Main
         if (version.isUsed())
         {
             System.out.println(VERSION);
+            return;
+        }
+        if (examples.isUsed())
+        {
+            System.out.println(EXAMPLES);
             return;
         }
 
@@ -301,6 +330,9 @@ public class Main
                 opt.addOmitedPath(new File(item));
             }
         }
+        excludeRc(opt, excludeRc, excludeSvn, excludeCvs, excludeHg);
+        excludeDirAndFile(opt, excludeDirName, excludeFileName);
+
         FindRepe findTask = new FindRepe(files, bugs, queueSize,opt);
 
         new Thread(findTask).start();
@@ -310,6 +342,43 @@ public class Main
             showBugs(findTask.getBugIterable(), fixBugs);
         }
         showGroups(findTask.getGroupsIterable(), delete.isUsed());
+    }
+
+    private static void excludeDirAndFile(ForEachFileOptions opt, ArrayStringOption excludeDirName, ArrayStringOption excludeFileName)
+    {
+        if (excludeDirName.isUsed())
+        {
+            String[] paths = excludeDirName.getValues();
+            for (String item : paths)
+            {
+                opt.addOmitedDirName(item);
+            }
+        }
+        if (excludeFileName.isUsed())
+        {
+            String[] paths = excludeFileName.getValues();
+            for (String item : paths)
+            {
+                opt.addOmitedFileName(item);
+            }
+        }
+    }
+
+    private static void excludeRc(ForEachFileOptions opt, BooleanOption excludeRc, BooleanOption excludeSvn, BooleanOption excludeCvs, BooleanOption excludeHg)
+    {
+        if (excludeRc.isUsed() || excludeSvn.isUsed())
+        {
+            opt.addOmitedDirName(".svn");
+        }
+        if (excludeRc.isUsed() || excludeCvs.isUsed())
+        {
+            opt.addOmitedDirName("CVS");
+        }
+        if (excludeRc.isUsed() || excludeHg.isUsed())
+        {
+            opt.addOmitedDirName(".hg");
+            opt.addOmitedFileName(".hgignore");
+        }
     }
 
     private static void showBugs(Iterable<File> bugList, boolean fix)
