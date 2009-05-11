@@ -114,7 +114,7 @@ public class Main
             //            "  -w --min-wasted=size minimun wasted size, exclude shorters wasted=size*(n-1)\n" +
             "\n" +
             "size units:\n" +
-            " 1=1b, 1k=1024b, 1m=1024k, 1g=1024m, 1m=1024g, 1t=1024g\n" +
+            " 1=1b, 1k=1024b, 1m=1024k, 1g=1024m, 1t=1024g\n" +
             //            " -r --recurse     \tinclude files residing in subdirectories\n" +
             //            " -H --hardlinks   \tnormally, when two or more files point to the same\n" +
             //            "                  \tdisk area they are treated as non-duplicates; this\n" +
