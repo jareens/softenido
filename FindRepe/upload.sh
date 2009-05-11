@@ -1,7 +1,7 @@
 #!/bin/sh
 
-if [ $# -lt 4 ] ; then
-  echo upload.sh version summary user password
+if [ $# -lt 2 ] ; then
+  echo upload.sh version summary
   exit
 fi
 
