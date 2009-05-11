@@ -43,7 +43,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe  version 0.4.0.1 beta  (2009-05-10)\n" +
+            "findrepe  version 0.5.0 beta  (2009-05-11)\n" +
             "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -100,10 +100,10 @@ public class Main
             "     --noautoexclude         don't autoexclude some paths (/dev, /proc, ...)\n" +
             "     --exclude=path          don't follow path\n" +
 
-            "     --exclude-rc            don't follow revision control directories\n" +
-            "     --exclude-svn           don't follow subversion directories (.svn)\n" +
-            "     --exclude-cvs           don't follow cvs directories (CVS)\n" +
-            "     --exclude-hg            don't follow mercurial directories and files(.hg and .hgignore)\n" +
+            "     --exclude-rc            ignore revision control directories\n" +
+            "     --exclude-svn           ignore subversion (.svn)\n" +
+            "     --exclude-cvs           ignore cvs (CVS)\n" +
+            "     --exclude-hg            ignore mercurial (.hg and .hgignore)\n" +
 
             "     --exclude-dir=name      don't follow directories named name\n" +
             "     --exclude-file=name     ignore files named name\n" +
@@ -114,11 +114,7 @@ public class Main
             //            "  -w --min-wasted=size minimun wasted size, exclude shorters wasted=size*(n-1)\n" +
             "\n" +
             "size units:\n" +
-            "\n" +
-            " b bytes     (defaul)\n" +
-            " k kilobytes (1024 bytes)     g gigabytes (1024 megabytes)\n" +
-            " m megabytes (1024 kilobytes) t terabytes (1024 gigabytes)\n" +
-            "\n" +
+            " 1=1b, 1k=1024b, 1m=1024k, 1g=1024m, 1m=1024g, 1t=1024g\n" +
             //            " -r --recurse     \tinclude files residing in subdirectories\n" +
             //            " -H --hardlinks   \tnormally, when two or more files point to the same\n" +
             //            "                  \tdisk area they are treated as non-duplicates; this\n" +
@@ -142,7 +138,9 @@ public class Main
             " findrepe -d backup\n" +
             " findrepe -d --min-size=1m c:\\backup e:\\img\n" +
             " findrepe -nd c:\\backup e:\\img\n" +
-            " findrepe -n /opt/ /backup/tools \n";
+            " findrepe -n /opt/ /backup/tools \n" +
+            "\n" +
+            " send me yours to: <flikxxi@gmail.com>\n";
 
 
     /**
