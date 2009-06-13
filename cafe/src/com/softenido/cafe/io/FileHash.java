@@ -21,6 +21,8 @@
  */
 package com.softenido.cafe.io;
 
+import com.softenido.cafe.security.ParallelMessageDigest;
+import com.softenido.cafe.util.FileDigest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,8 +39,13 @@ import java.util.logging.Logger;
  */
 public class FileHash
 {
+
     private static final String MD5 = "MD5";
     private static final String SHA1 = "SHA-1";
+    private static final String[] DEF_ALG =
+    {
+        MD5, SHA1
+    };
     private static int bufSize = 64 * 1024;
     private File file;
     private final long size;
@@ -47,6 +54,9 @@ public class FileHash
     private byte[] fullMD5 = null;
     private byte[] fullSHA1 = null;
     private boolean exception = false;
+    private FileDigest digest = null;
+    private final Object lock = new Object();
+    private static boolean pow2 = true;
 
     /**
      * Creates a new FileHash instance from a File object.
@@ -70,7 +80,7 @@ public class FileHash
             return false;
         }
         final FileHash other = (FileHash) obj;
-        if(file.equals(other.file))
+        if (file.equals(other.file))
         {
             return true;
         }
@@ -81,7 +91,7 @@ public class FileHash
         try
         {
             // exception
-            if(this.exception || other.exception)
+            if (this.exception || other.exception)
             {
                 return false;
             }
@@ -91,21 +101,28 @@ public class FileHash
             {
                 return true;
             }
-            if (!Arrays.equals(this.getFastMD5(), other.getFastMD5()))
+            if (pow2)
             {
-                return false;
+                return equalsHash(other);
             }
-            if (!Arrays.equals(this.getFastSHA1(), other.getFastSHA1()))
+            else
             {
-                return false;
-            }
-            if (!Arrays.equals(this.getFullMD5(), other.getFullMD5()))
-            {
-                return false;
-            }
-            if (!Arrays.equals(this.getFullSHA1(), other.getFullSHA1()))
-            {
-                return false;
+                if (!Arrays.equals(this.getFastMD5(), other.getFastMD5()))
+                {
+                    return false;
+                }
+                if (!Arrays.equals(this.getFastSHA1(), other.getFastSHA1()))
+                {
+                    return false;
+                }
+                if (!Arrays.equals(this.getFullMD5(), other.getFullMD5()))
+                {
+                    return false;
+                }
+                if (!Arrays.equals(this.getFullSHA1(), other.getFullSHA1()))
+                {
+                    return false;
+                }
             }
         }
         catch (IOException ex)
@@ -273,5 +290,83 @@ public class FileHash
             buildFullHash();
         }
         return fullSHA1;
+    }
+    private static final long[] SIZES = FileDigest.buildSizes();
+
+    private boolean equalsHash(FileHash other)
+    {
+        try
+        {
+            FileDigest digestA = this.getDigest();
+            FileDigest digestB = other.getDigest();
+            digestA.keepOn();
+            try
+            {
+                digestB.keepOn();
+                try
+                {
+                    for (int i = 0; i < SIZES.length && SIZES[i]<size ; i++)
+                    {
+                        long s = SIZES[i];
+                        byte[] digA = digestA.getHash(s);
+                        byte[] digB = digestB.getHash(s);
+                        if (digA != null && digB != null)
+                        {
+                            if (!Arrays.equals(digA, digB))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    byte[] digA = digestA.getHash();
+                    byte[] digB = digestB.getHash();
+                    if (digA != null && digB != null)
+                    {
+                        return Arrays.equals(digA, digB);
+                    }
+                    return false;
+
+                }
+                finally
+                {
+                    digestB.keepOff();
+                }
+            }
+            finally
+            {
+                digestA.keepOff();
+            }
+        }
+        catch (FileNotFoundException ex)
+        {
+            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (CloneNotSupportedException ex)
+        {
+            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (NoSuchAlgorithmException ex)
+        {
+            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        exception = true;
+        return false;
+    }
+
+    private FileDigest getDigest() throws NoSuchAlgorithmException
+    {
+        synchronized (lock)
+        {
+            if (digest == null)
+            {
+                MessageDigest md = ParallelMessageDigest.getInstance(DEF_ALG);
+                digest = new FileDigest(file, md);
+            }
+            return digest;
+        }
     }
 }

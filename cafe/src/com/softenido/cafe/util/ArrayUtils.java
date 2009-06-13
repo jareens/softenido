@@ -36,7 +36,19 @@ import java.util.TreeMap;
  */
 public final class ArrayUtils
 {
-
+    public static String toHexString(byte[] byteArray)
+    {
+        StringBuilder hex = new StringBuilder();
+        for(int i=0;i<byteArray.length;i++)
+        {
+            byte c = byteArray[i];
+            String l = Integer.toHexString(c&15);
+            c = (byte) (c >> 4);
+            String h = Integer.toHexString(c&15);
+            hex.append(h+l);
+        }
+        return hex.toString();
+    }
     public static byte[] getByteArray(int[] intArray)
     {
         byte[] byteArray = new byte[intArray.length * 4];
@@ -143,4 +155,31 @@ public final class ArrayUtils
         return splitAgainEquals(src, null);
     }
 
+    public static byte[] cat(byte[][] src)
+    {
+        int size = 0;
+        if (src == null)
+        {
+            return new byte[0];
+        }
+        for (int i = 0; i < src.length; i++)
+        {
+            if (src[i] != null)
+            {
+                size += src[i].length;
+            }
+        }
+        byte[] dst = new byte[size];
+        for (int i = 0, w = 0; i < src.length; i++)
+        {
+            if (src[i] != null)
+            {
+                for (int j = 0; j < src[i].length; j++)
+                {
+                    dst[w++] = src[i][j];
+                }
+            }
+        }
+        return dst;
+    }
 }
