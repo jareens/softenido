@@ -43,7 +43,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe  version 0.5.0 beta  (2009-05-11)\n" +
+            "findrepe  version 0.5.1 beta  (2009-06-13)\n" +
             "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
