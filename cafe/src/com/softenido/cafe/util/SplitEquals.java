@@ -38,7 +38,7 @@ import java.util.TreeMap;
 public class SplitEquals<E>
 {
 
-    public static <T> Consumer<T[]> split(Consumer<T> src, ProducerConsumer<T[]> dst, Comparator<T> cmp, T[] empty)
+    public static <T> Consumer<T[]> split(Consumer<T> src, ProducerConsumer<T[]> dst, Comparator<T> cmp, T[] empty,final int min,final int max)
     {
 
         Map<T, List<T>> map = (cmp == null) ? new LinkedHashMap<T, List<T>>() : new TreeMap<T, List<T>>(cmp);
@@ -56,28 +56,32 @@ public class SplitEquals<E>
         
         for (List<T> item : map.values())
         {
-            dst.add(item.toArray(empty));
+            int size = item.size();
+            if(size >= min && size <= max)
+            {
+                dst.add(item.toArray(empty));
+            }
         }
         return dst;
     }
 
-    public static <T> Consumer<T[]> splitAgain(Consumer<T[]> src, ProducerConsumer<T[]> dst, Comparator<T> cmp, T[] empty)
+    public static <T> Consumer<T[]> splitAgain(Consumer<T[]> src, ProducerConsumer<T[]> dst, Comparator<T> cmp, T[] empty,final int min,final int max)
     {
         for (T[] srcItem : src)
         {
             Consumer<T> wrapSrc = IterableBuilder.build(srcItem);
-            split(wrapSrc, dst, cmp, empty);
+            split(wrapSrc, dst, cmp, empty,min,max);
         }
         return dst;
     }
 
-    public static <T> Runnable buildSplit(final Consumer<T> src, final ProducerConsumer<T[]> dst, final Comparator<T> cmp, final T[] empty, final T[] poison)
+    public static <T> Runnable buildSplit(final Consumer<T> src, final ProducerConsumer<T[]> dst, final Comparator<T> cmp, final T[] empty, final T[] poison,final int min,final int max)
     {
         return new Runnable()
         {
             public void run()
             {
-                split(src, dst, cmp, empty);
+                split(src, dst, cmp, empty,min,max);
                 if (poison != null)
                 {
                     dst.add(poison);
@@ -86,13 +90,13 @@ public class SplitEquals<E>
         };
     }
 
-    public static <T> Runnable buildSplitAgain(final Consumer<T[]> src, final ProducerConsumer<T[]> dst, final Comparator<T> cmp, final T[] empty, final T[] poison)
+    public static <T> Runnable buildSplitAgain(final Consumer<T[]> src, final ProducerConsumer<T[]> dst, final Comparator<T> cmp, final T[] empty, final T[] poison,final int min,final int max)
     {
         return new Runnable()
         {
             public void run()
             {
-                splitAgain(src, dst, cmp, empty);
+                splitAgain(src, dst, cmp, empty,min,max);
                 if (poison != null)
                 {
                     dst.add(poison);
