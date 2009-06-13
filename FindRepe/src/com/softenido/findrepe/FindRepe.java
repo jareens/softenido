@@ -76,6 +76,8 @@ public class FindRepe implements Runnable
     private final FileHash[] emptyHash = new FileHash[0];   // elemento de muestra para crear arrays en los split
     
     private final ForEachFileOptions options;
+    private int minCount = 0;
+    private int maxCount = Integer.MAX_VALUE;
 
     public FindRepe(File[] bases, boolean bugs, int bufSize, ForEachFileOptions opt)
     {
@@ -140,20 +142,24 @@ public class FindRepe implements Runnable
             final Consumer<FileHash> hashConsumer = IterableBuilder.build(hashQueue, hashEof);
             final BlockingQueue<FileHash[]> sizeQueue = new LinkedBlockingQueue<FileHash[]>(bufSize);
             final ProducerConsumer<FileHash[]> sizeProducer = IterableBuilder.build(sizeQueue, hashEofArray);
-            new Thread(SplitEquals.buildSplit(hashConsumer, sizeProducer, cmp, emptyHash, hashEofArray)).start();
+            new Thread(SplitEquals.buildSplit(hashConsumer, sizeProducer, cmp, emptyHash, hashEofArray,minCount,maxCount)).start();
 
             // agrupar por contenido
             BlockingQueue<FileHash[]> equalQueue = new LinkedBlockingQueue<FileHash[]>(bufSize);
             final ProducerConsumer<FileHash[]> equalProducer = IterableBuilder.build(equalQueue, hashEofArray);
-            new Thread(SplitEquals.buildSplitAgain(sizeProducer, equalProducer, null, emptyHash, hashEofArray)).start();
+            new Thread(SplitEquals.buildSplitAgain(sizeProducer, equalProducer, null, emptyHash, hashEofArray,minCount,maxCount)).start();
             for (FileHash[] listHash : equalProducer)
             {
-                File[] listFile = new File[listHash.length];
-                for (int i = 0; i < listHash.length; i++)
+                if (listHash.length >= minCount && listHash.length <= maxCount)
                 {
-                    listFile[i] = listHash[i].getFile();
+                    File[] listFile = new File[listHash.length];
+                    for (int i = 0; i < listHash.length; i++)
+                    {
+                        listFile[i] = listHash[i].getFile();
+                        listHash[i] = null;// free as soon as posible
+                    }
+                    groupsQueue.put(listFile);
                 }
-                groupsQueue.put(listFile);
             }
             groupsQueue.put(filesEof);
         }
@@ -175,6 +181,26 @@ public class FindRepe implements Runnable
     public Iterable<File[]> getGroupsIterable()
     {
         return IterableBuilder.build(groupsQueue, filesEof);
+    }
+
+    public int getMaxCount()
+    {
+        return maxCount;
+    }
+
+    public void setMaxCount(int maxCount)
+    {
+        this.maxCount = maxCount;
+    }
+
+    public int getMinCount()
+    {
+        return minCount;
+    }
+
+    public void setMinCount(int minCount)
+    {
+        this.minCount = minCount;
     }
 
 }

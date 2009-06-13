@@ -333,6 +333,9 @@ public class Main
 
         FindRepe findTask = new FindRepe(files, bugs, queueSize,opt);
 
+        // by now ignore groups of 1
+        findTask.setMinCount(2);
+
         new Thread(findTask).start();
 
         if (bugs)
