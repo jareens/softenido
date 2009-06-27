@@ -121,24 +121,28 @@ public class FileDigest
 
     private byte[] buildHash(long size) throws FileNotFoundException, IOException, CloneNotSupportedException
     {
-        if (raf == null)
+        if( size > 0 )
         {
-            raf = new RandomAccessFile(file, "r");
+            if (raf == null)
+            {
+                raf = new RandomAccessFile(file, "r");
+            }
+            if (buf == null)
+            {
+                buf = new byte[(int)Math.min(64*1024,length)];
+            }
+            size = Math.min(size,length);
+            raf.seek(count);
+
+            while (count < size)
+            {
+                int r = Math.min(buf.length, (int) (size - count));
+                r = raf.read(buf, 0, r);
+                md.update(buf, 0, r);
+                count += r;
+            }
         }
-        if (buf == null)
-        {
-            buf = new byte[64 * 1024];
-        }
-        size = Math.min(size,length);
-        raf.seek(count);
-        
-        while (count < size)
-        {
-            int r = Math.min(buf.length, (int) (size - count));
-            r = raf.read(buf, 0, r);
-            md.update(buf, 0, r);
-            count += r;
-        }
+
         MessageDigest md2 = (count < length) ? (MessageDigest) md.clone() : md;
         return md2.digest();
     }

@@ -24,6 +24,7 @@ package com.softenido.cafe.util;
 import com.softenido.cafe.collections.Consumer;
 import com.softenido.cafe.collections.IterableBuilder;
 import com.softenido.cafe.collections.ProducerConsumer;
+import com.softenido.cafe.util.concurrent.ParallelTask;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -38,7 +39,7 @@ import java.util.TreeMap;
 public class SplitEquals<E>
 {
 
-    public static <T> Consumer<T[]> split(Consumer<T> src, ProducerConsumer<T[]> dst, Comparator<T> cmp, T[] empty,final int min,final int max)
+    public static <T> Consumer<T[]> split(Consumer<T> src, ProducerConsumer<T[]> dst, Comparator<T> cmp, T[] empty, final int min, final int max)
     {
 
         Map<T, List<T>> map = (cmp == null) ? new LinkedHashMap<T, List<T>>() : new TreeMap<T, List<T>>(cmp);
@@ -53,11 +54,11 @@ public class SplitEquals<E>
             }
             list.add(item);
         }
-        
+
         for (List<T> item : map.values())
         {
             int size = item.size();
-            if(size >= min && size <= max)
+            if (size >= min && size <= max)
             {
                 dst.add(item.toArray(empty));
             }
@@ -65,23 +66,24 @@ public class SplitEquals<E>
         return dst;
     }
 
-    public static <T> Consumer<T[]> splitAgain(Consumer<T[]> src, ProducerConsumer<T[]> dst, Comparator<T> cmp, T[] empty,final int min,final int max)
+    public static <T> Consumer<T[]> splitAgain(Consumer<T[]> src, ProducerConsumer<T[]> dst, Comparator<T> cmp, T[] empty, final int min, final int max)
     {
         for (T[] srcItem : src)
         {
             Consumer<T> wrapSrc = IterableBuilder.build(srcItem);
-            split(wrapSrc, dst, cmp, empty,min,max);
+            split(wrapSrc, dst, cmp, empty, min, max);
         }
         return dst;
     }
 
-    public static <T> Runnable buildSplit(final Consumer<T> src, final ProducerConsumer<T[]> dst, final Comparator<T> cmp, final T[] empty, final T[] poison,final int min,final int max)
+    public static <T> Runnable buildSplit(final Consumer<T> src, final ProducerConsumer<T[]> dst, final Comparator<T> cmp, final T[] empty, final T[] poison, final int min, final int max)
     {
         return new Runnable()
         {
+
             public void run()
             {
-                split(src, dst, cmp, empty,min,max);
+                split(src, dst, cmp, empty, min, max);
                 if (poison != null)
                 {
                     dst.add(poison);
@@ -90,13 +92,44 @@ public class SplitEquals<E>
         };
     }
 
-    public static <T> Runnable buildSplitAgain(final Consumer<T[]> src, final ProducerConsumer<T[]> dst, final Comparator<T> cmp, final T[] empty, final T[] poison,final int min,final int max)
+    public static <T> Runnable buildSplitAgain(final Consumer<T[]> src, final ProducerConsumer<T[]> dst, final Comparator<T> cmp, final T[] empty, final T[] poison, final int min, final int max)
     {
         return new Runnable()
         {
+
             public void run()
             {
-                splitAgain(src, dst, cmp, empty,min,max);
+                splitAgain(src, dst, cmp, empty, min, max);
+                if (poison != null)
+                {
+                    dst.add(poison);
+                }
+            }
+        };
+    }
+
+    public static <T> Runnable buildSplitParallel(final Consumer<T> src, final ProducerConsumer<T[]> dst, final Comparator<T> cmp, final T[] empty, final T[] poison, final int min, final int max)
+    {
+        return new ParallelTask(buildSplit(src, dst, cmp, empty, null, min, max))
+        {
+            @Override
+            public void tail()
+            {
+                if (poison != null)
+                {
+                    dst.add(poison);
+                }
+            }
+        };
+    }
+    
+    public static <T> Runnable buildSplitAgainParallel(final Consumer<T[]> src, final ProducerConsumer<T[]> dst, final Comparator<T> cmp, final T[] empty, final T[] poison, final int min, final int max)
+    {
+        return new ParallelTask(buildSplitAgain(src, dst, cmp, empty, null, min, max))
+        {
+            @Override
+            public void tail()
+            {
                 if (poison != null)
                 {
                     dst.add(poison);

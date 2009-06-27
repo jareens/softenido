@@ -84,9 +84,14 @@ public class FileHash
         {
             return true;
         }
-        if (this.file.length() != other.file.length())
+        if (this.size != other.size)
         {
             return false;
+        }
+        //two files of size 0 are always equal
+        if (this.size == 0)
+        {
+            return true;
         }
         try
         {
@@ -305,8 +310,13 @@ public class FileHash
                 digestB.keepOn();
                 try
                 {
-                    for (int i = 0; i < SIZES.length && SIZES[i]<size ; i++)
+                    for (int i = 0; i < SIZES.length-1 && SIZES[i]<size ; i++)
                     {
+                        // avoid reading just few bytes in the next iteration
+                        if( size<(SIZES[i]+SIZES[i+1])/2 )
+                        {
+                            break;
+                        }
                         long s = SIZES[i];
                         byte[] digA = digestA.getHash(s);
                         byte[] digB = digestB.getHash(s);
