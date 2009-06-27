@@ -43,7 +43,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe  version 0.5.1 beta  (2009-06-13)\n" +
+            "findrepe  version 0.6.0 beta  (2009-06-27)\n" +
             "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -92,10 +92,10 @@ public class Main
             "     --install-java[=path]   install a launcher using 'java' command\n" +
             "     --install-home[=path]   install a launcher using 'java.home' property\n" +
             
-//            "     --unique                list only unique files\n" +
-//            "     --count=N               list files repeated N times  \n" +
-//            "     --min-count=N           list files repated at least N times\n" +
-//            "     --max-count=N           list files repated no more than N times\n" +
+            "     --unique                list only unique files (--count=1)\n" +
+            "     --count=N               list files repeated N times  \n" +
+            "     --min-count=N           files repated at least N times\n" +
+            "     --max-count=N           files repated no more than N times\n" +
 
             "     --noautoexclude         don't autoexclude some paths (/dev, /proc, ...)\n" +
             "     --exclude=path          don't follow path\n" +
@@ -170,10 +170,10 @@ public class Main
         StringOption minSize = options.add(new StringOption('m', "min-size"));
         StringOption maxSize = options.add(new StringOption('M', "max-size"));
 
-//        BooleanOption unique  = options.add(new BooleanOption("unique"));
-//        StringOption count    = options.add(new StringOption("count"));
-//        StringOption minCount = options.add(new StringOption("max-count"));
-//        StringOption maxCount = options.add(new StringOption("max-count"));
+        BooleanOption unique  = options.add(new BooleanOption("unique"));
+        StringOption count    = options.add(new StringOption("count"));
+        StringOption minCount = options.add(new StringOption("min-count"));
+        StringOption maxCount = options.add(new StringOption("max-count"));
 
         BooleanOption excludeRc  = options.add(new BooleanOption("exclude-rc"));
         BooleanOption excludeSvn = options.add(new BooleanOption("exclude-svn"));
@@ -299,7 +299,7 @@ public class Main
         {
             files[i] = new File(fileNames[i]);
         }
-        ForEachFileOptions opt = new ForEachFileOptions();
+        FindRepeOptions opt = new FindRepeOptions();
 
         opt.setHidden(true);
         opt.setLinkDir(symlinks.isUsed());
@@ -331,18 +331,18 @@ public class Main
         excludeRc(opt, excludeRc, excludeSvn, excludeCvs, excludeHg);
         excludeDirAndFile(opt, excludeDirName, excludeFileName);
 
+        // ignore groups of 1 unless it specified by options
+        opt.setMinCount(2);
+        countFilter(opt, unique, count, minCount, maxCount);
+
         FindRepe findTask = new FindRepe(files, bugs, queueSize,opt);
-
-        // by now ignore groups of 1
-        findTask.setMinCount(2);
-
         new Thread(findTask).start();
 
         if (bugs)
         {
             showBugs(findTask.getBugIterable(), fixBugs);
         }
-        showGroups(findTask.getGroupsIterable(), delete.isUsed());
+        showGroups(opt, findTask.getGroupsIterable(), delete.isUsed());
     }
 
     private static void excludeDirAndFile(ForEachFileOptions opt, ArrayStringOption excludeDirName, ArrayStringOption excludeFileName)
@@ -381,6 +381,42 @@ public class Main
             opt.addOmitedFileName(".hgignore");
         }
     }
+    private static void countFilter(FindRepeOptions opt, BooleanOption unique, StringOption count, StringOption minCount, StringOption maxCount)
+    {
+        int lastUsed = 0;
+        if( unique.isUsed() )
+        {
+            opt.setMinCount(1);
+            opt.setMaxCount(1);
+            lastUsed = unique.getLastUsed();
+        }
+        if(count.isUsed() && count.getLastUsed()>lastUsed)
+        {
+            int num = Integer.parseInt(count.getValue());
+            if(num>0)
+            {
+                opt.setMinCount(num);
+                opt.setMaxCount(num);
+            }
+            lastUsed = count.getLastUsed();
+        }
+        if(minCount.isUsed() && minCount.getLastUsed()>lastUsed)
+        {
+            int num = Integer.parseInt(minCount.getValue());
+            if(num>0)
+            {
+                opt.setMinCount(num);
+            }
+        }
+        if(maxCount.isUsed() && maxCount.getLastUsed()>lastUsed)
+        {
+            int num = Integer.parseInt(maxCount.getValue());
+            if(num>0)
+            {
+                opt.setMaxCount(num);
+            }
+        }
+    }
 
     private static void showBugs(Iterable<File> bugList, boolean fix)
     {
@@ -390,13 +426,13 @@ public class Main
         }
     }
 
-    private static void showGroups(Iterable<File[]> groupsList, boolean delete)
+    private static void showGroups(FindRepeOptions opt, Iterable<File[]> groupsList, boolean delete)
     {
         int groupId = 0;
 
         for (File[] group : groupsList)
         {
-            if (group.length > 1)
+            if (group.length >= opt.minCount && group.length <= opt.maxCount)
             {
                 showOneGroup(groupId, group, delete);
                 groupId++;
@@ -458,4 +494,5 @@ public class Main
             System.out.printf("\n  files deleted: %d\n\n", deletedCount);
         }
     }
+
 }

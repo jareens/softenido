@@ -25,7 +25,6 @@ import com.softenido.cafe.collections.Consumer;
 import com.softenido.cafe.collections.IterableBuilder;
 import com.softenido.cafe.collections.ProducerConsumer;
 import com.softenido.cafe.io.FileHash;
-import com.softenido.cafe.io.ForEachFileOptions;
 import com.softenido.cafe.util.SplitEquals;
 import java.io.File;
 import java.io.IOException;
@@ -75,11 +74,9 @@ public class FindRepe implements Runnable
     private final FileHash[] hashEofArray = new FileHash[0];// elemento final en una cola de FileHash[]
     private final FileHash[] emptyHash = new FileHash[0];   // elemento de muestra para crear arrays en los split
     
-    private final ForEachFileOptions options;
-    private int minCount = 0;
-    private int maxCount = Integer.MAX_VALUE;
+    private final FindRepeOptions options;
 
-    public FindRepe(File[] bases, boolean bugs, int bufSize, ForEachFileOptions opt)
+    public FindRepe(File[] bases, boolean bugs, int bufSize, FindRepeOptions opt)
     {
         this.bases = bases;
         this.bugs = false;
@@ -142,15 +139,15 @@ public class FindRepe implements Runnable
             final Consumer<FileHash> hashConsumer = IterableBuilder.build(hashQueue, hashEof);
             final BlockingQueue<FileHash[]> sizeQueue = new LinkedBlockingQueue<FileHash[]>(bufSize);
             final ProducerConsumer<FileHash[]> sizeProducer = IterableBuilder.build(sizeQueue, hashEofArray);
-            new Thread(SplitEquals.buildSplit(hashConsumer, sizeProducer, cmp, emptyHash, hashEofArray,minCount,maxCount)).start();
+            new Thread(SplitEquals.buildSplit(hashConsumer, sizeProducer, cmp, emptyHash, hashEofArray,options.minCount,Integer.MAX_VALUE)).start();
 
             // agrupar por contenido
             BlockingQueue<FileHash[]> equalQueue = new LinkedBlockingQueue<FileHash[]>(bufSize);
             final ProducerConsumer<FileHash[]> equalProducer = IterableBuilder.build(equalQueue, hashEofArray);
-            new Thread(SplitEquals.buildSplitAgain(sizeProducer, equalProducer, null, emptyHash, hashEofArray,minCount,maxCount)).start();
+            new Thread(SplitEquals.buildSplitAgain(sizeProducer, equalProducer, null, emptyHash, hashEofArray,options.minCount,options.maxCount)).start();
             for (FileHash[] listHash : equalProducer)
             {
-                if (listHash.length >= minCount && listHash.length <= maxCount)
+                if (listHash.length >= options.minCount && listHash.length <= options.maxCount)
                 {
                     File[] listFile = new File[listHash.length];
                     for (int i = 0; i < listHash.length; i++)
@@ -182,25 +179,4 @@ public class FindRepe implements Runnable
     {
         return IterableBuilder.build(groupsQueue, filesEof);
     }
-
-    public int getMaxCount()
-    {
-        return maxCount;
-    }
-
-    public void setMaxCount(int maxCount)
-    {
-        this.maxCount = maxCount;
-    }
-
-    public int getMinCount()
-    {
-        return minCount;
-    }
-
-    public void setMinCount(int minCount)
-    {
-        this.minCount = minCount;
-    }
-
 }
