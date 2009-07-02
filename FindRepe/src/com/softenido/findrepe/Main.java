@@ -180,11 +180,11 @@ public class Main
         BooleanOption excludeCvs = options.add(new BooleanOption("exclude-cvs"));
         BooleanOption excludeHg  = options.add(new BooleanOption("exclude-hg"));
 
-        ArrayStringOption excludeDirName  = options.add(new ArrayStringOption("exclude-dir",':'));
-        ArrayStringOption excludeFileName = options.add(new ArrayStringOption("exclude-file",':'));
+        ArrayStringOption excludeDirName  = options.add(new ArrayStringOption("exclude-dir",File.pathSeparatorChar));
+        ArrayStringOption excludeFileName = options.add(new ArrayStringOption("exclude-file",File.pathSeparatorChar));
 
         BooleanOption noautoexclude  = options.add(new BooleanOption("noautoexclude"));
-        ArrayStringOption exclude    = options.add(new ArrayStringOption("exclude",':'));
+        ArrayStringOption exclude    = options.add(new ArrayStringOption("exclude",File.pathSeparatorChar));
   
         BooleanOption symlinks = options.add(new BooleanOption('s', "symlinks"));
 
