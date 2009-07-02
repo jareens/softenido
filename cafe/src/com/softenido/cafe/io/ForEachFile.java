@@ -84,6 +84,8 @@ public abstract class ForEachFile implements Runnable
         if(OSName.os.isPosix())
         {
             autoOmitPaths.add(new File(File.separator+"dev"));
+            autoOmitPaths.add(new File(File.separator+"tmp"));
+            autoOmitPaths.add(new File(File.separator+"lost+found"));
         }
         if(OSName.os.isLinux() || OSName.os.isSolaris())
         {
@@ -92,6 +94,8 @@ public abstract class ForEachFile implements Runnable
         if(OSName.os.isLinux())
         {
             autoOmitPaths.add(new File(File.separator+"sys"));
+            autoOmitPaths.add(new File(File.separator+"var"+File.separator+"run"));
+            autoOmitPaths.add(new File(File.separator+"var"+File.separator+"lock"));
         }
         if(OSName.os.isSolaris())
         {
