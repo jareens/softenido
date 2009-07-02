@@ -243,7 +243,7 @@ public abstract class ForEachFile implements Runnable
         {
             return true;
         }
-        final boolean omitExplicit = options.hasOmitedPaths && !autoOmitPaths.isEmpty();
+        final boolean omitExplicit = options.hasOmitedPaths && !options.omitedPaths.isEmpty();
         if (omitExplicit && options.omitedPaths.contains(file))
         {
             return true;
