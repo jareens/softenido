@@ -43,7 +43,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe  version 0.6.0 beta  (2009-06-27)\n" +
+            "findrepe  version 0.6.0 beta  (2009-07-04)\n" +
             "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -115,7 +115,6 @@ public class Main
             "\n" +
             "size units:\n" +
             " 1=1b, 1k=1024b, 1m=1024k, 1g=1024m, 1t=1024g\n" +
-            //            " -r --recurse     \tinclude files residing in subdirectories\n" +
             //            " -H --hardlinks   \tnormally, when two or more files point to the same\n" +
             //            "                  \tdisk area they are treated as non-duplicates; this\n" +
             //            "                  \toption will change this behavior\n" +
@@ -162,6 +161,7 @@ public class Main
         OptionParser options = new OptionParser();
 
         BooleanOption verbose = options.add(new BooleanOption('v', "verbose"));
+        int verboseLevel = 0;
 
         Option license = options.add(new BooleanOption('L', "license"));
         BooleanOption delete = options.add(new BooleanOption('d', "delete"));
@@ -192,7 +192,6 @@ public class Main
         Option help = options.add(new BooleanOption('h', "help"));
 
         BooleanOption examples = options.add(new BooleanOption("examples"));
-
 
 //        StringOption minWasted = options.add(new StringOption('w', "min-wasted"));
 
@@ -245,6 +244,10 @@ public class Main
         {
             System.out.println(EXAMPLES);
             return;
+        }
+        if( verbose.isUsed())
+        {
+            verboseLevel = verbose.getCount();
         }
 
         String optName = null;
@@ -326,14 +329,18 @@ public class Main
             for(String item : paths)
             {
                 opt.addOmitedPath(new File(item));
+                if(verboseLevel>0)
+                {
+                    System.out.println("findrepe: excluded path '"+item+"'");
+                }
             }
         }
-        excludeRc(opt, excludeRc, excludeSvn, excludeCvs, excludeHg);
+        excludeRc(opt, excludeRc, excludeSvn, excludeCvs, excludeHg, verboseLevel);
         excludeDirAndFile(opt, excludeDirName, excludeFileName);
 
         // ignore groups of 1 unless it specified by options
         opt.setMinCount(2);
-        countFilter(opt, unique, count, minCount, maxCount);
+        countFilter(opt, unique, count, minCount, maxCount, verboseLevel);
 
         FindRepe findTask = new FindRepe(files, bugs, queueSize,opt);
         new Thread(findTask).start();
@@ -365,23 +372,36 @@ public class Main
         }
     }
 
-    private static void excludeRc(ForEachFileOptions opt, BooleanOption excludeRc, BooleanOption excludeSvn, BooleanOption excludeCvs, BooleanOption excludeHg)
+    private static void excludeRc(ForEachFileOptions opt, BooleanOption excludeRc, BooleanOption excludeSvn, BooleanOption excludeCvs, BooleanOption excludeHg, int verboseLevel)
     {
         if (excludeRc.isUsed() || excludeSvn.isUsed())
         {
             opt.addOmitedDirName(".svn");
+            if(verboseLevel>0)
+            {
+                System.out.println("findrepe: excluded subversion files");
+            }
+
         }
         if (excludeRc.isUsed() || excludeCvs.isUsed())
         {
             opt.addOmitedDirName("CVS");
+            if(verboseLevel>0)
+            {
+                System.out.println("findrepe: excluded CVS files");
+            }
         }
         if (excludeRc.isUsed() || excludeHg.isUsed())
         {
             opt.addOmitedDirName(".hg");
             opt.addOmitedFileName(".hgignore");
+            if(verboseLevel>0)
+            {
+                System.out.println("findrepe: excluded mercurial files");
+            }
         }
     }
-    private static void countFilter(FindRepeOptions opt, BooleanOption unique, StringOption count, StringOption minCount, StringOption maxCount)
+    private static void countFilter(FindRepeOptions opt, BooleanOption unique, StringOption count, StringOption minCount, StringOption maxCount, int verboseLevel)
     {
         int lastUsed = 0;
         if( unique.isUsed() )
@@ -416,6 +436,22 @@ public class Main
                 opt.setMaxCount(num);
             }
         }
+        if(verboseLevel>0)
+        {
+            if(opt.minCount == opt.maxCount)
+            {
+                System.out.println("findrepe: exactly "+opt.minCount+" occurrence"+((opt.minCount==1)?"":"s"));
+            }
+            else if(opt.maxCount != Integer.MAX_VALUE )
+            {
+                System.out.println("findrepe: between "+opt.minCount+" and "+opt.maxCount+" occurrences");
+            }
+            else if(opt.minCount != 2)
+            {
+                System.out.println("findrepe: at least "+opt.minCount+" occurrence"+((opt.minCount==1)?"":"s"));
+            }
+        }
+
     }
 
     private static void showBugs(Iterable<File> bugList, boolean fix)
