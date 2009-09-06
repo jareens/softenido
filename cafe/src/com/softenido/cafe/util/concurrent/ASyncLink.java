@@ -1,5 +1,5 @@
 /*
- *  PipeLine.java
+ *  ASyncLink.java
  *
  *  Copyright (C) 2009  Francisco Gómez Carrasco
  *
@@ -19,16 +19,36 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.util.pipeline;
+package com.softenido.cafe.util.concurrent;
 
 /**
  *
  * @author franci
  */
-public interface PipeLine<A,B>
+public class ASyncLink<M,R> extends ASyncValue<R> implements Filter<M,R>
 {
-    void put(A a) throws InterruptedException;
-    B get() throws InterruptedException;
-    void close() throws InterruptedException;
-    void link(PipeLine<B,?> next);
+    private final Value<M> m;
+    private final Filter<M,R> filter;
+    
+    public ASyncLink(Filter<M, R> filter,Value<M> m)
+    {
+        this.m = m;
+        this.filter = filter;
+    }
+    public ASyncLink(Value<M> m)
+    {
+        this.filter = this;
+        this.m = m;
+    }
+
+    @Override
+    protected R call() throws Exception
+    {
+        return filter.filter(m.get());
+    }
+
+    public R filter(M a)
+    {
+        return null;
+    }
 }

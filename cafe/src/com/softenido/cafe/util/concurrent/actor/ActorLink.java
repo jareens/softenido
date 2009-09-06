@@ -1,5 +1,5 @@
 /*
- *  ASyncFilter.java
+ *  ActorLink.java
  *
  *  Copyright (C) 2009  Francisco Gómez Carrasco
  *
@@ -19,29 +19,40 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.util.pipeline;
+package com.softenido.cafe.util.concurrent.actor;
 
-import com.softenido.cafe.util.concurrent.ASyncValue;
+import com.softenido.cafe.util.concurrent.Value;
 
 /**
  *
  * @author franci
  */
-public class ASyncFilter<A,B> extends ASyncValue<B>
+public class ActorLink<M,T,R> extends ActorBase<M,R>
 {
-    private final A a;
-    private final Filter<A,B> filter;
+    private final ActorBase <M,T> head;
+    private final ActorBase <T,R> tail;
 
-    public ASyncFilter(A a,Filter<A,B> filter)
+    public ActorLink(ActorBase<M, T> head, ActorBase<T, R> tail)
     {
-        this.a      = a;
-        this.filter = filter;
+        this.head = head;
+        this.tail = tail;
     }
 
     @Override
-    protected B call() 
+    public Value<R> send(M m) throws InterruptedException
     {
-        return filter.filter(a);
+        return tail.send(head.send(m));
     }
 
+    @Override
+    public Value<R> send(Value<M> m) throws InterruptedException
+    {
+        return tail.send(head.send(m));
+    }
+
+    @Override
+    public void execute(Runnable task) throws InterruptedException
+    {
+        head.execute(task);
+    }
 }

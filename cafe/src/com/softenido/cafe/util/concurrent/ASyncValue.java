@@ -21,6 +21,7 @@
  */
 package com.softenido.cafe.util.concurrent;
 
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,29 +29,24 @@ import java.util.logging.Logger;
  *
  * @author franci
  */
-public abstract class ASyncValue<V> implements Runnable
+public abstract class ASyncValue<V> implements Runnable, Value<V>
 {
     private final Object lock = new Object();
     private V value = null;
     private Exception exception = null;
     private volatile boolean done = false;
 
-    public V getValue()
+    public V get() throws InterruptedException, ExecutionException
     {
         if (!done)
         {
             run();
+        }
+        if(exception!=null)
+        {
+            throw new ExecutionException(exception);
         }
         return value;
-    }
-
-    public Exception getException()
-    {
-        if (!done)
-        {
-            run();
-        }
-        return exception;
     }
 
     public final void run()
@@ -75,5 +71,5 @@ public abstract class ASyncValue<V> implements Runnable
         }
     }
 
-    protected abstract V call();
+    protected abstract V call() throws Exception;
 }

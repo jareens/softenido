@@ -1,5 +1,5 @@
 /*
- *  ASyncPipeLine.java
+ *  ActorPool.java
  *
  *  Copyright (C) 2009  Francisco Gómez Carrasco
  *
@@ -19,9 +19,10 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.util.pipeline;
+package com.softenido.cafe.util.concurrent.actor;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -30,31 +31,43 @@ import java.util.concurrent.TimeUnit;
  *
  * @author franci
  */
-public class ASyncPipeLine<A,B> extends SyncPipeLine<A,B>
+public class ActorPool
 {
-    private static final int CORES = Runtime.getRuntime().availableProcessors();
-    private static final int POOL_SIZE = CORES*CORES+CORES;
-    private static final int KEEP_ALIVE_TIME = 100;
+    public final static int CORES = Runtime.getRuntime().availableProcessors();
 
-    private static final BlockingQueue<Runnable> inbox = new LinkedBlockingQueue<Runnable>();
-    private static final ThreadPoolExecutor executor = new ThreadPoolExecutor(POOL_SIZE, POOL_SIZE, KEEP_ALIVE_TIME , TimeUnit.MILLISECONDS, inbox);
-    {
-        executor.allowCoreThreadTimeOut(true);
-    }
+    private final BlockingQueue<Runnable> inbox;
+    private final Executor executor;
 
-    public ASyncPipeLine(Filter<A, B> filter)
+    public ActorPool(int poolSize)
     {
-        super(filter);
-    }
-
-    public ASyncPipeLine()
-    {
+        if(poolSize>0)
+        {
+            inbox   = new LinkedBlockingQueue<Runnable>();
+            ThreadPoolExecutor pool = new ThreadPoolExecutor(poolSize, poolSize, 333, TimeUnit.MILLISECONDS, inbox);
+            pool.allowCoreThreadTimeOut(true);
+            this.executor = pool;
+        }
+        else
+        {
+            inbox   = null;
+            executor = null;
+        }
     }
     
-    @Override
-    protected void execute(Runnable task)
+    public ActorPool()
     {
-        executor.execute(task);
+        this(CORES);
     }
-
+    
+    void execute(Runnable task) throws InterruptedException
+    {
+        if(executor==null)
+        {
+            task.run();
+        }
+        else
+        {
+            executor.execute(task);
+        }
+    }
 }

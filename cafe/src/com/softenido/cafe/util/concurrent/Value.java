@@ -1,5 +1,5 @@
 /*
- *  PipeLines.java
+ *  Value.java
  *
  *  Copyright (C) 2009  Francisco Gómez Carrasco
  *
@@ -19,40 +19,15 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.util.pipeline;
+package com.softenido.cafe.util.concurrent;
 
+import java.util.concurrent.ExecutionException;
 
 /**
  *
  * @author franci
  */
-public class PipeLines
+public interface Value<V>
 {
-    static volatile boolean defaultAsync = true;
-
-    public static <A,B> PipeLine<A,B> build(Filter<A,B> filter,boolean async)
-    {
-        if(async)
-        {
-            return new ASyncPipeLine<A, B>(filter);
-        }
-        else
-        {
-            return new SyncPipeLine<A,B>(filter);
-        }
-    }
-    public static <A,B> PipeLine<A,B> build(Filter<A,B> filter)
-    {
-        return build(filter,defaultAsync);
-    }
-
-    public static boolean isDefaultAsync()
-    {
-        return defaultAsync;
-    }
-
-    public static void setDefaultAsync(boolean defaultAsync)
-    {
-        PipeLines.defaultAsync = defaultAsync;
-    }
+    public V get() throws InterruptedException, ExecutionException;
 }
