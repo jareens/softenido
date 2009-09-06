@@ -35,6 +35,30 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+
+class CachedFile extends File
+{
+    boolean directory=false;
+    boolean directoryCached =false;
+
+    public CachedFile(String pathname)
+    {
+        super(pathname);
+    }
+
+    @Override
+    public boolean isDirectory()
+    {
+        if(!directoryCached)
+        {
+            directory = super.isDirectory();
+            directoryCached = true;
+        }
+        return directory;
+    }
+
+
+}
 /**
  *
  * @author franci
@@ -148,7 +172,7 @@ public abstract class ForEachFile implements Runnable
                     }
                     for (File child : childs)
                     {
-                        run(child, level + 1);
+                        run(new CachedFile(child.toString()), level + 1);
                     }
                     return;
                 }

@@ -182,7 +182,7 @@ public class Files
                 v.add(names[i]);
             }
         }
-        return (String[]) (v.toArray(new String[v.size()]));
+        return v.toArray(new String[v.size()]);
     }
 
     /**
@@ -263,7 +263,7 @@ public class Files
             }
         };
         fef.run();
-        return (File[]) v.toArray(new File[0]);
+        return v.toArray(new File[0]);
     }
 
     /**
