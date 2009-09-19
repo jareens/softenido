@@ -56,7 +56,7 @@ public class ActorPool
     
     public ActorPool()
     {
-        this(CORES);
+        this(CORES*2+CORES+CORES/2);
     }
     
     void execute(Runnable task) throws InterruptedException

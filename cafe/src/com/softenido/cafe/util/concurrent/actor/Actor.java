@@ -28,7 +28,7 @@ import com.softenido.cafe.util.concurrent.Value;
  *
  * @author franci
  */
-public class Actor<M,R> extends ActorBase<M,R> implements Filter<M,R>
+public class Actor<M,R> implements ActorBase<M,R> , Filter<M,R>
 {
     private static volatile boolean forceSync = false;
 
@@ -40,18 +40,18 @@ public class Actor<M,R> extends ActorBase<M,R> implements Filter<M,R>
     }
     public Actor(ActorPool pool,int threads,Filter<M,R> filter)
     {
-        super(filter);
+        filter = filter==null?this:filter;
         if(forceSync||threads==0)
         {
-            actor = new ActorSync<M,R>(this.filter);
+            actor = new ActorSync<M,R>(filter);
         }
         else if(threads==1)
         {
-            actor = new ActorSingle<M,R>(this.filter,pool);
+            actor = new ActorSingle<M,R>(filter,pool);
         }
         else if(threads>1)
         {
-            actor = new ActorMulti<M,R>(this.filter,pool,threads);
+            actor = new ActorMulti<M,R>(filter,pool,threads);
         }
         else
         {
@@ -70,6 +70,10 @@ public class Actor<M,R> extends ActorBase<M,R> implements Filter<M,R>
     public Actor(int threads,Filter<M,R> filter)
     {
         this(null,threads,filter);
+    }
+    public Actor(int threads)
+    {
+        this(null,threads,null);
     }
     public Actor(Filter<M,R> filter)
     {
@@ -110,6 +114,11 @@ public class Actor<M,R> extends ActorBase<M,R> implements Filter<M,R>
     public void execute(Runnable task) throws InterruptedException
     {
         actor.execute(task);
+    }
+
+    public R filter(M a)
+    {
+        return null;
     }
 
 }

@@ -27,7 +27,7 @@ import com.softenido.cafe.util.concurrent.Value;
  *
  * @author franci
  */
-public class ActorLink<M,T,R> extends ActorBase<M,R>
+public class ActorLink<M,T,R> implements ActorBase<M,R>
 {
     private final ActorBase <M,T> head;
     private final ActorBase <T,R> tail;

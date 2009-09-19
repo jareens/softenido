@@ -1,5 +1,5 @@
 /*
- *  ActorSync.java
+ *  Pair.java
  *
  *  Copyright (C) 2009  Francisco Gómez Carrasco
  *
@@ -19,40 +19,31 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.util.concurrent.actor;
-
-import com.softenido.cafe.util.concurrent.Filter;
-import com.softenido.cafe.util.concurrent.ValueLink;
-import com.softenido.cafe.util.concurrent.ValueSync;
-import com.softenido.cafe.util.concurrent.Value;
+package com.softenido.cafe.util;
 
 /**
  *
  * @author franci
  */
-public class ActorSync<M,R> implements ActorBase<M,R>
+public class Pair<K,V>
 {
-    private final Filter<M,R> filter;
+    final K key;
+    final V val;
+
+    public Pair(K key, V val)
+    {
+        this.key = key;
+        this.val = val;
+    }
+
+    public K getKey()
+    {
+        return key;
+    }
+
+    public V getVal()
+    {
+        return val;
+    }
     
-    public ActorSync(Filter<M, R> filter)
-    {
-        this.filter = filter;
-    }
-
-    public Value<R> send(final M m) throws InterruptedException
-    {
-        return new ValueSync<R>(filter.filter(m));
-    }
-
-    @Override
-    public Value<R> send(Value<M> m) throws InterruptedException
-    {
-        return new ValueLink<M,R>(filter,m);
-    }
-
-    @Override
-    public void execute(Runnable task)
-    {
-        task.run();
-    }
 }

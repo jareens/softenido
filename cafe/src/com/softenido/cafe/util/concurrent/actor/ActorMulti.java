@@ -32,7 +32,7 @@ import com.softenido.cafe.util.concurrent.ASyncValue;
  *
  * @author franci
  */
-public class ActorMulti<M,R> extends ActorBase<M,R>
+public class ActorMulti<M,R> implements ActorBase<M,R>
 {
     private final AtomicInteger index = new AtomicInteger();
     private final ActorSingle<M,R> actors[];
@@ -41,11 +41,7 @@ public class ActorMulti<M,R> extends ActorBase<M,R>
     
     public ActorMulti(Filter<M,R> filter,ActorPool pool,int threads)
     {
-        super(filter);
-        if(filter==null)
-        {
-            filter = this;
-        }
+        assert filter!=null:"attempt to use a null filter";
         if(threads==0)
         {
             threads = ActorPool.CORES;
@@ -57,26 +53,6 @@ public class ActorMulti<M,R> extends ActorBase<M,R>
         {
             actors[i] = new ActorSingle<M,R>(filter,pool,queue);
         }
-    }
-    public ActorMulti(Filter<M,R> filter)
-    {
-        this(filter,null,0);
-    }
-    public ActorMulti(ActorPool pool,int threads)
-    {
-        this(null,pool,threads);
-    }
-    public ActorMulti(ActorPool pool)
-    {
-        this(null,pool,0);
-    }
-    public ActorMulti(int threads)
-    {
-        this(null,null,threads);
-    }
-    public ActorMulti()
-    {
-        this(null,null,1);
     }
 
     public ASyncValue<R> send(final M m) throws InterruptedException

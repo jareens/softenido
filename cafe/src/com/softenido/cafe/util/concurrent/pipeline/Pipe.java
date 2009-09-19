@@ -1,5 +1,5 @@
 /*
- *  PipeLineBase.java
+ *  Pipe.java
  *
  *  Copyright (C) 2009  Francisco Gómez Carrasco
  *
@@ -27,13 +27,13 @@ import java.util.concurrent.ExecutionException;
  *
  * @author franci
  */
-public interface PipeLineBase<A,B>
+public interface Pipe<A,B>
 {
-    void put(A a) throws InterruptedException;
-    //Value<B> poll() throws InterruptedException, ExecutionException;
-    B take() throws InterruptedException, ExecutionException;
-    void close() throws InterruptedException;
-    //void execute(Runnable task) throws InterruptedException;
-    boolean isAlive();
-
+    public void put(A a) throws InterruptedException;
+    public B take() throws InterruptedException, ExecutionException;
+    public B poll() throws InterruptedException, ExecutionException;
+    public void close() throws InterruptedException;
+    public boolean isAlive();
+    public void execute(Runnable task) throws InterruptedException;
+    public int size();
 }

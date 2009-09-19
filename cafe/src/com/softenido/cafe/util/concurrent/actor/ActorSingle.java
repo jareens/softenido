@@ -36,23 +36,25 @@ import java.util.logging.Logger;
  *
  * @author franci
  */
-public class ActorSingle<M,R> extends ActorBase<M,R> implements Runnable
+public class ActorSingle<M,R> implements ActorBase<M,R> , Runnable
 {
-    final static ActorPool shared = new ActorPool(100);
+    final static ActorPool shared = new ActorPool();
     
-    public static final int QUEUE_SIZE = 64*1024;
+    public static final int QUEUE_SIZE = 640*1024;
+    
     private final AtomicBoolean eagerLock = new AtomicBoolean(false); //controla si hay un hilo gloton
     private final BlockingQueue<Runnable> queue;
     private final ActorPool pool;
+    private final Filter<M,R> filter;
     
     private volatile boolean pendingData = false;
     private volatile boolean runningTask = false;
 
     ActorSingle(Filter<M,R> filter,ActorPool pool,BlockingQueue<Runnable> queue)
     {
-        super(filter);
         this.queue  = (queue!=null) ? queue :new LinkedBlockingQueue<Runnable>(QUEUE_SIZE);
         this.pool   = (pool!=null)? pool:ActorSingle.shared;
+        this.filter = filter;
     }
     public ActorSingle(Filter<M,R> filter,ActorPool pool)
     {
@@ -61,14 +63,6 @@ public class ActorSingle<M,R> extends ActorBase<M,R> implements Runnable
     public ActorSingle(Filter<M,R> filter)
     {
         this(filter,null);
-    }
-    public ActorSingle(ActorPool pool)
-    {
-        this(null,pool);
-    }
-    public ActorSingle()
-    {
-        this(null,null);
     }
 
     @Override
@@ -116,7 +110,7 @@ public class ActorSingle<M,R> extends ActorBase<M,R> implements Runnable
                     Runnable task;
                     while ( (task = queue.poll()) != null)
                     {
-                            task.run();
+                        task.run();
                     }
                 }
                 catch (Exception ex)

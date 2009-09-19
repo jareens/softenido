@@ -22,75 +22,210 @@
 package com.softenido.cafe.util.concurrent.pipeline;
 
 import com.softenido.cafe.util.concurrent.Filter;
-import com.softenido.cafe.util.concurrent.actor.ActorPool;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author franci
  */
-public class PipeLine<M,R> implements PipeLineBase<M,R>, Filter<M,R>
+public class PipeLine<M,R> implements Pipe<M,R>, Filter<M,R>, Runnable
 {
-    private final PipeLineActor<M,?> write;
-    private final PipeLineActor<?,R> read;
-    
-    private PipeLine(PipeLineActor<M,?> write,PipeLineActor<?,R> read)
-    {
-        this.write = write;
-        this.read = read;
-    }
-    public PipeLine(ActorPool pool,int threads,Filter<M,R> filter)
-    {
-        PipeLineActor<M,R> pipe = new PipeLineActor<M,R>(pool,threads, filter!=null?filter:this);
-        this.write = pipe;
-        this.read = pipe;
-    }
-    public PipeLine(ActorPool pool,int threads)
-    {
-        PipeLineActor<M,R> pipe = new PipeLineActor<M,R>(pool,threads,this);
-        this.write = pipe;
-        this.read = pipe;
-    }
-    public PipeLine(int threads)
-    {
-        PipeLineActor<M,R> pipe = new PipeLineActor<M,R>(threads,this);
-        this.write = pipe;
-        this.read = pipe;
-    }
+    final private boolean needFlush;
+    final private Pipe<M,?> first;
+    final private Pipe<?,R> last;
+    final private Pipe[] links;
+    private final AtomicBoolean firstLock = new AtomicBoolean(false); //controla si hay un hilo gloton
+    private volatile boolean pendingData = false;
+    private volatile boolean runningTask = false;
+
     public PipeLine()
     {
-        PipeLineActor<M,R> pipe = new PipeLineActor<M,R>(this);
-        this.write = pipe;
-        this.read = pipe;
+        Pipe<M,R> pipe = new PipeActor<M,R>(this);
+        this.first = pipe;
+        this.last  = pipe;
+        this.links = new Pipe[1];
+        this.links[0] = first;
+        this.needFlush= false;
     }
-
-    public void put(M m) throws InterruptedException
+    protected <C> PipeLine(PipeLine<M,C> ini, PipeLine<C,R> end)
     {
-        write.put(m);
+        assert ini!=end:"ini!=end";
+
+        this.first = ini.first;
+        this.last  = end.last;
+        this.links = new Pipe<?,?>[ini.links.length+end.links.length];
+        for(int i=0;i<ini.links.length;i++)
+        {
+            this.links[i] = ini.links[i];
+        }
+        for(int i=0;i<end.links.length;i++)
+        {
+            this.links[ini.links.length+i] = end.links[i];
+        }
+        needFlush = true;
+    }
+    protected <C> PipeLine(PipeLine<M,C> ini, Pipe<C,R> end)
+    {
+        assert ini!=end:"ini!=end";
+
+        this.first = ini.first;
+        this.last  = end;
+        this.links = new Pipe<?,?>[ini.links.length+1];
+        for(int i=0;i<ini.links.length;i++)
+        {
+            this.links[i] = ini.links[i];
+        }
+        this.links[ini.links.length] = end;
+        needFlush = true;
+    }
+    protected <C> PipeLine(Pipe<M,C> ini, PipeLine<C,R> end)
+    {
+        assert ini!=end:"ini!=end";
+
+        this.first = ini;
+        this.last  = end.last;
+        this.links = new Pipe<?,?>[end.links.length+1];
+        this.links[0] = ini;
+        for(int i=0;i<end.links.length;i++)
+        {
+            this.links[i+1] = end.links[i];
+        }
+        needFlush = true;
+    }
+    protected <C> PipeLine(Pipe<M,C> ini, Pipe<C,R> end)
+    {
+        assert ini!=end:"ini!=end";
+
+        this.first = ini;
+        this.last  = end;
+        this.links = new Pipe<?,?>[2];
+        this.links[0] = ini;
+        this.links[1] = end;
+        needFlush = true;
     }
 
+    @Override
+    public void put(M a) throws InterruptedException
+    {
+        first.put(a);
+        if(needFlush)
+        {
+            pendingData = true;
+            if(!runningTask)
+            {
+                execute(this);
+            }
+        }
+    }
+
+    @Override
     public R take() throws InterruptedException, ExecutionException
     {
-        return read.take();
+        return last.take();
+    }
+    public R poll() throws InterruptedException, ExecutionException
+    {
+        return last.poll();
     }
 
+    @Override
     public void close() throws InterruptedException
     {
-        write.close();
+        first.close();
+        if(needFlush)
+        {
+            pendingData = true;
+            if(!runningTask)
+            {
+                execute(this);
+            }
+        }
     }
 
+    @Override
     public boolean isAlive()
     {
-        return read.isAlive();
-    }
-    public <T> PipeLine<M,T> link(PipeLine<R,T> pipe)
-    {
-        read.link(pipe.write);
-        return new PipeLine(write,pipe.read);
+        return last.isAlive();
     }
 
+    @Override
+    public void execute(Runnable task) throws InterruptedException
+    {
+        first.execute(task);
+    }
+    public <T> PipeLine<M,T> link(PipeLine<R,T> next)
+    {
+        return new PipeLine(this,next);
+    }
+    public <T> PipeLine<M,T> link(Pipe<R,T> next)
+    {
+        return new PipeLine(this,next);
+    }
     public R filter(M a)
     {
         return null;
+    }
+
+    public void run()
+    {
+        if(!firstLock.compareAndSet(false, true))
+            return;
+        try
+        {
+            boolean loop=true;
+            while(loop || pendingData)
+            {
+                pendingData = false;
+                runningTask = true;
+                try
+                {
+                    loop = flush();
+                }
+                catch (Exception ex)
+                {
+                    pendingData = true;
+                    Logger.getLogger(PipeLine.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                finally
+                {
+                    runningTask = false;
+                }
+            }
+        }
+        finally
+        {
+            firstLock.set(false);
+        }
+    }
+    private boolean flush() throws InterruptedException, ExecutionException
+    {
+        boolean keep = false;
+        for(int i=0;i<links.length-1;i++)
+        {
+            boolean eager = (i == (links.length-2) );
+            Object val=this;
+            while(val!=null && (eager || links[i].size()>=links[i+1].size()) )
+            {
+                val = links[i].poll();
+                if (val != null)
+                {
+                    links[i + 1].put(val);
+                }
+                else if (!links[i].isAlive())
+                {
+                    links[i + 1].close();
+                }
+            }
+            keep = (keep || val!=null);
+        }
+        return keep;
+    }
+
+    public int size()
+    {
+        return last.size();
     }
 }

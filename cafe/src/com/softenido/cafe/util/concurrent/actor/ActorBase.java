@@ -21,33 +21,15 @@
  */
 package com.softenido.cafe.util.concurrent.actor;
 
-import com.softenido.cafe.util.concurrent.Filter;
 import com.softenido.cafe.util.concurrent.Value;
 
 /**
  *
  * @author franci
  */
-public abstract class ActorBase<M,R> implements Filter<M,R>
+public interface ActorBase<M,R>
 {
-    protected final Filter<M,R> filter;
-
-    public ActorBase(Filter<M, R> filter)
-    {
-        this.filter = (filter!=null)? filter:this;
-    }
-    public ActorBase()
-    {
-        this(null);
-    }
-    public R filter(M a)
-    {
-        return null;
-    }
-    
-    abstract public Value<R> send(final M m) throws InterruptedException;
-    abstract public Value<R> send(final Value<M> m) throws InterruptedException;
-
-    abstract public void execute(Runnable task) throws InterruptedException;
-
+    public Value<R> send(final M m) throws InterruptedException;
+    public Value<R> send(final Value<M> m) throws InterruptedException;
+    public void execute(Runnable task) throws InterruptedException;
 }
