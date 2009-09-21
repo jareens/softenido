@@ -1,0 +1,32 @@
+--any--
+java -jar FindRepe.jar --install
+java -jar FindRepe.jar --install-posix
+java -jar FindRepe.jar --install-home
+java -jar FindRepe.jar --install-java
+
+java -Dos.name="unknown" -jar FindRepe.jar --install
+java -Dos.name="unknown" -jar FindRepe.jar --install-posix
+
+findrepe
+findrepe --license
+findrepe --version
+findrepe --examples
+findrepe --help
+
+--posix--
+java -jar FindRepe.jar --install-home /opt/jdk1.6.0/
+java -jar FindRepe.jar --install-java /opt/jdk1.6.0/bin/java
+
+--linux--
+sudo java -jar FindRepe.jar --install
+sudo java -jar FindRepe.jar --install-posix
+sudo java -jar FindRepe.jar --install-home
+sudo java -jar FindRepe.jar --install-java
+sudo java -jar FindRepe.jar --install-home /opt/jdk1.6.0/
+sudo java -jar FindRepe.jar --install-java /opt/jdk1.6.0/bin/java
+
+--opensolaris--
+
+--windows--
+java -jar FindRepe.jar --install-home c:/opt/jdk1.6.0/
+java -jar FindRepe.jar --install-java c:/opt/jdk1.6.0/bin/java

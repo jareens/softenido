@@ -27,7 +27,6 @@ package com.softenido.cafe.util.options;
  */
 public interface Option
 {
-
     int getCount();
 
     void addCount();

@@ -29,22 +29,22 @@ public class OSName
 {
     // string for os.name property only few tested
 
-    private static final String DARWIN = "darwin";
-    private static final String MAC = "mac";
-    private static final String MAC_OS_X = "mac os x";
-    private static final String OPENBSD = "openbsd";
-    private static final String LINUX = "linux";        // tested
-    private static final String SOLARIS = "solaris";
-    private static final String SUNOS = "sunos";        // tested
-    private static final String FREEBSD = "freebsd";
-    private static final String WINDOWS = "windows";      // tested
-    private static final String WINDOWS_98 = "windows 98";
-    private static final String WINDOWS_98SE = "windows 98se";
-    private static final String WINDOWS_ME = "windows me";
-    private static final String WINDOWS_2000 = "windows 2000";
-    private static final String WINDOWS_XP = "windows xp";   // tested
+    private static final String DARWIN        = "darwin";
+    private static final String MAC           = "mac";
+    private static final String MAC_OS_X      = "mac os x";
+    private static final String OPENBSD       = "openbsd";
+    private static final String LINUX         = "linux";        // tested
+    private static final String SOLARIS       = "solaris";
+    private static final String SUNOS         = "sunos";        // tested
+    private static final String FREEBSD       = "freebsd";
+    private static final String WINDOWS       = "windows";      // tested
+    private static final String WINDOWS_98    = "windows 98";
+    private static final String WINDOWS_98SE  = "windows 98se";
+    private static final String WINDOWS_ME    = "windows me";
+    private static final String WINDOWS_2000  = "windows 2000";
+    private static final String WINDOWS_XP    = "windows xp";   // tested
     private static final String WINDOWS_VISTA = "windows vista";   // tested
-    private static final String WINDOWS_CE = "windows ce";
+    private static final String WINDOWS_CE    = "windows ce";
     private static final String OS_NAME = "os.name";
     private final boolean linux;
     private final boolean solaris;
@@ -63,9 +63,11 @@ public class OSName
     private final boolean windowsCE;
     private final boolean unknown;
     public static final OSName os = getInstance(System.getProperty(OS_NAME));
+    private final String name;
 
     public OSName(String osName)
     {
+        name   = osName;
         osName = osName.toLowerCase();
 
         boolean _linux = false;
@@ -258,6 +260,11 @@ public class OSName
     public boolean isWindowsVista()
     {
         return windowsVista;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
 }

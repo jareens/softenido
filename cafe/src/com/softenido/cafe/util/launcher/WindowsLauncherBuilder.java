@@ -40,6 +40,11 @@ public class WindowsLauncherBuilder extends LauncherBuilder
             ":done\n" +
             "call {$java} -jar {$jar} {$opt} %ARGS%\n";
 
+    public WindowsLauncherBuilder(String osname)
+    {
+        super(osname);
+    }
+
     @Override
     public String getLauncherFile(String name)
     {

@@ -1,4 +1,4 @@
-/*
+    /*
  *  Main.java
  *
  *  Copyright (C) 2009  Francisco Gómez Carrasco
@@ -22,6 +22,7 @@
 package com.softenido.findrepe;
 
 import com.softenido.cafe.io.ForEachFileOptions;
+import com.softenido.cafe.util.OSName;
 import com.softenido.cafe.util.SizeUnits;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
@@ -29,6 +30,8 @@ import com.softenido.cafe.util.options.Option;
 import com.softenido.cafe.util.options.OptionParser;
 import com.softenido.cafe.util.options.StringOption;
 import com.softenido.cafe.util.launcher.LauncherBuilder;
+import com.softenido.cafe.util.launcher.LauncherParser;
+import com.softenido.cafe.util.launcher.PosixLauncherBuilder;
 import com.softenido.cafe.util.options.ArrayStringOption;
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +46,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe  version 0.6.0 beta  (2009-07-04)\n" +
+            "findrepe  version 0.6.1 beta  (2009-09-21)\n" +
             "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -91,6 +94,7 @@ public class Main
             "     --install               install a launcher\n" +
             "     --install-java[=path]   install a launcher using 'java' command\n" +
             "     --install-home[=path]   install a launcher using 'java.home' property\n" +
+            "     --install-posix         posix flavor for install options when unknown\n" +
             
             "     --unique                list only unique files (--count=1)\n" +
             "     --count=N               list files repeated N times  \n" +
@@ -133,6 +137,7 @@ public class Main
             " java -jar FindRepe.jar --install\n" +
             " sudo java -jar FindRepe.jar --install\n" +
             " sudo /opt/jdk1.6/bin/java -jar FindRepe.jar --install-home\n" +
+            " sudo /opt/jdk1.6/bin/java -jar FindRepe.jar --install-posix\n" +
             " findrepe backup\n" +
             " findrepe -d backup\n" +
             " findrepe -d --min-size=1m c:\\backup e:\\img\n" +
@@ -140,7 +145,6 @@ public class Main
             " findrepe -n /opt/ /backup/tools \n" +
             "\n" +
             " send me yours to: <flikxxi@gmail.com>\n";
-
 
     /**
      * @param args the command line arguments
@@ -205,12 +209,22 @@ public class Main
 
         String[] fileNames;
         try
-        {
-            LauncherBuilder builder = LauncherBuilder.getBuilder();
-            args = builder.parse(args);
-            if (builder.isInstall())
+        {           
+            LauncherParser parser = new LauncherParser();
+            args = parser.parse(args);
+            if (parser.isInstall())
             {
-                if (builder.buildLauncher("findrepe"))
+                LauncherBuilder builder = LauncherBuilder.getBuilder();
+                if(builder==null && parser.isPosix())
+                {
+                    builder = new PosixLauncherBuilder("posix");
+                }
+                
+                if(builder==null)
+                {
+                    System.err.println("findrepe: Operating System '"+OSName.os.getName()+"' not supported for install options");
+                }
+                else if (builder.buildLauncher(parser,"findrepe"))
                 {
                     System.out.println("findrepe: '" + builder.getFileName() + "' created");
                 }

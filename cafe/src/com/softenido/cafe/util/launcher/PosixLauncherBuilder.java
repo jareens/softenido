@@ -38,6 +38,11 @@ public class PosixLauncherBuilder extends LauncherBuilder
             "#!/bin/sh\n" +
             "{$java} -jar {$jar} {$opt} $@\n";
 
+    public PosixLauncherBuilder(String osname)
+    {
+        super(osname);
+    }
+
     @Override
     public String getLauncherFile(String name)
     {
@@ -57,9 +62,9 @@ public class PosixLauncherBuilder extends LauncherBuilder
     }
 
     @Override
-    public boolean buildLauncher(String name) throws IOException
+    public boolean buildLauncher(LauncherParser parser,String name) throws IOException
     {
-        boolean val = super.buildLauncher(name);
+        boolean val = super.buildLauncher(parser,name);
         if(val)
         {
             val = new File(getFileName()).setExecutable(true,false);

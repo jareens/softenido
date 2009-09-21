@@ -21,6 +21,7 @@
  */
 package com.softenido.cafe.util.options;
 
+// CAMBIAR LA HERENCIA POR UNA COMPOSICIÓN PARA FACILITAR LA DETECCIÓN DE ERRORES EN OptionParser.add
 /**
  *
  * @author franci

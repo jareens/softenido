@@ -28,6 +28,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -99,13 +101,20 @@ public class ForEachArrayFileQueue implements Runnable
         }
         if (eof != null)
         {
-            if (fileQueue != null)
+            try
             {
-                fileQueue.add(eof);
+                if (fileQueue != null)
+                {
+                    fileQueue.put(eof);
+                }
+                if (nameQueue != null)
+                {
+                    nameQueue.put(eof.toString());
+                }
             }
-            if (nameQueue != null)
+            catch (InterruptedException ex)
             {
-                nameQueue.add(eof.toString());
+                Logger.getLogger(ForEachArrayFileQueue.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

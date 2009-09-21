@@ -22,10 +22,7 @@
 package com.softenido.cafe.util.launcher;
 
 import com.softenido.cafe.io.Files;
-import com.softenido.cafe.util.options.BooleanOption;
-import com.softenido.cafe.util.options.InvalidOptionException;
-import com.softenido.cafe.util.options.OptionParser;
-import com.softenido.cafe.util.options.StringOption;
+import com.softenido.cafe.util.OSName;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -38,7 +35,6 @@ import java.io.PrintWriter;
 public abstract class LauncherBuilder
 {
     // property keys
-    private static final String OS_NAME = "os.name";
     private static final String JAVA_CLASS_PATH = "java.class.path";
     private static final String JAVA_HOME = "java.home";
 
@@ -46,53 +42,46 @@ public abstract class LauncherBuilder
     protected static final String $JAVA = "{$java}";
     protected static final String $JAR = "{$jar}";
     protected static final String $OPT = "{$opt}";
-    
-    private boolean install = false;
-    private boolean auto = false;
-    private boolean java = false;
-    private boolean home = false;
-    private String javaPath = null;
-    private String homePath = null;
+
+    private final String osname;
     private String fileName = null;
 
     public static LauncherBuilder getBuilder()
     {
-        String osname = System.getProperties().getProperty(OS_NAME);
-        if (osname == null)
-        {
-            return null;
-        }
-        osname = osname.toLowerCase();
+        OSName os = OSName.getInstance();
 
-        if (osname.equals("linux"))
+        if(os.isLinux() || os.isSolaris())
         {
-            return new PosixLauncherBuilder();
+            return new PosixLauncherBuilder(os.getName());
         }
-        if (osname.startsWith("windows"))
+        if (os.isWindows())
         {
-            return new WindowsLauncherBuilder();
-        }
-        if (osname.equals("solaris") || osname.equals("sunos"))
-        {
-            return new PosixLauncherBuilder();
+            return new WindowsLauncherBuilder(os.getName());
         }
         return null;
     }
 
+    public LauncherBuilder(String osname)
+    {
+        this.osname = osname;
+    }
     public abstract String getLauncherFile(String name);
 
     public abstract String getLauncherStatement();
 
-    public boolean buildLauncher(String name) throws IOException
+    public boolean buildLauncher(LauncherParser parser,String name) throws IOException
     {
         fileName = getLauncherFile(name);
         String fileStmt = getLauncherStatement();
 
-        if (auto)
+        String javaPath = parser.getJavaPath();
+        String homePath = parser.getHomePath();
+
+        if (parser.isAuto())
         {
             javaPath = "java";
         }
-        else if (home)
+        else if (parser.isHome())
         {
             if (homePath == null)
             {
@@ -100,7 +89,7 @@ public abstract class LauncherBuilder
             }
             javaPath = new File(homePath, new File("bin", "java").toString()).toString();
         }
-        else if (java && javaPath == null)
+        else if (parser.isJava() && javaPath == null)
         {
             javaPath = "java";
         }
@@ -128,100 +117,21 @@ public abstract class LauncherBuilder
         return true;
     }
 
-    public String[] parse(String[] args) throws InvalidOptionException
-    {
-        OptionParser parser = new OptionParser();
-        
-        BooleanOption installAuto = parser.add(new BooleanOption("install"));
-        StringOption installJava = parser.add(new StringOption("install-java"));
-        StringOption installHome = parser.add(new StringOption("install-home"));
-
-        parser.setIgnoreShort(true);// no short options parsed in this parser
-        args = parser.parse(args);
-
-        auto = installAuto.isUsed();
-        java = installJava.isUsed();
-        home = installHome.isUsed();
-
-        if (java)
-        {
-            javaPath = installJava.getValue();
-        }
-        if (home)
-        {
-            homePath = installHome.getValue();
-        }
-        install = auto | java | home;
-
-        return args;
-    }
-
-    public boolean isAuto()
-    {
-        return auto;
-    }
-
-    public void setAuto(boolean auto)
-    {
-        this.auto = auto;
-    }
-
-    public boolean isHome()
-    {
-        return home;
-    }
-
-    public void setHome(boolean home)
-    {
-        this.home = home;
-    }
-
-    public boolean isInstall()
-    {
-        return install;
-    }
-
-    public void setInstall(boolean install)
-    {
-        this.install = install;
-    }
-
-    public boolean isJava()
-    {
-        return java;
-    }
-
-    public void setJava(boolean java)
-    {
-        this.java = java;
-    }
-
-    public String getHomePath()
-    {
-        return homePath;
-    }
-
-    public void setHomePath(String homePath)
-    {
-        this.homePath = homePath;
-    }
-
-    public String getJavaPath()
-    {
-        return javaPath;
-    }
-
-    public void setJavaPath(String javaPath)
-    {
-        this.javaPath = javaPath;
-    }
-
     public String getFileName()
     {
         return fileName;
     }
+
     protected String escape(String fileName)
     {
         return Files.escape(fileName);
     }
+    public boolean isSupported()
+    {
+        return true;
+    }
+    public String getOsname()
+    {
+        return osname;
+    }    
 }
