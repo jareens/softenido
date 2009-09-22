@@ -27,6 +27,8 @@ sudo java -jar FindRepe.jar --install-java /opt/jdk1.6.0/bin/java
 
 --opensolaris--
 
+--mac os x--
+
 --windows--
 java -jar FindRepe.jar --install-home c:/opt/jdk1.6.0/
 java -jar FindRepe.jar --install-java c:/opt/jdk1.6.0/bin/java

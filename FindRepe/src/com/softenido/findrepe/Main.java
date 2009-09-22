@@ -46,7 +46,7 @@ public class Main
 {
 
     private static final String VERSION =
-            "findrepe  version 0.6.1 beta  (2009-09-21)\n" +
+            "findrepe  version 0.6.2 beta  (2009-09-22)\n" +
             "Copyright (C) 2009 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -198,10 +198,8 @@ public class Main
         BooleanOption examples = options.add(new BooleanOption("examples"));
 
 //        StringOption minWasted = options.add(new StringOption('w', "min-wasted"));
-
 //        StringOption recurse = options.add(new StringOption('r', "recurse"));
 //        StringOption hardlinks = options.add(new StringOption("H", "hardlinks"));
-
 //        StringOption omitfirst = options.add(new StringOption("f", "omitfirst"));
 //        StringOption sameline = options.add(new StringOption("1", "sameline"));
 //        StringOption size = options.add(new StringOption("S", "size"));
