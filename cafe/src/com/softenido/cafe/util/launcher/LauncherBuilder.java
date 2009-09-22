@@ -50,7 +50,7 @@ public abstract class LauncherBuilder
     {
         OSName os = OSName.getInstance();
 
-        if(os.isLinux() || os.isSolaris())
+        if(os.isLinux() || os.isSolaris() || os.isMacosx())
         {
             return new PosixLauncherBuilder(os.getName());
         }
