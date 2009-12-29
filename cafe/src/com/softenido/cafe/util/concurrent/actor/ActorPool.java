@@ -35,6 +35,8 @@ public class ActorPool
 {
     public final static int CORES = Runtime.getRuntime().availableProcessors();
 
+    private static int keepAliveTime = 333;
+
     private final BlockingQueue<Runnable> inbox;
     private final Executor executor;
 
@@ -43,7 +45,7 @@ public class ActorPool
         if(poolSize>0)
         {
             inbox   = new LinkedBlockingQueue<Runnable>();
-            ThreadPoolExecutor pool = new ThreadPoolExecutor(poolSize, poolSize, 333, TimeUnit.MILLISECONDS, inbox);
+            ThreadPoolExecutor pool = new ThreadPoolExecutor(poolSize, poolSize, keepAliveTime, TimeUnit.MILLISECONDS, inbox);
             pool.allowCoreThreadTimeOut(true);
             this.executor = pool;
         }
@@ -69,5 +71,15 @@ public class ActorPool
         {
             executor.execute(task);
         }
+    }
+
+    public static int getKeepAliveTime()
+    {
+        return keepAliveTime;
+    }
+
+    public static void setKeepAliveTime(int keepAliveTime)
+    {
+        ActorPool.keepAliveTime = keepAliveTime;
     }
 }

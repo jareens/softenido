@@ -87,6 +87,7 @@ public class PipeActor<M,R> implements Pipe<M,R>
     private R get(boolean blocking) throws InterruptedException, ExecutionException
     {
         R ret;
+        boolean keep=false;
         do
         {
             Value<R> val = blocking?queue.take():queue.poll();
@@ -97,8 +98,9 @@ public class PipeActor<M,R> implements Pipe<M,R>
                 return null;
             }
             ret = val!=null?val.get():null;
+            keep= val!=null;
         }
-        while(alive && ret==null && blocking);
+        while(alive && ret==null && (keep||blocking));
         return ret;
     }
 

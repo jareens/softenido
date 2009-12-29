@@ -50,6 +50,15 @@ public class PipeLine<M,R> implements Pipe<M,R>, Filter<M,R>, Runnable
         this.links[0] = first;
         this.needFlush= false;
     }
+    public PipeLine(Filter filter)
+    {
+        Pipe<M,R> pipe = new PipeActor<M,R>(filter);
+        this.first = pipe;
+        this.last  = pipe;
+        this.links = new Pipe[1];
+        this.links[0] = first;
+        this.needFlush= false;
+    }
     protected <C> PipeLine(PipeLine<M,C> ini, PipeLine<C,R> end)
     {
         assert ini!=end:"ini!=end";

@@ -22,6 +22,7 @@
 package com.softenido.cafe.io;
 
 import com.softenido.cafe.util.ArrayUtils;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -432,6 +433,12 @@ public class Files
     {
         return isLink(new File(name));
     }
+    public static boolean isBugName(File file) throws IOException
+    {
+        String name = file.toString();
+        String name2 = normalize(name);
+        return !name.equals(name2);
+    }
 
     public static boolean isLink(File file) throws IOException
     {
@@ -464,4 +471,17 @@ public class Files
         }
         return false;
     }
+    public static byte[] bytesFromFile(File file) throws IOException
+    {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        InputStream in = new FileInputStream(file);
+        byte buf[] = new byte[64*1024];
+        int r;
+        while( (r=in.read(buf))>0)
+        {
+            baos.write(buf, 0, r);
+        }
+        return baos.toByteArray();
+    }
+
 }

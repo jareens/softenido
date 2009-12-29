@@ -23,6 +23,7 @@ package com.softenido.cafe.util.options;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /*
@@ -66,7 +67,7 @@ public class OptionParser
 
     public String[] parse(String[] args) throws InvalidOptionException
     {
-        Option[] rules = optionList.toArray(new Option[0]);
+        Option[] rules = sort(optionList.toArray(new Option[0]));
         String remainder[] = new String[args.length];
         int remainderSize = 0;
         boolean noMoreOptions = false;
@@ -169,6 +170,20 @@ public class OptionParser
     public void setIgnoreShort(boolean ignoreShort)
     {
         this.ignoreShort = ignoreShort;
+    }
+
+    private Option[] sort(Option[] list)
+    {
+        //reverse order longer options first
+        Comparator<Option> cmp = new Comparator<Option>()
+        {
+            public int compare(Option opt1, Option opt2)
+            {
+                return opt2.getLongName().length() - opt1.getLongName().length();
+            }
+        };
+        Arrays.sort(list,cmp);
+        return list;
     }
 
 }

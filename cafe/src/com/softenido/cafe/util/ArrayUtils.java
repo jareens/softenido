@@ -87,8 +87,8 @@ public final class ArrayUtils
      * the arrary if necesary
      *
      * @param <T>
-     * @param original
-     * @return a copy of the original array, compated eliminating duplicated objects
+     * @param src
+     * @return a copy of the src array, compated eliminating duplicated objects
      */
     public static <T> T[] uniqueCopyOf(T[] src)
     {
@@ -182,4 +182,41 @@ public final class ArrayUtils
         }
         return dst;
     }
+    public static <T> T[] cat(T[] ... src)
+    {
+        if (src == null)
+        {
+            return null;
+        }
+        int size = 0;
+        T[] dst = null;
+        for (int i = 0; i < src.length; i++)
+        {
+            if (src[i] != null)
+            {
+                size += src[i].length;
+                if(dst==null)
+                {
+                    dst = Arrays.copyOf(src[i],0);
+                }
+            }
+        }
+        if(dst ==null)
+        {
+            return null;
+        }
+        dst = Arrays.copyOf(dst,size);
+        for (int i = 0, w = 0; i < src.length; i++)
+        {
+            if (src[i] != null)
+            {
+                for (int j = 0; j < src[i].length; j++)
+                {
+                    dst[w++] = src[i][j];
+                }
+            }
+        }
+        return dst;
+    }
+
 }
