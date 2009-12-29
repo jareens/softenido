@@ -1,0 +1,34 @@
+-injars PicBulkTmp.jar
+-injars dist/lib/gdata-core-1.0.jar(!META-INF/*)
+-outjars PicBulk.jar
+
+-libraryjars <java.home>/lib/rt.jar
+
+-dontshrink
+-dontobfuscate
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+-ignorewarnings
+
+# Also keep - Serialization code. Keep all fields and methods that are
+# used for serialization.
+-keepclassmembers class * extends java.io.Serializable 
+{
+    static final long serialVersionUID;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+# Keep names - Native method names. Keep all native class/method names.
+-keepclasseswithmembernames class * 
+{
+    native <methods>;
+}
+
+-keepclassmembernames class * 
+{
+    java.lang.Class class$(java.lang.String);
+    java.lang.Class class$(java.lang.String,boolean);
+    public static void main(java.lang.String[]);
+}

@@ -1,0 +1,47 @@
+-injars dist/PicBulk.jar
+-injars dist/lib/cafe.jar(!META-INF/*)
+-injars dist/lib/EasyMail.jar(!META-INF/*)
+-injars dist/lib/javamail-dsn-1.4.2.jar(!META-INF/*)
+-injars dist/lib/javamail-mailapi-1.4.2.jar(!META-INF/*)
+-injars dist/lib/javamail-smtp-1.4.2.jar(!META-INF/*)
+-injars dist/lib/google-collect-1.0-rc5.jar(!META-INF/*)
+-injars dist/lib/gdata-photos-2.0.jar
+-injars dist/lib/gdata-media-1.0.jar
+-outjars PicBulkTmp.jar
+
+-libraryjars <java.home>/lib/rt.jar
+-libraryjars dist/lib/gdata-core-1.0.jar
+
+-dontobfuscate
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+-ignorewarnings
+
+#keep all applications
+-keepclasseswithmembers public class * 
+{
+    public static void main(java.lang.String[]);
+}
+
+# Also keep - Serialization code. Keep all fields and methods that are
+# used for serialization.
+-keepclassmembers class * extends java.io.Serializable 
+{
+    static final long serialVersionUID;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+# Keep names - Native method names. Keep all native class/method names.
+-keepclasseswithmembernames class * 
+{
+    native <methods>;
+}
+
+-keepclassmembernames class * 
+{
+    java.lang.Class class$(java.lang.String);
+    java.lang.Class class$(java.lang.String,boolean);
+    public static void main(java.lang.String[]);
+}
