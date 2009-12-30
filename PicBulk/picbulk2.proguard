@@ -6,6 +6,7 @@
 
 -dontshrink
 -dontobfuscate
+-dontoptimize
 -keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
 -ignorewarnings
 

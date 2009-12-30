@@ -5,8 +5,8 @@
 -injars dist/lib/javamail-mailapi-1.4.2.jar(!META-INF/*)
 -injars dist/lib/javamail-smtp-1.4.2.jar(!META-INF/*)
 -injars dist/lib/google-collect-1.0-rc5.jar(!META-INF/*)
--injars dist/lib/gdata-photos-2.0.jar
--injars dist/lib/gdata-media-1.0.jar
+-injars dist/lib/gdata-photos-2.0.jar(!META-INF/*)
+-injars dist/lib/gdata-media-1.0.jar(!META-INF/*)
 -outjars PicBulkTmp.jar
 
 -libraryjars <java.home>/lib/rt.jar
@@ -45,3 +45,5 @@
     java.lang.Class class$(java.lang.String,boolean);
     public static void main(java.lang.String[]);
 }
+-keep public class com.google.common.** { public protected *;}
+-keep interface com.google.common.**
