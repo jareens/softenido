@@ -1,7 +1,7 @@
 /*
  *  SizeUnits.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ public class SizeUnits extends AbstractUnits
 
     final static long[] VALUES = new long[]
     {
-        1, 1024, 1024 * 1024, 1024 * 1024 * 1024, 1024 * 1024 * 1024 * 1024
+        1L, 1024L, 1024L * 1024L, 1024L * 1024L * 1024L, 1024L * 1024L * 1024L * 1024L
     };
     final static String[] SHORT_NAMES = new String[]
     {
