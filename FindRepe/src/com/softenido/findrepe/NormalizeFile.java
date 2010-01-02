@@ -1,7 +1,7 @@
 /*
  *  NormalizeFile.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ public class NormalizeFile
 {
     private final Object lock = new Object();
     private Process child;
-    private OutputStream out = child.getOutputStream();
+    private OutputStream out;
     
     public String normalize(File fd) throws IOException
     {

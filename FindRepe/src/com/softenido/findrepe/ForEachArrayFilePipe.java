@@ -1,5 +1,5 @@
 /*
- *  ForEachArrayFileQueue.java
+ *  ForEachArrayFilePipe.java
  *
  *  Copyright (C) 2009-2010 Francisco Gómez Carrasco
  *
@@ -23,11 +23,11 @@ package com.softenido.findrepe;
 
 import com.softenido.cafe.io.Files;
 import com.softenido.cafe.io.ForEachFileOptions;
-import com.softenido.cafe.io.ForEachFileQueue;
+import com.softenido.cafe.io.ForEachFilePipe;
+import com.softenido.cafe.util.concurrent.pipeline.Pipe;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,28 +35,28 @@ import java.util.logging.Logger;
  *
  * @author franci
  */
-public class ForEachArrayFileQueue implements Runnable
+public class ForEachArrayFilePipe implements Runnable
 {
 
     private final File[] files;
 
     final FileFilter filter;
-    final BlockingQueue<File> fileQueue;
-    final BlockingQueue<String> nameQueue;
-    final File eof;
+    final Pipe<File,?> filePipe;
+    final Pipe<String,?> namePipe;
+    final boolean eof;
     
     private ForEachFileOptions options = null;;
     
     /**
      * 
-     * @param files array of directories to be enqueued
+     * @param files array of directories to be enPiped
      * @param recursive
      * @param filter
-     * @param fileQueue
-     * @param nameQueue
+     * @param filePipe
+     * @param namePipe
      * @param eof
      */
-    public ForEachArrayFileQueue(File[] files, FileFilter filter, BlockingQueue<File> fileQueue, BlockingQueue<String> nameQueue, File eof) throws IOException
+    public ForEachArrayFilePipe(File[] files, FileFilter filter, Pipe<File,?> filePipe, Pipe<String,?> namePipe, boolean eof) throws IOException
     {
         files = Files.uniqueCopyOf(files);
         for (int i = 0; i < files.length; i++)
@@ -66,14 +66,14 @@ public class ForEachArrayFileQueue implements Runnable
         this.files = Files.uniqueCopyOf(files);
 
         this.filter = filter;
-        this.fileQueue = fileQueue;
-        this.nameQueue = nameQueue;
+        this.filePipe = filePipe;
+        this.namePipe = namePipe;
         this.eof = eof;
     }
 
-    public ForEachArrayFileQueue(File[] file, BlockingQueue<File> fileQueue, File eof) throws IOException
+    public ForEachArrayFilePipe(File[] file, Pipe<File,?> filePipe, boolean eof) throws IOException
     {
-        this(file, null, fileQueue, null, eof);
+        this(file, null, filePipe, null, eof);
     }
 
     public void setOptions(ForEachFileOptions opt)
@@ -95,26 +95,26 @@ public class ForEachArrayFileQueue implements Runnable
             }
 
             // sacar una copia de optiones para cada busqueda, han de excluir al resto
-            ForEachFileQueue fefq = new ForEachFileQueue(fd, filter, fileQueue, nameQueue, null,opt);
+            ForEachFilePipe fefq = new ForEachFilePipe(fd, filter, filePipe, namePipe, false,opt);
             // excluidos el resto de rutas
             fefq.run();
         }
-        if (eof != null)
+        if (eof)
         {
             try
             {
-                if (fileQueue != null)
+                if (filePipe != null)
                 {
-                    fileQueue.put(eof);
+                    filePipe.close();
                 }
-                if (nameQueue != null)
+                if (namePipe != null)
                 {
-                    nameQueue.put(eof.toString());
+                    namePipe.close();
                 }
             }
             catch (InterruptedException ex)
             {
-                Logger.getLogger(ForEachArrayFileQueue.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ForEachArrayFilePipe.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

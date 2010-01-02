@@ -1,7 +1,7 @@
 /*
  *  FindRepe.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,35 +25,15 @@ import com.softenido.cafe.collections.Consumer;
 import com.softenido.cafe.collections.IterableBuilder;
 import com.softenido.cafe.collections.ProducerConsumer;
 import com.softenido.cafe.io.FileHash;
+import com.softenido.cafe.util.ArrayUtils;
 import com.softenido.cafe.util.SplitEquals;
 import java.io.File;
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class FileHashSizeComparator implements Comparator<FileHash>
-{
-
-    public FileHashSizeComparator()
-    {
-    }
-
-    public int compare(FileHash f1, FileHash f2)
-    {
-        if (f1.getSize() < f2.getSize())
-        {
-            return -1;
-        }
-        if (f1.getSize() > f2.getSize())
-        {
-            return +1;
-        }
-        return 0;
-    }
-}
 
 /**
  *
@@ -79,7 +59,7 @@ public class FindRepe implements Runnable
     public FindRepe(File[] bases, boolean bugs, int bufSize, FindRepeOptions opt)
     {
         this.bases = bases;
-        this.bugs = false;
+        this.bugs = bugs;
         this.bufSize = bufSize;
         this.options = opt;
 
@@ -88,17 +68,18 @@ public class FindRepe implements Runnable
 
         bugQueue = new LinkedBlockingQueue<File>();
         groupsQueue = new LinkedBlockingQueue<File[]>(bufSize);
-        
     }
 
     public void run()
     {
         try
         {
+            final File[] basesAndFocus = ArrayUtils.cat(bases,options.getFocusPaths());
             //obtener ficheros en bruto
             final BlockingQueue<File> fileQueue = new LinkedBlockingQueue<File>(bufSize);
-            ForEachArrayFileQueue feafq = new ForEachArrayFileQueue(bases, fileQueue, fileEof);
+            ForEachArrayFileQueue feafq = new ForEachArrayFileQueue(basesAndFocus, fileQueue, fileEof);
             feafq.setOptions(options);
+
             new Thread(feafq).start();
             // envolver con FileHash y y detectar bugs en el nombre
             final BlockingQueue<FileHash> hashQueue = new LinkedBlockingQueue<FileHash>(bufSize);
@@ -139,15 +120,15 @@ public class FindRepe implements Runnable
             final Consumer<FileHash> hashConsumer = IterableBuilder.build(hashQueue, hashEof);
             final BlockingQueue<FileHash[]> sizeQueue = new LinkedBlockingQueue<FileHash[]>(bufSize);
             final ProducerConsumer<FileHash[]> sizeProducer = IterableBuilder.build(sizeQueue, hashEofArray);
-            new Thread(SplitEquals.buildSplit(hashConsumer, sizeProducer, cmp, emptyHash, hashEofArray,options.minCount,Integer.MAX_VALUE)).start();
+            new Thread(SplitEquals.buildSplit(hashConsumer, sizeProducer, cmp, emptyHash, hashEofArray,options.getMinCount(),Integer.MAX_VALUE)).start();
 
             // agrupar por contenido
             BlockingQueue<FileHash[]> equalQueue = new LinkedBlockingQueue<FileHash[]>(bufSize);
             final ProducerConsumer<FileHash[]> equalProducer = IterableBuilder.build(equalQueue, hashEofArray);
-            new Thread(SplitEquals.buildSplitAgain(sizeProducer, equalProducer, null, emptyHash, hashEofArray,options.minCount,options.maxCount)).start();
+            new Thread(SplitEquals.buildSplitAgain(sizeProducer, equalProducer, null, emptyHash, hashEofArray,options.getMinCount(),options.getMaxCount())).start();
             for (FileHash[] listHash : equalProducer)
             {
-                if (listHash.length >= options.minCount && listHash.length <= options.maxCount)
+                if (listHash.length >= options.getMinCount() && listHash.length <= options.getMaxCount())
                 {
                     File[] listFile = new File[listHash.length];
                     for (int i = 0; i < listHash.length; i++)
