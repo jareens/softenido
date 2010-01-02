@@ -18,16 +18,16 @@ if [ -f $filenamezip ] ; then
   rm $filenamezip
 fi
 
-cp GPLv3.txt $filename/GPLv3.txt
+cp GPLv3.txt $filename/
 
-if [ $1 -eq 1]
+if [ $1 -eq 1] ; then
   proguard @findrepe.proguard
   cp -R FindRepe.jar $filename/
-  zip $filenamezip \
-      $filename/FindRepe.jar \
-      $filename/GPLv3.txt
+  cp -R GPLv3.txt $filename/
+  zip $filenamezip $filename/FindRepe.jar $filename/GPLv3.txt
 else
   cp -R dist $filename/
+  cp -R GPLv3.txt $filename/
   zip $filenamezip \
       $filename/FindRepe.jar \
       $filename/lib/cafe.jar \
