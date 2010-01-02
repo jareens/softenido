@@ -62,4 +62,16 @@ public class AbstractUnits
         }
         return Long.parseLong(nm);
     }
+    public String toString(long val,boolean round)
+    {
+        for (int i = values.length-1; i >=0; i--)
+        {
+            long unit = (round ? Math.round((double) val / values[i]) : val / values[i]);
+            if (Math.abs(val)>=values[i])
+            {
+                return ""+unit+shortNames[i];
+            }
+        }
+        return ""+val;
+    }
 }
