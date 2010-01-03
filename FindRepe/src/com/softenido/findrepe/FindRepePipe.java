@@ -177,7 +177,14 @@ public class FindRepePipe implements Runnable
             {
                 for (File dir : paths)
                 {
-                    if (Files.isParentOf(dir, item.getFile()))
+                    if(dir.isFile())
+                    {
+                        if(dir.equals(item.getFile()))
+                        {
+                            return list;
+                        }
+                    }
+                    else if (Files.isParentOf(dir, item.getFile()))
                     {
                         return list;
                     }
@@ -271,7 +278,7 @@ public class FindRepePipe implements Runnable
 
     public void run()
     {
-        final File[] paths = options.getFocusPaths();
+        final File[] paths = Files.getAbsoluteFile(options.getFocusPaths());
         final FileFilter[] dirsRegEx = options.getFocusDirs();
         final FileFilter[] filesRegEx = options.getFocusFiles();
         final long minWastedSize = options.getMinWasted();

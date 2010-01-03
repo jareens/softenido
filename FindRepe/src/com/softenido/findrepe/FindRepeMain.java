@@ -47,9 +47,9 @@ import java.util.logging.Logger;
  */
 public class FindRepeMain
 {
-
+    private static final String VER = "0.7.1";
     private static final String VERSION =
-            "findrepe  version 0.7.0 beta  (2010-01-01)\n"
+            "findrepe  version "+VER+" beta  (2010-01-03)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -99,6 +99,7 @@ public class FindRepeMain
             + "     --install-java[=path]   install a launcher using 'java' command\n"
             + "     --install-home[=path]   install a launcher using 'java.home' property\n"
             + "     --install-posix         posix flavor for install options when unknown\n"
+//            + "     --install-version       adds version to launcher name\n"
             + "     --unique                list only unique files (--count=1)\n"
             + "     --count=N               list files repeated N times  \n"
             + " -c  --min-count=N           files repeated at least N times\n"
@@ -225,7 +226,7 @@ public class FindRepeMain
                 {
                     System.err.println("findrepe: Operating System '" + OSName.os.getName() + "' not supported for install options");
                 }
-                else if (builder.buildLauncher(parser, "findrepe"))
+                else if (builder.buildLauncher(parser, "findrepe",VER))
                 {
                     System.out.println("findrepe: '" + builder.getFileName() + "' created");
                 }
