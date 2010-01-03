@@ -36,7 +36,8 @@ public class LauncherParser
     private boolean auto = false;
     private boolean java = false;
     private boolean home = false;
-    private boolean posix= false;
+    private boolean posix = false;
+    private boolean version= false;
     private String javaPath = null;
     private String homePath = null;
 
@@ -48,20 +49,21 @@ public class LauncherParser
         StringOption installJava  = parser.add(new StringOption("install-java"));
         StringOption installHome  = parser.add(new StringOption("install-home"));
         BooleanOption installPosix= parser.add(new BooleanOption("install-posix"));
+        BooleanOption installVersion= parser.add(new BooleanOption("install-version"));
 
         parser.setIgnoreShort(true);// no short options parsed in this parser
         args = parser.parse(args);
 
-        auto = installAuto.isUsed();
-        java = installJava.isUsed();
-        home = installHome.isUsed();
-        posix= installPosix.isUsed();
+        auto   = installAuto.isUsed();
+        java   = installJava.isUsed();
+        home   = installHome.isUsed();
+        posix  = installPosix.isUsed();
+        version=installVersion.isUsed();
         
-        if( !auto && !java && !home && posix )
+        if( !auto && !java && !home && (posix ||version) )
         {
             auto = true;
         }
-
         if (java)
         {
             javaPath = installJava.getValue();
@@ -70,7 +72,7 @@ public class LauncherParser
         {
             homePath = installHome.getValue();
         }
-        install = auto | java | home;
+        install = auto | java | home | version;
 
         return args;
     }
@@ -143,4 +145,15 @@ public class LauncherParser
     {
         this.posix = posix;
     }
+
+    public boolean isVersion()
+    {
+        return version;
+    }
+
+    public void setVersion(boolean version)
+    {
+        this.version = version;
+    }
+    
 }

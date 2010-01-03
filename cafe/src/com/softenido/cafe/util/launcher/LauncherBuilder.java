@@ -68,9 +68,18 @@ public abstract class LauncherBuilder
     public abstract String getLauncherFile(String name);
 
     public abstract String getLauncherStatement();
-
-    public boolean buildLauncher(LauncherParser parser,String name) throws IOException
+    
+    public final boolean buildLauncher(LauncherParser parser,String name) throws IOException
     {
+        return buildLauncher(parser, name,null);
+    }
+    
+    public boolean buildLauncher(LauncherParser parser,String name, String version) throws IOException
+    {
+        if( parser.isVersion() && version!=null && version.length()>0 )
+        {
+            name += "-"+version;
+        }
         fileName = getLauncherFile(name);
         String fileStmt = getLauncherStatement();
 

@@ -62,9 +62,9 @@ public class PosixLauncherBuilder extends LauncherBuilder
     }
 
     @Override
-    public boolean buildLauncher(LauncherParser parser,String name) throws IOException
+    public boolean buildLauncher(LauncherParser parser,String name, String version) throws IOException
     {
-        boolean val = super.buildLauncher(parser,name);
+        boolean val = super.buildLauncher(parser, name, version);
         if(val)
         {
             val = new File(getFileName()).setExecutable(true,false);

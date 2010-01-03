@@ -295,7 +295,6 @@ public class Files
 
         ForEachFile fef = new ForEachFile(file, filter,null)
         {
-
             @Override
             protected void doForEeach(File file, String name)
             {
@@ -483,5 +482,13 @@ public class Files
         }
         return baos.toByteArray();
     }
-
+    public static File[] getAbsoluteFile(File[] files)
+    {
+        File[] abs = new File[files.length];
+        for(int i=0;i<files.length;i++)
+        {
+            abs[i]=files[i].getAbsoluteFile();
+        }
+        return abs;
+    }
 }
