@@ -66,11 +66,11 @@ public class LauncherParser
         }
         if (java)
         {
-            javaPath = installJava.getValue();
+            javaPath = installJava.getValue(null);
         }
         if (home)
         {
-            homePath = installHome.getValue();
+            homePath = installHome.getValue(null);
         }
         install = auto | java | home | version;
 

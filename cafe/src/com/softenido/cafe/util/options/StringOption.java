@@ -119,9 +119,17 @@ public class StringOption extends BooleanOption
         return size;
     }
 
-    public String getValue()
+    public String getValue() throws MissingOptionParameterException
     {
+        if(value==null)
+        {
+            throw new MissingOptionParameterException(this);
+        }
         return value;
+    }
+    public String getValue(String def)
+    {
+        return isUsed()?value:def;
     }
 
     private String rest(String src, String prefix)

@@ -491,4 +491,17 @@ public class Files
         }
         return abs;
     }
+    public static File[] toFileArray(String[] fileNames)
+    {
+        if(fileNames==null)
+        {
+            return null;
+        }
+        File[] files = new File[fileNames.length];
+        for (int i = 0; i < files.length; i++)
+        {
+            files[i] = new File(fileNames[i]);
+        }
+        return files;
+    }
 }
