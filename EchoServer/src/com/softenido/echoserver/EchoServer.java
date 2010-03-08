@@ -22,10 +22,7 @@
 package com.softenido.echoserver;
 
 import com.softenido.cafe.util.ArrayUtils;
-import com.softenido.cafe.util.OSName;
-import com.softenido.cafe.util.launcher.LauncherBuilder;
 import com.softenido.cafe.util.launcher.LauncherParser;
-import com.softenido.cafe.util.launcher.PosixLauncherBuilder;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
 import com.softenido.cafe.util.options.NumberOption;
@@ -158,23 +155,9 @@ public class EchoServer implements Runnable
         String[] ports;
         try
         {
-            LauncherParser parser = new LauncherParser();
-            args = parser.parse(args);
-            if (parser.isInstall())
+            args = LauncherParser.parseInstall(ECHOSERVER, null, VER, args);
+            if(args==null)
             {
-                LauncherBuilder builder = LauncherBuilder.getBuilder();
-                if (builder == null && parser.isPosix())
-                {
-                    builder = new PosixLauncherBuilder("posix");
-                }
-                if (builder == null)
-                {
-                    System.err.println(ECHOSERVER+": Operating System '" + OSName.os.getName() + "' not supported for install options");
-                }
-                else if (builder.buildLauncher(parser, ECHOSERVER,VER))
-                {
-                    System.out.println(ECHOSERVER+": '" + builder.getFileName() + "' created");
-                }
                 return;
             }
             ports = options.parse(args);
@@ -182,7 +165,7 @@ public class EchoServer implements Runnable
         catch (InvalidOptionException ex)
         {
             System.err.println(ex);
-            System.err.println(ECHOSERVER+": Try --help for more information");
+            System.err.println(ECHOSERVER+": try --help for more information");
             return;
         }
 
