@@ -50,9 +50,9 @@ public class ForEachFileOptions
     HashSet<File> omitedFiles;
 
     boolean hasOmitedDirNames;
-    HashSet<File> omitedDirNames;
+    HashSet<FileFilter> omitedDirNames;
     boolean hasOmitedFileNames;
-    HashSet<File> omitedFileNames;
+    HashSet<FileFilter> omitedFileNames;
 
     public ForEachFileOptions()
     {
@@ -75,9 +75,9 @@ public class ForEachFileOptions
         omitedFiles = new HashSet<File>();
         
         hasOmitedDirNames = false;
-        omitedDirNames = new HashSet<File>();
+        omitedDirNames = new HashSet<FileFilter>();
         hasOmitedFileNames = false;
-        omitedFileNames = new HashSet<File>();
+        omitedFileNames = new HashSet<FileFilter>();
     }
 
     public ForEachFileOptions(ForEachFileOptions val)
@@ -101,10 +101,10 @@ public class ForEachFileOptions
         this.omitedFiles = new HashSet<File>(val.omitedFiles);
 
         this.hasOmitedDirNames = val.hasOmitedDirNames;
-        this.omitedDirNames = new HashSet<File>(val.omitedDirNames);
+        this.omitedDirNames = new HashSet<FileFilter>(val.omitedDirNames);
 
         this.hasOmitedFileNames = val.hasOmitedFileNames;
-        this.omitedFileNames = new HashSet<File>(val.omitedFileNames);
+        this.omitedFileNames = new HashSet<FileFilter>(val.omitedFileNames);
     }
 
     public boolean isAutoOmit()
@@ -251,22 +251,28 @@ public class ForEachFileOptions
         hasOmitedPaths = hasOmitedPaths || (!omitedPaths.isEmpty());
     }
 
-    public void addOmitedDirName(File dir)
+    public void addOmitedDirName(String dirName)
     {
-        omitedDirNames.add(dir);
+        FileFilter omitedDirFilter = NameFileFilter.getStringInstance(dirName);
+        omitedDirNames.add(omitedDirFilter);
         hasOmitedDirNames = true;
     }
-    public void addOmitedDirName(String dir)
+    public void addOmitedDirName(String dirName,boolean wildcard)
     {
-        addOmitedDirName(new File(dir));
-    }
-    public void addOmitedFileName(File fileName)
-    {
-        omitedFileNames.add(fileName);
-        hasOmitedFileNames = true;
+        FileFilter omitedDirFilter = wildcard?NameFileFilter.getWildCardInstance(dirName):NameFileFilter.getRegExInstance(dirName);
+        omitedDirNames.add(omitedDirFilter);
+        hasOmitedDirNames = true;
     }
     public void addOmitedFileName(String fileName)
     {
-        addOmitedFileName(new File(fileName));
+        FileFilter omitedFileFilter = NameFileFilter.getStringInstance(fileName);
+        omitedFileNames.add(omitedFileFilter);
+        hasOmitedFileNames = true;
+    }
+    public void addOmitedFileName(String fileName,boolean wildcard)
+    {
+        FileFilter omitedFileFilter = wildcard?NameFileFilter.getWildCardInstance(fileName):NameFileFilter.getRegExInstance(fileName);
+        omitedFileNames.add(omitedFileFilter);
+        hasOmitedFileNames = true;
     }
 }

@@ -289,10 +289,12 @@ public abstract class ForEachFile implements Runnable
     {
         if(options.hasOmitedDirNames)
         {
-            File name = new File(file.getName());
-            if(options.omitedDirNames.contains(name))
+            for(FileFilter item : options.omitedDirNames)
             {
-                return true;
+                if(item.accept(file))
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -310,10 +312,12 @@ public abstract class ForEachFile implements Runnable
         
         if(options.hasOmitedFileNames)
         {
-            File name = new File(file.getName());
-            if(options.omitedFileNames.contains(name))
+            for (FileFilter item : options.omitedFileNames)
             {
-                return true;
+                if(item.accept(file))
+                {
+                    return true;
+                }
             }
         }
         

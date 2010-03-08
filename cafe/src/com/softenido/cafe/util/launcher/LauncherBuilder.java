@@ -69,28 +69,28 @@ public abstract class LauncherBuilder
 
     public abstract String getLauncherStatement();
     
-    public final boolean buildLauncher(LauncherParser parser,String name) throws IOException
+    public final boolean buildLauncher(LauncherOptions options, String jar, String name) throws IOException
     {
-        return buildLauncher(parser, name,null);
+        return buildLauncher(options, jar, name,null);
     }
     
-    public boolean buildLauncher(LauncherParser parser,String name, String version) throws IOException
+    public boolean buildLauncher(LauncherOptions options,String jar, String name, String version) throws IOException
     {
-        if( parser.isVersion() && version!=null && version.length()>0 )
+        if( options.isVersion() && version!=null && version.length()>0 )
         {
             name += "-"+version;
         }
         fileName = getLauncherFile(name);
         String fileStmt = getLauncherStatement();
 
-        String javaPath = parser.getJavaPath();
-        String homePath = parser.getHomePath();
+        String javaPath = options.getJavaPath();
+        String homePath = options.getHomePath();
 
-        if (parser.isAuto())
+        if (options.isAuto())
         {
             javaPath = "java";
         }
-        else if (parser.isHome())
+        else if (options.isHome())
         {
             if (homePath == null)
             {
@@ -98,19 +98,22 @@ public abstract class LauncherBuilder
             }
             javaPath = new File(homePath, new File("bin", "java").toString()).toString();
         }
-        else if (parser.isJava() && javaPath == null)
+        else if (options.isJava() && javaPath == null)
         {
             javaPath = "java";
         }
         javaPath = escape(javaPath);
 
-        String jar = new File(System.getProperty(JAVA_CLASS_PATH)).getAbsolutePath().toString();
+        if(jar==null)
+        {
+            jar = new File(System.getProperty(JAVA_CLASS_PATH)).getAbsolutePath().toString();
+        }
         jar = escape(jar);
         
         return buildLauncher(fileName, fileStmt, javaPath, jar, "");
     }
 
-    public static boolean buildLauncher(String fileName, String fileStmt, String java, String jar, String opt) throws IOException
+    private static boolean buildLauncher(String fileName, String fileStmt, String java, String jar, String opt) throws IOException
     {
         fileStmt = fileStmt.replace($JAVA, java).replace($JAR, jar).replace($OPT, opt);
         PrintWriter out = new PrintWriter(new FileWriter(fileName));

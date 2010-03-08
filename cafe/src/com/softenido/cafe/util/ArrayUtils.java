@@ -24,6 +24,7 @@ package com.softenido.cafe.util;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -218,5 +219,41 @@ public final class ArrayUtils
         }
         return dst;
     }
+    public static BitSet asBitSet(byte[] src)
+    {
+        return asBitSet(src, false);
+    }
+    public static BitSet asBitSet(byte[] src,boolean secure)
+    {
+        BitSet bits = (secure? new SecureBitSet(src.length*8):new BitSet(src.length*8));
+
+        for(int i=0;i<src.length;i++)
+            for(int j=0;j<8;j++)
+                bits.set(i*8+j, ((src[i]>>>j) & 1) != 0);
+        return bits;
+    }
+    public static BitSet asAsBitSet(short[] src,boolean secure)
+    {
+        BitSet bits = (secure? new SecureBitSet(src.length*16):new BitSet(src.length*16));
+
+        for(int i=0;i<src.length;i++)
+            for(int j=0;j<16;j++)
+                bits.set(i*16+j, ((src[i]>>>j) & 1) != 0);
+        return bits;
+    }
+
+    public byte[] toByteArray(BitSet bits,int nbits)
+    {
+        byte[] dst = new byte[(nbits*8+1)/8];
+        for(int i=0;i<dst.length;i++)
+        {
+            byte b=0;
+            for(int j=0;j<16;j++)
+                b |= bits.get(i*16+j)?(1<<j):0;
+            dst[i]=b;
+        }
+        return dst;
+    }
+
 
 }

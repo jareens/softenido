@@ -31,11 +31,12 @@ public class ArrayStringOption extends StringOption
 {
 
     private ArrayList<String> values = new ArrayList<String>();
-    private String separator = null;
+    private final String separator;
 
     public ArrayStringOption(String longName)
     {
         super(longName);
+        separator = null;
     }
 
     public ArrayStringOption(String longName, char separator)
@@ -47,6 +48,7 @@ public class ArrayStringOption extends StringOption
     public ArrayStringOption(char shortName, String longName)
     {
         super(shortName, longName);
+        separator = null;
     }
 
     public ArrayStringOption(char shortName, String longName, char separator)
