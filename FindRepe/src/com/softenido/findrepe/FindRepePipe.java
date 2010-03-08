@@ -219,8 +219,6 @@ public class FindRepePipe implements Runnable
         //obtener ficheros en bruto
         final FileFilter[] dirNameRegEx = options.getDirNames();
         final FileFilter[] fileNameRegEx = options.getFileNames();
-
-
         final BucketMap<FileHash> sizeMap = new BucketMap<FileHash>(cmp);
 
         Pipe<File, FileHash> pipe = new PipeLine<File, File>()//readable
@@ -282,7 +280,7 @@ public class FindRepePipe implements Runnable
         final FileFilter[] dirsRegEx = options.getFocusDirs();
         final FileFilter[] filesRegEx = options.getFocusFiles();
         final long minWastedSize = options.getMinWasted();
-        final boolean wastedFilter = (minWastedSize!= Long.MAX_VALUE);
+        final boolean wastedFilter = (minWastedSize!=0);
 
         try
         {

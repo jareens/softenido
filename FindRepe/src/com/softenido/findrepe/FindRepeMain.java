@@ -21,19 +21,20 @@
  */
 package com.softenido.findrepe;
 
+import com.softenido.cafe.io.Files;
 import com.softenido.cafe.io.ForEachFileOptions;
-import com.softenido.cafe.util.OSName;
+import com.softenido.cafe.util.ArrayUtils;
 import com.softenido.cafe.util.SizeUnits;
 import com.softenido.cafe.util.concurrent.actor.ActorPool;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
-import com.softenido.cafe.util.options.Option;
+import com.softenido.cafe.util.options.InvalidOptionParameterException;
+import com.softenido.cafe.util.options.MissingOptionParameterException;
 import com.softenido.cafe.util.options.OptionParser;
-import com.softenido.cafe.util.options.StringOption;
-import com.softenido.cafe.util.launcher.LauncherBuilder;
 import com.softenido.cafe.util.launcher.LauncherParser;
-import com.softenido.cafe.util.launcher.PosixLauncherBuilder;
 import com.softenido.cafe.util.options.ArrayStringOption;
+import com.softenido.cafe.util.options.NumberOption;
+import com.softenido.cafe.util.options.SizeOption;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -47,9 +48,10 @@ import java.util.logging.Logger;
  */
 public class FindRepeMain
 {
-    private static final String VER = "0.7.1";
+    private static final String FINDREPE = "findrepe";
+    private static final String VER = "0.8.0";
     private static final String VERSION =
-            "findrepe  version "+VER+" beta  (2010-01-03)\n"
+            "findrepe  version "+VER+" beta  (2010-03-08)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -89,6 +91,7 @@ public class FindRepeMain
             + " -v, --verbose               increase verbosity\n"
             + " -L, --license               display software license\n"
             + " -d, --delete                prompt user for files to delete\n"
+            + "     --delete-auto=path      smart auto-selection of files for deletion\n"
             + " -n, --noempty               exclude zero-length files\n"
             + " -s, --symlinks              follow symlinks\n"
             + " -m, --min-size=size         minimum file size[bkmgt], exclude shorters\n"
@@ -160,26 +163,27 @@ public class FindRepeMain
             return;
         }
         int queueSize = 10000;
+        int verboseLevel = 0;
+
         SizeUnits sizeParser = new SizeUnits();
         OptionParser options = new OptionParser();
 
         BooleanOption verbose = options.add(new BooleanOption('v', "verbose"));
-        int verboseLevel = 0;
-
-        Option license = options.add(new BooleanOption('L', "license"));
+        BooleanOption license = options.add(new BooleanOption('L', "license"));
         BooleanOption delete = options.add(new BooleanOption('d', "delete"));
+        ArrayStringOption deleteAuto = options.add(new ArrayStringOption("delete-auto",File.pathSeparatorChar));
         BooleanOption noempty = options.add(new BooleanOption('n', "noempty"));
         BooleanOption symlinks = options.add(new BooleanOption('s', "symlinks"));
 
-        StringOption minSize = options.add(new StringOption('m', "min-size"));
-        StringOption maxSize = options.add(new StringOption('M', "max-size"));
-        StringOption minWasted = options.add(new StringOption('w', "min-wasted"));
+        SizeOption minSize = options.add(new SizeOption('m', "min-size"));
+        SizeOption maxSize = options.add(new SizeOption('M', "max-size"));
+        SizeOption minWasted = options.add(new SizeOption('w', "min-wasted"));
         BooleanOption optSize = options.add(new BooleanOption('S',"size"));
 
         BooleanOption unique = options.add(new BooleanOption("unique"));
-        StringOption count = options.add(new StringOption("count"));
-        StringOption minCount = options.add(new StringOption('c',"min-count"));
-        StringOption maxCount = options.add(new StringOption('C',"max-count"));
+        NumberOption count = options.add(new NumberOption("count"));
+        NumberOption minCount = options.add(new NumberOption('c',"min-count"));
+        NumberOption maxCount = options.add(new NumberOption('C',"max-count"));
 
         BooleanOption excludeRc = options.add(new BooleanOption("exclude-rc"));
         BooleanOption excludeSvn = options.add(new BooleanOption("exclude-svn"));
@@ -204,39 +208,24 @@ public class FindRepeMain
         BooleanOption bug = options.add(new BooleanOption("bug"));
         BooleanOption bugFix = options.add(new BooleanOption("bug-fix"));
 
-        Option version = options.add(new BooleanOption("version"));
-        Option help = options.add(new BooleanOption('h', "help"));
-
+        BooleanOption version = options.add(new BooleanOption("version"));
+        BooleanOption help = options.add(new BooleanOption('h', "help"));
         BooleanOption examples = options.add(new BooleanOption("examples"));
        
         String[] fileNames;
         try
         {
-            LauncherParser parser = new LauncherParser();
-            args = parser.parse(args);
-            if (parser.isInstall())
+            args = LauncherParser.parseInstall(FINDREPE, null, VER, args);
+            if(args==null)
             {
-                LauncherBuilder builder = LauncherBuilder.getBuilder();
-                if (builder == null && parser.isPosix())
-                {
-                    builder = new PosixLauncherBuilder("posix");
-                }
-
-                if (builder == null)
-                {
-                    System.err.println("findrepe: Operating System '" + OSName.os.getName() + "' not supported for install options");
-                }
-                else if (builder.buildLauncher(parser, "findrepe",VER))
-                {
-                    System.out.println("findrepe: '" + builder.getFileName() + "' created");
-                }
                 return;
             }
             fileNames = options.parse(args);
-        } catch (InvalidOptionException ex)
+        }
+        catch (InvalidOptionException ex)
         {
             System.err.println(ex);
-            System.err.println("findrepe: Try --help for more information");
+            System.err.println(FINDREPE+": Try --help for more information");
             return;
         }
 
@@ -275,136 +264,139 @@ public class FindRepeMain
         long minWastedValue = Long.MAX_VALUE;
         try
         {
-            if (minSize.isUsed())
+            if(minSize.isUsed())
             {
+                minSizeValue = minSize.longValue();
                 minSizeUsed = true;
-                optName = minSize.getUsedName();
-                optVal = minSize.getValue();
-                minSizeValue = sizeParser.parse(optVal);
             }
-            if (maxSize.isUsed())
+            if(maxSize.isUsed())
             {
-                maxSizeUsed = true;
-                optName = maxSize.getUsedName();
-                optVal = maxSize.getValue();
-                maxSizeValue = sizeParser.parse(optVal);
+                maxSizeValue = maxSize.longValue();
+                maxSizeUsed  = true;
             }
             if (minWasted.isUsed())
             {
+                minWastedValue = minWasted.longValue();
                 minWastedUsed = true;
-                optName = minWasted.getUsedName();
-                optVal = minWasted.getValue();
-                minWastedValue = sizeParser.parse(optVal);
             }
+
+            if (fileNames.length == 0)
+            {
+                System.err.println(FINDREPE+": no directories specified");
+                return;
+            }
+
+            File[] files = Files.toFileArray(fileNames);
+            File[] autoDeleteFiles = new File[0];
+            files = Files.uniqueCopyOf(files);
+            if (deleteAuto.isUsed())
+            {
+                autoDeleteFiles = Files.getAbsoluteFile(Files.toFileArray(deleteAuto.getValues()));
+                if(autoDeleteFiles.length>0)
+                {
+                    files = ArrayUtils.cat(files, autoDeleteFiles);
+                }
+            }
+
+            FindRepeOptions opt = new FindRepeOptions();
+
+            opt.setHidden(true);
+            opt.setLinkDir(symlinks.isUsed());
+
+            if (noempty.isUsed())
+            {
+                opt.setMinSize(1);
+            }
+            if (minSizeUsed)
+            {
+                opt.setMinSize(minSizeValue);
+            }
+            if (maxSizeUsed)
+            {
+                opt.setMaxSize(maxSizeValue);
+            }
+            if (minWastedUsed)
+            {
+                opt.setMinWasted(minWastedValue);
+            }
+            if (noautoexclude.isUsed())
+            {
+                opt.setAutoOmit(false);
+            }
+            if (exclude.isUsed())
+            {
+                String[] paths = exclude.getValues();
+                for (String item : paths)
+                {
+                    opt.addOmitedPath(new File(item));
+                    if (verboseLevel > 0)
+                    {
+                        System.out.println(FINDREPE+": excluded path '" + item + "'");
+                    }
+                }
+            }
+            boolean useRegEx = regex.isUsed() && (!wildcard.isUsed() || regex.getLastUsed() > wildcard.getLastUsed());
+
+            boolean fixBugs = bugFix.isUsed();
+            boolean bugs = fixBugs || bug.isUsed();
+
+            excludeRc(opt, excludeRc, excludeSvn, excludeCvs, excludeHg, verboseLevel);
+            excludeDirAndFile(opt, excludeDirName, excludeFileName, useRegEx);
+            focusPathDirFile(opt, focusPath, focusDirName, focusFileName, useRegEx);
+            dirFile(opt, dirName, fileName, useRegEx);
+
+            // ignore groups of 1 unless it specified by options
+            opt.setMinCount(2);
+            countFilter(opt, unique, count, minCount, maxCount, verboseLevel);
+
+            if (old.isUsed())
+            {
+                FindRepe findTask = new FindRepe(files, bugs, queueSize, opt);
+                new Thread(findTask).start();
+
+                if (bugs)
+                {
+                    showBugs(findTask.getBugIterable(), fixBugs);
+                }
+                showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed()?sizeParser:null),autoDeleteFiles );
+            }
+            else
+            {
+                ActorPool.setKeepAliveTime(1234);
+
+                FindRepePipe findTask = new FindRepePipe(files, bugs, queueSize, opt);
+                new Thread(findTask).start();
+
+                if (bugs)
+                {
+                    showBugs(findTask.getBugIterable(), fixBugs);
+                }
+                showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed()?sizeParser:null), autoDeleteFiles);
+            }
+        }
+        catch (MissingOptionParameterException ex)
+        {
+            System.err.println(FINDREPE+":"+ex.getMessage());
+        }
+        catch (InvalidOptionParameterException ex)
+        {
+            System.err.println(FINDREPE+":"+ex.getMessage());
         }
         catch (NumberFormatException ex)
         {
-            if (optVal == null)
-            {
-                System.err.println("findrepe: missing argument to '" + optName + "'");
-            } else
-            {
-                System.err.println("findrepe: invalid argument '" + optVal + "' to '" + optName + "'");
-            }
-            return;
+            System.err.println(FINDREPE+":"+ex.getMessage());
         }
 
-        if (fileNames.length == 0)
-        {
-            System.err.println("findrepe: no directories specified");
-            return;
-        }
-
-        File[] files = new File[fileNames.length];
-        for (int i = 0; i < files.length; i++)
-        {
-            files[i] = new File(fileNames[i]);
-        }
-        FindRepeOptions opt = new FindRepeOptions();
-
-        opt.setHidden(true);
-        opt.setLinkDir(symlinks.isUsed());
-
-        if (noempty.isUsed())
-        {
-            opt.setMinSize(1);
-        }
-        if (minSizeUsed)
-        {
-            opt.setMinSize(minSizeValue);
-        }
-        if (maxSizeUsed)
-        {
-            opt.setMaxSize(maxSizeValue);
-        }
-        if (minWastedUsed)
-        {
-            opt.setMinWasted(minWastedValue);
-        }
-        if (noautoexclude.isUsed())
-        {
-            opt.setAutoOmit(false);
-        }
-        if (exclude.isUsed())
-        {
-            String[] paths = exclude.getValues();
-            for (String item : paths)
-            {
-                opt.addOmitedPath(new File(item));
-                if (verboseLevel > 0)
-                {
-                    System.out.println("findrepe: excluded path '" + item + "'");
-                }
-            }
-        }
-        boolean useRegEx = regex.isUsed() && (!wildcard.isUsed() || regex.getLastUsed() > wildcard.getLastUsed());
-
-        boolean fixBugs = bugFix.isUsed();
-        boolean bugs = fixBugs || bug.isUsed();
-        
-        excludeRc(opt, excludeRc, excludeSvn, excludeCvs, excludeHg, verboseLevel);
-        excludeDirAndFile(opt, excludeDirName, excludeFileName);
-        focusPathDirFile(opt, focusPath, focusDirName, focusFileName, useRegEx);
-        dirFile(opt, dirName, fileName, useRegEx);
-
-        // ignore groups of 1 unless it specified by options
-        opt.setMinCount(2);
-        countFilter(opt, unique, count, minCount, maxCount, verboseLevel);
-
-        if (old.isUsed())
-        {
-            FindRepe findTask = new FindRepe(files, bugs, queueSize, opt);
-            new Thread(findTask).start();
-
-            if (bugs)
-            {
-                showBugs(findTask.getBugIterable(), fixBugs);
-            }
-            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed()?sizeParser:null) );
-        }
-        else
-        {
-            ActorPool.setKeepAliveTime(1234);
-
-            FindRepePipe findTask = new FindRepePipe(files, bugs, queueSize, opt);
-            new Thread(findTask).start();
-
-            if (bugs)
-            {
-                showBugs(findTask.getBugIterable(), fixBugs);
-            }
-            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed()?sizeParser:null) );
-        }
     }
 
-    private static void excludeDirAndFile(ForEachFileOptions opt, ArrayStringOption excludeDirName, ArrayStringOption excludeFileName)
+    private static void excludeDirAndFile(ForEachFileOptions opt, ArrayStringOption excludeDirName, ArrayStringOption excludeFileName, boolean useRegEx)
     {
         if (excludeDirName.isUsed())
         {
             String[] paths = excludeDirName.getValues();
             for (String item : paths)
             {
-                opt.addOmitedDirName(item);
+                opt.addOmitedDirName(item,!useRegEx);
             }
         }
         if (excludeFileName.isUsed())
@@ -412,7 +404,7 @@ public class FindRepeMain
             String[] paths = excludeFileName.getValues();
             for (String item : paths)
             {
-                opt.addOmitedFileName(item);
+                opt.addOmitedFileName(item,!useRegEx);
             }
         }
     }
@@ -471,7 +463,7 @@ public class FindRepeMain
             opt.addOmitedDirName(".svn");
             if (verboseLevel > 0)
             {
-                System.out.println("findrepe: excluded subversion files");
+                System.out.println(FINDREPE+": excluded subversion files");
             }
 
         }
@@ -480,7 +472,7 @@ public class FindRepeMain
             opt.addOmitedDirName("CVS");
             if (verboseLevel > 0)
             {
-                System.out.println("findrepe: excluded CVS files");
+                System.out.println(FINDREPE+": excluded CVS files");
             }
         }
         if (excludeRc.isUsed() || excludeHg.isUsed())
@@ -489,14 +481,14 @@ public class FindRepeMain
             opt.addOmitedFileName(".hgignore");
             if (verboseLevel > 0)
             {
-                System.out.println("findrepe: excluded mercurial files");
+                System.out.println(FINDREPE+": excluded mercurial files");
             }
         }
     }
 
-    private static void countFilter(FindRepeOptions opt, BooleanOption unique, StringOption count, StringOption minCount, StringOption maxCount, int verboseLevel)
+    private static void countFilter(FindRepeOptions opt, BooleanOption unique, NumberOption count, NumberOption minCount, NumberOption maxCount, int verboseLevel) throws MissingOptionParameterException, InvalidOptionParameterException
     {
-        int lastUsed = 0;
+        int lastUsed = -1;
         if (unique.isUsed())
         {
             opt.setMinCount(1);
@@ -505,7 +497,7 @@ public class FindRepeMain
         }
         if (count.isUsed() && count.getLastUsed() > lastUsed)
         {
-            int num = Integer.parseInt(count.getValue());
+            int num = count.intValue();
             if (num > 0)
             {
                 opt.setMinCount(num);
@@ -515,7 +507,7 @@ public class FindRepeMain
         }
         if (minCount.isUsed() && minCount.getLastUsed() > lastUsed)
         {
-            int num = Integer.parseInt(minCount.getValue());
+            int num = minCount.intValue();
             if (num > 0)
             {
                 opt.setMinCount(num);
@@ -523,7 +515,7 @@ public class FindRepeMain
         }
         if (maxCount.isUsed() && maxCount.getLastUsed() > lastUsed)
         {
-            int num = Integer.parseInt(maxCount.getValue());
+            int num = maxCount.intValue();
             if (num > 0)
             {
                 opt.setMaxCount(num);
@@ -533,13 +525,15 @@ public class FindRepeMain
         {
             if (opt.getMinCount() == opt.getMaxCount())
             {
-                System.out.println("findrepe: exactly " + opt.getMinCount() + " occurrence" + ((opt.getMinCount() == 1) ? "" : "s"));
-            } else if (opt.getMaxCount() != Integer.MAX_VALUE)
+                System.out.println(FINDREPE+": exactly " + opt.getMinCount() + " occurrence" + ((opt.getMinCount() == 1) ? "" : "s"));
+            }
+            else if (opt.getMaxCount() != Integer.MAX_VALUE)
             {
-                System.out.println("findrepe: between " + opt.getMinCount() + " and " + opt.getMaxCount() + " occurrences");
-            } else if (opt.getMinCount() != 2)
+                System.out.println(FINDREPE+": between " + opt.getMinCount() + " and " + opt.getMaxCount() + " occurrences");
+            }
+            else if (opt.getMinCount() != 2)
             {
-                System.out.println("findrepe: at least " + opt.getMinCount() + " occurrence" + ((opt.getMinCount() == 1) ? "" : "s"));
+                System.out.println(FINDREPE+": at least " + opt.getMinCount() + " occurrence" + ((opt.getMinCount() == 1) ? "" : "s"));
             }
         }
 
@@ -593,25 +587,51 @@ public class FindRepeMain
         }
     }
 
-    private static void showGroups(FindRepeOptions opt, Iterable<File[]> groupsList, boolean delete, SizeUnits units)
+    private static void showGroups(FindRepeOptions opt, Iterable<File[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete)
     {
         int groupId = 0;
+        int deleteMin = opt.getMinCount();
 
         for (File[] group : groupsList)
         {
             if (group.length >= opt.getMinCount() && group.length <= opt.getMaxCount())
             {
-                showOneGroup(groupId, group, delete,units);
+                showOneGroup(groupId, group, delete,units,deleteMin,autoDelete);
                 groupId++;
             }
         }
     }
 
-    private static void showOneGroup(int groupId, File files[], boolean delete, SizeUnits units)
+    private static void showOneGroup(int groupId, File files[], boolean delete, SizeUnits units, int deleteMin, File[] autoDelete)
     {
         boolean[] deleted = new boolean[files.length];
         Arrays.fill(deleted, false);
         Scanner sc = new Scanner(System.in);
+
+        if(delete && autoDelete.length>0 && files.length>1 && files.length>= deleteMin)
+        {
+            int matches[] = new int[files.length];
+            Arrays.fill(matches, 0);
+            for(int i=0;i<files.length;i++)
+            {
+                for(int j=0;j<autoDelete.length;j++)
+                {
+                    if(Files.isParentOf(autoDelete[j],files[i]))
+                    {
+                        matches[i]++;
+                    }
+                }
+            }
+            int sorted[] = Arrays.copyOf(matches, matches.length);
+            Arrays.sort(sorted);
+            int minVal = sorted[deleteMin-2];
+            for(int i=0;i<matches.length;i++)
+            {
+                if(matches[i]>minVal)
+                    deleted[i] = true;
+            }
+        }
+
         while (true)
         {
             System.out.println();
