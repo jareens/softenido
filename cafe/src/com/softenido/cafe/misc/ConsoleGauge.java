@@ -22,7 +22,6 @@
 package com.softenido.cafe.misc;
 
 import java.io.Console;
-import com.softenido.cafe.misc.AbstractGauge;
 
 /**
  *
