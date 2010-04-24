@@ -21,6 +21,7 @@
  */
 package com.softenido.cafe.io;
 
+import com.softenido.cafe.io.packed.PackedFile;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.concurrent.BlockingQueue;
@@ -69,7 +70,7 @@ public class ForEachFileQueue extends ForEachFile
     }
 
     @Override
-    protected void doForEeach(File file, String name)
+    protected void doForEach(File file, String name)
     {
         try
         {
@@ -86,12 +87,6 @@ public class ForEachFileQueue extends ForEachFile
         {
             Logger.getLogger(ForEachFileQueue.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @Override
-    protected void doForEeach(ZipFile zf, ZipEntry ze)
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -136,5 +131,11 @@ public class ForEachFileQueue extends ForEachFile
     public BlockingQueue<String> getNameQueue()
     {
         return nameQueue;
+    }
+
+    @Override
+    protected void doForEach(PackedFile fe)
+    {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

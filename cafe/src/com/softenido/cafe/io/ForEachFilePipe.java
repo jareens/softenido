@@ -21,13 +21,12 @@
  */
 package com.softenido.cafe.io;
 
+import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.util.concurrent.pipeline.Pipe;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 /**
  *
@@ -36,10 +35,10 @@ import java.util.zip.ZipFile;
 public class ForEachFilePipe extends ForEachFile
 {
     private final boolean eof;
-    private final Pipe<File,?> filePipe;
+    private final Pipe<PackedFile,?> filePipe;
     private final Pipe<String,?> namePipe;
 
-    public ForEachFilePipe(File file, FileFilter filter, Pipe<File,?> filePipe, Pipe<String,?> namePipe, boolean eof,ForEachFileOptions opt)
+    public ForEachFilePipe(File file, FileFilter filter, Pipe<PackedFile,?> filePipe, Pipe<String,?> namePipe, boolean eof,ForEachFileOptions opt)
     {
         super(file, filter,opt);
         this.eof      = eof;
@@ -47,50 +46,44 @@ public class ForEachFilePipe extends ForEachFile
         this.namePipe = namePipe;
     }
 
-    public ForEachFilePipe(File file, Pipe<File,?> rawPipe, boolean eof)
+    public ForEachFilePipe(File file, Pipe<PackedFile,?> rawPipe, boolean eof)
     {
         this(file, null, rawPipe, null, eof,null);
     }
 
-    public ForEachFilePipe(File file, FileFilter filter, Pipe<File,?> filePipe, boolean eof)
+    public ForEachFilePipe(File file, FileFilter filter, Pipe<PackedFile,?> filePipe, boolean eof)
     {
         this(file, filter, filePipe, null, eof,null);
     }
 
-    public ForEachFilePipe(File file, FileFilter filter, Pipe<File,?> filePipe)
+    public ForEachFilePipe(File file, FileFilter filter, Pipe<PackedFile,?> filePipe)
     {
         this(file, filter, filePipe, null, false,null);
     }
 
-    public ForEachFilePipe(File file, int recursive, Pipe<File,?> filePipe)
+    public ForEachFilePipe(File file, int recursive, Pipe<PackedFile,?> filePipe)
     {
         this(file, null, filePipe, null, false, null);
     }
 
     @Override
-    protected void doForEeach(File file, String name)
+    protected void doForEach(PackedFile fe)
     {
         try
         {
             if (filePipe != null)
             {
-                filePipe.put(file);
+                filePipe.put(fe);
             }
             if (namePipe != null)
             {
-                namePipe.put(name);
+                namePipe.put(fe.toString());
             }
         }
         catch (InterruptedException ex)
         {
             Logger.getLogger(ForEachFilePipe.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @Override
-    protected void doForEeach(ZipFile zf, ZipEntry ze)
-    {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -117,7 +110,7 @@ public class ForEachFilePipe extends ForEachFile
         }
     }
 
-    public Pipe<File,?> getFilePipe()
+    public Pipe<PackedFile,?> getFilePipe()
     {
         return filePipe;
     }

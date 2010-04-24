@@ -21,15 +21,18 @@
  */
 package com.softenido.cafe.io;
 
+import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.security.ParallelMessageDigest;
 import com.softenido.cafe.util.FileDigest;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,7 +50,7 @@ public class FileHash
         MD5, SHA1
     };
     private static int bufSize = 64 * 1024;
-    private File file;
+    private PackedFile file;
     private final long size;
     private byte[] fastMD5 = null;
     private byte[] fastSHA1 = null;
@@ -62,7 +65,7 @@ public class FileHash
      * Creates a new FileHash instance from a File object.
      * @param file
      */
-    public FileHash(File file)
+    public FileHash(PackedFile file)
     {
         this.file = file;
         this.size = file.length();
@@ -151,7 +154,7 @@ public class FileHash
             return;
         }
         boolean error = true;
-        FileInputStream fis = null;
+        InputStream fis = null;
         try
         {
             MessageDigest md5 = MessageDigest.getInstance(MD5);
@@ -159,7 +162,7 @@ public class FileHash
             if (size > 0)
             {
                 byte[] buf = new byte[1024];
-                fis = new FileInputStream(file);
+                fis = file.getInputStream();
                 int r = fis.read(buf);
                 fis.close();
                 md5.update(buf, 0, r);
@@ -208,13 +211,13 @@ public class FileHash
             return;
         }
         boolean error = true;
-        FileInputStream fis = null;
+        InputStream fis = null;
         try
         {
             MessageDigest md5 = MessageDigest.getInstance(MD5);
             MessageDigest sha1 = MessageDigest.getInstance(SHA1);
             byte[] buf = new byte[bufSize];
-            fis = new FileInputStream(file);
+            fis = file.getInputStream();
             int r;
 
             while ((r = fis.read(buf)) > 0)
@@ -256,9 +259,9 @@ public class FileHash
         return size;
     }
 
-    public File getFile()
+    public PackedFile getFile()
     {
-        return file;
+         return file;
     }
 
     public byte[] getFastMD5() throws FileNotFoundException, IOException
@@ -366,7 +369,7 @@ public class FileHash
         exception = true;
         return false;
     }
-
+    
     private FileDigest getDigest() throws NoSuchAlgorithmException
     {
         synchronized (lock)
@@ -379,4 +382,11 @@ public class FileHash
             return digest;
         }
     }
+
+    @Override
+    public String toString()
+    {
+        return file.toString();
+    }
+
 }

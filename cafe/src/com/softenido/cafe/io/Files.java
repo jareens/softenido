@@ -21,6 +21,7 @@
  */
 package com.softenido.cafe.io;
 
+import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.util.ArrayUtils;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,8 +33,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 /**
  *
@@ -128,17 +127,17 @@ public class Files
 
         ForEachFile fef = new ForEachFile(file, null,null)
         {
-
             @Override
-            protected void doForEeach(File file, String name)
+            protected void doForEach(File file, String name)
             {
                 v.add(file.toString());
             }
-
             @Override
-            protected void doForEeach(ZipFile zf, ZipEntry ze)
+            protected void doForEach(PackedFile fe)
             {
+                throw new UnsupportedOperationException("Not supported yet.");
             }
+
         };
         fef.run();
         return (String[]) v.toArray();
@@ -250,7 +249,7 @@ public class Files
         {
 
             @Override
-            protected void doForEeach(File file, String name)
+            protected void doForEach(File file, String name)
             {
                 if ((filter == null) || filter.accept(file, file.toString()))
                 {
@@ -259,8 +258,9 @@ public class Files
             }
 
             @Override
-            protected void doForEeach(ZipFile zf, ZipEntry ze)
+            protected void doForEach(PackedFile fe)
             {
+                throw new UnsupportedOperationException("Not supported yet.");
             }
         };
         fef.run();
@@ -296,15 +296,17 @@ public class Files
         ForEachFile fef = new ForEachFile(file, filter,null)
         {
             @Override
-            protected void doForEeach(File file, String name)
+            protected void doForEach(File file, String name)
             {
                 v.add(file);
             }
 
             @Override
-            protected void doForEeach(ZipFile zf, ZipEntry ze)
+            protected void doForEach(PackedFile fe)
             {
+                throw new UnsupportedOperationException("Not supported yet.");
             }
+
         };
         fef.run();
         return (File[]) v.toArray();

@@ -21,10 +21,12 @@
  */
 package com.softenido.cafe.util;
 
+import com.softenido.cafe.io.packed.PackedFile;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -37,6 +39,7 @@ public class FileDigest
 
     private final Object lock = new Object();
     private final File file;
+    private final PackedFile pf;
     private final long length;
     private final byte[][] hashes = new byte[64][];
     private final long[] sizes = new long[64];
@@ -46,12 +49,20 @@ public class FileDigest
     private final MessageDigest md;
     //resources to free in keepOff
     private int keep = 0;
-    private RandomAccessFile raf = null;
+    private InputStream data = null;
     private byte[] buf = null;
 
     public FileDigest(File file, MessageDigest md) throws NoSuchAlgorithmException
     {
         this.file = file;
+        this.pf =null;
+        this.length = file.length();
+        this.md = md;
+    }
+    public FileDigest(PackedFile file, MessageDigest md) throws NoSuchAlgorithmException
+    {
+        this.file = null;
+        this.pf =file;
         this.length = file.length();
         this.md = md;
     }
@@ -76,10 +87,10 @@ public class FileDigest
                 {
                     buf = null;
                 }
-                if (raf != null)
+                if (data != null)
                 {
-                    raf.close();
-                    raf = null;
+                    data.close();
+                    data = null;
                 }
             }
         }
@@ -123,21 +134,21 @@ public class FileDigest
     {
         if( size > 0 )
         {
-            if (raf == null)
+            if (data == null)
             {
-                raf = new RandomAccessFile(file, "r");
+                data = getInputStream();
+                data.skip(count);
             }
             if (buf == null)
             {
                 buf = new byte[(int)Math.min(64*1024,length)];
             }
             size = Math.min(size,length);
-            raf.seek(count);
 
             while (count < size)
             {
                 int r = Math.min(buf.length, (int) (size - count));
-                r = raf.read(buf, 0, r);
+                r = data.read(buf, 0, r);
                 md.update(buf, 0, r);
                 count += r;
             }
@@ -175,6 +186,19 @@ public class FileDigest
         }
         assert(sizes[63]==Long.MAX_VALUE);
         return sizes;
+    }
+
+    private InputStream getInputStream() throws FileNotFoundException, IOException
+    {
+        if(file!=null)
+        {
+            return new FileInputStream(file);
+        }
+        if(pf!=null)
+        {
+            return pf.getInputStream();
+        }
+        return null;
     }
 
 }
