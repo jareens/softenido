@@ -21,6 +21,7 @@
  */
 package com.softenido.findrepe;
 
+import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.io.Files;
 import com.softenido.cafe.io.ForEachFileOptions;
 import com.softenido.cafe.io.ForEachFilePipe;
@@ -41,7 +42,7 @@ public class ForEachArrayFilePipe implements Runnable
     private final File[] files;
 
     final FileFilter filter;
-    final Pipe<File,?> filePipe;
+    final Pipe<PackedFile,?> filePipe;
     final Pipe<String,?> namePipe;
     final boolean eof;
     
@@ -56,7 +57,7 @@ public class ForEachArrayFilePipe implements Runnable
      * @param namePipe
      * @param eof
      */
-    public ForEachArrayFilePipe(File[] files, FileFilter filter, Pipe<File,?> filePipe, Pipe<String,?> namePipe, boolean eof) throws IOException
+    public ForEachArrayFilePipe(File[] files, FileFilter filter, Pipe<PackedFile,?> filePipe, Pipe<String,?> namePipe, boolean eof) throws IOException
     {
         files = Files.uniqueCopyOf(files);
         for (int i = 0; i < files.length; i++)
@@ -71,7 +72,7 @@ public class ForEachArrayFilePipe implements Runnable
         this.eof = eof;
     }
 
-    public ForEachArrayFilePipe(File[] file, Pipe<File,?> filePipe, boolean eof) throws IOException
+    public ForEachArrayFilePipe(File[] file, Pipe<PackedFile,?> filePipe, boolean eof) throws IOException
     {
         this(file, null, filePipe, null, eof);
     }

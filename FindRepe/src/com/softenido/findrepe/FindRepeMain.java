@@ -23,6 +23,7 @@ package com.softenido.findrepe;
 
 import com.softenido.cafe.io.Files;
 import com.softenido.cafe.io.ForEachFileOptions;
+import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.util.ArrayUtils;
 import com.softenido.cafe.util.SizeUnits;
 import com.softenido.cafe.util.concurrent.actor.ActorPool;
@@ -48,10 +49,11 @@ import java.util.logging.Logger;
  */
 public class FindRepeMain
 {
+
     private static final String FINDREPE = "findrepe";
-    private static final String VER = "0.8.0";
+    private static final String VER = "0.8.0.1";
     private static final String VERSION =
-            "findrepe  version "+VER+" beta  (2010-03-08)\n"
+            "findrepe  version " + VER + " beta  (2010-04-24)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -120,6 +122,7 @@ public class FindRepeMain
             + "     --focus-file=pattern    focus on files matching pattern\n"
             + "     --dir=pattern           only directories matching pattern\n"
             + "     --file=pattern          only files matching pattern\n"
+            + " -z  --zip                   recurse into zip files (zip, jar, ...)\n"
             + " -e  --regex                 uses java regular expresions\n"
             + "     --wildcard              uses wildcards '*', '?' and '[]' (default)\n"
             + "     --old                   old algorithm, as in version 0.6.2 (developers)\n"
@@ -128,7 +131,7 @@ public class FindRepeMain
             + "     --version               print version number\n"
             + "     --examples              print some useful examples\n"
             + "(-h) --help                  show this help (-h works with no other options)\n"
-            +"\n"
+            + "\n"
             + "size units:\n"
             + " 1=1b, 1k=1024b, 1m=1024k, 1g=1024m, 1t=1024g\n"
             + " separator character is " + File.pathSeparator + "\n"
@@ -171,19 +174,19 @@ public class FindRepeMain
         BooleanOption verbose = options.add(new BooleanOption('v', "verbose"));
         BooleanOption license = options.add(new BooleanOption('L', "license"));
         BooleanOption delete = options.add(new BooleanOption('d', "delete"));
-        ArrayStringOption deleteAuto = options.add(new ArrayStringOption("delete-auto",File.pathSeparatorChar));
+        ArrayStringOption deleteAuto = options.add(new ArrayStringOption("delete-auto", File.pathSeparatorChar));
         BooleanOption noempty = options.add(new BooleanOption('n', "noempty"));
         BooleanOption symlinks = options.add(new BooleanOption('s', "symlinks"));
 
         SizeOption minSize = options.add(new SizeOption('m', "min-size"));
         SizeOption maxSize = options.add(new SizeOption('M', "max-size"));
         SizeOption minWasted = options.add(new SizeOption('w', "min-wasted"));
-        BooleanOption optSize = options.add(new BooleanOption('S',"size"));
+        BooleanOption optSize = options.add(new BooleanOption('S', "size"));
 
         BooleanOption unique = options.add(new BooleanOption("unique"));
         NumberOption count = options.add(new NumberOption("count"));
-        NumberOption minCount = options.add(new NumberOption('c',"min-count"));
-        NumberOption maxCount = options.add(new NumberOption('C',"max-count"));
+        NumberOption minCount = options.add(new NumberOption('c', "min-count"));
+        NumberOption maxCount = options.add(new NumberOption('C', "max-count"));
 
         BooleanOption excludeRc = options.add(new BooleanOption("exclude-rc"));
         BooleanOption excludeSvn = options.add(new BooleanOption("exclude-svn"));
@@ -196,9 +199,10 @@ public class FindRepeMain
         BooleanOption noautoexclude = options.add(new BooleanOption("noautoexclude"));
         ArrayStringOption exclude = options.add(new ArrayStringOption("exclude", File.pathSeparatorChar));
 
-        ArrayStringOption focusPath = options.add(new ArrayStringOption('f',"focus", File.pathSeparatorChar));
+        ArrayStringOption focusPath = options.add(new ArrayStringOption('f', "focus", File.pathSeparatorChar));
         ArrayStringOption focusDirName = options.add(new ArrayStringOption("focus-dir", File.pathSeparatorChar));
         ArrayStringOption focusFileName = options.add(new ArrayStringOption("focus-file", File.pathSeparatorChar));
+        BooleanOption optZip = options.add(new BooleanOption('z', "zip"));
 
         ArrayStringOption dirName = options.add(new ArrayStringOption("dir", File.pathSeparatorChar));
         ArrayStringOption fileName = options.add(new ArrayStringOption("file", File.pathSeparatorChar));
@@ -211,12 +215,12 @@ public class FindRepeMain
         BooleanOption version = options.add(new BooleanOption("version"));
         BooleanOption help = options.add(new BooleanOption('h', "help"));
         BooleanOption examples = options.add(new BooleanOption("examples"));
-       
+
         String[] fileNames;
         try
         {
             args = LauncherParser.parseInstall(FINDREPE, null, VER, args);
-            if(args==null)
+            if (args == null)
             {
                 return;
             }
@@ -225,7 +229,7 @@ public class FindRepeMain
         catch (InvalidOptionException ex)
         {
             System.err.println(ex);
-            System.err.println(FINDREPE+": Try --help for more information");
+            System.err.println(FINDREPE + ": Try --help for more information");
             return;
         }
 
@@ -264,15 +268,15 @@ public class FindRepeMain
         long minWastedValue = Long.MAX_VALUE;
         try
         {
-            if(minSize.isUsed())
+            if (minSize.isUsed())
             {
                 minSizeValue = minSize.longValue();
                 minSizeUsed = true;
             }
-            if(maxSize.isUsed())
+            if (maxSize.isUsed())
             {
                 maxSizeValue = maxSize.longValue();
-                maxSizeUsed  = true;
+                maxSizeUsed = true;
             }
             if (minWasted.isUsed())
             {
@@ -282,7 +286,7 @@ public class FindRepeMain
 
             if (fileNames.length == 0)
             {
-                System.err.println(FINDREPE+": no directories specified");
+                System.err.println(FINDREPE + ": no directories specified");
                 return;
             }
 
@@ -292,7 +296,7 @@ public class FindRepeMain
             if (deleteAuto.isUsed())
             {
                 autoDeleteFiles = Files.getAbsoluteFile(Files.toFileArray(deleteAuto.getValues()));
-                if(autoDeleteFiles.length>0)
+                if (autoDeleteFiles.length > 0)
                 {
                     files = ArrayUtils.cat(files, autoDeleteFiles);
                 }
@@ -331,7 +335,7 @@ public class FindRepeMain
                     opt.addOmitedPath(new File(item));
                     if (verboseLevel > 0)
                     {
-                        System.out.println(FINDREPE+": excluded path '" + item + "'");
+                        System.out.println(FINDREPE + ": excluded path '" + item + "'");
                     }
                 }
             }
@@ -345,46 +349,38 @@ public class FindRepeMain
             focusPathDirFile(opt, focusPath, focusDirName, focusFileName, useRegEx);
             dirFile(opt, dirName, fileName, useRegEx);
 
+
+            if (optZip.isUsed())
+            {
+                opt.setZip(true);
+            }
+
+
+
             // ignore groups of 1 unless it specified by options
             opt.setMinCount(2);
             countFilter(opt, unique, count, minCount, maxCount, verboseLevel);
 
-            if (old.isUsed())
+            FindRepePipe findTask = new FindRepePipe(files, bugs, queueSize, opt);
+            new Thread(findTask).start();
+
+            if (bugs)
             {
-                FindRepe findTask = new FindRepe(files, bugs, queueSize, opt);
-                new Thread(findTask).start();
-
-                if (bugs)
-                {
-                    showBugs(findTask.getBugIterable(), fixBugs);
-                }
-                showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed()?sizeParser:null),autoDeleteFiles );
+                showBugs(findTask.getBugIterable(), fixBugs);
             }
-            else
-            {
-                ActorPool.setKeepAliveTime(1234);
-
-                FindRepePipe findTask = new FindRepePipe(files, bugs, queueSize, opt);
-                new Thread(findTask).start();
-
-                if (bugs)
-                {
-                    showBugs(findTask.getBugIterable(), fixBugs);
-                }
-                showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed()?sizeParser:null), autoDeleteFiles);
-            }
+            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed() ? sizeParser : null), autoDeleteFiles);
         }
         catch (MissingOptionParameterException ex)
         {
-            System.err.println(FINDREPE+":"+ex.getMessage());
+            System.err.println(FINDREPE + ":" + ex.getMessage());
         }
         catch (InvalidOptionParameterException ex)
         {
-            System.err.println(FINDREPE+":"+ex.getMessage());
+            System.err.println(FINDREPE + ":" + ex.getMessage());
         }
         catch (NumberFormatException ex)
         {
-            System.err.println(FINDREPE+":"+ex.getMessage());
+            System.err.println(FINDREPE + ":" + ex.getMessage());
         }
 
     }
@@ -396,7 +392,7 @@ public class FindRepeMain
             String[] paths = excludeDirName.getValues();
             for (String item : paths)
             {
-                opt.addOmitedDirName(item,!useRegEx);
+                opt.addOmitedDirName(item, !useRegEx);
             }
         }
         if (excludeFileName.isUsed())
@@ -404,7 +400,7 @@ public class FindRepeMain
             String[] paths = excludeFileName.getValues();
             for (String item : paths)
             {
-                opt.addOmitedFileName(item,!useRegEx);
+                opt.addOmitedFileName(item, !useRegEx);
             }
         }
     }
@@ -463,7 +459,7 @@ public class FindRepeMain
             opt.addOmitedDirName(".svn");
             if (verboseLevel > 0)
             {
-                System.out.println(FINDREPE+": excluded subversion files");
+                System.out.println(FINDREPE + ": excluded subversion files");
             }
 
         }
@@ -472,7 +468,7 @@ public class FindRepeMain
             opt.addOmitedDirName("CVS");
             if (verboseLevel > 0)
             {
-                System.out.println(FINDREPE+": excluded CVS files");
+                System.out.println(FINDREPE + ": excluded CVS files");
             }
         }
         if (excludeRc.isUsed() || excludeHg.isUsed())
@@ -481,7 +477,7 @@ public class FindRepeMain
             opt.addOmitedFileName(".hgignore");
             if (verboseLevel > 0)
             {
-                System.out.println(FINDREPE+": excluded mercurial files");
+                System.out.println(FINDREPE + ": excluded mercurial files");
             }
         }
     }
@@ -525,15 +521,15 @@ public class FindRepeMain
         {
             if (opt.getMinCount() == opt.getMaxCount())
             {
-                System.out.println(FINDREPE+": exactly " + opt.getMinCount() + " occurrence" + ((opt.getMinCount() == 1) ? "" : "s"));
+                System.out.println(FINDREPE + ": exactly " + opt.getMinCount() + " occurrence" + ((opt.getMinCount() == 1) ? "" : "s"));
             }
             else if (opt.getMaxCount() != Integer.MAX_VALUE)
             {
-                System.out.println(FINDREPE+": between " + opt.getMinCount() + " and " + opt.getMaxCount() + " occurrences");
+                System.out.println(FINDREPE + ": between " + opt.getMinCount() + " and " + opt.getMaxCount() + " occurrences");
             }
             else if (opt.getMinCount() != 2)
             {
-                System.out.println(FINDREPE+": at least " + opt.getMinCount() + " occurrence" + ((opt.getMinCount() == 1) ? "" : "s"));
+                System.out.println(FINDREPE + ": at least " + opt.getMinCount() + " occurrence" + ((opt.getMinCount() == 1) ? "" : "s"));
             }
         }
 
@@ -544,14 +540,14 @@ public class FindRepeMain
         //METER NUEVA OPCIÓN Y COLA PARA MOSTRAR LOS LINKS SIN DESTINO
         //        EVITANDO ASÍ SUPERPONERSE CON LAS PREGUNTAS
 
-        NormalizeFile normalize= new NormalizeFile();
+        NormalizeFile normalize = new NormalizeFile();
         try
         {
             Scanner sc = new Scanner(System.in);
             for (File bug : bugList)
             {
                 System.out.println("bug:" + bug.toString());
-                if(fix)
+                if (fix)
                 {
                     System.out.println("fix?[y/N]");
                     String line = sc.nextLine();
@@ -560,7 +556,7 @@ public class FindRepeMain
                         try
                         {
                             String name = normalize.normalize(bug);
-                            System.out.println("fixed: "+name);
+                            System.out.println("fixed: " + name);
                         }
                         catch (IOException ex)
                         {
@@ -587,36 +583,36 @@ public class FindRepeMain
         }
     }
 
-    private static void showGroups(FindRepeOptions opt, Iterable<File[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete)
+    private static void showGroups(FindRepeOptions opt, Iterable<PackedFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete)
     {
         int groupId = 0;
         int deleteMin = opt.getMinCount();
 
-        for (File[] group : groupsList)
+        for (PackedFile[] group : groupsList)
         {
             if (group.length >= opt.getMinCount() && group.length <= opt.getMaxCount())
             {
-                showOneGroup(groupId, group, delete,units,deleteMin,autoDelete);
+                showOneGroup(groupId, group, delete, units, deleteMin, autoDelete);
                 groupId++;
             }
         }
     }
 
-    private static void showOneGroup(int groupId, File files[], boolean delete, SizeUnits units, int deleteMin, File[] autoDelete)
+    private static void showOneGroup(int groupId, PackedFile files[], boolean delete, SizeUnits units, int deleteMin, File[] autoDelete)
     {
         boolean[] deleted = new boolean[files.length];
         Arrays.fill(deleted, false);
         Scanner sc = new Scanner(System.in);
 
-        if(delete && autoDelete.length>0 && files.length>1 && files.length>= deleteMin)
+        if (delete && autoDelete.length > 0 && files.length > 1 && files.length >= deleteMin)
         {
             int matches[] = new int[files.length];
             Arrays.fill(matches, 0);
-            for(int i=0;i<files.length;i++)
+            for (int i = 0; i < files.length; i++)
             {
-                for(int j=0;j<autoDelete.length;j++)
+                for (int j = 0; j < autoDelete.length; j++)
                 {
-                    if(Files.isParentOf(autoDelete[j],files[i]))
+                    if (Files.isParentOf(autoDelete[j], files[i].getFile()))
                     {
                         matches[i]++;
                     }
@@ -624,11 +620,13 @@ public class FindRepeMain
             }
             int sorted[] = Arrays.copyOf(matches, matches.length);
             Arrays.sort(sorted);
-            int minVal = sorted[deleteMin-2];
-            for(int i=0;i<matches.length;i++)
+            int minVal = sorted[deleteMin - 2];
+            for (int i = 0; i < matches.length; i++)
             {
-                if(matches[i]>minVal)
+                if (matches[i] > minVal)
+                {
                     deleted[i] = true;
+                }
             }
         }
 
@@ -637,8 +635,8 @@ public class FindRepeMain
             System.out.println();
             for (int i = 0; i < files.length; i++)
             {
-                String id = deleted[i]? "-" : (files[i].canWrite()?""+i:"r");
-                String size = units==null? "":units.toString(files[i].length(),true);
+                String id = deleted[i] ? "-" : (files[i].canWrite() ? "" + i : "r");
+                String size = units == null ? "" : units.toString(files[i].length(), true);
                 System.out.printf("[%s]%s %s\n", id, size, files[i].toString());
             }
             if (!delete)
@@ -652,16 +650,16 @@ public class FindRepeMain
             {
                 break;
             }
-            if(line.trim().equalsIgnoreCase("all"))
+            if (line.trim().equalsIgnoreCase("all"))
             {
-                for(int i=0;i<deleted.length;i++)
+                for (int i = 0; i < deleted.length; i++)
                 {
                     deleted[i] = true;
                 }
             }
-            else if(line.trim().equalsIgnoreCase("none"))
+            else if (line.trim().equalsIgnoreCase("none"))
             {
-                for(int i=0;i<deleted.length;i++)
+                for (int i = 0; i < deleted.length; i++)
                 {
                     deleted[i] = false;
                 }
@@ -686,13 +684,13 @@ public class FindRepeMain
         }
         System.out.println();
         int deletedCount = 0;
-        int notDeletedCount =0;
+        int notDeletedCount = 0;
         for (int i = 0; i < files.length; i++)
         {
-            boolean notdeleted=false;
+            boolean notdeleted = false;
             if (deleted[i])
             {
-                if(!files[i].delete())
+                if (!files[i].delete())
                 {
                     notdeleted = true;
                     notDeletedCount++;
@@ -702,7 +700,7 @@ public class FindRepeMain
                     deletedCount++;
                 }
             }
-            System.out.printf("  [%s] %s\n", (notdeleted?"e":(deleted[i] ? "-" : "+")), files[i].toString());
+            System.out.printf("  [%s] %s\n", (notdeleted ? "e" : (deleted[i] ? "-" : "+")), files[i].toString());
         }
         if (deletedCount > 0)
         {
