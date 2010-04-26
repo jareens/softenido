@@ -23,15 +23,22 @@ package com.softenido.cafe.io;
 
 import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.util.OSName;
+import com.softenido.cafe.util.zip.FixZipInputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipInputStream;
+
 
 class CachedFile extends File
 {
@@ -145,7 +152,7 @@ public abstract class ForEachFile implements Runnable
         }
         try
         {
-            if ((options.directory || !file.isDirectory()) && (options.file || !file.isFile()) && (options.hidden || (level == 0) || !file.isHidden()) && (filter == null || filter.accept(file)) && acceptSize(file.length()) && (options.linkFile || !Files.isLink(file)))
+            if (!options.onlyPacked && (options.directory || !file.isDirectory()) && (options.file || !file.isFile()) && (options.hidden || (level == 0) || !file.isHidden()) && (filter == null || filter.accept(file)) && acceptSize(file.length()) && (options.linkFile || !Files.isLink(file)))
             {
                 if (!isOmitedFile(file))
                 {
@@ -176,7 +183,7 @@ public abstract class ForEachFile implements Runnable
                     String name = file.getName().toLowerCase();
                     if ((options.zip && name.endsWith(".zip")) || (options.jar && name.endsWith(".jar")))
                     {
-                        ZipInputStream child = new ZipInputStream(new FileInputStream(file));
+                        ZipInputStream child = new FixZipInputStream(new FileInputStream(file));
                         try
                         {
                             run(new PackedFile(file), child, level + 1);
@@ -202,10 +209,9 @@ public abstract class ForEachFile implements Runnable
         {
             return;
         }
-
+        ZipEntry ent=null;
         try
         {
-            ZipEntry ent;
             while ((ent = zip.getNextEntry()) != null)
             {
                 PackedFile child = new PackedFile(pf, ent);
@@ -225,15 +231,16 @@ public abstract class ForEachFile implements Runnable
                     }
                 }
             }
-
+        }
+        catch (ZipException ex)
+        {
+            Logger.getLogger(ForEachFile.class.getName()).log(Level.WARNING, "error in file: \"{0}\"", pf);
         }
         catch (IOException ex)
         {
-            Logger.getLogger(ForEachFile.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ForEachFile.class.getName()).log(Level.WARNING, "error in file: \"{0}\"", pf);
         }
-
     }
-
 
     protected abstract void doForEach(PackedFile fe);
 

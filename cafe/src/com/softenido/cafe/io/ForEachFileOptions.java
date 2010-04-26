@@ -38,6 +38,7 @@ public class ForEachFileOptions
     boolean file;
     boolean zip;
     boolean jar;
+    boolean onlyPacked;
     boolean linkDir;//says if link directories should by followed
     boolean linkFile;//says if link Files (or directories) could be target
     FileFilter filter;
@@ -62,6 +63,7 @@ public class ForEachFileOptions
         file = true;
         zip = false;
         jar = false;
+        onlyPacked = false;
         linkDir = false;//says if link directories should by followed
         linkFile = false;//says if link Files (or directories) could be target
         filter = null;
@@ -88,6 +90,7 @@ public class ForEachFileOptions
         this.file = val.file;
         this.zip = val.zip;
         this.jar = val.jar;
+        this.onlyPacked = val.onlyPacked;
         this.linkDir = val.linkDir;
         this.linkFile = val.linkFile;
         this.filter = val.filter;
@@ -235,6 +238,15 @@ public class ForEachFileOptions
     public void setZip(boolean zip)
     {
         this.zip = zip;
+    }
+    public boolean isOnlyPacked()
+    {
+        return onlyPacked;
+    }
+
+    public void setOnlyPacked(boolean onlyPacked)
+    {
+        this.onlyPacked = onlyPacked;
     }
 
     public void addOmitedPath(File path)

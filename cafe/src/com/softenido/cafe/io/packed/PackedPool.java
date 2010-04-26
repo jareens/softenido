@@ -41,9 +41,14 @@ public class PackedPool
         final ZipFile zf = new ZipFile(paths[0]);
         try
         {
-            ZipEntry ze = zf.getEntry(paths[1]);
-            InputStream ret = zf.getInputStream(ze);
             String curPath = paths[0]+"!"+paths[1];
+            ZipEntry ze = zf.getEntry(paths[1]);
+            if(ze==null)
+            {
+                throw new FileNotFoundException("'"+curPath+"' not found");
+            }
+            
+            InputStream ret = zf.getInputStream(ze);
             try
             {
                 for(int i=2;i<paths.length;i++)
@@ -88,6 +93,5 @@ public class PackedPool
             zf.close();
             throw ex;
         }
-
     }
 }
