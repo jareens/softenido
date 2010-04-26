@@ -26,7 +26,6 @@ import com.softenido.cafe.io.ForEachFileOptions;
 import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.util.ArrayUtils;
 import com.softenido.cafe.util.SizeUnits;
-import com.softenido.cafe.util.concurrent.actor.ActorPool;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
 import com.softenido.cafe.util.options.InvalidOptionParameterException;
@@ -123,9 +122,9 @@ public class FindRepeMain
             + "     --dir=pattern           only directories matching pattern\n"
             + "     --file=pattern          only files matching pattern\n"
             + " -z  --zip                   recurse into zip files (zip, jar, ...)\n"
+            + " -Z  --zip-only              exclude files not added by option --zip\n"
             + " -e  --regex                 uses java regular expresions\n"
             + "     --wildcard              uses wildcards '*', '?' and '[]' (default)\n"
-            + "     --old                   old algorithm, as in version 0.6.2 (developers)\n"
             + "     --bug                   show filenames with bugs\n"
             + "     --bug-fix               try to fix filenames with bugs\n"
             + "     --version               print version number\n"
@@ -203,12 +202,12 @@ public class FindRepeMain
         ArrayStringOption focusDirName = options.add(new ArrayStringOption("focus-dir", File.pathSeparatorChar));
         ArrayStringOption focusFileName = options.add(new ArrayStringOption("focus-file", File.pathSeparatorChar));
         BooleanOption optZip = options.add(new BooleanOption('z', "zip"));
+        BooleanOption optZipOnly = options.add(new BooleanOption('Z', "zip-only"));
 
         ArrayStringOption dirName = options.add(new ArrayStringOption("dir", File.pathSeparatorChar));
         ArrayStringOption fileName = options.add(new ArrayStringOption("file", File.pathSeparatorChar));
         BooleanOption regex = options.add(new BooleanOption("regex"));
         BooleanOption wildcard = options.add(new BooleanOption("wildcard"));
-        BooleanOption old = options.add(new BooleanOption("old"));
         BooleanOption bug = options.add(new BooleanOption("bug"));
         BooleanOption bugFix = options.add(new BooleanOption("bug-fix"));
 
@@ -349,13 +348,17 @@ public class FindRepeMain
             focusPathDirFile(opt, focusPath, focusDirName, focusFileName, useRegEx);
             dirFile(opt, dirName, fileName, useRegEx);
 
-
             if (optZip.isUsed())
             {
                 opt.setZip(true);
+                opt.setJar(true);
             }
-
-
+            if (optZipOnly.isUsed())
+            {
+                opt.setZip(true);
+                opt.setJar(true);
+                opt.setOnlyPacked(true);
+            }
 
             // ignore groups of 1 unless it specified by options
             opt.setMinCount(2);
@@ -629,7 +632,7 @@ public class FindRepeMain
                 }
             }
         }
-
+        boolean showResult = false;
         while (true)
         {
             System.out.println();
@@ -654,6 +657,7 @@ public class FindRepeMain
             {
                 for (int i = 0; i < deleted.length; i++)
                 {
+                    showResult = true;
                     deleted[i] = true;
                 }
             }
@@ -673,6 +677,7 @@ public class FindRepeMain
                     int index = scLine.nextInt();
                     if (index >= 0 && index < files.length)
                     {
+                        showResult = true;
                         deleted[index] = true;
                     }
                     else
@@ -682,34 +687,36 @@ public class FindRepeMain
                 }
             }
         }
-        System.out.println();
-        int deletedCount = 0;
-        int notDeletedCount = 0;
-        for (int i = 0; i < files.length; i++)
+        if(showResult)
         {
-            boolean notdeleted = false;
-            if (deleted[i])
+            System.out.println();
+            int deletedCount = 0;
+            int notDeletedCount = 0;
+            for (int i = 0; i < files.length; i++)
             {
-                if (!files[i].delete())
+                boolean notdeleted = false;
+                if (deleted[i])
                 {
-                    notdeleted = true;
-                    notDeletedCount++;
+                    if (!files[i].delete())
+                    {
+                        notdeleted = true;
+                        notDeletedCount++;
+                    }
+                    else
+                    {
+                        deletedCount++;
+                    }
                 }
-                else
-                {
-                    deletedCount++;
-                }
+                System.out.printf("  [%s] %s\n", (notdeleted ? "e" : (deleted[i] ? "-" : "+")), files[i].toString());
             }
-            System.out.printf("  [%s] %s\n", (notdeleted ? "e" : (deleted[i] ? "-" : "+")), files[i].toString());
+            if (deletedCount > 0)
+            {
+                System.out.printf("\n  files deleted: %d\n\n", deletedCount);
+            }
+            if (notDeletedCount > 0)
+            {
+                System.out.printf("\n  files not deleted: %d\n\n", notDeletedCount);
+            }
         }
-        if (deletedCount > 0)
-        {
-            System.out.printf("\n  files deleted: %d\n\n", deletedCount);
-        }
-        if (notDeletedCount > 0)
-        {
-            System.out.printf("\n  files not deleted: %d\n\n", notDeletedCount);
-        }
-
     }
 }
