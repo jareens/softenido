@@ -26,6 +26,7 @@ import com.softenido.cafe.io.ForEachFileOptions;
 import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.util.ArrayUtils;
 import com.softenido.cafe.util.SizeUnits;
+import com.softenido.cafe.util.VerboseHandler;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
 import com.softenido.cafe.util.options.InvalidOptionParameterException;
@@ -39,6 +40,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,11 +50,10 @@ import java.util.logging.Logger;
  */
 public class FindRepeMain
 {
-
     private static final String FINDREPE = "findrepe";
-    private static final String VER = "0.8.0.1";
+    private static final String VER = "0.9.0.rc";
     private static final String VERSION =
-            "findrepe  version " + VER + " beta  (2010-04-24)\n"
+            "findrepe  version " + VER + " beta  (2010-07-15)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -121,7 +122,7 @@ public class FindRepeMain
             + "     --focus-file=pattern    focus on files matching pattern\n"
             + "     --dir=pattern           only directories matching pattern\n"
             + "     --file=pattern          only files matching pattern\n"
-            + " -z  --zip                   recurse into zip files (zip, jar, ...)\n"
+            + " -z  --zip                   recurse into zip files (zip, jar, ...)(ALPHA)\n"
             + " -Z  --zip-only              exclude files not added by option --zip\n"
             + " -e  --regex                 uses java regular expresions\n"
             + "     --wildcard              uses wildcards '*', '?' and '[]' (default)\n"
@@ -149,8 +150,8 @@ public class FindRepeMain
             + " findrepe -d backup\n"
             + " findrepe -d --min-size=1m c:\\backup e:\\img\n"
             + " findrepe -nd c:\\backup e:\\img\n"
-            + " findrepe -n /opt/ /backup/tools \n"
-            + " findrepe -n /opt/ --exclude=/opt/nb6.7" + File.pathSeparator + "/opt/nb6.8\n"
+            + " findrepe -vn /opt/ /backup/tools \n"
+            + " findrepe -vvn /opt/ --exclude=/opt/nb6.7" + File.pathSeparator + "/opt/nb6.8\n"
             + "\n"
             + " send me yours to: <flikxxi@gmail.com>\n";
 
@@ -256,7 +257,18 @@ public class FindRepeMain
         {
             verboseLevel = verbose.getCount();
         }
-
+        
+        VerboseHandler vh= new VerboseHandler(System.err, "findrepe: ");
+        VerboseHandler.register(verboseLevel, vh, ConsoleHandler.class);
+        
+        Logger logger = Logger.getLogger(FindRepeMain.class.getName());
+        if(logger.isLoggable(Level.CONFIG))
+        {
+            logger.log(Level.WARNING,"logger.level={0}",vh.getLevel().getName());
+            options.log();
+            vh.flush();
+        }
+        
         String optName = null;
         String optVal = null;
         boolean minSizeUsed = false;
@@ -332,10 +344,6 @@ public class FindRepeMain
                 for (String item : paths)
                 {
                     opt.addOmitedPath(new File(item));
-                    if (verboseLevel > 0)
-                    {
-                        System.out.println(FINDREPE + ": excluded path '" + item + "'");
-                    }
                 }
             }
             boolean useRegEx = regex.isUsed() && (!wildcard.isUsed() || regex.getLastUsed() > wildcard.getLastUsed());
@@ -363,15 +371,24 @@ public class FindRepeMain
             // ignore groups of 1 unless it specified by options
             opt.setMinCount(2);
             countFilter(opt, unique, count, minCount, maxCount, verboseLevel);
+            
+            if(logger.isLoggable(Level.CONFIG))
+            {
+                for(int i=0;i<fileNames.length;i++)
+                {
+                    logger.log(Level.CONFIG,"paths[{0}]={1}",new Object[]{i,fileNames[i]});
+                }
+                vh.flush();
+            }          
 
-            FindRepePipe findTask = new FindRepePipe(files, bugs, queueSize, opt);
+            FindRepePipe findTask = new FindRepePipe(files, bugs, queueSize, opt);           
             new Thread(findTask).start();
 
             if (bugs)
             {
                 showBugs(findTask.getBugIterable(), fixBugs);
             }
-            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed() ? sizeParser : null), autoDeleteFiles);
+            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed() ? sizeParser : null), autoDeleteFiles, vh);
         }
         catch (MissingOptionParameterException ex)
         {
@@ -586,7 +603,7 @@ public class FindRepeMain
         }
     }
 
-    private static void showGroups(FindRepeOptions opt, Iterable<PackedFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete)
+    private static void showGroups(FindRepeOptions opt, Iterable<PackedFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete,VerboseHandler vh)
     {
         int groupId = 0;
         int deleteMin = opt.getMinCount();
@@ -595,7 +612,17 @@ public class FindRepeMain
         {
             if (group.length >= opt.getMinCount() && group.length <= opt.getMaxCount())
             {
-                showOneGroup(groupId, group, delete, units, deleteMin, autoDelete);
+                vh.lock();
+                try
+                {
+                    vh.flush();
+                    showOneGroup(groupId, group, delete, units, deleteMin, autoDelete);
+                }
+                finally
+                {
+                    vh.unlock();
+                    
+                }
                 groupId++;
             }
         }
@@ -633,8 +660,10 @@ public class FindRepeMain
             }
         }
         boolean showResult = false;
+        
         while (true)
         {
+            System.out.flush();
             System.out.println();
             for (int i = 0; i < files.length; i++)
             {
@@ -719,4 +748,5 @@ public class FindRepeMain
             }
         }
     }
+
 }

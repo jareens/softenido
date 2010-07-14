@@ -45,7 +45,6 @@ import java.util.logging.Logger;
 public class FindRepePipe implements Runnable
 {
     //añadir criterio para enlaces y archivos ocultos
-
     private final boolean bugs;
     private final int bufSize;
     private final File[] bases;
@@ -54,6 +53,7 @@ public class FindRepePipe implements Runnable
     private final File fileEof; // elemento final que marca el final de una cola de files
     private final PackedFile[] filesEof = new PackedFile[0];// elemento final que marca el final de una cola de arrays de files
     private final FindRepeOptions options;
+
 
     public FindRepePipe(File[] bases, boolean bugs, int bufSize, FindRepeOptions opt)
     {
@@ -245,7 +245,6 @@ public class FindRepePipe implements Runnable
             }
         }).link(new PipeLine<PackedFile, FileHash>()//toHash
         {
-
             @Override
             public FileHash filter(PackedFile a)
             {
@@ -412,4 +411,11 @@ public class FindRepePipe implements Runnable
     {
         return IterableBuilder.build(groupsQueue, filesEof);
     }
+
+    public void verbose(FindRepePipe from, Level level, String msg, Exception ex)
+    {
+        Logger.getLogger(FindRepePipe.class.getName()).log(level, msg, ex);
+    }
+
+    
 }

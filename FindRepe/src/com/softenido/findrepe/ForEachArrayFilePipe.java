@@ -38,14 +38,12 @@ import java.util.logging.Logger;
  */
 public class ForEachArrayFilePipe implements Runnable
 {
-
     private final File[] files;
 
     final FileFilter filter;
     final Pipe<PackedFile,?> filePipe;
     final Pipe<String,?> namePipe;
     final boolean eof;
-    
     private ForEachFileOptions options = null;;
     
     /**
@@ -97,6 +95,7 @@ public class ForEachArrayFilePipe implements Runnable
 
             // sacar una copia de optiones para cada busqueda, han de excluir al resto
             ForEachFilePipe fefq = new ForEachFilePipe(fd, filter, filePipe, namePipe, false,opt);
+
             // excluidos el resto de rutas
             fefq.run();
         }
