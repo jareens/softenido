@@ -31,13 +31,13 @@ import java.util.HashSet;
  */
 public class ForEachFileOptions
 {
-
     int recursive;
     boolean hidden;
     boolean directory;
     boolean file;
     boolean zip;
     boolean jar;
+    boolean tar;
     boolean onlyPacked;
     boolean linkDir;//says if link directories should by followed
     boolean linkFile;//says if link Files (or directories) could be target
@@ -63,6 +63,7 @@ public class ForEachFileOptions
         file = true;
         zip = false;
         jar = false;
+        tar = false;
         onlyPacked = false;
         linkDir = false;//says if link directories should by followed
         linkFile = false;//says if link Files (or directories) could be target
@@ -90,6 +91,7 @@ public class ForEachFileOptions
         this.file = val.file;
         this.zip = val.zip;
         this.jar = val.jar;
+        this.tar = val.tar;
         this.onlyPacked = val.onlyPacked;
         this.linkDir = val.linkDir;
         this.linkFile = val.linkFile;
@@ -178,6 +180,16 @@ public class ForEachFileOptions
     public void setJar(boolean jar)
     {
         this.jar = jar;
+    }
+
+    public boolean isTar()
+    {
+        return tar;
+    }
+
+    public void setTar(boolean tar)
+    {
+        this.tar = tar;
     }
 
     public boolean isLinkDir()

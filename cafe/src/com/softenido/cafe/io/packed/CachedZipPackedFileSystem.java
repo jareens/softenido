@@ -7,7 +7,7 @@ package com.softenido.cafe.io.packed;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.zip.ZipEntry;
+import org.apache.commons.compress.archivers.ArchiveEntry;
 
 /**
  *
@@ -17,7 +17,7 @@ class CachedZipPackedFileSystem extends ZipPackedFileSystem
 {
     private final long length;
     
-    public CachedZipPackedFileSystem(String path, ZipEntry entry)
+    public CachedZipPackedFileSystem(String path,  ArchiveEntry entry)
     {
         super(path);
         this.length = entry.getSize();

@@ -24,15 +24,12 @@ package com.softenido.cafe.io;
 import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.security.ParallelMessageDigest;
 import com.softenido.cafe.util.FileDigest;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +38,7 @@ import java.util.logging.Logger;
  * @author franci
  */
 public class FileHash
-{
+{  
 
     private static final String MD5 = "MD5";
     private static final String SHA1 = "SHA-1";
@@ -59,8 +56,8 @@ public class FileHash
     private boolean exception = false;
     private FileDigest digest = null;
     private final Object lock = new Object();
-    private static boolean pow2 = true;
-
+    private static boolean pow2 = true;   
+    
     /**
      * Creates a new FileHash instance from a File object.
      * @param file
@@ -132,6 +129,11 @@ public class FileHash
                     return false;
                 }
             }
+        }
+        catch (FileNotFoundException ex)
+        {
+            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
         catch (IOException ex)
         {

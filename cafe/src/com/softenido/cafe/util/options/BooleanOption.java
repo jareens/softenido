@@ -21,6 +21,8 @@
  */
 package com.softenido.cafe.util.options;
 
+import java.text.MessageFormat;
+
 /**
  *
  * @author franci
@@ -117,6 +119,12 @@ public class BooleanOption implements Option
     public String getUsedName()
     {
         return usedName;
+    }
+
+    @Override
+    public String toString()
+    {
+        return MessageFormat.format("--{0}={1} (count={2})",new Object[]{longName,(count>0),count});
     }
 
 }

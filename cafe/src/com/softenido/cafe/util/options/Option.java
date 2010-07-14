@@ -44,4 +44,5 @@ public interface Option
     int parseShort(int argIndex, int charIndex, String[] args);
 
     String getUsedName();
+    
 }

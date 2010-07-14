@@ -22,6 +22,9 @@
 package com.softenido.cafe.util.options;
 
 // CAMBIAR LA HERENCIA POR UNA COMPOSICIÓN PARA FACILITAR LA DETECCIÓN DE ERRORES EN OptionParser.add
+
+import java.text.MessageFormat;
+
 /**
  *
  * @author franci
@@ -146,4 +149,11 @@ public class StringOption extends BooleanOption
     {
         this.value = value;
     }
+    
+    @Override
+    public String toString()
+    {
+        return MessageFormat.format("--{0}={1}",new Object[]{longName,value});
+    }
+    
 }

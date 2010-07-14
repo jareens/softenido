@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.ZipEntry;
+import org.apache.commons.compress.archivers.ArchiveEntry;
 
 /**
  *
@@ -36,7 +37,7 @@ public class PackedFile
         this.fs = new ZipPackedFileSystem(path);
     }
 
-    public PackedFile(PackedFile pf, ZipEntry child)
+    public PackedFile(PackedFile pf, ArchiveEntry child)
     {
         this.path = pf.path+PackedFile.pathSeparator+child.getName();
         this.fs = new CachedZipPackedFileSystem(this.path,child);

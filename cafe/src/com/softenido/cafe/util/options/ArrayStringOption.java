@@ -21,6 +21,7 @@
  */
 package com.softenido.cafe.util.options;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 /**
@@ -81,4 +82,10 @@ public class ArrayStringOption extends StringOption
             }
         }
     }
+    @Override
+    public String toString()
+    {
+        return MessageFormat.format("--{0}={1})",new Object[]{longName,values});
+    }
+    
 }

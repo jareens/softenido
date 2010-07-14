@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
 
@@ -184,6 +186,20 @@ public class OptionParser
         };
         Arrays.sort(list,cmp);
         return list;
+    }
+    public void log()
+    {
+        Logger logger = Logger.getLogger(OptionParser.class.getName());
+        if(logger.isLoggable(Level.CONFIG))
+        {
+            for(Option op : optionList)
+            {
+                if(op.isUsed())
+                {
+                    logger.config(op.toString());
+                }
+            }
+        }
     }
 
 }

@@ -23,22 +23,18 @@ package com.softenido.cafe.io;
 
 import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.util.OSName;
-import com.softenido.cafe.util.zip.FixZipInputStream;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipInputStream;
-
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveInputStream;
+import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 
 class CachedFile extends File
 {
@@ -69,12 +65,15 @@ class CachedFile extends File
  */
 public abstract class ForEachFile implements Runnable
 {
-
     private static int bufSize = 64 * 1024;
     private File base;
     ForEachFileOptions options;
     private FileFilter filter = null;
     private HashSet<File> autoOmitPaths = new HashSet<File>();
+    
+    Logger logger = Logger.getLogger(ForEachFile.class.getName());
+
+    private static final ArchiveStreamFactory asf = new ArchiveStreamFactory();
 
     public ForEachFileOptions getOptions()
     {
@@ -149,7 +148,8 @@ public abstract class ForEachFile implements Runnable
         if (level > options.recursive)
         {
             return;
-        }
+        }       
+        logger.log(Level.FINEST, "file={0}",file);
         try
         {
             if (!options.onlyPacked && (options.directory || !file.isDirectory()) && (options.file || !file.isFile()) && (options.hidden || (level == 0) || !file.isHidden()) && (filter == null || filter.accept(file)) && acceptSize(file.length()) && (options.linkFile || !Files.isLink(file)))
@@ -168,7 +168,7 @@ public abstract class ForEachFile implements Runnable
                         File[] childs = file.listFiles();
                         if (childs == null)
                         {
-                            System.err.printf("%d %s error\n", level, file);
+                            logger.log(Level.WARNING, "error in {0}",file);
                             return;
                         }
                         for (File child : childs)
@@ -181,9 +181,9 @@ public abstract class ForEachFile implements Runnable
                 else if ((options.zip || options.jar) && file.isFile())
                 {
                     String name = file.getName().toLowerCase();
-                    if ((options.zip && name.endsWith(".zip")) || (options.jar && name.endsWith(".jar")))
+                    if (inspectFile(name))
                     {
-                        ZipInputStream child = new FixZipInputStream(new FileInputStream(file));
+                        ArchiveInputStream child = asf.createArchiveInputStream(new BufferedInputStream(new FileInputStream(file)));
                         try
                         {
                             run(new PackedFile(file), child, level + 1);
@@ -197,23 +197,25 @@ public abstract class ForEachFile implements Runnable
                 }
             }
         }
-        catch (IOException ex)
+        catch (Exception ex)
         {
-            Logger.getLogger(ForEachFile.class.getName()).log(Level.SEVERE, null, ex);
+              doException(ex);
         }
     }
 
-    private void run(PackedFile pf, ZipInputStream zip, int level)
+    private void run(PackedFile pf, ArchiveInputStream zip, int level)
     {
         if (level > options.recursive)
         {
             return;
         }
-        ZipEntry ent=null;
+        System.out.println(pf);
+        ArchiveEntry ent = null;
         try
         {
             while ((ent = zip.getNextEntry()) != null)
             {
+                System.out.println(ent.getName());
                 PackedFile child = new PackedFile(pf, ent);
                 if ((options.directory || !ent.isDirectory()) && (options.file || ent.isDirectory()) && (filter == null || filter.accept(new File(ent.getName()))) && acceptSize(ent.getSize()))
                 {
@@ -221,25 +223,34 @@ public abstract class ForEachFile implements Runnable
                 }
                 if ((level < options.recursive) && (options.hidden || (level == 0)))
                 {
-                    if ((options.zip || options.jar) && !ent.isDirectory())
+                    if ((options.zip || options.jar|| options.tar) && !ent.isDirectory())
                     {
                         String name = ent.getName().toLowerCase();
-                        if ((options.zip && name.endsWith(".zip")) || (options.jar && name.endsWith(".jar")))
+                        if (inspectFile(name))
                         {
-                            run(child, new ZipInputStream(zip), level + 1);
+                            // SI NO SE USA BUFFERED INPUT STREAM, POS DA ERROR
+                            InputStream buf = new BufferedInputStream(zip);
+                            ArchiveInputStream ais =  new ArchiveStreamFactory().createArchiveInputStream(buf);
+                            run(child, ais, level + 1);
                         }
                     }
                 }
             }
         }
-        catch (ZipException ex)
+        catch (Exception ex)
         {
-            Logger.getLogger(ForEachFile.class.getName()).log(Level.WARNING, "error in file: \"{0}\"", pf);
+              doException(ex);
         }
-        catch (IOException ex)
-        {
-            Logger.getLogger(ForEachFile.class.getName()).log(Level.WARNING, "error in file: \"{0}\"", pf);
-        }
+    }
+    boolean inspectFile(String name)
+    {
+        if(options.zip && name.endsWith(".zip"))
+            return true;
+        if(options.jar && name.endsWith(".jar"))
+            return true;
+        if(options.tar && name.endsWith(".tar"))
+            return true;
+        return false;
     }
 
     protected abstract void doForEach(PackedFile fe);
@@ -251,7 +262,7 @@ public abstract class ForEachFile implements Runnable
 
     private void doException(Exception ex)
     {
-        Logger.getLogger(ForEachFile.class.getName()).log(Level.SEVERE, null, ex);
+        logger.log(Level.SEVERE, null, ex);
     }
 
     private boolean isOmitedPath(final File file, boolean verifyParents)
@@ -370,8 +381,9 @@ public abstract class ForEachFile implements Runnable
         }
         catch (IOException ex)
         {
-            Logger.getLogger(ForEachFile.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, null, ex);
         }
         return false;
     }
+   
 }

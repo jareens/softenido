@@ -22,8 +22,6 @@
 package com.softenido.cafe.util.options;
 
 import com.softenido.cafe.util.SizeUnits;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -64,5 +62,5 @@ public class SizeOption extends StringOption
         {
             return def;
         }
-    }  
+    }     
 }
