@@ -43,6 +43,7 @@ import java.util.Scanner;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  *
@@ -51,9 +52,9 @@ import java.util.logging.Logger;
 public class FindRepeMain
 {
     private static final String FINDREPE = "findrepe";
-    private static final String VER = "0.9.0.rc";
+    private static final String VER = "0.9.0.rc3";
     private static final String VERSION =
-            "findrepe  version " + VER + " beta  (2010-07-15)\n"
+            "findrepe  version " + VER + " alpha (2010-07-15)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -91,6 +92,7 @@ public class FindRepeMain
             + "\n"
             + "Options:\n"
             + " -v, --verbose               increase verbosity\n"
+            + "     --verbose-logger        format messages as a logger\n"
             + " -L, --license               display software license\n"
             + " -d, --delete                prompt user for files to delete\n"
             + "     --delete-auto=path      smart auto-selection of files for deletion\n"
@@ -172,6 +174,7 @@ public class FindRepeMain
         OptionParser options = new OptionParser();
 
         BooleanOption verbose = options.add(new BooleanOption('v', "verbose"));
+        BooleanOption verboseLogger = options.add(new BooleanOption("verbose-logger"));
         BooleanOption license = options.add(new BooleanOption('L', "license"));
         BooleanOption delete = options.add(new BooleanOption('d', "delete"));
         ArrayStringOption deleteAuto = options.add(new ArrayStringOption("delete-auto", File.pathSeparatorChar));
@@ -257,14 +260,15 @@ public class FindRepeMain
         {
             verboseLevel = verbose.getCount();
         }
-        
-        VerboseHandler vh= new VerboseHandler(System.err, "findrepe: ");
+          
+        VerboseHandler vh = verboseLogger.isUsed() ? new VerboseHandler(System.err, new SimpleFormatter()) : new VerboseHandler(System.err, "findrepe: ");
         VerboseHandler.register(verboseLevel, vh, ConsoleHandler.class);
         
         Logger logger = Logger.getLogger(FindRepeMain.class.getName());
         if(logger.isLoggable(Level.CONFIG))
         {
-            logger.log(Level.WARNING,"logger.level={0}",vh.getLevel().getName());
+            logger.log(Level.CONFIG,"{0}.version={1}", new String[]{FINDREPE,VER});
+            logger.log(Level.CONFIG,"logger.level={0}",vh.getLevel().getName());
             options.log();
             vh.flush();
         }
