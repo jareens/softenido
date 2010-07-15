@@ -67,9 +67,15 @@ public class VerboseHandler extends StreamHandler
             @Override
             public String format(LogRecord record)
             {
-                return prefix + MessageFormat.format(record.getMessage(),record.getParameters())+"\n";
+                String message = record.getMessage();
+                if(message!=null)
+                  return prefix + MessageFormat.format(record.getMessage(),record.getParameters())+"\n";
+                else if(record.getThrown() != null)
+                    return prefix + record.getThrown().getMessage()+"\n";
+                else
+                    return prefix + "\n";
             }
-        });
+        });    
     }
 
     @Override

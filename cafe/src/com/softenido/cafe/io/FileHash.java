@@ -354,7 +354,7 @@ public class FileHash
         }
         catch (FileNotFoundException ex)
         {
-            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileHash.class.getName()).log(Level.WARNING, null, ex);
         }
         catch (IOException ex)
         {
