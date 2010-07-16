@@ -71,7 +71,7 @@ public abstract class ForEachFile implements Runnable
     private FileFilter filter = null;
     private HashSet<File> autoOmitPaths = new HashSet<File>();
     
-    Logger logger = Logger.getLogger(ForEachFile.class.getName());
+    static final Logger logger = Logger.getLogger(ForEachFile.class.getName());
 
     private static final ArchiveStreamFactory asf = new ArchiveStreamFactory();
 
