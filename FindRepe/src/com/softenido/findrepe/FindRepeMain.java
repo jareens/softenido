@@ -616,10 +616,10 @@ public class FindRepeMain
         {
             if (group.length >= opt.getMinCount() && group.length <= opt.getMaxCount())
             {
+                vh.flush();
                 vh.lock();
                 try
                 {
-                    vh.flush();
                     showOneGroup(groupId, group, delete, units, deleteMin, autoDelete);
                 }
                 finally
