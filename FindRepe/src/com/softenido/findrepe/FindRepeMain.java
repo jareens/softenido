@@ -27,6 +27,8 @@ import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.util.ArrayUtils;
 import com.softenido.cafe.util.SizeUnits;
 import com.softenido.cafe.util.VerboseHandler;
+import com.softenido.cafe.util.concurrent.actor.Actor;
+import com.softenido.cafe.util.concurrent.actor.ActorPool;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
 import com.softenido.cafe.util.options.InvalidOptionParameterException;
@@ -51,10 +53,11 @@ import java.util.logging.SimpleFormatter;
  */
 public class FindRepeMain
 {
+
     private static final String FINDREPE = "findrepe";
-    private static final String VER = "0.9.0.rc3";
+    private static final String VER = "0.9.0";
     private static final String VERSION =
-            "findrepe  version " + VER + " alpha (2010-07-15)\n"
+            "findrepe  version " + VER + " alpha (2010-07-22)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -98,9 +101,9 @@ public class FindRepeMain
             + "     --delete-auto=path      smart auto-selection of files for deletion\n"
             + " -n, --noempty               exclude zero-length files\n"
             + " -s, --symlinks              follow symlinks\n"
-            + " -m, --min-size=size         minimum file size[bkmgt], exclude shorters\n"
-            + " -M, --max-size=size         maximun file size[bkmgt], exclude largers\n"
-            + " -w  --min-wasted=size       minimun wasted size[bkmgt] copies, size*(n-1)\n"
+            + " -m, --min-size=size         exclude files shorter than size[bkmgt]\n"
+            + " -M, --max-size=size         exclude files larger than size[bkmgt]\n"
+            + " -w  --min-wasted=size       minimum wasted size[bkmgt] copies, size*(n-1)\n"
             + " -S  --size                  show size[bkmgt] of files\n"
             + "     --install               install a launcher\n"
             + "     --install-java[=path]   install a launcher using 'java' command\n"
@@ -128,6 +131,7 @@ public class FindRepeMain
             + " -Z  --zip-only              exclude files not added by option --zip\n"
             + " -e  --regex                 uses java regular expresions\n"
             + "     --wildcard              uses wildcards '*', '?' and '[]' (default)\n"
+            + " -j  --jobs=N                limits thread use to N (0-1024, developers only)\n"
             + "     --bug                   show filenames with bugs\n"
             + "     --bug-fix               try to fix filenames with bugs\n"
             + "     --version               print version number\n"
@@ -214,6 +218,7 @@ public class FindRepeMain
         BooleanOption wildcard = options.add(new BooleanOption("wildcard"));
         BooleanOption bug = options.add(new BooleanOption("bug"));
         BooleanOption bugFix = options.add(new BooleanOption("bug-fix"));
+        NumberOption opJobs = options.add(new NumberOption('j', "jobs"));
 
         BooleanOption version = options.add(new BooleanOption("version"));
         BooleanOption help = options.add(new BooleanOption('h', "help"));
@@ -260,19 +265,22 @@ public class FindRepeMain
         {
             verboseLevel = verbose.getCount();
         }
-          
+
         VerboseHandler vh = verboseLogger.isUsed() ? new VerboseHandler(System.err, new SimpleFormatter()) : new VerboseHandler(System.err, "findrepe: ");
         VerboseHandler.register(verboseLevel, vh, ConsoleHandler.class);
-        
+
         Logger logger = Logger.getLogger(FindRepeMain.class.getName());
-        if(logger.isLoggable(Level.CONFIG))
+        if (logger.isLoggable(Level.CONFIG))
         {
-            logger.log(Level.CONFIG,"{0}.version={1}", new String[]{FINDREPE,VER});
-            logger.log(Level.CONFIG,"logger.level={0}",vh.getLevel().getName());
+            logger.log(Level.CONFIG, "{0}.version={1}", new String[]
+                    {
+                        FINDREPE, VER
+                    });
+            logger.log(Level.CONFIG, "logger.level={0}", vh.getLevel().getName());
             options.log();
             vh.flush();
         }
-        
+
         String optName = null;
         String optVal = null;
         boolean minSizeUsed = false;
@@ -375,17 +383,34 @@ public class FindRepeMain
             // ignore groups of 1 unless it specified by options
             opt.setMinCount(2);
             countFilter(opt, unique, count, minCount, maxCount, verboseLevel);
-            
-            if(logger.isLoggable(Level.CONFIG))
+
+            if (logger.isLoggable(Level.CONFIG))
             {
-                for(int i=0;i<fileNames.length;i++)
+                for (int i = 0; i < fileNames.length; i++)
                 {
-                    logger.log(Level.CONFIG,"paths[{0}]={1}",new Object[]{i,fileNames[i]});
+                    logger.log(Level.CONFIG, "paths[{0}]={1}", new Object[]
+                            {
+                                i, fileNames[i]
+                            });
                 }
                 vh.flush();
-            }          
+            }
 
-            FindRepePipe findTask = new FindRepePipe(files, bugs, queueSize, opt);           
+            if (opJobs.isUsed())
+            {
+                int jobs = opJobs.intValue();
+                jobs = Math.min(jobs, 1024);
+                if (jobs <= 0)
+                {
+                    Actor.setForceSync(true);
+                }
+                else
+                {
+                    ActorPool.setDefaultPoolSize(jobs);
+                }
+            }
+
+            FindRepePipe findTask = new FindRepePipe(files, bugs, queueSize, opt);
             new Thread(findTask).start();
 
             if (bugs)
@@ -607,7 +632,7 @@ public class FindRepeMain
         }
     }
 
-    private static void showGroups(FindRepeOptions opt, Iterable<PackedFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete,VerboseHandler vh)
+    private static void showGroups(FindRepeOptions opt, Iterable<PackedFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete, VerboseHandler vh)
     {
         int groupId = 0;
         int deleteMin = opt.getMinCount();
@@ -625,7 +650,6 @@ public class FindRepeMain
                 finally
                 {
                     vh.unlock();
-                    
                 }
                 groupId++;
             }
@@ -664,7 +688,7 @@ public class FindRepeMain
             }
         }
         boolean showResult = false;
-        
+
         while (true)
         {
             System.out.flush();
@@ -752,5 +776,4 @@ public class FindRepeMain
             }
         }
     }
-
 }

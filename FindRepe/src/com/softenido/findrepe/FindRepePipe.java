@@ -229,7 +229,6 @@ public class FindRepePipe implements Runnable
 
         Pipe<PackedFile, FileHash> pipe = new PipeLine<PackedFile, PackedFile>()//readable
         {
-
             @Override
             public PackedFile filter(PackedFile a)
             {
@@ -237,7 +236,6 @@ public class FindRepePipe implements Runnable
             }
         }.link(new PipeLine<PackedFile, PackedFile>()//readable
         {
-
             @Override
             public PackedFile filter(PackedFile a)
             {
@@ -252,7 +250,6 @@ public class FindRepePipe implements Runnable
             }
         }).link(new PipeLine<FileHash, FileHash>()//toBucketMap(size)
         {
-
             @Override
             public FileHash filter(FileHash a)
             {
@@ -297,7 +294,6 @@ public class FindRepePipe implements Runnable
 
             Pipe<FileHash[], PackedFile[]> pipe = new PipeLine<FileHash[], FileHash[]>()//readable
             {
-
                 @Override
                 public FileHash[] filter(FileHash[] a)//min+focus
                 {
