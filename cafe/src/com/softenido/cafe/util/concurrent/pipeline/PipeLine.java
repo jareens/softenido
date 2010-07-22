@@ -221,6 +221,7 @@ public class PipeLine<M,R> implements Pipe<M,R>, Filter<M,R>, Runnable
                 val = links[i].poll();
                 if (val != null)
                 {
+                    keep = true;
                     links[i + 1].put(val);
                 }
                 else if (!links[i].isAlive())
@@ -228,7 +229,6 @@ public class PipeLine<M,R> implements Pipe<M,R>, Filter<M,R>, Runnable
                     links[i + 1].close();
                 }
             }
-            keep = (keep || val!=null);
         }
         return keep;
     }

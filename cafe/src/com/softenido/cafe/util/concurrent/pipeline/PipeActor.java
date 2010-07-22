@@ -46,7 +46,7 @@ public class PipeActor<M,R> implements Pipe<M,R>
             return null;
         }
     };
-
+    
     PipeActor(ActorPool pool,int threads,Filter<M, R> filter)
     {
         this.actor = new Actor(pool,threads,filter);
@@ -90,7 +90,7 @@ public class PipeActor<M,R> implements Pipe<M,R>
         boolean keep=false;
         do
         {
-            Value<R> val = blocking?queue.take():queue.poll();
+            final Value<R> val = blocking?queue.take():queue.poll();
             if (val == poison)
             {
                 alive = false;

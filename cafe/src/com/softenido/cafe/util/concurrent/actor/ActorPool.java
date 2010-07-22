@@ -34,8 +34,8 @@ import java.util.concurrent.TimeUnit;
 public class ActorPool
 {
     public final static int CORES = Runtime.getRuntime().availableProcessors();
-
     private static int keepAliveTime = 333;
+    private static volatile int defaultPoolSize = CORES*2+CORES+CORES/2;
 
     private final BlockingQueue<Runnable> inbox;
     private final Executor executor;
@@ -58,7 +58,7 @@ public class ActorPool
     
     public ActorPool()
     {
-        this(CORES*2+CORES+CORES/2);
+        this(defaultPoolSize);
     }
     
     void execute(Runnable task) throws InterruptedException
@@ -81,5 +81,15 @@ public class ActorPool
     public static void setKeepAliveTime(int keepAliveTime)
     {
         ActorPool.keepAliveTime = keepAliveTime;
+    }
+
+    public static int getDefaultPoolSize()
+    {
+        return defaultPoolSize;
+    }
+
+    public static void setDefaultPoolSize(int defaultPoolSize)
+    {
+        ActorPool.defaultPoolSize = defaultPoolSize;
     }
 }

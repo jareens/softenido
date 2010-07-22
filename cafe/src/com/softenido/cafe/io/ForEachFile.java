@@ -209,13 +209,13 @@ public abstract class ForEachFile implements Runnable
         {
             return;
         }
-        System.out.println(pf);
+        logger.log(Level.FINEST, "file={0}",pf);
         ArchiveEntry ent = null;
         try
         {
             while ((ent = zip.getNextEntry()) != null)
             {
-                System.out.println(ent.getName());
+                logger.log(Level.FINEST, "file={0}",ent.getName());
                 PackedFile child = new PackedFile(pf, ent);
                 if ((options.directory || !ent.isDirectory()) && (options.file || ent.isDirectory()) && (filter == null || filter.accept(new File(ent.getName()))) && acceptSize(ent.getSize()))
                 {
