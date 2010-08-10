@@ -25,6 +25,7 @@ import com.softenido.cafe.collections.IterableBuilder;
 import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.io.FileHash;
 import com.softenido.cafe.io.Files;
+import com.softenido.cafe.io.ForEachFilePipe;
 import com.softenido.cafe.util.ArrayUtils;
 import com.softenido.cafe.util.concurrent.pipeline.Pipe;
 import com.softenido.cafe.util.concurrent.pipeline.PipeArray;
@@ -88,12 +89,12 @@ public class FindRepePipe implements Runnable
                 }
                 else
                 {
-                    System.err.println("findrepe: wrong link '" + item.toString() + "'");
+                    Logger.getLogger(FindRepePipe.class.getName()).log(Level.WARNING, "wrong link \"{0}\"",item);
                 }
             }
             catch (InterruptedException ex)
             {
-                Logger.getLogger(Readable.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FindRepePipe.class.getName()).log(Level.SEVERE, null, ex);
             }
             catch (IOException ex)
             {
@@ -182,16 +183,23 @@ public class FindRepePipe implements Runnable
                 File file = item.getFile().getFile();
                 for (File dir : paths)
                 {
-                    if (dir.isFile())
+                    try
                     {
-                        if (dir.equals(item.getFile()))
+                        if (dir.isFile())
                         {
-                            return list;
+                            if (dir.equals(item.getFile().getFile()))
+                            {
+                                return list;
+                            }
+                        }
+                        else if (Files.isParentOf(dir, file, false))
+                        {
+                                return list;
                         }
                     }
-                    else if (Files.isParentOf(dir, file))
+                    catch (IOException ex)
                     {
-                        return list;
+                        Logger.getLogger(FindRepePipe.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -258,8 +266,7 @@ public class FindRepePipe implements Runnable
             }
         });
 
-        ForEachArrayFilePipe foreach = new ForEachArrayFilePipe(basesAndFocus, pipe, true);
-        foreach.setOptions(options);
+        ForEachFilePipe foreach = new ForEachFilePipe(basesAndFocus, options, pipe,  true);
         new Thread(foreach).start();
 
         // wait until pipe is alive to obtain all items for each bucket

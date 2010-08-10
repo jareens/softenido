@@ -30,6 +30,7 @@ import java.util.Comparator;
  */
 class FileHashSizeComparator implements Comparator<FileHash>
 {
+    @Override
     public int compare(FileHash f1, FileHash f2)
     {
         if (f1.getSize() < f2.getSize())

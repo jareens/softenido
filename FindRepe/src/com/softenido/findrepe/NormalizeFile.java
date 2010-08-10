@@ -24,7 +24,8 @@ package com.softenido.findrepe;
 import com.softenido.cafe.io.Files;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  *
@@ -32,48 +33,41 @@ import java.io.OutputStream;
  */
 public class NormalizeFile
 {
-    private final Object lock = new Object();
-    private Process child;
-    private OutputStream out;
+    private final File fd;
+    private String message;
+    private int value = 0;
     
-    public String normalize(File fd) throws IOException
+    public NormalizeFile(File fd)
     {
-        synchronized (lock)
-        {
-            if (child == null)
-            {
-                child = Runtime.getRuntime().exec("sh");
-                out = child.getOutputStream();
-            }
+        this.fd = fd;
+    }
+
+    public String getErrorMessage()
+    {
+        return message;
+    }
+
+    public int getValue()
+    {
+        return value;
+    }
+
+    public String normalize() throws IOException, InterruptedException
+    {
+            value=0;
+
             String name = fd.getCanonicalPath();
             String escape = Files.escape(name);
             String normal = Files.normalize(escape);
             escape = Files.wildcard(escape);
-            final String cmd = "mv " + escape + " " + normal;
-            out.write(cmd.getBytes());
+
+            String[] cmd = new String[]{"mv",escape,normal};
+            Process child = Runtime.getRuntime().exec(cmd);
+            InputStream err = child.getErrorStream();
+            value=child.waitFor();
+            byte[] buf = new byte[16*1024];
+            int r = err.read(buf);
+            message = new String(Arrays.copyOfRange(buf, 0, r));
             return normal;
-        }
-        
     }
-    public void close() throws IOException, InterruptedException
-    {
-        if(out!=null)
-        {
-            out.close();
-            out = null;
-        }
-        if(child!=null)
-        {
-            child.waitFor();
-            child=null;
-        }
-    }
-
-    @Override
-    protected void finalize() throws Throwable
-    {
-        close();
-        super.finalize();
-    }
-
 }

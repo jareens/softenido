@@ -55,9 +55,9 @@ public class FindRepeMain
 {
 
     private static final String FINDREPE = "findrepe";
-    private static final String VER = "0.9.0";
+    private static final String VER = "0.9.1";
     private static final String VERSION =
-            "findrepe  version " + VER + " alpha (2010-07-22)\n"
+            "findrepe  version " + VER + " alpha (2010-08-11)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -105,6 +105,8 @@ public class FindRepeMain
             + " -M, --max-size=size         exclude files larger than size[bkmgt]\n"
             + " -w  --min-wasted=size       minimum wasted size[bkmgt] copies, size*(n-1)\n"
             + " -S  --size                  show size[bkmgt] of files\n"
+            + " -H  --nohide                ignore hide entries\n"
+            + " -A  --absolute-path         show absolute path of files\n"
             + "     --install               install a launcher\n"
             + "     --install-java[=path]   install a launcher using 'java' command\n"
             + "     --install-home[=path]   install a launcher using 'java.home' property\n"
@@ -189,6 +191,8 @@ public class FindRepeMain
         SizeOption maxSize = options.add(new SizeOption('M', "max-size"));
         SizeOption minWasted = options.add(new SizeOption('w', "min-wasted"));
         BooleanOption optSize = options.add(new BooleanOption('S', "size"));
+        BooleanOption optNoHide = options.add(new BooleanOption('H', "nohide"));
+        BooleanOption optAbsPath = options.add(new BooleanOption('A', "absolute-path"));
 
         BooleanOption unique = options.add(new BooleanOption("unique"));
         NumberOption count = options.add(new NumberOption("count"));
@@ -315,7 +319,6 @@ public class FindRepeMain
 
             File[] files = Files.toFileArray(fileNames);
             File[] autoDeleteFiles = new File[0];
-            files = Files.uniqueCopyOf(files);
             if (deleteAuto.isUsed())
             {
                 autoDeleteFiles = Files.getAbsoluteFile(Files.toFileArray(deleteAuto.getValues()));
@@ -327,8 +330,8 @@ public class FindRepeMain
 
             FindRepeOptions opt = new FindRepeOptions();
 
-            opt.setHidden(true);
-            opt.setLinkDir(symlinks.isUsed());
+            opt.setHidden(!optNoHide.isUsed());
+            opt.setSymlinks(symlinks.isUsed());
 
             if (noempty.isUsed())
             {
@@ -388,10 +391,7 @@ public class FindRepeMain
             {
                 for (int i = 0; i < fileNames.length; i++)
                 {
-                    logger.log(Level.CONFIG, "paths[{0}]={1}", new Object[]
-                            {
-                                i, fileNames[i]
-                            });
+                    logger.log(Level.CONFIG, "paths[{0}]={1}", new Object[]{i, fileNames[i]});
                 }
                 vh.flush();
             }
@@ -415,9 +415,9 @@ public class FindRepeMain
 
             if (bugs)
             {
-                showBugs(findTask.getBugIterable(), fixBugs);
+                showBugs(findTask.getBugIterable(), fixBugs, vh);
             }
-            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed() ? sizeParser : null), autoDeleteFiles, vh);
+            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed() ? sizeParser : null), autoDeleteFiles, vh, optAbsPath.isUsed());
         }
         catch (MissingOptionParameterException ex)
         {
@@ -584,55 +584,60 @@ public class FindRepeMain
 
     }
 
-    private static void showBugs(Iterable<File> bugList, boolean fix)
+    private static void showBugs(Iterable<File> bugList, boolean fix, VerboseHandler vh)
     {
         //METER NUEVA OPCIÓN Y COLA PARA MOSTRAR LOS LINKS SIN DESTINO
         //        EVITANDO ASÍ SUPERPONERSE CON LAS PREGUNTAS
 
-        NormalizeFile normalize = new NormalizeFile();
         try
         {
             Scanner sc = new Scanner(System.in);
             for (File bug : bugList)
             {
-                System.out.println("bug:" + bug.toString());
-                if (fix)
+                vh.flush();
+                vh.lock();
+                String line;
+                try
                 {
-                    System.out.println("fix?[y/N]");
-                    String line = sc.nextLine();
-                    if (line.equalsIgnoreCase("y"))
+                    System.out.println();
+                    System.out.println("bug:" + bug.toString());
+                    if(!fix)
+                        continue;
+                    
+                    System.out.print("fix?[y/N]");
+                    line = sc.nextLine();
+                }
+                finally
+                {
+                    vh.unlock();
+                }
+                if (line.equalsIgnoreCase("y"))
+                {
+                    NormalizeFile normalize = new NormalizeFile(bug);
+                    String name = normalize.normalize();
+                    if(normalize.getValue()!=0)
                     {
-                        try
-                        {
-                            String name = normalize.normalize(bug);
-                            System.out.println("fixed: " + name);
-                        }
-                        catch (IOException ex)
-                        {
-                            Logger.getLogger(FindRepeMain.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        Logger.getLogger(FindRepeMain.class.getName()).log(Level.SEVERE, "could not be fixed");
+                        Logger.getLogger(FindRepeMain.class.getName()).log(Level.WARNING, normalize.getErrorMessage());
+                    }
+                    else
+                    {
+                        Logger.getLogger(FindRepeMain.class.getName()).log(Level.INFO, "fixed: {0}",name);
                     }
                 }
             }
         }
-        finally
+        catch (InterruptedException ex)
         {
-            try
-            {
-                normalize.close();
-            }
-            catch (IOException ex)
-            {
-                Logger.getLogger(FindRepeMain.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            catch (InterruptedException ex)
-            {
-                Logger.getLogger(FindRepeMain.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            Logger.getLogger(FindRepeMain.class.getName()).log(Level.SEVERE, null, ex);
+        }                
+        catch (IOException ex)
+        {
+            Logger.getLogger(FindRepeMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private static void showGroups(FindRepeOptions opt, Iterable<PackedFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete, VerboseHandler vh)
+    private static void showGroups(FindRepeOptions opt, Iterable<PackedFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete, VerboseHandler vh, boolean absPath)
     {
         int groupId = 0;
         int deleteMin = opt.getMinCount();
@@ -645,7 +650,12 @@ public class FindRepeMain
                 vh.lock();
                 try
                 {
-                    showOneGroup(groupId, group, delete, units, deleteMin, autoDelete);
+                    VERIFY(group);
+                    showOneGroup(groupId, group, delete, units, deleteMin, autoDelete, absPath);
+                }
+                catch (IOException ex)
+                {
+                    Logger.getLogger(FindRepeMain.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 finally
                 {
@@ -656,8 +666,9 @@ public class FindRepeMain
         }
     }
 
-    private static void showOneGroup(int groupId, PackedFile files[], boolean delete, SizeUnits units, int deleteMin, File[] autoDelete)
+    private static void showOneGroup(int groupId, PackedFile files[], boolean delete, SizeUnits units, int deleteMin, File[] autoDelete, boolean absPath) throws IOException
     {
+        boolean showResult = false;
         boolean[] deleted = new boolean[files.length];
         Arrays.fill(deleted, false);
         Scanner sc = new Scanner(System.in);
@@ -670,7 +681,7 @@ public class FindRepeMain
             {
                 for (int j = 0; j < autoDelete.length; j++)
                 {
-                    if (Files.isParentOf(autoDelete[j], files[i].getFile()))
+                    if(files[i].canWrite() && Files.isParentOf(autoDelete[j], files[i].getFile(),false))
                     {
                         matches[i]++;
                     }
@@ -681,14 +692,14 @@ public class FindRepeMain
             int minVal = sorted[deleteMin - 2];
             for (int i = 0; i < matches.length; i++)
             {
-                if (matches[i] > minVal)
+                if( (matches[i]>minVal) && files[i].canWrite())
                 {
+                    showResult = true;
                     deleted[i] = true;
                 }
             }
         }
-        boolean showResult = false;
-
+        
         while (true)
         {
             System.out.flush();
@@ -697,7 +708,8 @@ public class FindRepeMain
             {
                 String id = deleted[i] ? "-" : (files[i].canWrite() ? "" + i : "r");
                 String size = units == null ? "" : units.toString(files[i].length(), true);
-                System.out.printf("[%s]%s %s\n", id, size, files[i].toString());
+                String name = (absPath?files[i].getAbsolutePath():files[i].toString());
+                System.out.printf("[%s]%s %s\n", id, size, name);
             }
             if (!delete)
             {
@@ -774,6 +786,31 @@ public class FindRepeMain
             {
                 System.out.printf("\n  files not deleted: %d\n\n", notDeletedCount);
             }
+        }
+    }
+
+    private static void VERIFY(PackedFile[] group)
+    {
+        try
+        {
+            for (int i = 0; i < group.length; i++)
+            {
+                String a = group[i].getFile().getCanonicalFile().toString();
+                for (int j = i + 1; j < group.length; j++)
+                {
+                    String b = group[j].getFile().getCanonicalFile().toString();
+                    if(a.equals(b))
+                    {
+                        System.err.printf("YOU HAVE FOUND A BUG: THE SAME FILE REPORTED TWICE\n");
+                        System.err.printf("A=%s\n",a);
+                        System.err.printf("B=%s\n",b);
+                    }
+                }
+            }
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(FindRepeMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
