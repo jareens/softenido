@@ -25,6 +25,7 @@ import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.util.concurrent.pipeline.Pipe;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,7 +39,7 @@ public class ForEachFilePipe extends ForEachFile
     private final Pipe<PackedFile,?> filePipe;
     private final Pipe<String,?> namePipe;
 
-    public ForEachFilePipe(File file, FileFilter filter, Pipe<PackedFile,?> filePipe, Pipe<String,?> namePipe, boolean eof,ForEachFileOptions opt)
+    public ForEachFilePipe(File[] file, FileFilter filter, ForEachFileOptions opt, Pipe<PackedFile,?> filePipe, Pipe<String,?> namePipe, boolean eof) throws IOException
     {
         super(file, filter,opt);
         this.eof      = eof;
@@ -46,24 +47,9 @@ public class ForEachFilePipe extends ForEachFile
         this.namePipe = namePipe;
     }
 
-    public ForEachFilePipe(File file, Pipe<PackedFile,?> rawPipe, boolean eof)
+    public ForEachFilePipe(File[] file, ForEachFileOptions opt, Pipe<PackedFile, FileHash> pipe, boolean eof) throws IOException
     {
-        this(file, null, rawPipe, null, eof,null);
-    }
-
-    public ForEachFilePipe(File file, FileFilter filter, Pipe<PackedFile,?> filePipe, boolean eof)
-    {
-        this(file, filter, filePipe, null, eof,null);
-    }
-
-    public ForEachFilePipe(File file, FileFilter filter, Pipe<PackedFile,?> filePipe)
-    {
-        this(file, filter, filePipe, null, false,null);
-    }
-
-    public ForEachFilePipe(File file, int recursive, Pipe<PackedFile,?> filePipe)
-    {
-        this(file, null, filePipe, null, false, null);
+        this(file, null, opt, pipe, null, eof);
     }
 
     @Override

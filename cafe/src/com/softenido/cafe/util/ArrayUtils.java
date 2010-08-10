@@ -46,7 +46,7 @@ public final class ArrayUtils
             String l = Integer.toHexString(c&15);
             c = (byte) (c >> 4);
             String h = Integer.toHexString(c&15);
-            hex.append(h+l);
+            hex.append(h).append(l);
         }
         return hex.toString();
     }

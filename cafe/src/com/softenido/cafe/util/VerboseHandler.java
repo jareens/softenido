@@ -23,6 +23,7 @@ package com.softenido.cafe.util;
 
 import java.io.OutputStream;
 import java.text.MessageFormat;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Formatter;
@@ -48,7 +49,7 @@ public class VerboseHandler extends StreamHandler
         Level.FINER,
         Level.FINEST
     };
-    private final Lock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock();
 
     public VerboseHandler()
     {
@@ -85,6 +86,7 @@ public class VerboseHandler extends StreamHandler
         try
         {
             super.publish(record);
+            super.flush();
         }
         finally
         {
@@ -122,6 +124,5 @@ public class VerboseHandler extends StreamHandler
                 break;
             }
         }
-     }       
-
+     }
 }

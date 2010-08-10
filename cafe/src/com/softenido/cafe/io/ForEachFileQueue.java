@@ -24,11 +24,10 @@ package com.softenido.cafe.io;
 import com.softenido.cafe.io.packed.PackedFile;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 /**
  *
@@ -41,7 +40,7 @@ public class ForEachFileQueue extends ForEachFile
     private final BlockingQueue<File> fileQueue;
     private final BlockingQueue<String> nameQueue;
 
-    public ForEachFileQueue(File file, FileFilter filter, BlockingQueue<File> fileQueue, BlockingQueue<String> nameQueue, File eof,ForEachFileOptions opt)
+    public ForEachFileQueue(File[] file, FileFilter filter, BlockingQueue<File> fileQueue, BlockingQueue<String> nameQueue, File eof,ForEachFileOptions opt) throws IOException
     {
         super(file, filter,opt);
         this.eof = eof;
@@ -49,22 +48,22 @@ public class ForEachFileQueue extends ForEachFile
         this.nameQueue = nameQueue;
     }
 
-    public ForEachFileQueue(File file, BlockingQueue<File> rawQueue, File eof)
+    public ForEachFileQueue(File[] file, BlockingQueue<File> rawQueue, File eof) throws IOException
     {
         this(file, null, rawQueue, null, eof,null);
     }
 
-    public ForEachFileQueue(File file, FileFilter filter, BlockingQueue<File> fileQueue, File eof)
+    public ForEachFileQueue(File[] file, FileFilter filter, BlockingQueue<File> fileQueue, File eof) throws IOException
     {
         this(file, filter, fileQueue, null, eof,null);
     }
 
-    public ForEachFileQueue(File file, FileFilter filter, BlockingQueue<File> fileQueue)
+    public ForEachFileQueue(File[] file, FileFilter filter, BlockingQueue<File> fileQueue) throws IOException
     {
         this(file, filter, fileQueue, null, null,null);
     }
 
-    public ForEachFileQueue(File file, int recursive, BlockingQueue<File> fileQueue)
+    public ForEachFileQueue(File[] file, int recursive, BlockingQueue<File> fileQueue) throws IOException
     {
         this(file, null, fileQueue, null, null,null);
     }

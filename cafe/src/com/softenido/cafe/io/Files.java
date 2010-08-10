@@ -21,14 +21,15 @@
  */
 package com.softenido.cafe.io;
 
-import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.util.ArrayUtils;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -74,6 +75,16 @@ public class Files
             "&", "\\&"
         },
     };
+
+    private static boolean equals(File a, File b,boolean useCanonical) throws IOException
+    {
+        if(useCanonical)
+        {
+            a = a.getCanonicalFile();
+            b = b.getCanonicalFile();
+        }
+        return a.equals(b);
+    }
     File file;
 
     public Files(File file)
@@ -85,16 +96,16 @@ public class Files
     // If the dst file does not exist, it is created
     public static void copy(File src, File dst) throws IOException
     {
-        InputStream in = new FileInputStream(src);
+        InputStream in = new BufferedInputStream(new FileInputStream(src));
         try
         {
-            OutputStream out = new FileOutputStream(dst);
+            OutputStream out = new BufferedOutputStream(new FileOutputStream(dst));
             try
             {
                 // Transfer bytes from in to out
                 byte[] buf = new byte[8192];
                 int r;
-                while ((r = in.read(buf)) > 0)
+                while((r = in.read(buf)) > 0)
                 {
                     out.write(buf, 0, r);
                 }
@@ -112,7 +123,7 @@ public class Files
 
     public static boolean move(File src, File dst) throws IOException
     {
-        if (src.renameTo(dst))
+        if(src.renameTo(dst))
         {
             return true;
         }
@@ -121,27 +132,28 @@ public class Files
         return true;
     }
 
-    public String[] list()
-    {
-        final ArrayList<String> v = new ArrayList<String>();
-
-        ForEachFile fef = new ForEachFile(file, null,null)
-        {
-            @Override
-            protected void doForEach(File file, String name)
-            {
-                v.add(file.toString());
-            }
-            @Override
-            protected void doForEach(PackedFile fe)
-            {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-        };
-        fef.run();
-        return (String[]) v.toArray();
-    }
+//    public String[] list() throws IOException
+//    {
+//        final ArrayList<String> v = new ArrayList<String>();
+//
+//        ForEachFile fef = new ForEachFile(file)
+//        {
+//
+//            @Override
+//            protected void doForEach(File file, String name)
+//            {
+//                v.add(file.toString());
+//            }
+//
+//            @Override
+//            protected void doForEach(PackedFile fe)
+//            {
+//                throw new UnsupportedOperationException("Not supported yet.");
+//            }
+//        };
+//        fef.run();
+//        return (String[]) v.toArray();
+//    }
 
     /**
      * Returns an array of strings naming the files and directories in the
@@ -167,23 +179,23 @@ public class Files
      *          filter.  Returns <code>null</code> if this abstract pathname
      *          does not denote a directory, or if an I/O error occurs.
      */
-    public String[] list(FilenameFilter filter)
-    {
-        String names[] = list();
-        if ((names == null) || (filter == null))
-        {
-            return names;
-        }
-        ArrayList<String> v = new ArrayList<String>();
-        for (int i = 0; i < names.length; i++)
-        {
-            if (filter.accept(file, names[i]))
-            {
-                v.add(names[i]);
-            }
-        }
-        return v.toArray(new String[v.size()]);
-    }
+//    public String[] list(FilenameFilter filter) throws IOException
+//    {
+//        String names[] = list();
+//        if((names == null) || (filter == null))
+//        {
+//            return names;
+//        }
+//        ArrayList<String> v = new ArrayList<String>();
+//        for(int i = 0; i < names.length; i++)
+//        {
+//            if(filter.accept(file, names[i]))
+//            {
+//                v.add(names[i]);
+//            }
+//        }
+//        return v.toArray(new String[v.size()]);
+//    }
 
     /**
      * Returns an array of abstract pathnames denoting the files in the
@@ -214,10 +226,10 @@ public class Files
      *          empty.  Returns <code>null</code> if this abstract pathname
      *          does not denote a directory, or if an I/O error occurs.
      */
-    public File[] listFiles()
-    {
-        return listFiles((FileFilter) null);
-    }
+//    public File[] listFiles() throws IOException
+//    {
+//        return listFiles((FileFilter) null);
+//    }
 
     /**
      * Returns an array of abstract pathnames denoting the files and
@@ -241,31 +253,31 @@ public class Files
      *          empty.  Returns <code>null</code> if this abstract pathname
      *          does not denote a directory, or if an I/O error occurs.
      */
-    public File[] listFiles(final FilenameFilter filter)
-    {
-        final ArrayList<File> v = new ArrayList<File>();
-
-        ForEachFile fef = new ForEachFile(file, null,null)
-        {
-
-            @Override
-            protected void doForEach(File file, String name)
-            {
-                if ((filter == null) || filter.accept(file, file.toString()))
-                {
-                    v.add(file);
-                }
-            }
-
-            @Override
-            protected void doForEach(PackedFile fe)
-            {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        };
-        fef.run();
-        return v.toArray(new File[0]);
-    }
+//    public File[] listFiles(final FilenameFilter filter) throws IOException
+//    {
+//        final ArrayList<File> v = new ArrayList<File>();
+//
+//        ForEachFile fef = new ForEachFile(file, null, null)
+//        {
+//
+//            @Override
+//            protected void doForEach(File file, String name)
+//            {
+//                if((filter == null) || filter.accept(file, file.toString()))
+//                {
+//                    v.add(file);
+//                }
+//            }
+//
+//            @Override
+//            protected void doForEach(PackedFile fe)
+//            {
+//                throw new UnsupportedOperationException("Not supported yet.");
+//            }
+//        };
+//        fef.run();
+//        return v.toArray(new File[0]);
+//    }
 
     /**
      * Returns an array of abstract pathnames denoting the files and
@@ -289,32 +301,32 @@ public class Files
      *          empty.  Returns <code>null</code> if this abstract pathname
      *          does not denote a directory, or if an I/O error occurs.
      */
-    public File[] listFiles(FileFilter filter)
-    {
-        final ArrayList<File> v = new ArrayList<File>();
-
-        ForEachFile fef = new ForEachFile(file, filter,null)
-        {
-            @Override
-            protected void doForEach(File file, String name)
-            {
-                v.add(file);
-            }
-
-            @Override
-            protected void doForEach(PackedFile fe)
-            {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-        };
-        fef.run();
-        return (File[]) v.toArray();
-    }
+//    public File[] listFiles(FileFilter filter) throws IOException
+//    {
+//        final ArrayList<File> v = new ArrayList<File>();
+//
+//        ForEachFile fef = new ForEachFile(file, filter, null)
+//        {
+//
+//            @Override
+//            protected void doForEach(File file, String name)
+//            {
+//                v.add(file);
+//            }
+//
+//            @Override
+//            protected void doForEach(PackedFile fe)
+//            {
+//                throw new UnsupportedOperationException("Not supported yet.");
+//            }
+//        };
+//        fef.run();
+//        return (File[]) v.toArray();
+//    }
 
     public static String escape(String name)
     {
-        for (String[] item : escapeCharacters)
+        for(String[] item : escapeCharacters)
         {
             if(!File.separator.equals(item[0]))
             {
@@ -338,7 +350,7 @@ public class Files
     {
         File[] items = getParentFiles(file, includeFile);
         String[] names = new String[items.length];
-        for (int i = 0; i < items.length; i++)
+        for(int i = 0; i < items.length; i++)
         {
             names[i] = items[i].toString();
         }
@@ -354,11 +366,11 @@ public class Files
     {
         File item = file;
         ArrayList<File> files = new ArrayList<File>();
-        if (includeFile)
+        if(includeFile)
         {
             files.add(item);
         }
-        while ((item = item.getParentFile()) != null)
+        while((item = item.getParentFile()) != null)
         {
             files.add(item);
         }
@@ -373,7 +385,7 @@ public class Files
     public static String getCommonParent(File a, File b)
     {
         File parent = getCommonParentFile(a, b);
-        if (parent != null)
+        if(parent != null)
         {
             return parent.toString();
         }
@@ -386,7 +398,7 @@ public class Files
         File[] listB = getParentFiles(b, true);
         int max = Math.min(listA.length, listB.length);
         File common = null;
-        for (int i = 0; i < max && listA[i].equals(listB[i]); i++)
+        for(int i = 0; i < max && listA[i].equals(listB[i]); i++)
         {
             common = listA[i];
         }
@@ -398,29 +410,46 @@ public class Files
         return (getCommonParentFile(a, b) != null);
     }
 
-    public static boolean isParentOf(File parent, File child)
+    public static boolean isParentOf(File parent, File child, boolean canonical) throws IOException
     {
-        return parent.equals(getCommonParentFile(parent, child));
+        File pa = parent.getAbsoluteFile();
+        File ca = child.getAbsoluteFile();
+        if( pa.equals(getCommonParentFile(pa, ca)) )
+        {
+            return true;
+        }
+        if(canonical)
+        {
+            File pc = parent.getCanonicalFile();
+            File cc = child.getCanonicalFile();
+            if(pc.equals(parent) && cc.equals(child))
+            {
+                return false;
+            }
+            return pc.equals(getCommonParentFile(pc, cc));
+        }
+        return false;
     }
 
-    public static File[] uniqueCopyOf(File[] list)
+    public static File[] uniqueCopyOf(File[] list, boolean canonical) throws IOException
     {
         // se eliminan los duplicados
         File[] unique = ArrayUtils.uniqueCopyOf(list);
-        for (int i = 0; i < unique.length; i++)
+        for(int i = 0; i < unique.length; i++)
         {
-            for (int j = i + 1; j < unique.length; j++)
+            for(int j = i + 1; j < unique.length; j++)
             {
-                if (unique[j].equals(unique[i]))
+                if(equals(unique[j],unique[i],true))
                 {
                     continue;
                 }
-                if (isParentOf(unique[j], unique[i]))
+
+                if(isParentOf(unique[j], unique[i],canonical))
                 {
                     unique[i] = unique[j];
                     continue;
                 }
-                if (isParentOf(unique[i], unique[j]))
+                if(isParentOf(unique[i], unique[j],canonical))
                 {
                     unique[j] = unique[i];
                     continue;
@@ -434,6 +463,7 @@ public class Files
     {
         return isLink(new File(name));
     }
+
     public static boolean isBugName(File file) throws IOException
     {
         String name = file.toString();
@@ -441,66 +471,123 @@ public class Files
         return !name.equals(name2);
     }
 
+    /**
+     * Tests whether the file denoted by this abstract pathname is a link.
+     * @param file
+     * @return
+     * @throws IOException
+     */
     public static boolean isLink(File file) throws IOException
     {
-        if (file.exists())
+        return isLink(file,false);
+    }
+    /**
+     * Tests whether the file denoted by this abstract pathname is a link, or his path is in a link.
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static boolean isLink(File file, boolean path) throws IOException
+    {
+        File c = file.getCanonicalFile();
+        File a = file.getAbsoluteFile();
+        boolean link = !c.equals(a);
+        if( !link || path)
         {
-            String canonical = file.getCanonicalPath();
-            String absolute = file.getAbsolutePath();
-            return !canonical.equals(absolute);
+            return link;
         }
-        return false;
+        File ap = a.getParentFile();
+        File cp = c.getParentFile();
+        if(ap.equals(cp))
+        {
+            return true;
+        }
+        File apc = a.getParentFile().getCanonicalFile();
+        String name = file.getName();
+        File apcName = new File(apc, name);
+        link = !apcName.equals(c);
+        return link;
+    }
+    public static File getNoDotFile(File file) throws IOException
+    {
+        // "." => ""
+        File absolute = file.getAbsoluteFile();
+        File canonical = file.getCanonicalFile();
+        if(absolute.equals(canonical))
+            return file;
+
+        // .../. => ...
+        String name = file.getName();
+        while(name.equals("..")||name.equals("."))
+        {
+            File parent = file.getParentFile();
+            if(parent== null)
+                parent = file.getAbsoluteFile().getParentFile();
+            if(parent==null)
+                return canonical;
+            if(name.equals(".") && !canonical.equals(parent.getCanonicalFile()))
+                return canonical;
+            file = parent;
+            name = file.getName();
+        }
+        String path = file.getPath();
+
+        if(path.startsWith("."+File.separator) || path.startsWith(".."+File.separator))
+            return canonical;
+        if(path.contains(File.separator+"."+File.separator) || path.contains(File.separator+".."+File.separator))
+            return canonical;
+        return file;
     }
 
     public static boolean isCyclicLink(File file) throws IOException
     {
-        if (file.exists() && file.isDirectory())
+        if(file.isDirectory() && isLink(file))
         {
             File canonical = file.getCanonicalFile();
             File absolute = file.getAbsoluteFile();
-            if (!canonical.equals(absolute))
+            File[] parents = getParentFiles(absolute, false);
+            for(int i = 0; i < parents.length; i++)
             {
-                File[] parents = getParentFiles(absolute, false);
-                for (int i = 0; i < parents.length; i++)
+                if(canonical.equals(parents[i].getCanonicalFile()))
                 {
-                    if (canonical.equals(parents[i].getCanonicalFile()))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
         }
         return false;
     }
+
     public static byte[] bytesFromFile(File file) throws IOException
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         InputStream in = new FileInputStream(file);
-        byte buf[] = new byte[64*1024];
+        byte buf[] = new byte[64 * 1024];
         int r;
-        while( (r=in.read(buf))>0)
+        while((r = in.read(buf)) > 0)
         {
             baos.write(buf, 0, r);
         }
         return baos.toByteArray();
     }
+
     public static File[] getAbsoluteFile(File[] files)
     {
         File[] abs = new File[files.length];
-        for(int i=0;i<files.length;i++)
+        for(int i = 0; i < files.length; i++)
         {
-            abs[i]=files[i].getAbsoluteFile();
+            abs[i] = files[i].getAbsoluteFile();
         }
         return abs;
     }
+
     public static File[] toFileArray(String[] fileNames)
     {
-        if(fileNames==null)
+        if(fileNames == null)
         {
             return null;
         }
         File[] files = new File[fileNames.length];
-        for (int i = 0; i < files.length; i++)
+        for(int i = 0; i < files.length; i++)
         {
             files[i] = new File(fileNames[i]);
         }

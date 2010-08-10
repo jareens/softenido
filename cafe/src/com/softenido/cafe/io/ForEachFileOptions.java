@@ -39,8 +39,8 @@ public class ForEachFileOptions
     boolean jar;
     boolean tar;
     boolean onlyPacked;
-    boolean linkDir;//says if link directories should by followed
-    boolean linkFile;//says if link Files (or directories) could be target
+    boolean symlinks;//says if link directories should by followed and link Files (or directories) could be target
+    boolean readable;
     FileFilter filter;
     long minSize;
     long maxSize;
@@ -65,8 +65,8 @@ public class ForEachFileOptions
         jar = false;
         tar = false;
         onlyPacked = false;
-        linkDir = false;//says if link directories should by followed
-        linkFile = false;//says if link Files (or directories) could be target
+        symlinks = false;
+        readable = false;
         filter = null;
         minSize = 0;
         maxSize = Long.MAX_VALUE;
@@ -93,8 +93,8 @@ public class ForEachFileOptions
         this.jar = val.jar;
         this.tar = val.tar;
         this.onlyPacked = val.onlyPacked;
-        this.linkDir = val.linkDir;
-        this.linkFile = val.linkFile;
+        this.symlinks = val.symlinks;
+        this.readable = val.readable;
         this.filter = val.filter;
         this.minSize = val.minSize;
         this.maxSize = val.maxSize;
@@ -192,24 +192,24 @@ public class ForEachFileOptions
         this.tar = tar;
     }
 
-    public boolean isLinkDir()
+    public boolean isSymlinks()
     {
-        return linkDir;
+        return symlinks;
     }
 
-    public void setLinkDir(boolean linkDir)
+    public void setSymlinks(boolean symlinks)
     {
-        this.linkDir = linkDir;
+        this.symlinks = symlinks;
     }
 
-    public boolean isLinkFile()
+    public boolean isReadable()
     {
-        return linkFile;
+        return readable;
     }
 
-    public void setLinkFile(boolean linkFile)
+    public void setReadable(boolean readable)
     {
-        this.linkFile = linkFile;
+        this.readable = readable;
     }
 
     public long getMaxSize()

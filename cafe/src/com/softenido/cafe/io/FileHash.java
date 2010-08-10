@@ -32,13 +32,14 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.compress.archivers.ArchiveException;
 
 /**
  *
  * @author franci
  */
 public class FileHash
-{  
+{
 
     private static final String MD5 = "MD5";
     private static final String SHA1 = "SHA-1";
@@ -56,8 +57,8 @@ public class FileHash
     private boolean exception = false;
     private FileDigest digest = null;
     private final Object lock = new Object();
-    private static boolean pow2 = true;   
-    
+    private static boolean pow2 = true;
+
     /**
      * Creates a new FileHash instance from a File object.
      * @param file
@@ -130,6 +131,10 @@ public class FileHash
                 }
             }
         }
+        catch (ArchiveException ex)
+        {
+            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
+        }
         catch (FileNotFoundException ex)
         {
             Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
@@ -149,7 +154,7 @@ public class FileHash
         return (int) (file.length() % Integer.MAX_VALUE);
     }
 
-    private synchronized void buildFastHash() throws FileNotFoundException, IOException
+    private synchronized void buildFastHash() throws FileNotFoundException, IOException, ArchiveException
     {
         if (fastMD5 != null && fastSHA1 != null)
         {
@@ -199,7 +204,7 @@ public class FileHash
         }
     }
 
-    private void buildFullHash() throws FileNotFoundException, IOException
+    private void buildFullHash() throws FileNotFoundException, IOException, ArchiveException
     {
         if (fullMD5 != null && fullSHA1 != null)
         {
@@ -263,10 +268,10 @@ public class FileHash
 
     public PackedFile getFile()
     {
-         return file;
+        return file;
     }
 
-    public byte[] getFastMD5() throws FileNotFoundException, IOException
+    public byte[] getFastMD5() throws FileNotFoundException, IOException, ArchiveException
     {
         if (fastMD5 == null)
         {
@@ -275,7 +280,7 @@ public class FileHash
         return fastMD5;
     }
 
-    public byte[] getFastSHA1() throws FileNotFoundException, IOException
+    public byte[] getFastSHA1() throws FileNotFoundException, IOException, ArchiveException
     {
         if (fastSHA1 == null)
         {
@@ -284,7 +289,7 @@ public class FileHash
         return fastSHA1;
     }
 
-    public byte[] getFullMD5() throws FileNotFoundException, IOException
+    public byte[] getFullMD5() throws FileNotFoundException, IOException, ArchiveException
     {
         if (fullMD5 == null)
         {
@@ -293,7 +298,7 @@ public class FileHash
         return fullMD5;
     }
 
-    public byte[] getFullSHA1() throws FileNotFoundException, IOException
+    public byte[] getFullSHA1() throws FileNotFoundException, IOException, ArchiveException
     {
         if (fullSHA1 == null)
         {
@@ -305,26 +310,31 @@ public class FileHash
 
     private boolean equalsHash(FileHash other)
     {
+        PackedFile cause = null;
         try
         {
-            FileDigest digestA = this.getDigest();
-            FileDigest digestB = other.getDigest();
+            final FileDigest digestA = this.getDigest();
+            final FileDigest digestB = other.getDigest();
             digestA.keepOn();
             try
             {
                 digestB.keepOn();
                 try
                 {
-                    for (int i = 0; i < SIZES.length-1 && SIZES[i]<size ; i++)
+                    for (int i = 0; i < SIZES.length - 1 && SIZES[i]<size ; i++)
                     {
                         // avoid reading just few bytes in the next iteration
                         if( size<(SIZES[i]+SIZES[i+1])/2 )
                         {
                             break;
                         }
-                        long s = SIZES[i];
+                        final long s = SIZES[i];
+
+                        cause = this.file;
                         byte[] digA = digestA.getHash(s);
+                        cause = other.file;
                         byte[] digB = digestB.getHash(s);
+                        cause = null;
                         if (digA != null && digB != null)
                         {
                             if (!Arrays.equals(digA, digB))
@@ -333,8 +343,11 @@ public class FileHash
                             }
                         }
                     }
+                    cause = this.file;
                     byte[] digA = digestA.getHash();
+                    cause = other.file;
                     byte[] digB = digestB.getHash();
+                    cause = null;
                     if (digA != null && digB != null)
                     {
                         return Arrays.equals(digA, digB);
@@ -352,26 +365,30 @@ public class FileHash
                 digestA.keepOff();
             }
         }
+        catch (ArchiveException ex)
+        {
+            Logger.getLogger(FileHash.class.getName()).log(Level.WARNING, cause == null ? null : cause.getPath(), ex);
+        }
         catch (FileNotFoundException ex)
         {
-            Logger.getLogger(FileHash.class.getName()).log(Level.WARNING, null, ex);
+            Logger.getLogger(FileHash.class.getName()).log(Level.WARNING, cause == null ? null : cause.getPath(), ex);
         }
         catch (IOException ex)
         {
-            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, cause == null ? null : cause.getPath(), ex);
         }
         catch (CloneNotSupportedException ex)
         {
-            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, cause == null ? null : cause.getPath(), ex);
         }
         catch (NoSuchAlgorithmException ex)
         {
-            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FileHash.class.getName()).log(Level.SEVERE, cause == null ? null : cause.getPath(), ex);
         }
         exception = true;
         return false;
     }
-    
+
     private FileDigest getDigest() throws NoSuchAlgorithmException
     {
         synchronized (lock)

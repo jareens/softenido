@@ -36,6 +36,10 @@ class FilePackedFileSystem implements PackedFileSystem
     {
         return new FileInputStream(file);
     }
+    public String getAbsolutePath() throws IOException
+    {
+        return file.getAbsolutePath();
+    }
 
     public String getCanonicalPath() throws IOException
     {

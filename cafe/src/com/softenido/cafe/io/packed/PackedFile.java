@@ -7,8 +7,8 @@ package com.softenido.cafe.io.packed;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.zip.ZipEntry;
 import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveException;
 
 /**
  *
@@ -54,13 +54,17 @@ public class PackedFile
     {
         return fs.length();
     }
-    public InputStream getInputStream() throws IOException
+    public InputStream getInputStream() throws IOException, ArchiveException
     {
         return fs.getInputStream();
     }
     public String getCanonicalPath() throws IOException
     {
         return fs.getCanonicalPath();
+    }
+    public String getAbsolutePath() throws IOException
+    {
+        return fs.getAbsolutePath();
     }
 
     public String getPath()
@@ -92,6 +96,14 @@ public class PackedFile
     public String toString()
     {
         return path;
+    }
+
+    public String getName()
+    {
+        String[] paths = splitPath();
+        if(paths.length==0)
+            return "";
+        return paths[paths.length-1];
     }
     
 }

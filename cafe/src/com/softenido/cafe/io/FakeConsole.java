@@ -21,6 +21,7 @@
  */
 package com.softenido.cafe.io;
 
+import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -58,6 +59,14 @@ public class FakeConsole implements VirtualConsole
 
         reader = new InputStreamReader(in);
 
+    }
+    public static VirtualConsole getConsole(boolean debug)
+    {
+        if(System.console()!=null)
+            return new RealConsole(System.console());
+        if(debug)
+            return new FakeConsole(System.in,System.out);
+        throw new IOError(new Exception("There is no console"));
     }
 
     public void flush()

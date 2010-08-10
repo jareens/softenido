@@ -6,10 +6,10 @@
 package com.softenido.cafe.io.packed;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import org.apache.commons.compress.archivers.ArchiveException;
 
 /**
  *
@@ -33,8 +33,12 @@ class ZipPackedFileSystem implements PackedFileSystem
     {
         return path;//zFile.getCanonicalPath()+"!"+eName;
     }
+    public String getAbsolutePath() throws IOException
+    {
+        return path;//zFile.getCanonicalPath()+"!"+eName;
+    }
 
-    public InputStream getInputStream() throws IOException
+    public InputStream getInputStream() throws IOException, FileNotFoundException, ArchiveException
     {
         return pool.get(new PackedFile(path));
     }
@@ -75,5 +79,4 @@ class ZipPackedFileSystem implements PackedFileSystem
     {
         return path;
     }
-
 }

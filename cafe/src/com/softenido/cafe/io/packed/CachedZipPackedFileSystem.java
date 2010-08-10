@@ -8,6 +8,7 @@ package com.softenido.cafe.io.packed;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveException;
 
 /**
  *
@@ -54,7 +55,7 @@ class CachedZipPackedFileSystem extends ZipPackedFileSystem
     }
 
     @Override
-    public InputStream getInputStream() throws IOException
+    public InputStream getInputStream() throws IOException, ArchiveException
     {
         return super.getInputStream();
     }

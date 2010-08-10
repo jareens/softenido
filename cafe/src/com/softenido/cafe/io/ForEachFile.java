@@ -1,7 +1,7 @@
 /*
  *  ForEachFile.java
  *
- *  Copyright (C) 2007-2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2007-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -38,7 +38,6 @@ import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 
 class CachedFile extends File
 {
-
     boolean directory = false;
     boolean directoryCached = false;
 
@@ -65,24 +64,19 @@ class CachedFile extends File
  */
 public abstract class ForEachFile implements Runnable
 {
-    private static int bufSize = 64 * 1024;
-    private File base;
-    ForEachFileOptions options;
-    private FileFilter filter = null;
-    private HashSet<File> autoOmitPaths = new HashSet<File>();
-    
-    static final Logger logger = Logger.getLogger(ForEachFile.class.getName());
 
+    private static int bufSize = 64 * 1024;
+    private final File[] base;
+    private final ForEachFileOptions options;
+    private final FileFilter filter;
+    private final HashSet<File> autoOmitPaths = new HashSet<File>();
+    private final CoveredPath coveredPath;
+    static final Logger logger = Logger.getLogger(ForEachFile.class.getName());
     private static final ArchiveStreamFactory asf = new ArchiveStreamFactory();
 
     public ForEachFileOptions getOptions()
     {
         return new ForEachFileOptions(options);
-    }
-
-    public void setOptions(ForEachFileOptions options)
-    {
-        this.options = new ForEachFileOptions(options);
     }
 
     public static int getBufSize()
@@ -95,15 +89,21 @@ public abstract class ForEachFile implements Runnable
         ForEachFile.bufSize = bufSize;
     }
 
-    public ForEachFile(File file)
+//    ForEachFile(File file) throws IOException
+//    {
+//        this(file, null, null);
+//    }
+//
+//    ForEachFile(File files, FileFilter filter, ForEachFileOptions opt) throws IOException
+//    {
+//        this(new File[]{files},filter,opt);
+//    }
+    public ForEachFile(File[] files, FileFilter filter, ForEachFileOptions opt) throws IOException
     {
-        this(file, null, null);
-    }
-
-    public ForEachFile(File file, FileFilter filter, ForEachFileOptions opt)
-    {
-        this.base = file;
+        options = opt == null ? new ForEachFileOptions() : new ForEachFileOptions(opt);
+        this.base = files;
         this.filter = filter;
+        this.coveredPath = new CoveredPath(options.symlinks);
 
         if (OSName.os.isPosix())
         {
@@ -126,7 +126,6 @@ public abstract class ForEachFile implements Runnable
             autoOmitPaths.add(new File(File.separator + "devices"));
         }
 
-        options = opt == null ? new ForEachFileOptions() : new ForEachFileOptions(opt);
         if (autoOmitPaths.isEmpty())
         {
             options.autoOmit = false;
@@ -140,67 +139,100 @@ public abstract class ForEachFile implements Runnable
 
     public void run()
     {
-        run(base, 0);
+        for (File item : base)
+        {
+            File file;
+            try
+            {
+                file = Files.getNoDotFile(item);
+                if (file != null)
+                {
+                    run(file, 0);
+                }
+            }
+            catch (IOException ex)
+            {
+                Logger.getLogger(ForEachFile.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
-    private void run(final File file, final int level)
+    private void run(File file, final int level)
     {
         if (level > options.recursive)
         {
             return;
-        }       
-        logger.log(Level.FINEST, "file={0}",file);
+        }    
+        logger.log(Level.FINEST, "file={0}", file);
         try
         {
-            if (!options.onlyPacked && (options.directory || !file.isDirectory()) && (options.file || !file.isFile()) && (options.hidden || (level == 0) || !file.isHidden()) && (filter == null || filter.accept(file)) && acceptSize(file.length()) && (options.linkFile || !Files.isLink(file)))
+            if(!acceptFile(file, level))
             {
-                if (!isOmitedFile(file))
-                {
-                    doForEach(file, null);
-                }
+                return;
             }
-            if ((level < options.recursive) && (options.hidden || (level == 0) || !file.isHidden()))
+            if( acceptTarget(file) )
             {
-                if (file.isDirectory())
+                doForEach(file, null);
+            }
+            if(file.canRead())
+            {
+                if(file.isDirectory())
                 {
-                    if (followDir(file, level))
+                    File[] childs = file.listFiles();
+                    if (childs == null)
                     {
-                        File[] childs = file.listFiles();
-                        if (childs == null)
-                        {
-                            logger.log(Level.WARNING, "error in {0}",file);
-                            return;
-                        }
-                        for (File child : childs)
-                        {
-                            run(new CachedFile(child.toString()), level + 1);
-                        }
+                        logger.log(Level.WARNING, "error in {0}", file);
                         return;
                     }
-                }
-                else if ((options.zip || options.jar) && file.isFile())
-                {
-                    String name = file.getName().toLowerCase();
-                    if (inspectFile(name))
+                    for (File child : childs)
                     {
-                        ArchiveInputStream child = asf.createArchiveInputStream(new BufferedInputStream(new FileInputStream(file)));
-                        try
-                        {
-                            run(new PackedFile(file), child, level + 1);
-                        }
-                        finally
-                        {
-                            child.close();
-                        }
-
+                        run(new CachedFile(child.toString()), level + 1);
+                    }
+                }
+                else if(inspectFile(file.getName()))
+                {
+                    ArchiveInputStream child = asf.createArchiveInputStream(new BufferedInputStream(new FileInputStream(file)));
+                    try
+                    {
+                        run(new PackedFile(file), child, level + 1);
+                    }
+                    finally
+                    {
+                        child.close();
                     }
                 }
             }
         }
         catch (Exception ex)
         {
-              doException(ex);
+            doException(file.toString(), ex);
         }
+    }
+
+    private boolean acceptTarget(final File file)
+    {
+        if(options.onlyPacked)
+        {
+            return false;
+        }
+        if(file.isFile())
+        {
+            if(!options.file)
+                return false;
+            if(!acceptSize(file.length()))
+                return false;
+        }
+        else if(file.isDirectory())
+        {
+            if(!options.directory)
+                return false;
+        }
+
+        if(filter != null && !filter.accept(file))
+            return false;
+        if(isOmitedFile(file))
+            return false;
+        return true;
     }
 
     private void run(PackedFile pf, ArchiveInputStream zip, int level)
@@ -209,13 +241,13 @@ public abstract class ForEachFile implements Runnable
         {
             return;
         }
-        logger.log(Level.FINEST, "file={0}",pf);
+        logger.log(Level.FINEST, "file={0}", pf);
         ArchiveEntry ent = null;
         try
         {
             while ((ent = zip.getNextEntry()) != null)
             {
-                logger.log(Level.FINEST, "file={0}",ent.getName());
+                logger.log(Level.FINEST, "file={0}", ent.getName());
                 PackedFile child = new PackedFile(pf, ent);
                 if ((options.directory || !ent.isDirectory()) && (options.file || ent.isDirectory()) && (filter == null || filter.accept(new File(ent.getName()))) && acceptSize(ent.getSize()))
                 {
@@ -223,14 +255,14 @@ public abstract class ForEachFile implements Runnable
                 }
                 if ((level < options.recursive) && (options.hidden || (level == 0)))
                 {
-                    if ((options.zip || options.jar|| options.tar) && !ent.isDirectory())
+                    if ((options.zip || options.jar || options.tar) && !ent.isDirectory())
                     {
                         String name = ent.getName().toLowerCase();
                         if (inspectFile(name))
                         {
                             // SI NO SE USA BUFFERED INPUT STREAM, POS DA ERROR
                             InputStream buf = new BufferedInputStream(zip);
-                            ArchiveInputStream ais =  new ArchiveStreamFactory().createArchiveInputStream(buf);
+                            ArchiveInputStream ais = new ArchiveStreamFactory().createArchiveInputStream(buf);
                             run(child, ais, level + 1);
                         }
                     }
@@ -239,17 +271,25 @@ public abstract class ForEachFile implements Runnable
         }
         catch (Exception ex)
         {
-              doException(ex);
+            doException(pf.getPath(), ex);
         }
     }
+
     boolean inspectFile(String name)
     {
-        if(options.zip && name.endsWith(".zip"))
+        name = name.toLowerCase();
+        if (options.zip && name.endsWith(".zip"))
+        {
             return true;
-        if(options.jar && name.endsWith(".jar"))
+        }
+        if (options.jar && name.endsWith(".jar"))
+        {
             return true;
-        if(options.tar && name.endsWith(".tar"))
+        }
+        if (options.tar && name.endsWith(".tar"))
+        {
             return true;
+        }
         return false;
     }
 
@@ -260,9 +300,9 @@ public abstract class ForEachFile implements Runnable
         doForEach(new PackedFile(file));
     }
 
-    private void doException(Exception ex)
+    private void doException(String msg, Exception ex)
     {
-        logger.log(Level.SEVERE, null, ex);
+        logger.log(Level.SEVERE, msg, ex);
     }
 
     private boolean isOmitedPath(final File file, boolean verifyParents)
@@ -330,45 +370,44 @@ public abstract class ForEachFile implements Runnable
         return false;
     }
 
-//        si un directorio no es padre de una ruta excluida no hay que comparar si no es un link
-//        si un directorio contiene una ruta excluida solo hay que comparar al concreto salvo que sea un link
-//        si un directorio canonico tiene menos niveles que una ruta excluida no está excluido
-    // (file.isDirectory() && file.canRead() && ((level == 0) || (this.linkDir && !Files.isCyclicLink(file)) || !(Files.isLink(file))))
-    private boolean followDir(final File file, int level)
+    private boolean acceptFile(File file, int level) throws IOException
     {
-        try
+        if (level != 0 && !options.hidden && file.isHidden())
         {
+            return false;
+        }
+        if(options.readable && !file.canRead())
+        {
+            return false;
+        }
+        boolean link = Files.isLink(file);
+        if( (level>0) && link && !options.symlinks)
+        {
+            return false;
+        }
+
+        if(file.isDirectory())
+        {
+            if( link && Files.isCyclicLink(file))
+            {
+                return false;
+            }
+
             // only follow directories that can be read
-            if (!file.isDirectory())
-            {
-                return false;
-            }
-            if (!file.canRead())
-            {
-                return false;
-            }
             if (isOmitedDirName(file))
             {
                 return false;
             }
 
+            //        si un directorio no es padre de una ruta excluida no hay que comparar si no es un link
+            //        si un directorio contiene una ruta excluida solo hay que comparar al concreto salvo que sea un link
+            //        si un directorio canonico tiene menos niveles que una ruta excluida no está excluido
+                // (file.isDirectory() && file.canRead() && ((level == 0) || (this.linkDir && !Files.isCyclicLink(file)) || !(Files.isLink(file))))
+
             //verify isn't omited in absolute form
             final File absolute = file.getAbsoluteFile();
             final File canonical = file.getCanonicalFile();
-            final boolean link = !absolute.equals(canonical);
 
-            //verify is not a link or links can be followed
-            if (link && level > 0)
-            {
-                if (!options.linkDir)
-                {
-                    return false;
-                }
-                if (Files.isCyclicLink(file))
-                {
-                    return false;
-                }
-            }
             if (isOmitedPath(absolute, false))
             {
                 return false;
@@ -377,13 +416,13 @@ public abstract class ForEachFile implements Runnable
             {
                 return false;
             }
-            return true;
         }
-        catch (IOException ex)
+        if (!coveredPath.add(file, level == 0, link))
         {
-            logger.log(Level.SEVERE, null, ex);
+            logger.log(Level.FINE, "already covered file={0} -> {1}", new File[]{file, file.getCanonicalFile()});
+            return false;
         }
-        return false;
+        return true;
     }
-   
+
 }

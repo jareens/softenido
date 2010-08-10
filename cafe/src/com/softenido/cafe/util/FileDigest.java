@@ -22,6 +22,7 @@
 package com.softenido.cafe.util;
 
 import com.softenido.cafe.io.packed.PackedFile;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import org.apache.commons.compress.archivers.ArchiveException;
 
 /**
  *
@@ -36,7 +38,8 @@ import java.security.NoSuchAlgorithmException;
  */
 public class FileDigest
 {
-
+    private static int defBufSize = 256*1024;
+    private final int bufSize = defBufSize;
     private final Object lock = new Object();
     private final File file;
     private final PackedFile pf;
@@ -96,7 +99,7 @@ public class FileDigest
         }
     }
 
-    public byte[] getHash() throws FileNotFoundException, IOException, CloneNotSupportedException
+    public byte[] getHash() throws FileNotFoundException, IOException, CloneNotSupportedException, ArchiveException
     {
         synchronized (lock)
         {
@@ -108,7 +111,7 @@ public class FileDigest
         }
     }
 
-    public byte[] getHash(long size) throws FileNotFoundException, IOException, CloneNotSupportedException
+    public byte[] getHash(long size) throws FileNotFoundException, IOException, CloneNotSupportedException, ArchiveException
     {
         synchronized (lock)
         {
@@ -130,7 +133,7 @@ public class FileDigest
         }
     }
 
-    private byte[] buildHash(long size) throws FileNotFoundException, IOException, CloneNotSupportedException
+    private byte[] buildHash(long size) throws FileNotFoundException, IOException, CloneNotSupportedException, ArchiveException
     {
         if( size > 0 )
         {
@@ -141,7 +144,7 @@ public class FileDigest
             }
             if (buf == null)
             {
-                buf = new byte[(int)Math.min(64*1024,length)];
+                buf = new byte[(int)Math.min(bufSize,length)];
             }
             size = Math.min(size,length);
 
@@ -188,15 +191,15 @@ public class FileDigest
         return sizes;
     }
 
-    private InputStream getInputStream() throws FileNotFoundException, IOException
+    private InputStream getInputStream() throws FileNotFoundException, IOException, ArchiveException
     {
         if(file!=null)
         {
-            return new FileInputStream(file);
+            return new BufferedInputStream(new FileInputStream(file));
         }
         if(pf!=null)
         {
-            return pf.getInputStream();
+            return new BufferedInputStream(pf.getInputStream());
         }
         return null;
     }
