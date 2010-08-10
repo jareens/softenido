@@ -55,7 +55,7 @@ public class FindRepeMain
 {
 
     private static final String FINDREPE = "findrepe";
-    private static final String VER = "0.9.1";
+    private static final String VER = "0.10.0";
     private static final String VERSION =
             "findrepe  version " + VER + " alpha (2010-08-11)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
