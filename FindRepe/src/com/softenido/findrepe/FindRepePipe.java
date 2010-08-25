@@ -22,8 +22,10 @@
 package com.softenido.findrepe;
 
 import com.softenido.cafe.collections.IterableBuilder;
-import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.io.FileHash;
+import com.softenido.cafe.io.FileHashByName;
+import com.softenido.cafe.io.packed.PackedFile;
+import com.softenido.cafe.io.FileHashBySizeContent;
 import com.softenido.cafe.io.Files;
 import com.softenido.cafe.io.ForEachFilePipe;
 import com.softenido.cafe.util.ArrayUtils;
@@ -54,7 +56,6 @@ public class FindRepePipe implements Runnable
     private final File fileEof; // elemento final que marca el final de una cola de files
     private final PackedFile[] filesEof = new PackedFile[0];// elemento final que marca el final de una cola de arrays de files
     private final FindRepeOptions options;
-
 
     public FindRepePipe(File[] bases, boolean bugs, int bufSize, FindRepeOptions opt)
     {
@@ -254,7 +255,8 @@ public class FindRepePipe implements Runnable
             @Override
             public FileHash filter(PackedFile a)
             {
-                return new FileHash(a);
+                return options.isByName()?new FileHashByName(a,options.isByNameIgnoreCase()):
+                                          new FileHashBySizeContent(a);
             }
         }).link(new PipeLine<FileHash, FileHash>()//toBucketMap(size)
         {

@@ -25,7 +25,7 @@ import com.softenido.cafe.io.Files;
 import com.softenido.cafe.io.ForEachFileOptions;
 import com.softenido.cafe.io.packed.PackedFile;
 import com.softenido.cafe.util.ArrayUtils;
-import com.softenido.cafe.util.SizeUnits;
+import com.softenido.core.util.SizeUnits;
 import com.softenido.cafe.util.VerboseHandler;
 import com.softenido.cafe.util.concurrent.actor.Actor;
 import com.softenido.cafe.util.concurrent.actor.ActorPool;
@@ -38,8 +38,10 @@ import com.softenido.cafe.util.launcher.LauncherParser;
 import com.softenido.cafe.util.options.ArrayStringOption;
 import com.softenido.cafe.util.options.NumberOption;
 import com.softenido.cafe.util.options.SizeOption;
+import com.softenido.cafe.util.options.StringOption;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.ConsoleHandler;
@@ -55,7 +57,7 @@ public class FindRepeMain
 {
 
     private static final String FINDREPE = "findrepe";
-    private static final String VER = "0.10.0";
+    private static final String VER = "0.11.0";
     private static final String VERSION =
             "findrepe  version " + VER + " alpha (2010-08-11)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
@@ -131,6 +133,9 @@ public class FindRepeMain
             + "     --file=pattern          only files matching pattern\n"
             + " -z  --zip                   recurse into zip files (zip, jar, ...)(ALPHA)\n"
             + " -Z  --zip-only              exclude files not added by option --zip\n"
+            //+ "     --diff=difftool         uses difftool with diff command\n"
+            + "     --byname                compares by file name not content\n"
+            + "     --ibyname               like --byname, but case insensitive\n"
             + " -e  --regex                 uses java regular expresions\n"
             + "     --wildcard              uses wildcards '*', '?' and '[]' (default)\n"
             + " -j  --jobs=N                limits thread use to N (0-1024, developers only)\n"
@@ -216,6 +221,10 @@ public class FindRepeMain
         BooleanOption optZip = options.add(new BooleanOption('z', "zip"));
         BooleanOption optZipOnly = options.add(new BooleanOption('Z', "zip-only"));
 
+        BooleanOption optByName = options.add(new BooleanOption("byname"));
+        BooleanOption optIByName = options.add(new BooleanOption("ibyname"));
+        StringOption optDiff = options.add(new StringOption("diff"));
+
         ArrayStringOption dirName = options.add(new ArrayStringOption("dir", File.pathSeparatorChar));
         ArrayStringOption fileName = options.add(new ArrayStringOption("file", File.pathSeparatorChar));
         BooleanOption regex = options.add(new BooleanOption("regex"));
@@ -285,8 +294,6 @@ public class FindRepeMain
             vh.flush();
         }
 
-        String optName = null;
-        String optVal = null;
         boolean minSizeUsed = false;
         boolean maxSizeUsed = false;
         boolean minWastedUsed = false;
@@ -382,6 +389,16 @@ public class FindRepeMain
                 opt.setJar(true);
                 opt.setOnlyPacked(true);
             }
+            if(optIByName.isUsed()||optByName.isUsed())
+            {
+                opt.setByName(true);
+                opt.setByNameIgnoreCase(optIByName.isUsed());
+            }
+            String diff=null;
+            if(optDiff.isUsed())
+            {
+                diff = optDiff.getValue();
+            }
 
             // ignore groups of 1 unless it specified by options
             opt.setMinCount(2);
@@ -417,7 +434,7 @@ public class FindRepeMain
             {
                 showBugs(findTask.getBugIterable(), fixBugs, vh);
             }
-            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed() ? sizeParser : null), autoDeleteFiles, vh, optAbsPath.isUsed());
+            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed() ? sizeParser : null), autoDeleteFiles, vh, optAbsPath.isUsed(), diff);
         }
         catch (MissingOptionParameterException ex)
         {
@@ -637,7 +654,7 @@ public class FindRepeMain
         }
     }
 
-    private static void showGroups(FindRepeOptions opt, Iterable<PackedFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete, VerboseHandler vh, boolean absPath)
+    private static void showGroups(FindRepeOptions opt, Iterable<PackedFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete, VerboseHandler vh, boolean absPath, String diff)
     {
         int groupId = 0;
         int deleteMin = opt.getMinCount();
@@ -651,7 +668,7 @@ public class FindRepeMain
                 try
                 {
                     VERIFY(group);
-                    showOneGroup(groupId, group, delete, units, deleteMin, autoDelete, absPath);
+                    showOneGroup(groupId, group, delete, units, deleteMin, autoDelete, absPath,diff);
                 }
                 catch (IOException ex)
                 {
@@ -666,7 +683,7 @@ public class FindRepeMain
         }
     }
 
-    private static void showOneGroup(int groupId, PackedFile files[], boolean delete, SizeUnits units, int deleteMin, File[] autoDelete, boolean absPath) throws IOException
+    private static void showOneGroup(int groupId, PackedFile files[], boolean delete, SizeUnits units, int deleteMin, File[] autoDelete, boolean absPath,String diff) throws IOException
     {
         boolean showResult = false;
         boolean[] deleted = new boolean[files.length];
@@ -715,8 +732,9 @@ public class FindRepeMain
             {
                 return;
             }
-
-            System.out.printf("\nGroup %d, delete files [0 - %d, all, none]: ", groupId, files.length - 1);
+            String prompt = diff==null?"\nGroup %d, delete files [0 - %d, all, none]: ":
+                                       "\nGroup %d, delete files [0 - %d, all, none, diff]: ";
+            System.out.printf(prompt, groupId, files.length - 1);
             String line = sc.nextLine();
             if (line.length() == 0)
             {
@@ -735,6 +753,17 @@ public class FindRepeMain
                 for (int i = 0; i < deleted.length; i++)
                 {
                     deleted[i] = false;
+                }
+            }
+            else if(diff != null && line.trim().equalsIgnoreCase("diff"))
+            {
+                try
+                {
+                    execDiff(diff, files);
+                }
+                catch (InterruptedException ex)
+                {
+                    Logger.getLogger(FindRepeMain.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             else
@@ -812,5 +841,17 @@ public class FindRepeMain
         {
             Logger.getLogger(FindRepeMain.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private static int execDiff(String diff,PackedFile[] files) throws IOException, InterruptedException
+    {
+        String[] cmd = new String[files.length+1];
+        cmd[0]=diff;
+        for(int i=0;i<files.length;i++)
+        {
+            cmd[i+1] = files[i].toString();
+        }
+        Process child = Runtime.getRuntime().exec(cmd);
+        return child.waitFor();
     }
 }

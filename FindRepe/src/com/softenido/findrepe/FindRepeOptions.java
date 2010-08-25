@@ -50,6 +50,10 @@ public class FindRepeOptions extends ForEachFileOptions
     private boolean hasFileName;
     private final HashSet<FileFilter> fileName;
 
+    private boolean byName;
+    private boolean byNameIgnoreCase;
+
+
 
     public FindRepeOptions()
     {
@@ -68,6 +72,8 @@ public class FindRepeOptions extends ForEachFileOptions
         dirName= new HashSet<FileFilter>();//at least one of the parent directories must match a rule for every file
         hasFileName = false;
         fileName = new HashSet<FileFilter>();// every file must match a rule
+        byName = false;
+        byNameIgnoreCase =false;
     }
 
     public FindRepeOptions(ForEachFileOptions val)
@@ -87,6 +93,8 @@ public class FindRepeOptions extends ForEachFileOptions
         dirName= new HashSet<FileFilter>();//at least one of the parent directories must match a rule for every file
         hasFileName = false;
         fileName = new HashSet<FileFilter>();// every file must match a rule
+        byName = false;
+        byNameIgnoreCase = false;
     }
 
     public FindRepeOptions(FindRepeOptions val)
@@ -107,6 +115,8 @@ public class FindRepeOptions extends ForEachFileOptions
         dirName= new HashSet<FileFilter>(val.dirName);
         hasFileName = val.hasFileName;
         fileName = new HashSet<FileFilter>(val.fileName);
+        byName          = val.byName;
+        byNameIgnoreCase= val.byNameIgnoreCase;
     }
 
     public int getMaxCount()
@@ -197,6 +207,26 @@ public class FindRepeOptions extends ForEachFileOptions
     FileFilter[] getFileNames()
     {
         return fileName.toArray(new FileFilter[0]);
+    }
+
+    public boolean isByName()
+    {
+        return byName;
+    }
+
+    public void setByName(boolean byName)
+    {
+        this.byName = byName;
+    }
+
+    public boolean isByNameIgnoreCase()
+    {
+        return byNameIgnoreCase;
+    }
+
+    public void setByNameIgnoreCase(boolean byNameIgnoreCase)
+    {
+        this.byNameIgnoreCase = byNameIgnoreCase;
     }
 
 }
