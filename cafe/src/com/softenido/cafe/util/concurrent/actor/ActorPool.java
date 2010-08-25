@@ -1,7 +1,7 @@
 /*
  *  ActorPool.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author franci
  */
-public class ActorPool
+public class ActorPool implements Executor
 {
     public final static int CORES = Runtime.getRuntime().availableProcessors();
     private static int keepAliveTime = 333;
@@ -61,7 +61,7 @@ public class ActorPool
         this(defaultPoolSize);
     }
     
-    void execute(Runnable task) throws InterruptedException
+    public void execute(Runnable task)//throws InterruptedException
     {
         if(executor==null)
         {

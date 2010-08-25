@@ -1,7 +1,7 @@
 /*
  *  SafeDataEraser.java
  *
- *  Copyright (C) 2007  Francisco Gómez Carrasco
+ *  Copyright (C) 2007  Francisco G�mez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,24 +23,27 @@ package com.softenido.cafe.misc;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 /**
  * Obtains safe Erarser data for magnetic memory
+ *
+ * based on <b>Secure Deletion of Data from Magnetic and Solid-State Memory<b>
+ * by <b>Peter Gutmann<b>
+ *
  * @author franci
  */
 public class SafeDataEraser
 {
-    private static Random rand = new Random();
-    
-    private final byte[][] data=
+    private static final Random rand = new SecureRandom();
+    private static final byte[][] patterns=
     {
-        null,
-        null,
-        null,
-        null,
         {(byte)0x55,(byte)0x55,(byte)0x55},
         {(byte)0xAA,(byte)0xAA,(byte)0xAA},
         {(byte)0x92,(byte)0x49,(byte)0x24},
@@ -67,81 +70,77 @@ public class SafeDataEraser
         {(byte)0x24,(byte)0x92,(byte)0x49},
         {(byte)0x6D,(byte)0xB6,(byte)0xDB},
         {(byte)0xB6,(byte)0xDB,(byte)0x6D},
-        {(byte)0xDB,(byte)0x6D,(byte)0xB6},
-        null,
-        null,
-        null,
-        null,
+        {(byte)0xDB,(byte)0x6D,(byte)0xB6}
     };
+
+    private final byte[][] shuffle;
     
     /**
      * Creates a new instance of SafeDataEraser
      */
     public SafeDataEraser()
     {
-    }
-    /**
-     *
-     * @param index
-     * @param buf
-     */
-    public void getPattern(int index,byte[] buf)
-    {
-        byte[] pattern;
-        
-        pattern = data[index%35];
-        
-        if(pattern==null)
+        byte[][] pat = new byte[patterns.length][];
+        for(int i = 0;i<pat.length;i++)
         {
-            pattern = new byte[3];
-            rand.nextBytes(pattern);
+            pat[i] = patterns[i];
         }
-        
+
+        Collections.shuffle(Arrays.asList(pat), rand);
+
+        shuffle = new byte[35][];
+        for(int i = 0;i<4;i++)
+        {
+            byte[] item = new byte[3];
+            rand.nextBytes(item);
+            shuffle[i]= item;
+        }
+        for(int i = 0;i<pat.length;i++)
+        {
+            shuffle[i+4]= pat[i];
+        }
+        for(int i = 31;i<35;i++)
+        {
+            byte[] item = new byte[3];
+            rand.nextBytes(item);
+            shuffle[i]= item;
+        }
+    }
+
+    public void getPattern(int index, byte[] buf)
+    {
+        byte[] pattern = shuffle[index % shuffle.length];
         for(int i=0;i<buf.length;i++)
-            buf[i] = pattern[i%3];
+        {
+            buf[i] = pattern[ i % 3];
+        }
     }
     
-    public void wipeFile(String strFile) throws FileNotFoundException, IOException
+    public void wipeFile(File file) throws FileNotFoundException, IOException
     {
-        long size;                  // size of the file to wipe
-        File f = null;              // file descriptor
-        FileOutputStream fos = null;// Stream used to write to the file
-        byte[] pattern = null;      // buffer for the pattern
-        
-        try
+        final long size = file.length();
+        if (size == 0)
         {
-            f = new File(strFile);
-            size = f.length();
-            if(size==0)
-            {
-                f = null;
-                return;
-            }
-            pattern = new byte[3*1024];
-            
-            for(int i=0;i<data.length;i++)
-            {
-                fos = new FileOutputStream(f);
-                rand.nextBytes(pattern);
+            return;
+        }
 
-                for( int j=0 ; j<size ; j+=pattern.length )
-                    fos.write(pattern);
-                
-                fos.flush();
-                if(fos!=null)
-                    fos.close();
-                fos = null;
-            }
-        }
-        finally
+        byte[] buf = new byte[(int) Math.min(30 * 1024, size)];
+        for (int i = 0; i < patterns.length; i++)
         {
-            if(pattern!=null)
-                pattern = null;
-            if(fos!=null)
+            RandomAccessFile raf = new RandomAccessFile(file,"rwd");
+            try
             {
-                fos.close();
-                fos = null;
+                getPattern(i, buf);
+                for (long j = 0; j < size; j += buf.length)
+                {
+                    raf.write(buf, 0, (int) Math.min(buf.length, size - j));
+                }
+            }
+            finally
+            {
+                raf.close();
             }
         }
+        file.delete();
     }
 }

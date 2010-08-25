@@ -1,7 +1,7 @@
 /*
  *  ActorMulti.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,12 +21,12 @@
  */
 package com.softenido.cafe.util.concurrent.actor;
 
-import com.softenido.cafe.util.concurrent.Value;
+import com.softenido.core.util.concurrent.Value;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
-import com.softenido.cafe.util.concurrent.Filter;
-import com.softenido.cafe.util.concurrent.ASyncValue;
+import com.softenido.core.util.concurrent.Filter;
+import com.softenido.core.util.concurrent.ASyncValue;
 
 /**
  *

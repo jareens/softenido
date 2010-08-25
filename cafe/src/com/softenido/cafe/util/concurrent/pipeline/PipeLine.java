@@ -1,7 +1,7 @@
 /*
  *  PipeLine.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  */
 package com.softenido.cafe.util.concurrent.pipeline;
 
-import com.softenido.cafe.util.concurrent.Filter;
+import com.softenido.core.util.concurrent.Filter;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -50,7 +50,7 @@ public class PipeLine<M,R> implements Pipe<M,R>, Filter<M,R>, Runnable
         this.links[0] = first;
         this.needFlush= false;
     }
-    public PipeLine(Filter filter)
+    public PipeLine(Filter<M,R> filter)
     {
         Pipe<M,R> pipe = new PipeActor<M,R>(filter);
         this.first = pipe;
@@ -167,11 +167,11 @@ public class PipeLine<M,R> implements Pipe<M,R>, Filter<M,R>, Runnable
     }
     public <T> PipeLine<M,T> link(PipeLine<R,T> next)
     {
-        return new PipeLine(this,next);
+        return new PipeLine<M,T>(this,next);
     }
     public <T> PipeLine<M,T> link(Pipe<R,T> next)
     {
-        return new PipeLine(this,next);
+        return new PipeLine<M,T>(this,next);
     }
     public R filter(M a)
     {

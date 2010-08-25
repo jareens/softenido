@@ -47,7 +47,7 @@ public class ForEachFilePipe extends ForEachFile
         this.namePipe = namePipe;
     }
 
-    public ForEachFilePipe(File[] file, ForEachFileOptions opt, Pipe<PackedFile, FileHash> pipe, boolean eof) throws IOException
+    public ForEachFilePipe(File[] file, ForEachFileOptions opt, Pipe<PackedFile, ?> pipe, boolean eof) throws IOException
     {
         this(file, null, opt, pipe, null, eof);
     }

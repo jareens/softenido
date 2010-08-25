@@ -28,7 +28,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -431,7 +430,7 @@ public class Files
         return false;
     }
 
-    public static File[] uniqueCopyOf(File[] list, boolean canonical) throws IOException
+    public static File[] uniqueCopyOf(File[] list, boolean canonical, boolean mergeWithParent) throws IOException
     {
         // se eliminan los duplicados
         File[] unique = ArrayUtils.uniqueCopyOf(list);
@@ -443,16 +442,18 @@ public class Files
                 {
                     continue;
                 }
-
-                if(isParentOf(unique[j], unique[i],canonical))
+                if(mergeWithParent)
                 {
-                    unique[i] = unique[j];
-                    continue;
-                }
-                if(isParentOf(unique[i], unique[j],canonical))
-                {
-                    unique[j] = unique[i];
-                    continue;
+                    if(unique[j].isDirectory() && isParentOf(unique[j], unique[i],canonical))
+                    {
+                        unique[i] = unique[j];
+                        continue;
+                    }
+                    if(unique[i].isDirectory() && isParentOf(unique[i], unique[j],canonical))
+                    {
+                        unique[j] = unique[i];
+                        continue;
+                    }
                 }
             }
         }

@@ -1,7 +1,7 @@
 /*
  *  AbstractGauge.java
  *
- *  Copyright (C) 2007  Francisco Gómez Carrasco
+ *  Copyright (C) 2007-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
  */
 package com.softenido.cafe.misc;
 
+import com.softenido.core.text.HumanMillisFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 

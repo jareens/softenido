@@ -1,7 +1,7 @@
 /*
  *  ActorSync.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,10 +21,10 @@
  */
 package com.softenido.cafe.util.concurrent.actor;
 
-import com.softenido.cafe.util.concurrent.Filter;
-import com.softenido.cafe.util.concurrent.ValueLink;
-import com.softenido.cafe.util.concurrent.ValueSync;
-import com.softenido.cafe.util.concurrent.Value;
+import com.softenido.core.util.concurrent.Filter;
+import com.softenido.core.util.concurrent.ValueLink;
+import com.softenido.core.util.concurrent.ValueSync;
+import com.softenido.core.util.concurrent.Value;
 
 /**
  *

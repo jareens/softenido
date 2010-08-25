@@ -263,14 +263,14 @@ public class ForEachFileOptions
 
     public void addOmitedPath(File path)
     {
-        omitedPaths.add(path);
+        omitedPaths.add(path.getAbsoluteFile());
         hasOmitedPaths = true;
     }
     public void addOmitedPath(File[] paths)
     {
         for(File item : paths)
         {
-            omitedPaths.add(item);
+            omitedPaths.add(item.getAbsoluteFile());
         }
         hasOmitedPaths = hasOmitedPaths || (!omitedPaths.isEmpty());
     }
