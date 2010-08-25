@@ -1,7 +1,7 @@
 /*
  *  PosixLauncherBuilder.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ public class PosixLauncherBuilder extends LauncherBuilder
     private static final String USER_BIN = "/usr/bin/";
     private static final String POSIX_STATEMENT =
             "#!/bin/sh\n" +
-            "{$java} -jar {$jar} {$opt} $@\n";
+            "{$java} -jar {$jar} {$opt} \"$@\"\n";
 
     public PosixLauncherBuilder(String osname)
     {
