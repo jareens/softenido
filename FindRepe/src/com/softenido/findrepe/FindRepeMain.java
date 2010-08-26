@@ -41,7 +41,6 @@ import com.softenido.cafe.util.options.SizeOption;
 import com.softenido.cafe.util.options.StringOption;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.logging.ConsoleHandler;
@@ -59,7 +58,7 @@ public class FindRepeMain
     private static final String FINDREPE = "findrepe";
     private static final String VER = "0.11.0";
     private static final String VERSION =
-            "findrepe  version " + VER + " alpha (2010-08-11)\n"
+            "findrepe  version " + VER + " alpha (2010-08-26)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
