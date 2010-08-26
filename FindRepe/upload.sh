@@ -18,33 +18,52 @@ if [ -f $filenamezip ] ; then
   rm $filenamezip
 fi
 
-cp GPLv3.txt $filename/
-
-
 if [ $1 -eq 1 ] ; then
   echo "mode proguard"
   proguard @findrepe.proguard
   cp -R FindRepe.jar $filename/
   cp -R GPLv3.txt $filename/
-  zip $filenamezip $filename/FindRepe.jar $filename/GPLv3.txt
+  cp -R install*.sh $filename/
+  cp -R install*.bat $filename/
+  zip $filenamezip \
+      $filename/FindRepe.jar \
+      $filename/GPLv3.txt \
+      $filename/install.sh \
+      $filename/install-version.sh \
+      $filename/install.bat \
+      $filename/install-version.bat
 elif [ $1 -eq 2 ] ; then
   echo "mode zip"
   cp -R dist $filename/
   cp -R GPLv3.txt $filename/
+  cp -R install*.sh $filename/
+  cp -R install*.bat $filename/
   zip $filenamezip \
       $filename/FindRepe.jar \
       $filename/lib/cafe.jar \
+      $filename/lib/core.jar \
       $filename/lib/commons-compress-1.0.jar \
-      $filename/GPLv3.txt
+      $filename/GPLv3.txt \
+      $filename/install.sh \
+      $filename/install-version.sh \
+      $filename/install.bat \
+      $filename/install-version.bat
 else
   echo "mode normal"
   cp -R dist $filename/
   cp -R GPLv3.txt $filename/
+  cp -R install*.sh $filename/
+  cp -R install*.bat $filename/
   zip $filenamezip \
       $filename/FindRepe.jar \
       $filename/lib/cafe.jar \
+      $filename/lib/core.jar \
       $filename/lib/commons-compress-1.0.jar \
-      $filename/GPLv3.txt
+      $filename/GPLv3.txt \
+      $filename/install.sh \
+      $filename/install-version.sh \
+      $filename/install.bat \
+      $filename/install-version.bat
 fi
 
 rm -r $filename
