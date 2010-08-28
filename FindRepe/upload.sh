@@ -28,10 +28,9 @@ if [ $1 -eq 1 ] ; then
   zip $filenamezip \
       $filename/FindRepe.jar \
       $filename/GPLv3.txt \
-      $filename/install.sh \
-      $filename/install-version.sh \
-      $filename/install.bat \
-      $filename/install-version.bat
+      $filename/install-linux.sh \
+      $filename/install-w7.bat \
+      $filename/install-xp.bat
 elif [ $1 -eq 2 ] ; then
   echo "mode zip"
   cp -R dist $filename/
@@ -44,10 +43,9 @@ elif [ $1 -eq 2 ] ; then
       $filename/lib/core.jar \
       $filename/lib/commons-compress-1.0.jar \
       $filename/GPLv3.txt \
-      $filename/install.sh \
-      $filename/install-version.sh \
-      $filename/install.bat \
-      $filename/install-version.bat
+      $filename/install-linux.sh \
+      $filename/install-w7.bat \
+      $filename/install-xp.bat
 else
   echo "mode normal"
   cp -R dist $filename/
@@ -60,10 +58,9 @@ else
       $filename/lib/core.jar \
       $filename/lib/commons-compress-1.0.jar \
       $filename/GPLv3.txt \
-      $filename/install.sh \
-      $filename/install-version.sh \
-      $filename/install.bat \
-      $filename/install-version.bat
+      $filename/install-linux.sh \
+      $filename/install-w7.bat \
+      $filename/install-xp.bat
 fi
 
 rm -r $filename
