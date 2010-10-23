@@ -112,12 +112,16 @@ public class StringOption extends BooleanOption
                 setValue(args[argIndex].substring(charIndex + size));
                 size = 2;
             }
+            else if( (argIndex+1) == args.length)
+            {
+                setValue("");
+                size = 2;
+            }
             else if (argIndex < args.length)
             {
                 setValue(args[argIndex + 1]);
                 size = 3;
             }
-
         }
         return size;
     }
@@ -139,7 +143,7 @@ public class StringOption extends BooleanOption
     {
         int size = src.length();
         int index = prefix.length();
-        return (size > index) ? src.substring(index) : null;
+        return (size >= index) ? src.substring(index) : null;
     }
 
     /**
