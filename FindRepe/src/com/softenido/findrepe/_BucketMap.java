@@ -21,9 +21,12 @@
  */
 package com.softenido.findrepe;
 
+import com.softenido.core.equals.EqualsBuilder;
+import com.softenido.core.equals.EqualsHashMap;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,40 +36,44 @@ import java.util.TreeMap;
  *
  * @author franci
  */
-public class BucketMap<T>
+public class _BucketMap<E>
 {
-    private T[] empty;
-    private final Map<T, List<T>> map;
+    private E[] empty;
+    private final Map<E, List<E>> map;
 
-    public BucketMap(Comparator<T> cmp)
+    public _BucketMap(Comparator<E> cmp)
     {
-        map = (cmp==null)?new LinkedHashMap<T, List<T>>() : new TreeMap<T, List<T>>(cmp);
+        map = (cmp==null)?new LinkedHashMap<E, List<E>>() : new TreeMap<E, List<E>>(cmp);
     }
-    public BucketMap()
+    public _BucketMap(EqualsBuilder<E> cmp)
     {
-        this(null);
+        map = (cmp==null)?new HashMap<E, List<E>>() : new EqualsHashMap<E, List<E>>(cmp);
     }
-    public void add(T item)
+    public _BucketMap()
     {
-        List<T> list = map.get(item);
+        map = new HashMap<E, List<E>>();
+    }
+    public void add(E item)
+    {
+        List<E> list = map.get(item);
         if (list == null)
         {
-            list = new ArrayList<T>();
+            list = new ArrayList<E>();
             map.put(item, list);
             if(empty==null)
             {
-                empty = (T[]) Array.newInstance(item.getClass(), 0);
+                empty = (E[]) Array.newInstance(item.getClass(), 0);
             }
         }
         list.add(item);
     }
-    public T[][] toArray()
+    public E[][] toArray()
     {
         if(empty==null)
             return null;
-        T[][] dst = (T[][]) Array.newInstance(empty.getClass(),map.size());
+        E[][] dst = (E[][]) Array.newInstance(empty.getClass(),map.size());
         
-        List<T>[] values = map.values().toArray(new ArrayList[0]);
+        List<E>[] values = map.values().toArray(new ArrayList[0]);
 
         for (int i = 0; i < dst.length; i++)
         {

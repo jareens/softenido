@@ -71,4 +71,32 @@
     nbproject/build-impl.xml file.
 
     -->
+
+    <target name="proguard" depends="jar" description="hace un proguard">
+        <exec executable="proguard">
+            <arg value="@findrepe.proguard"/>
+        </exec>
+    </target>
+    <target name="zip" depends="jar" description="genera un zip">
+        <property name="project.name-ver" value="findrepe-${application.version}"/>
+        <delete dir="${project.name-ver}" quiet="true"/>
+        <mkdir dir="${project.name-ver}"/>
+        <copy todir="${project.name-ver}">
+            <fileset dir="dist">
+                <include name="**/*.*"/>
+            </fileset>
+        </copy>
+        <zip destfile="${project.name-ver}.zip" duplicate="preserve">
+            <zipfileset dir="${project.name-ver}" prefix="${project.name-ver}" includes="**/*.*"/>
+        </zip>
+        <delete dir="${project.name-ver}" quiet="true" deleteonexit="true"/>
+    </target>
+    <target name="cool" depends="compile">
+        <loadproperties encoding="iso-8859-1" srcfile="Foo.class">
+                <filterchain>
+                        <classconstants/>
+                </filterchain>
+        </loadproperties>
+</target>
+
 </project>

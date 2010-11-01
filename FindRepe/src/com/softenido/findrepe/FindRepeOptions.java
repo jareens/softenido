@@ -24,8 +24,11 @@ package com.softenido.findrepe;
 
 import com.softenido.cafe.io.ForEachFileOptions;
 import com.softenido.cafe.io.NameFileFilter;
+import com.softenido.cafe.io.virtual.VirtualFile;
+import com.softenido.core.equals.EqualsBuilder;
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Comparator;
 import java.util.HashSet;
 
 /**
@@ -50,10 +53,13 @@ public class FindRepeOptions extends ForEachFileOptions
     private boolean hasFileName;
     private final HashSet<FileFilter> fileName;
 
-    private boolean byName;
-    private boolean byNameIgnoreCase;
-
-
+    public final static EqualsBuilder<VirtualFile> BYHASH_HALF_COMPARATOR = new FileComparatorByHash(true);
+    public final static EqualsBuilder<VirtualFile> BYHASH_FULL_COMPARATOR = new FileComparatorByHash(false);
+    public final static EqualsBuilder<VirtualFile> DEFAULT_HALF_COMPARATOR = BYHASH_HALF_COMPARATOR;
+    public final static EqualsBuilder<VirtualFile> DEFAULT_FULL_COMPARATOR = BYHASH_FULL_COMPARATOR;
+        
+    private EqualsBuilder<VirtualFile> halfCmp;
+    private EqualsBuilder<VirtualFile> fullCmp;
 
     public FindRepeOptions()
     {
@@ -72,8 +78,8 @@ public class FindRepeOptions extends ForEachFileOptions
         dirName= new HashSet<FileFilter>();//at least one of the parent directories must match a rule for every file
         hasFileName = false;
         fileName = new HashSet<FileFilter>();// every file must match a rule
-        byName = false;
-        byNameIgnoreCase =false;
+        halfCmp = DEFAULT_HALF_COMPARATOR;
+        fullCmp = DEFAULT_FULL_COMPARATOR;
     }
 
     public FindRepeOptions(ForEachFileOptions val)
@@ -93,8 +99,8 @@ public class FindRepeOptions extends ForEachFileOptions
         dirName= new HashSet<FileFilter>();//at least one of the parent directories must match a rule for every file
         hasFileName = false;
         fileName = new HashSet<FileFilter>();// every file must match a rule
-        byName = false;
-        byNameIgnoreCase = false;
+        halfCmp = DEFAULT_HALF_COMPARATOR;
+        fullCmp = DEFAULT_FULL_COMPARATOR;
     }
 
     public FindRepeOptions(FindRepeOptions val)
@@ -115,8 +121,8 @@ public class FindRepeOptions extends ForEachFileOptions
         dirName= new HashSet<FileFilter>(val.dirName);
         hasFileName = val.hasFileName;
         fileName = new HashSet<FileFilter>(val.fileName);
-        byName          = val.byName;
-        byNameIgnoreCase= val.byNameIgnoreCase;
+        halfCmp = val.halfCmp;
+        fullCmp = val.fullCmp;
     }
 
     public int getMaxCount()
@@ -209,24 +215,19 @@ public class FindRepeOptions extends ForEachFileOptions
         return fileName.toArray(new FileFilter[0]);
     }
 
-    public boolean isByName()
+    public void setComparators(EqualsBuilder<VirtualFile> half, EqualsBuilder<VirtualFile> full)
     {
-        return byName;
+        this.halfCmp = half;
+        this.fullCmp = full;
     }
 
-    public void setByName(boolean byName)
+    public EqualsBuilder<VirtualFile> getFullCmp()
     {
-        this.byName = byName;
+        return fullCmp;
     }
 
-    public boolean isByNameIgnoreCase()
+    public EqualsBuilder<VirtualFile> getHalfCmp()
     {
-        return byNameIgnoreCase;
+        return halfCmp;
     }
-
-    public void setByNameIgnoreCase(boolean byNameIgnoreCase)
-    {
-        this.byNameIgnoreCase = byNameIgnoreCase;
-    }
-
 }

@@ -22,16 +22,16 @@
 package com.softenido.findrepe;
 
 import com.softenido.cafe.collections.IterableBuilder;
-import com.softenido.cafe.io.FileHash;
-import com.softenido.cafe.io.FileHashByName;
-import com.softenido.cafe.io.packed.PackedFile;
-import com.softenido.cafe.io.FileHashBySizeContent;
+import com.softenido.cafe.io.virtual.VirtualFile;
 import com.softenido.cafe.io.Files;
 import com.softenido.cafe.io.ForEachFilePipe;
 import com.softenido.cafe.util.ArrayUtils;
+import com.softenido.cafe.util.concurrent.actor.ActorPool;
 import com.softenido.cafe.util.concurrent.pipeline.Pipe;
 import com.softenido.cafe.util.concurrent.pipeline.PipeArray;
 import com.softenido.cafe.util.concurrent.pipeline.PipeLine;
+import com.softenido.core.equals.EqualsBuilder;
+import com.softenido.cafe.util.RepeatedSet;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -47,30 +47,37 @@ import java.util.logging.Logger;
  */
 public class FindRepePipe implements Runnable
 {
+    private boolean lowmem=false;
+    private static final int thNum=ActorPool.CORES*2;
+
     //añadir criterio para enlaces y archivos ocultos
     private final boolean bugs;
-    private final int bufSize;
     private final File[] bases;
     private BlockingQueue<File> bugQueue;
-    private BlockingQueue<PackedFile[]> groupsQueue;
+    private BlockingQueue<VirtualFile[]> groupsQueue;
     private final File fileEof; // elemento final que marca el final de una cola de files
-    private final PackedFile[] filesEof = new PackedFile[0];// elemento final que marca el final de una cola de arrays de files
+    private final VirtualFile[] filesEof = new VirtualFile[0];// elemento final que marca el final de una cola de arrays de files
     private final FindRepeOptions options;
+
+    private final EqualsBuilder<VirtualFile> halfCmp;
+    private final EqualsBuilder<VirtualFile> fullCmp;
 
     public FindRepePipe(File[] bases, boolean bugs, int bufSize, FindRepeOptions opt)
     {
         this.bases = bases;
         this.bugs = bugs;
-        this.bufSize = bufSize;
         this.options = opt;
 
-        fileEof = bases[0]; // elemento final que marca
+        this.fileEof = bases[0]; // elemento final que marca
 
-        bugQueue = new LinkedBlockingQueue<File>();
-        groupsQueue = new LinkedBlockingQueue<PackedFile[]>(bufSize);
+        this.bugQueue = new LinkedBlockingQueue<File>();
+        this.groupsQueue = new LinkedBlockingQueue<VirtualFile[]>(bufSize);
+
+        this.halfCmp = opt.getHalfCmp();
+        this.fullCmp = opt.getFullCmp();
     }
 
-    private PackedFile readable(PackedFile item)
+    private VirtualFile readable(VirtualFile item)
     {
         if (item.exists())
         {
@@ -84,9 +91,9 @@ public class FindRepePipe implements Runnable
         {
             try
             {
-                if (Files.isBugName(item.getFile()))
+                if (Files.isBugName(item.getBaseFile()))
                 {
-                    bugQueue.put(item.getFile());
+                    bugQueue.put(item.getBaseFile());
                 }
                 else
                 {
@@ -105,14 +112,14 @@ public class FindRepePipe implements Runnable
         return null;
     }
 
-    private static PackedFile filterDirFile(PackedFile file, FileFilter[] dirsRegEx, FileFilter[] filesRegEx)
+    private static VirtualFile filterDirFile(VirtualFile file, FileFilter[] dirsRegEx, FileFilter[] filesRegEx)
     {
-        PackedFile ret = file;
+        VirtualFile ret = file;
         if (filesRegEx.length > 0)
         {
             for (FileFilter filter : filesRegEx)
             {
-                if (filter.accept(file.getFile()))
+                if (filter.accept(file.getBaseFile()))
                 {
                     return file;
                 }
@@ -122,7 +129,7 @@ public class FindRepePipe implements Runnable
 
         if (dirsRegEx.length > 0)
         {
-            for (String names : Files.getParents(file.getFile()))
+            for (String names : Files.getParents(file.getBaseFile()))
             {
                 for (FileFilter filter : dirsRegEx)
                 {
@@ -137,15 +144,15 @@ public class FindRepePipe implements Runnable
         return ret;
     }
 
-    private static FileHash[] focusFilter(File[] paths, FileFilter[] dirsRegEx, FileFilter[] filesRegEx, FileHash[] list)
+    private static VirtualFile[] focusFilter(File[] paths, FileFilter[] dirsRegEx, FileFilter[] filesRegEx, VirtualFile[] list)
     {
-        FileHash[] ret = list;
+        VirtualFile[] ret = list;
         // if any file has the correct name
         if (filesRegEx.length > 0)
         {
-            for (FileHash item : list)
+            for (VirtualFile item : list)
             {
-                File unpacked = item.getFile().getFile();
+                File unpacked = item.getBaseFile();
                 for (FileFilter filter : filesRegEx)
                 {
                     if (filter.accept(unpacked))
@@ -160,9 +167,9 @@ public class FindRepePipe implements Runnable
         // if any dir has the correct name
         if (dirsRegEx.length > 0)
         {
-            for (FileHash item : list)
+            for (VirtualFile item : list)
             {
-                File unpacked = item.getFile().getFile();
+                File unpacked = item.getBaseFile();
                 for (String names : Files.getParents(unpacked))
                 {
                     for (FileFilter filter : dirsRegEx)
@@ -179,16 +186,16 @@ public class FindRepePipe implements Runnable
         // if any file has the correct path
         if (paths.length > 0)
         {
-            for (FileHash item : list)
+            for (VirtualFile item : list)
             {
-                File file = item.getFile().getFile();
+                File file = item.getBaseFile();
                 for (File dir : paths)
                 {
                     try
                     {
                         if (dir.isFile())
                         {
-                            if (dir.equals(item.getFile().getFile()))
+                            if (dir.equals(item.getBaseFile()))
                             {
                                 return list;
                             }
@@ -209,7 +216,7 @@ public class FindRepePipe implements Runnable
         return ret;
     }
 
-    private static long wastedSize(FileHash[] files)
+    private static long wastedSize(VirtualFile[] files)
     {
         if (files.length <= 1)
         {
@@ -217,51 +224,42 @@ public class FindRepePipe implements Runnable
         }
         long full = 0;
         long min = Long.MAX_VALUE;
-        for (FileHash item : files)
+        for (VirtualFile item : files)
         {
-            long size = item.getSize();
-            min = Math.min(min, item.getSize());
+            long size = item.length();
+            min = Math.min(min, item.length());
             full += size;
         }
 
         return (full - min);
     }
 
-    FileHash[][] getFileHashBySize() throws IOException, InterruptedException
+    VirtualFile[][] getFileHashBySize() throws IOException, InterruptedException
     {
-        final FileHashSizeComparator cmp = new FileHashSizeComparator();
         final File[] basesAndFocus = ArrayUtils.cat(bases, options.getFocusPaths());
         //obtener ficheros en bruto
         final FileFilter[] dirNameRegEx = options.getDirNames();
         final FileFilter[] fileNameRegEx = options.getFileNames();
-        final BucketMap<FileHash> sizeMap = new BucketMap<FileHash>(cmp);
+        final RepeatedSet<VirtualFile> sizeMap = new RepeatedSet<VirtualFile>(halfCmp);
 
-        Pipe<PackedFile, FileHash> pipe = new PipeLine<PackedFile, PackedFile>()//readable
+        Pipe<VirtualFile, VirtualFile> pipe = new PipeLine<VirtualFile, VirtualFile>(thNum)//readable
         {
             @Override
-            public PackedFile filter(PackedFile a)
+            public VirtualFile filter(VirtualFile a)
             {
                 return readable(a);//AL PONER AQUI UN PUNTO DE RUPTURA DA ERROR EN NETBEANS
             }
-        }.link(new PipeLine<PackedFile, PackedFile>()//readable
+        }.link(new PipeLine<VirtualFile, VirtualFile>(thNum)//readable
         {
             @Override
-            public PackedFile filter(PackedFile a)
+            public VirtualFile filter(VirtualFile a)
             {
                 return filterDirFile(a, dirNameRegEx, fileNameRegEx);//AL PONER AQUI UN PUNTO DE RUPTURA DA ERROR EN NETBEANS
             }
-        }).link(new PipeLine<PackedFile, FileHash>()//toHash
+        }).link(new PipeLine<VirtualFile, VirtualFile>(thNum)//toBucketMap(size)
         {
             @Override
-            public FileHash filter(PackedFile a)
-            {
-                return options.isByName()?new FileHashByName(a,options.isByNameIgnoreCase()):
-                                          new FileHashBySizeContent(a);
-            }
-        }).link(new PipeLine<FileHash, FileHash>()//toBucketMap(size)
-        {
-            @Override
-            public FileHash filter(FileHash a)
+            public VirtualFile filter(VirtualFile a)
             {
                 sizeMap.add(a);
                 return null;
@@ -285,8 +283,8 @@ public class FindRepePipe implements Runnable
         }
         bugQueue.put(fileEof);
         // now each bucket is
-        FileHash[][] list = sizeMap.toArray();
-        return (list == null ? new FileHash[0][] : list);
+        VirtualFile[][] list = sizeMap.toArray(new VirtualFile[0][]);
+        return (list == null ? new VirtualFile[0][] : list);
     }
 
     public void run()
@@ -299,12 +297,12 @@ public class FindRepePipe implements Runnable
 
         try
         {
-            FileHash[][] hashes = getFileHashBySize();
+            VirtualFile[][] hashes = getFileHashBySize();
 
-            Pipe<FileHash[], PackedFile[]> pipe = new PipeLine<FileHash[], FileHash[]>()//readable
+            Pipe<VirtualFile[], VirtualFile[]> pipe = new PipeLine<VirtualFile[], VirtualFile[]>(thNum)//readable
             {
                 @Override
-                public FileHash[] filter(FileHash[] a)//min+focus
+                public VirtualFile[] filter(VirtualFile[] a)//min+focus
                 {
                     if (a.length < options.getMinCount())
                     {
@@ -318,19 +316,17 @@ public class FindRepePipe implements Runnable
 
                     return focusFilter(paths, dirsRegEx, filesRegEx, a);
                 }
-            }.link(new PipeLine<FileHash[], FileHash[][]>()//split
+            }.link(new PipeLine<VirtualFile[], VirtualFile[][]>(thNum)//split
             {
-
                 @Override
-                public FileHash[][] filter(FileHash[] a)
+                public VirtualFile[][] filter(VirtualFile[] a)
                 {
-                    return ArrayUtils.splitEquals(a);
+                    return ArrayUtils.splitEquals(a,fullCmp);
                 }
-            }).link(new PipeArray<FileHash[], FileHash[]>()//toBucketMap(size)
+            }).link(new PipeArray<VirtualFile[], VirtualFile[]>()//toBucketMap(size)
             {
-
                 @Override
-                public FileHash[] filter(FileHash[] a)
+                public VirtualFile[] filter(VirtualFile[] a)
                 {
                     if (a.length < options.getMinCount())
                     {
@@ -346,28 +342,27 @@ public class FindRepePipe implements Runnable
                     }
                     return focusFilter(paths, dirsRegEx, filesRegEx, a);
                 }
-            }).link(new PipeLine<FileHash[], PackedFile[]>()
+            }).link(new PipeLine<VirtualFile[], VirtualFile[]>(thNum)
             {
-
                 @Override
-                public PackedFile[] filter(FileHash[] a)
-                {
-                    PackedFile[] dst = new PackedFile[a.length];
-                    for (int i = 0; i < a.length; i++)
-                    {
-                        dst[i] = a[i].getFile();
-                    }
-                    return dst;
-                }
-            }).link(new PipeLine<PackedFile[], PackedFile[]>()
-            {
-
-                @Override
-                public PackedFile[] filter(PackedFile[] a)
+                public VirtualFile[] filter(VirtualFile[] a)
                 {
                     try
                     {
+                        if(lowmem)
+                        {
+                            VirtualFile[] b = new VirtualFile[a.length];
+                            for(int i=0;i<b.length;i++)
+                            {
+                                b[i] = a[i].clone();
+                            }
+                            a = b;
+                        }
                         groupsQueue.put(a);
+                    }
+                    catch (CloneNotSupportedException ex)
+                    {
+                        Logger.getLogger(FindRepePipe.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     catch (InterruptedException ex)
                     {
@@ -412,7 +407,7 @@ public class FindRepePipe implements Runnable
         return IterableBuilder.build(bugQueue, fileEof);
     }
 
-    public Iterable<PackedFile[]> getGroupsIterable()
+    public Iterable<VirtualFile[]> getGroupsIterable()
     {
         return IterableBuilder.build(groupsQueue, filesEof);
     }
@@ -422,5 +417,14 @@ public class FindRepePipe implements Runnable
         Logger.getLogger(FindRepePipe.class.getName()).log(level, msg, ex);
     }
 
+    public boolean isLowmem()
+    {
+        return lowmem;
+    }
+
+    public void setLowmem(boolean lowmem)
+    {
+        this.lowmem = lowmem;
+    }
     
 }
