@@ -120,5 +120,4 @@ public class Actor<M,R> implements ActorBase<M,R> , Filter<M,R>
     {
         return null;
     }
-
 }

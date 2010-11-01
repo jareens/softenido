@@ -1,7 +1,7 @@
 /*
  *  FileDigest.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  */
 package com.softenido.cafe.util;
 
-import com.softenido.cafe.io.packed.PackedFile;
+import com.softenido.cafe.io.virtual.VirtualFile;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.compress.archivers.ArchiveException;
 
 /**
@@ -42,7 +44,7 @@ public class FileDigest
     private final int bufSize = defBufSize;
     private final Object lock = new Object();
     private final File file;
-    private final PackedFile pf;
+    private final VirtualFile pf;
     private final long length;
     private final byte[][] hashes = new byte[64][];
     private final long[] sizes = new long[64];
@@ -53,7 +55,7 @@ public class FileDigest
     //resources to free in keepOff
     private int keep = 0;
     private InputStream data = null;
-    private byte[] buf = null;
+    
 
     public FileDigest(File file, MessageDigest md) throws NoSuchAlgorithmException
     {
@@ -62,7 +64,7 @@ public class FileDigest
         this.length = file.length();
         this.md = md;
     }
-    public FileDigest(PackedFile file, MessageDigest md) throws NoSuchAlgorithmException
+    public FileDigest(VirtualFile file, MessageDigest md) throws NoSuchAlgorithmException
     {
         this.file = null;
         this.pf =file;
@@ -86,10 +88,6 @@ public class FileDigest
             assert (keep>=0);
             if (keep <= 0)
             {
-                if (buf != null)
-                {
-                    buf = null;
-                }
                 if (data != null)
                 {
                     data.close();
@@ -142,16 +140,20 @@ public class FileDigest
                 data = getInputStream();
                 data.skip(count);
             }
-            if (buf == null)
-            {
-                buf = new byte[(int)Math.min(bufSize,length)];
-            }
+            byte[] buf = new byte[(int)Math.min(bufSize,length)];
             size = Math.min(size,length);
 
             while (count < size)
             {
                 int r = Math.min(buf.length, (int) (size - count));
                 r = data.read(buf, 0, r);
+
+                if(r<0)
+                {
+                    Logger.getLogger(FileDigest.class.getName()).log(Level.INFO, "can't read from {0}",pf);
+                    break;
+                }
+                
                 md.update(buf, 0, r);
                 count += r;
             }

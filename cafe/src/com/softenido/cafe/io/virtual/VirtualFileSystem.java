@@ -1,5 +1,5 @@
 /*
- *  PackedFileSystem.java
+ *  VirtualFileSystem.java
  *
  *  Copyright (C) 2010  Francisco Gómez Carrasco
  *
@@ -19,7 +19,7 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.io.packed;
+package com.softenido.cafe.io.virtual;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,17 +30,25 @@ import org.apache.commons.compress.archivers.ArchiveException;
  *
  * @author franci
  */
-interface PackedFileSystem
+interface VirtualFileSystem
 {
     boolean canRead();
     boolean canWrite();
     boolean delete();
     boolean exists();
     String getCanonicalPath() throws IOException;
+    VirtualFileSystem getCanonicalFile() throws IOException;
     String getAbsolutePath() throws IOException;
-    File getFile();
+    VirtualFileSystem getAbsoluteFile() throws IOException;
+    File getBaseFile();
     InputStream getInputStream() throws IOException, ArchiveException;
     String getName();
     String getPath();
+    String[] splitPath();
+    boolean isHidden();
+    boolean isFile();
+    boolean isDirectory();
     long length();
+    boolean isLink() throws IOException;
+    boolean isLink(boolean path) throws IOException;
 }

@@ -1,7 +1,7 @@
 /*
  *  ScaleImage.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,17 +21,27 @@
  */
 package com.softenido.cafe.imageio;
 
+import com.softenido.cafe.image.SimpleScaleDimension;
+import com.softenido.cafe.image.ScaleDimension;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.color.ColorSpace;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorConvertOp;
+import java.awt.image.ColorModel;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
+import java.awt.image.RGBImageFilter;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.imageio.ImageIO;
@@ -42,12 +52,42 @@ import javax.imageio.ImageIO;
  */
 public class ScaleImage
 {
-    public static boolean scaleImage(File inputImage, File outputImage, int width, int height) throws Exception
+    private final ConvolveOp blurOp = new ConvolveOp(new Kernel(3, 3, new float[] { 0.1111f, 0.1111f, 0.1111f,0.1111f, .1111f, .1111f,0.1111f, 0.1111f, 0.1111f }));
+    private final ScaleDimension scale;
+    private final boolean gray;
+    private final boolean nop;
+
+    public ScaleImage(ScaleDimension scale, boolean gray)
+    {
+        this.scale = scale;
+        this.gray  = gray;
+        this.nop   = (scale==null) && !gray;
+    }
+
+    public ScaleImage(ScaleDimension scale)
+    {
+        this(scale,false);
+    }
+
+    public ScaleImage(boolean gray)
+    {
+        this(null,gray);
+    }
+    public ScaleImage(int maxWidth, int maxHeight, boolean grayscale)
+    {
+        this(new SimpleScaleDimension(maxWidth,maxHeight),grayscale);
+    }
+    public ScaleImage(int maxWidth, int maxHeight)
+    {
+        this(maxWidth,maxHeight,false);
+    }
+    
+    public boolean filter(File inputImage, File outputImage, String format) throws Exception
     {
         InputStream in = new FileInputStream(inputImage);
         try
         {
-            InputStream in2 = scaleImage(in, width, height);
+            InputStream in2 = filter(in, format);
             try
             {
                 OutputStream out = new FileOutputStream(outputImage);
@@ -64,6 +104,7 @@ public class ScaleImage
                 {
                     out.close();
                 }
+                return (in!=in2);
             }
             finally
             {
@@ -74,7 +115,6 @@ public class ScaleImage
         {
             in.close();
         }
-        return false;
     }
 
 //        // Write the scaled image to the outputstream
@@ -88,37 +128,72 @@ public class ScaleImage
 //        encoder.encode(thumbImage);
 //        ImageIO.write(thumbImage, "jpg", out);
 
-    public static InputStream scaleImage(InputStream inputImage, int maxWidth, int maxHeight) throws Exception
-    {
-        return scaleImage(inputImage, new SimpleScaleDimension(maxWidth,maxHeight));
-    }
-    public static InputStream scaleImage(InputStream inputImage, ScaleDimension scale) throws Exception
-    {
 
-        InputStream imageStream = new BufferedInputStream(inputImage);
-        Image image = (Image) ImageIO.read(imageStream);
+    public InputStream filter(InputStream imageStream, String format) throws IOException
+    {
+        if(nop)
+        {
+            return imageStream;
+        }
+        
+        BufferedImage image = ImageIO.read(new BufferedInputStream(imageStream));
+        image = filter(image);
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ImageIO.write(image, format, out);
+        
+        ByteArrayInputStream bis = new ByteArrayInputStream(out.toByteArray());
+
+        return bis;
+    }
+
+    public BufferedImage filter(BufferedImage img)
+    {
+        if(nop)
+        {
+            return img;
+        }
 
         // Make sure the aspect ratio is maintained, so the image is not skewed
-        Dimension size  = new Dimension(image.getWidth(null),image.getHeight(null));
-        Dimension resize= scale.convert(size);
+        Dimension size  = new Dimension(img.getWidth(),img.getHeight());
+        Dimension resize= (scale==null)?null:scale.convert(size);
         if(resize==null)
         {
             resize = size;
         }
 
-        // Draw the scaled image
-        BufferedImage scaledImage = new BufferedImage(resize.width, resize.height, BufferedImage.TYPE_INT_RGB);
+        if(!resize.equals(size) || gray)
+        {
+            img = scaleByGraphics2D(img,resize.width, resize.height, gray);
+        }
+        return img;
+    }
+
+    private static BufferedImage scaleByAffine(BufferedImage img, int w, int h)
+    {
+        double sx = ((double) w) / ((double) img.getWidth());
+        double sy = ((double) h) / ((double) img.getHeight());
+
+        AffineTransform ops = new AffineTransform();
+        ops.scale(sx, sy);
+
+        AffineTransformOp op = new AffineTransformOp(ops, AffineTransformOp.TYPE_BICUBIC);       
+        return op.filter(img, op.createCompatibleDestImage(img, ColorModel.getRGBdefault()));
+    }
+    private static BufferedImage scaleByGraphics2D(BufferedImage img, int w, int h, boolean gray)
+    {
+        BufferedImage scaledImage = new BufferedImage(w, h, gray?BufferedImage.TYPE_BYTE_GRAY:BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D = scaledImage.createGraphics();
         graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        graphics2D.drawImage(image, 0, 0, resize.width, resize.height, null);
-
-        // Write the scaled image to the outputstream
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        ImageIO.write(scaledImage, "jpg", out);
-
-        // Read the outputstream into the inputstream for the return value
-        ByteArrayInputStream bis = new ByteArrayInputStream(out.toByteArray());
-
-        return bis;
+        graphics2D.drawImage(img, 0, 0, w, h, null);
+        return scaledImage;
     }
+    
+    private static BufferedImage grayScale(BufferedImage img)
+    {
+        ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_GRAY);
+        ColorConvertOp op = new ColorConvertOp(cs, null);
+        return op.filter(img, null);
+    }
+
 }

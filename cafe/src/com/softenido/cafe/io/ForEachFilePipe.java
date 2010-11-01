@@ -1,7 +1,7 @@
 /*
  *  ForEachFilePipe.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  */
 package com.softenido.cafe.io;
 
-import com.softenido.cafe.io.packed.PackedFile;
+import com.softenido.cafe.io.virtual.VirtualFile;
 import com.softenido.cafe.util.concurrent.pipeline.Pipe;
 import java.io.File;
 import java.io.FileFilter;
@@ -36,10 +36,10 @@ import java.util.logging.Logger;
 public class ForEachFilePipe extends ForEachFile
 {
     private final boolean eof;
-    private final Pipe<PackedFile,?> filePipe;
+    private final Pipe<VirtualFile,?> filePipe;
     private final Pipe<String,?> namePipe;
 
-    public ForEachFilePipe(File[] file, FileFilter filter, ForEachFileOptions opt, Pipe<PackedFile,?> filePipe, Pipe<String,?> namePipe, boolean eof) throws IOException
+    public ForEachFilePipe(File[] file, FileFilter filter, ForEachFileOptions opt, Pipe<VirtualFile,?> filePipe, Pipe<String,?> namePipe, boolean eof) throws IOException
     {
         super(file, filter,opt);
         this.eof      = eof;
@@ -47,13 +47,13 @@ public class ForEachFilePipe extends ForEachFile
         this.namePipe = namePipe;
     }
 
-    public ForEachFilePipe(File[] file, ForEachFileOptions opt, Pipe<PackedFile, ?> pipe, boolean eof) throws IOException
+    public ForEachFilePipe(File[] file, ForEachFileOptions opt, Pipe<VirtualFile, ?> pipe, boolean eof) throws IOException
     {
         this(file, null, opt, pipe, null, eof);
     }
 
     @Override
-    protected void doForEach(PackedFile fe)
+    protected void doForEach(VirtualFile fe)
     {
         try
         {
@@ -96,7 +96,7 @@ public class ForEachFilePipe extends ForEachFile
         }
     }
 
-    public Pipe<PackedFile,?> getFilePipe()
+    public Pipe<VirtualFile,?> getFilePipe()
     {
         return filePipe;
     }

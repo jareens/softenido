@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.softenido.cafe.io.packed;
+package com.softenido.cafe.io.virtual;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -77,14 +77,14 @@ public class PackedPool
         };
     }
 
-    public InputStream get(PackedFile file) throws FileNotFoundException, IOException, ArchiveException
+    public InputStream get(VirtualFile file) throws FileNotFoundException, IOException, ArchiveException
     {
         return get(file.splitPath());
     }
     private static final ArchiveStreamFactory asf = new ArchiveStreamFactory();
 
 
-    private InputStream get(String[] paths) throws FileNotFoundException, IOException, ArchiveException
+    InputStream get(String[] paths) throws FileNotFoundException, IOException, ArchiveException
     {
         if(paths.length==0)
         {
@@ -101,7 +101,7 @@ public class PackedPool
         {
             for(int i=2;i<paths.length;i++)
             {
-                curPath.append(PackedFile.pathSeparator).append(paths[i]);
+                curPath.append(VirtualFile.pathSeparator).append(paths[i]);
                 in = getEntryInputStream(in, paths[i]);
                 if(in==null)
                 {

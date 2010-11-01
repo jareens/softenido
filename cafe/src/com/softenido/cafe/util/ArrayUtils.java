@@ -1,7 +1,7 @@
 /*
  *  ArrayUtils.java
  *
- *  Copyright (C) 2007-2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2007-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
  */
 package com.softenido.cafe.util;
 
+import com.softenido.core.equals.EqualsBuilder;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,7 +110,6 @@ public final class ArrayUtils
     public static <T> T[][] splitEquals(T[] src,Comparator<T> cmp)
     {
         //verificar que funciona cuando se usa un comparador
-                
         Map<T, List<T>> map = (cmp==null)?new LinkedHashMap<T, List<T>>() : new TreeMap<T, List<T>>(cmp);
 
         for (int i = 0; i < src.length; i++)
@@ -133,9 +133,21 @@ public final class ArrayUtils
         }
         return dst;
     }
+    public static <T> T[][] splitEquals(T[] src,EqualsBuilder<T> cmp)
+    {
+        RepeatedSet<T> set = new RepeatedSet<T>(cmp);
+
+        for (int i = 0; i < src.length; i++)
+        {
+            set.add(src[i]);
+        }
+        T[][] dst = (T[][]) Array.newInstance(src.getClass(), set.size());
+        return set.toArray(dst);
+    }
+
     public static <T> T[][] splitEquals(T[] src)
     {
-        return splitEquals(src, null);
+        return splitEquals(src, (Comparator<T>) null);
     }
     public static <T> T[][] splitAgainEquals(T[][] src,Comparator<T> cmp)
     {
@@ -270,4 +282,31 @@ public final class ArrayUtils
         List<T> list = Arrays.asList(data);
         Collections.shuffle(list, rand);
     }
+    public static int compare(byte[] b1,byte[] b2)
+    {
+        int size = Math.min(b1.length, b2.length);
+        for(int i =0;i<size;i++)
+        {
+            int cmp = b1[i] - b2[i];
+            if(cmp!=0)
+            {
+                return cmp;
+            }
+        }
+        return (b1.length<b2.length ? -1 : (b1.length==b2.length ? 0 : 1));
+    }
+    public static int compare(byte[][] b1,byte[][] b2)
+    {
+        int size = Math.min(b1.length, b2.length);
+        for(int i =0;i<size;i++)
+        {
+            int cmp = compare(b1[i],b2[i]);
+            if(cmp!=0)
+            {
+                return cmp;
+            }
+        }
+        return (b1.length<b2.length ? -1 : (b1.length==b2.length ? 0 : 1));
+    }
+
 }

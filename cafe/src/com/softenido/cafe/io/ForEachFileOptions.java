@@ -1,7 +1,7 @@
 /*
  *  ForEachFileOptions.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@
  */
 package com.softenido.cafe.io;
 
+import com.softenido.cafe.io.virtual.VirtualFile;
+import com.softenido.cafe.io.virtual.VirtualFileFilter;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.HashSet;
@@ -46,14 +48,16 @@ public class ForEachFileOptions
     long maxSize;
     boolean autoOmit;
     boolean hasOmitedPaths;
-    HashSet<File> omitedPaths;
+    HashSet<VirtualFile> omitedPaths;
     boolean hasOmitedFiles;
-    HashSet<File> omitedFiles;
+    HashSet<VirtualFile> omitedFiles;
 
     boolean hasOmitedDirNames;
-    HashSet<FileFilter> omitedDirNames;
+    HashSet<VirtualFileFilter> omitedDirNames;
     boolean hasOmitedFileNames;
-    HashSet<FileFilter> omitedFileNames;
+    HashSet<VirtualFileFilter> omitedFileNames;
+    boolean hasAllowedFileNames;
+    HashSet<VirtualFileFilter> allowedFileNames;
 
     public ForEachFileOptions()
     {
@@ -73,14 +77,16 @@ public class ForEachFileOptions
 
         autoOmit = true;
         hasOmitedPaths = false;
-        omitedPaths = new HashSet<File>();
+        omitedPaths = new HashSet<VirtualFile>();
         hasOmitedFiles = false;
-        omitedFiles = new HashSet<File>();
+        omitedFiles = new HashSet<VirtualFile>();
         
         hasOmitedDirNames = false;
-        omitedDirNames = new HashSet<FileFilter>();
+        omitedDirNames = new HashSet<VirtualFileFilter>();
         hasOmitedFileNames = false;
-        omitedFileNames = new HashSet<FileFilter>();
+        omitedFileNames = new HashSet<VirtualFileFilter>();
+        hasAllowedFileNames = false;
+        allowedFileNames = new HashSet<VirtualFileFilter>();
     }
 
     public ForEachFileOptions(ForEachFileOptions val)
@@ -101,15 +107,18 @@ public class ForEachFileOptions
 
         this.autoOmit = val.autoOmit;
         this.hasOmitedPaths = val.hasOmitedPaths;
-        this.omitedPaths = new HashSet<File>(val.omitedPaths);
+        this.omitedPaths = new HashSet<VirtualFile>(val.omitedPaths);
         this.hasOmitedFiles = val.hasOmitedFiles;
-        this.omitedFiles = new HashSet<File>(val.omitedFiles);
+        this.omitedFiles = new HashSet<VirtualFile>(val.omitedFiles);
 
         this.hasOmitedDirNames = val.hasOmitedDirNames;
-        this.omitedDirNames = new HashSet<FileFilter>(val.omitedDirNames);
+        this.omitedDirNames = new HashSet<VirtualFileFilter>(val.omitedDirNames);
 
         this.hasOmitedFileNames = val.hasOmitedFileNames;
-        this.omitedFileNames = new HashSet<FileFilter>(val.omitedFileNames);
+        this.omitedFileNames = new HashSet<VirtualFileFilter>(val.omitedFileNames);
+        
+        this.hasAllowedFileNames = val.hasAllowedFileNames;
+        this.allowedFileNames = new HashSet<VirtualFileFilter>(val.allowedFileNames);
     }
 
     public boolean isAutoOmit()
@@ -263,40 +272,65 @@ public class ForEachFileOptions
 
     public void addOmitedPath(File path)
     {
-        omitedPaths.add(path.getAbsoluteFile());
+        addOmitedPath(new VirtualFile(path.getAbsoluteFile()));
+    }
+    public void addOmitedPath(VirtualFile path)
+    {
+        omitedPaths.add(path);
         hasOmitedPaths = true;
     }
     public void addOmitedPath(File[] paths)
     {
         for(File item : paths)
         {
-            omitedPaths.add(item.getAbsoluteFile());
+            addOmitedPath(item);
         }
-        hasOmitedPaths = hasOmitedPaths || (!omitedPaths.isEmpty());
+    }
+    public void addOmitedPath(VirtualFile[] paths)
+    {
+        for(VirtualFile item : paths)
+        {
+            addOmitedPath(item);
+        }
     }
 
     public void addOmitedDirName(String dirName)
     {
-        FileFilter omitedDirFilter = NameFileFilter.getStringInstance(dirName);
+        VirtualFileFilter omitedDirFilter = VirtualFile.buildFilter(NameFileFilter.getStringInstance(dirName));
         omitedDirNames.add(omitedDirFilter);
         hasOmitedDirNames = true;
     }
     public void addOmitedDirName(String dirName,boolean wildcard)
     {
-        FileFilter omitedDirFilter = wildcard?NameFileFilter.getWildCardInstance(dirName):NameFileFilter.getRegExInstance(dirName);
+        VirtualFileFilter omitedDirFilter = VirtualFile.buildFilter(wildcard?NameFileFilter.getWildCardInstance(dirName):NameFileFilter.getRegExInstance(dirName));
         omitedDirNames.add(omitedDirFilter);
         hasOmitedDirNames = true;
     }
     public void addOmitedFileName(String fileName)
     {
-        FileFilter omitedFileFilter = NameFileFilter.getStringInstance(fileName);
+        VirtualFileFilter omitedFileFilter = VirtualFile.buildFilter(NameFileFilter.getStringInstance(fileName));
         omitedFileNames.add(omitedFileFilter);
         hasOmitedFileNames = true;
     }
     public void addOmitedFileName(String fileName,boolean wildcard)
     {
-        FileFilter omitedFileFilter = wildcard?NameFileFilter.getWildCardInstance(fileName):NameFileFilter.getRegExInstance(fileName);
+        VirtualFileFilter omitedFileFilter = VirtualFile.buildFilter(wildcard?NameFileFilter.getWildCardInstance(fileName):NameFileFilter.getRegExInstance(fileName));
         omitedFileNames.add(omitedFileFilter);
         hasOmitedFileNames = true;
+    }
+    public void addAllowedFileName(FileFilter filter)
+    {
+        allowedFileNames.add(VirtualFile.buildFilter(filter));
+        hasAllowedFileNames = true;
+    }
+    public void addAllowedFileName(String fileName)
+    {
+        FileFilter allowedFileFilter = NameFileFilter.getStringInstance(fileName);
+        addAllowedFileName(allowedFileFilter);
+    }
+    public void addAllowedFileName(String fileName,boolean wildcard)
+    {
+        FileFilter allowedFileFilter = wildcard?NameFileFilter.getWildCardInstance(fileName):NameFileFilter.getRegExInstance(fileName);
+        addAllowedFileName(allowedFileFilter);
     }
 }

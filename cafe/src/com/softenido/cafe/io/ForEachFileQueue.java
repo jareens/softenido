@@ -1,7 +1,7 @@
 /*
  *  ForEachFileQueue.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  */
 package com.softenido.cafe.io;
 
-import com.softenido.cafe.io.packed.PackedFile;
+import com.softenido.cafe.io.virtual.VirtualFile;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -133,7 +133,7 @@ public class ForEachFileQueue extends ForEachFile
     }
 
     @Override
-    protected void doForEach(PackedFile fe)
+    protected void doForEach(VirtualFile fe)
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }

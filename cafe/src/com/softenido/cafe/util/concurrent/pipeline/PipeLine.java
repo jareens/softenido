@@ -50,6 +50,15 @@ public class PipeLine<M,R> implements Pipe<M,R>, Filter<M,R>, Runnable
         this.links[0] = first;
         this.needFlush= false;
     }
+    public PipeLine(int threads)
+    {
+        Pipe<M,R> pipe = new PipeActor<M,R>(threads,this);
+        this.first = pipe;
+        this.last  = pipe;
+        this.links = new Pipe[1];
+        this.links[0] = first;
+        this.needFlush= false;
+    }
     public PipeLine(Filter<M,R> filter)
     {
         Pipe<M,R> pipe = new PipeActor<M,R>(filter);

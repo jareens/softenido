@@ -1,7 +1,7 @@
 /*
- *  E.java
+ *  VirtualFileFilter.java
  *
- *  Copyright (C) 2007  Francisco Gómez Carrasco
+ *  Copyright (C) 2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,30 +19,13 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.math;
-
-import java.math.BigDecimal;
-import java.math.MathContext;
+package com.softenido.cafe.io.virtual;
 
 /**
  *
  * @author franci
  */
-public class E
+public interface VirtualFileFilter
 {
-    public static BigDecimal buildE(int setPrecision)
-    {
-        BigDecimal f = BigDecimal.ONE;
-        BigDecimal e = new BigDecimal(2);
-        MathContext mc = new MathContext(setPrecision);
-        for(int i=2;i<setPrecision+3;i++)
-        {
-            f = f.multiply(new BigDecimal(i));
-            BigDecimal e2 = e.add(BigDecimal.ONE.divide(f,mc),mc);
-            if(e2.equals(e))
-                break;
-            e = e2;
-        }
-        return e;
-    }
+    boolean accept(VirtualFile pathname);
 }

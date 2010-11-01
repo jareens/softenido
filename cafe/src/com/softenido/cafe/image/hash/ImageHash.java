@@ -1,7 +1,7 @@
 /*
- *  FileHashBySizeContent.java
+ *  ImageHash.java
  *
- *  Copyright (C) 2007-2010  Francisco Gómez Carrasco
+ *  Copyright (C) 2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,33 +19,28 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.io;
+package com.softenido.cafe.image.hash;
 
-import com.softenido.cafe.io.packed.PackedFile;
+import com.softenido.cafe.io.Hash;
+import java.util.Arrays;
 
 /**
  *
  * @author franci
  */
-public class FileHashByName implements FileHash
+public class ImageHash implements Hash
 {
+    private final int w;
+    private final int h;
+    private final byte[] hash;
+    private final int hc;
 
-    private final PackedFile file;
-    private final String name;
-    private final int size;
-    private final boolean ignoreCase;
-
-    public FileHashByName(PackedFile file,boolean ignoreCase)
+    public ImageHash(int w, int h, int hc, byte[] hash)
     {
-        this.file = file;
-        this.name = file.getName();
-        this.size = this.name.length();
-        this.ignoreCase = ignoreCase;
-    }
-
-    public long getSize()
-    {
-        return size;
+        this.w    = w;
+        this.h    = h;
+        this.hc   = hc;
+        this.hash = hash;
     }
 
     @Override
@@ -59,33 +54,24 @@ public class FileHashByName implements FileHash
         {
             return false;
         }
-        final FileHashByName other = (FileHashByName) obj;
-        if (file.equals(other.file))
-        {
-            return true;
-        }
-        if(this.size != other.size)
+        final ImageHash other = (ImageHash) obj;
+        if (this.w != other.w)
         {
             return false;
         }
-        return ignoreCase? name.equalsIgnoreCase(other.name) : name.equals(other.name);
+        if (this.h != other.h)
+        {
+            return false;
+        }
+        if (!Arrays.equals(this.hash, other.hash))
+        {
+            return false;
+        }
+        return true;
     }
-
     @Override
     public int hashCode()
     {
-        return size;
+        return hc;
     }
-
-    public PackedFile getFile()
-    {
-        return file;
-    }
-
-    @Override
-    public String toString()
-    {
-        return file.toString();
-    }
-
 }

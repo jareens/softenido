@@ -21,18 +21,20 @@
  */
 package com.softenido.cafe.io;
 
-import com.softenido.cafe.io.packed.PackedFile;
+import com.softenido.cafe.io.virtual.VirtualFile;
+import com.softenido.cafe.io.virtual.VirtualFileFilter;
+import com.softenido.cafe.io.virtual.VirtualFiles;
 import com.softenido.cafe.util.OSName;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 
@@ -66,9 +68,9 @@ public abstract class ForEachFile implements Runnable
 {
 
     private static int bufSize = 64 * 1024;
-    private final File[] base;
+    private final VirtualFile[] base;
     private final ForEachFileOptions options;
-    private final FileFilter filter;
+    private final VirtualFileFilter filter;
     private final HashSet<File> autoOmitPaths = new HashSet<File>();
     private final CoveredPath coveredPath;
     static final Logger logger = Logger.getLogger(ForEachFile.class.getName());
@@ -89,16 +91,11 @@ public abstract class ForEachFile implements Runnable
         ForEachFile.bufSize = bufSize;
     }
 
-//    ForEachFile(File file) throws IOException
-//    {
-//        this(file, null, null);
-//    }
-//
-//    ForEachFile(File files, FileFilter filter, ForEachFileOptions opt) throws IOException
-//    {
-//        this(new File[]{files},filter,opt);
-//    }
     public ForEachFile(File[] files, FileFilter filter, ForEachFileOptions opt) throws IOException
+    {
+        this(VirtualFile.asPacketFile(files),VirtualFile.buildFilter(filter), opt);
+    }
+    public ForEachFile(VirtualFile[] files, VirtualFileFilter filter, ForEachFileOptions opt) throws IOException
     {
         options = opt == null ? new ForEachFileOptions() : new ForEachFileOptions(opt);
         this.base = files;
@@ -139,15 +136,15 @@ public abstract class ForEachFile implements Runnable
 
     public void run()
     {
-        for (File item : base)
+        for (VirtualFile item : base)
         {
-            File file;
+            VirtualFile file;
             try
             {
-                file = Files.getNoDotFile(item);
+                file = VirtualFiles.getNoDotFile(item);
                 if (file != null)
                 {
-                    run(file, 0);
+                    visit(file, null, 0);
                 }
             }
             catch (IOException ex)
@@ -157,7 +154,7 @@ public abstract class ForEachFile implements Runnable
         }
     }
 
-    private void run(File file, final int level)
+    private void visit(VirtualFile file, InputStream in, final int level)
     {
         if (level > options.recursive)
         {
@@ -166,41 +163,25 @@ public abstract class ForEachFile implements Runnable
         logger.log(Level.FINEST, "file={0}", file);
         try
         {
-            if(!acceptFile(file, level))
+            if(!canVisit(file, level))
             {
                 return;
             }
-            if( acceptTarget(file) )
+            if( canDo(file) )
             {
-                doForEach(file, null);
+                doForEach(file);
             }
-            if(file.canRead())
+            if (!file.canRead())
             {
-                if(file.isDirectory())
-                {
-                    File[] childs = file.listFiles();
-                    if (childs == null)
-                    {
-                        logger.log(Level.WARNING, "error in {0}", file);
-                        return;
-                    }
-                    for (File child : childs)
-                    {
-                        run(new CachedFile(child.toString()), level + 1);
-                    }
-                }
-                else if(inspectFile(file.getName()))
-                {
-                    ArchiveInputStream child = asf.createArchiveInputStream(new BufferedInputStream(new FileInputStream(file)));
-                    try
-                    {
-                        run(new PackedFile(file), child, level + 1);
-                    }
-                    finally
-                    {
-                        child.close();
-                    }
-                }
+                return;
+            }
+            if(!file.isComplex() && file.isDirectory())
+            {
+                followDirectory(file.getBaseFile(),level);
+            }
+            else if(canFollowArchive(file.getName()))
+            {
+                followArchive(file, in, level + 1);
             }
         }
         catch (Exception ex)
@@ -209,7 +190,44 @@ public abstract class ForEachFile implements Runnable
         }
     }
 
-    private boolean acceptTarget(final File file)
+    private void followDirectory(File file, int level)
+    {
+        File[] childs = file.listFiles();
+        if (childs == null)
+        {
+            logger.log(Level.WARNING, "error in {0}", file);
+            return;
+        }
+        for (File child : childs)
+        {
+            visit(new VirtualFile(child), null, level + 1);
+        }
+    }
+    private void followArchive(VirtualFile pf, InputStream in, int level) throws ArchiveException, IOException
+    {
+        if (in == null)
+        {
+            in = pf.getInputStream();
+        }
+
+        ArchiveInputStream zip = asf.createArchiveInputStream(new BufferedInputStream(in));
+        ArchiveEntry ent = null;
+        try
+        {
+            while ((ent = zip.getNextEntry()) != null)
+            {
+                logger.log(Level.FINEST, "file={0}", ent.getName());
+                VirtualFile child = new VirtualFile(pf, ent);
+                visit(child, zip, level+1);
+            }
+        }
+        catch (Exception ex)
+        {
+            doException(pf.getPath(), ex);
+        }
+    }
+
+    private boolean canDo(final VirtualFile file)
     {
         if(options.onlyPacked)
         {
@@ -228,54 +246,19 @@ public abstract class ForEachFile implements Runnable
                 return false;
         }
 
-        if(filter != null && !filter.accept(file))
+        if (filter != null && !filter.accept(file))
+        {
             return false;
-        if(isOmitedFile(file))
+        }
+        if (isOmitedFile(file))
+        {
             return false;
+        }
         return true;
     }
 
-    private void run(PackedFile pf, ArchiveInputStream zip, int level)
-    {
-        if (level > options.recursive)
-        {
-            return;
-        }
-        logger.log(Level.FINEST, "file={0}", pf);
-        ArchiveEntry ent = null;
-        try
-        {
-            while ((ent = zip.getNextEntry()) != null)
-            {
-                logger.log(Level.FINEST, "file={0}", ent.getName());
-                PackedFile child = new PackedFile(pf, ent);
-                if ((options.directory || !ent.isDirectory()) && (options.file || ent.isDirectory()) && (filter == null || filter.accept(new File(ent.getName()))) && acceptSize(ent.getSize()))
-                {
-                    doForEach(child);
-                }
-                if ((level < options.recursive) && (options.hidden || (level == 0)))
-                {
-                    if ((options.zip || options.jar || options.tar) && !ent.isDirectory())
-                    {
-                        String name = ent.getName().toLowerCase();
-                        if (inspectFile(name))
-                        {
-                            // SI NO SE USA BUFFERED INPUT STREAM, POS DA ERROR
-                            InputStream buf = new BufferedInputStream(zip);
-                            ArchiveInputStream ais = new ArchiveStreamFactory().createArchiveInputStream(buf);
-                            run(child, ais, level + 1);
-                        }
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            doException(pf.getPath(), ex);
-        }
-    }
 
-    boolean inspectFile(String name)
+    boolean canFollowArchive(String name)
     {
         name = name.toLowerCase();
         if (options.zip && name.endsWith(".zip"))
@@ -293,11 +276,11 @@ public abstract class ForEachFile implements Runnable
         return false;
     }
 
-    protected abstract void doForEach(PackedFile fe);
+    protected abstract void doForEach(VirtualFile fe);
 
     protected void doForEach(File file, String name)
     {
-        doForEach(new PackedFile(file));
+        doForEach(new VirtualFile(file));
     }
 
     private void doException(String msg, Exception ex)
@@ -305,10 +288,10 @@ public abstract class ForEachFile implements Runnable
         logger.log(Level.SEVERE, msg, ex);
     }
 
-    private boolean isOmitedPath(final File file, boolean verifyParents)
+    private boolean isOmitedPath(final VirtualFile file, boolean verifyParents)
     {
         final boolean omitImplicit = options.autoOmit && !autoOmitPaths.isEmpty();
-        if (omitImplicit && autoOmitPaths.contains(file))
+        if (omitImplicit && autoOmitPaths.contains(file.getBaseFile()))
         {
             return true;
         }
@@ -319,10 +302,10 @@ public abstract class ForEachFile implements Runnable
         }
         if ((omitImplicit || omitExplicit) && verifyParents)
         {
-            File parent = file;
+            File parent = file.getBaseFile();
             while ((parent = parent.getParentFile()) != null)
             {
-                if (isOmitedPath(parent, false))
+                if (isOmitedPath(new VirtualFile(parent), false))
                 {
                     return true;
                 }
@@ -331,11 +314,11 @@ public abstract class ForEachFile implements Runnable
         return false;
     }
 
-    private boolean isOmitedDirName(final File file)
+    private boolean isOmitedDirName(final VirtualFile file)
     {
         if (options.hasOmitedDirNames)
         {
-            for (FileFilter item : options.omitedDirNames)
+            for (VirtualFileFilter item : options.omitedDirNames)
             {
                 if (item.accept(file))
                 {
@@ -346,7 +329,7 @@ public abstract class ForEachFile implements Runnable
         return false;
     }
 
-    private boolean isOmitedFile(final File file)
+    private boolean isOmitedFile(final VirtualFile file)
     {
         if (options.hasOmitedFiles)
         {
@@ -355,10 +338,9 @@ public abstract class ForEachFile implements Runnable
                 return true;
             }
         }
-
         if (options.hasOmitedFileNames)
         {
-            for (FileFilter item : options.omitedFileNames)
+            for (VirtualFileFilter item : options.omitedFileNames)
             {
                 if (item.accept(file))
                 {
@@ -366,11 +348,23 @@ public abstract class ForEachFile implements Runnable
                 }
             }
         }
+        // when there are filter for allowed files at least one should be satisfied
+        if (options.hasAllowedFileNames)
+        {
+            for (VirtualFileFilter item : options.allowedFileNames)
+            {
+                if(item.accept(file))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         return false;
     }
-
-    private boolean acceptFile(File file, int level) throws IOException
+   
+    private boolean canVisit(VirtualFile file, int level) throws IOException
     {
         if (level != 0 && !options.hidden && file.isHidden())
         {
@@ -380,7 +374,7 @@ public abstract class ForEachFile implements Runnable
         {
             return false;
         }
-        boolean link = Files.isLink(file);
+        boolean link = file.isLink();
         if( (level>0) && link && !options.symlinks)
         {
             return false;
@@ -388,7 +382,7 @@ public abstract class ForEachFile implements Runnable
 
         if(file.isDirectory())
         {
-            if( link && Files.isCyclicLink(file))
+            if( link && Files.isCyclicLink(file.getBaseFile()))
             {
                 return false;
             }
@@ -405,8 +399,8 @@ public abstract class ForEachFile implements Runnable
                 // (file.isDirectory() && file.canRead() && ((level == 0) || (this.linkDir && !Files.isCyclicLink(file)) || !(Files.isLink(file))))
 
             //verify isn't omited in absolute form
-            final File absolute = file.getAbsoluteFile();
-            final File canonical = file.getCanonicalFile();
+            final VirtualFile absolute = file.getAbsoluteFile();
+            final VirtualFile canonical = file.getCanonicalFile();
 
             if (isOmitedPath(absolute, false))
             {
@@ -419,7 +413,7 @@ public abstract class ForEachFile implements Runnable
         }
         if (!coveredPath.add(file, level == 0, link))
         {
-            logger.log(Level.FINE, "already covered file={0} -> {1}", new File[]{file, file.getCanonicalFile()});
+            logger.log(Level.FINE, "already covered file={0} -> {1}", new VirtualFile[]{file, file.getCanonicalFile()});
             return false;
         }
         return true;

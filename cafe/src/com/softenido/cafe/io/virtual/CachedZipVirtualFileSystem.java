@@ -3,8 +3,9 @@
  * and open the template in the editor.
  */
 
-package com.softenido.cafe.io.packed;
+package com.softenido.cafe.io.virtual;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.compress.archivers.ArchiveEntry;
@@ -14,14 +15,16 @@ import org.apache.commons.compress.archivers.ArchiveException;
  *
  * @author franci
  */
-class CachedZipPackedFileSystem extends ZipPackedFileSystem
+class CachedZipVirtualFileSystem extends ZipVirtualFileSystem
 {
     private final long length;
+    private final boolean directory;
     
-    public CachedZipPackedFileSystem(String path,  ArchiveEntry entry)
+    public CachedZipVirtualFileSystem(String[] paths,String path, ArchiveEntry entry)
     {
-        super(path);
+        super(paths,path);
         this.length = entry.getSize();
+        this.directory = entry.isDirectory();
     }
 
     @Override
@@ -55,8 +58,14 @@ class CachedZipPackedFileSystem extends ZipPackedFileSystem
     }
 
     @Override
-    public InputStream getInputStream() throws IOException, ArchiveException
+    public boolean isDirectory()
     {
-        return super.getInputStream();
+        return directory;
+    }
+
+    @Override
+    public boolean isFile()
+    {
+        return !directory;
     }
 }

@@ -1,5 +1,5 @@
 /*
- *  FileHashBySizeContent.java
+ *  PackedFileHash.java
  *
  *  Copyright (C) 2007-2010  Francisco Gómez Carrasco
  *
@@ -21,7 +21,7 @@
  */
 package com.softenido.cafe.io;
 
-import com.softenido.cafe.io.packed.PackedFile;
+import com.softenido.cafe.io.virtual.VirtualFile;
 import com.softenido.cafe.security.ParallelMessageDigest;
 import com.softenido.cafe.util.FileDigest;
 import java.io.FileNotFoundException;
@@ -38,9 +38,8 @@ import org.apache.commons.compress.archivers.ArchiveException;
  *
  * @author franci
  */
-public class FileHashBySizeContent implements FileHash
+public class PackedFileHash
 {
-
     private static final String MD5 = "MD5";
     private static final String SHA1 = "SHA-1";
     private static final String[] DEF_ALG =
@@ -48,7 +47,7 @@ public class FileHashBySizeContent implements FileHash
         MD5, SHA1
     };
     private static int bufSize = 64 * 1024;
-    private final PackedFile file;
+    private final VirtualFile file;
     private final long size;
     private byte[] fastMD5 = null;
     private byte[] fastSHA1 = null;
@@ -60,10 +59,10 @@ public class FileHashBySizeContent implements FileHash
     private static boolean pow2 = true;
 
     /**
-     * Creates a new FileHashBySizeContent instance from a File object.
+     * Creates a new PackedFileHash instance from a File object.
      * @param file
      */
-    public FileHashBySizeContent(PackedFile file)
+    public PackedFileHash(VirtualFile file)
     {
         this.file = file;
         this.size = file.length();
@@ -80,7 +79,7 @@ public class FileHashBySizeContent implements FileHash
         {
             return false;
         }
-        final FileHashBySizeContent other = (FileHashBySizeContent) obj;
+        final PackedFileHash other = (PackedFileHash) obj;
         if (file.equals(other.file))
         {
             return true;
@@ -135,14 +134,14 @@ public class FileHashBySizeContent implements FileHash
 
         catch (ArchiveException ex)
         {
-            Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PackedFileHash.class.getName()).log(Level.SEVERE, null, ex);
         }        catch (FileNotFoundException ex)
         {
-            Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PackedFileHash.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }        catch (IOException ex)
         {
-            Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PackedFileHash.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         return true;
@@ -182,7 +181,7 @@ public class FileHashBySizeContent implements FileHash
         }
         catch (NoSuchAlgorithmException ex)
         {
-            Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PackedFileHash.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally
         {
@@ -199,7 +198,7 @@ public class FileHashBySizeContent implements FileHash
             }
             catch (IOException ex)
             {
-                Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PackedFileHash.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -239,7 +238,7 @@ public class FileHashBySizeContent implements FileHash
         }
         catch (NoSuchAlgorithmException ex)
         {
-            Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PackedFileHash.class.getName()).log(Level.SEVERE, null, ex);
         }
         finally
         {
@@ -256,7 +255,7 @@ public class FileHashBySizeContent implements FileHash
             }
             catch (IOException ex)
             {
-                Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PackedFileHash.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -266,7 +265,7 @@ public class FileHashBySizeContent implements FileHash
         return size;
     }
 
-    public PackedFile getFile()
+    public VirtualFile getFile()
     {
         return file;
     }
@@ -308,9 +307,9 @@ public class FileHashBySizeContent implements FileHash
     }
     private static final long[] SIZES = FileDigest.buildSizes();
 
-    private boolean equalsHash(FileHashBySizeContent other)
+    private boolean equalsHash(PackedFileHash other)
     {
-        PackedFile cause = null;
+        VirtualFile cause = null;
         try
         {
             final FileDigest digestA = this.getDigest();
@@ -371,19 +370,19 @@ public class FileHashBySizeContent implements FileHash
 
         catch (ArchiveException ex)
         {
-            Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.WARNING, cause == null ? null : cause.getPath(), ex);
+            Logger.getLogger(PackedFileHash.class.getName()).log(Level.WARNING, cause == null ? null : cause.getPath(), ex);
         }        catch (FileNotFoundException ex)
         {
-            Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.WARNING, cause == null ? null : cause.getPath(), ex);
+            Logger.getLogger(PackedFileHash.class.getName()).log(Level.WARNING, cause == null ? null : cause.getPath(), ex);
         }        catch (IOException ex)
         {
-            Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.SEVERE, cause == null ? null : cause.getPath(), ex);
+            Logger.getLogger(PackedFileHash.class.getName()).log(Level.SEVERE, cause == null ? null : cause.getPath(), ex);
         }        catch (CloneNotSupportedException ex)
         {
-            Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.SEVERE, cause == null ? null : cause.getPath(), ex);
+            Logger.getLogger(PackedFileHash.class.getName()).log(Level.SEVERE, cause == null ? null : cause.getPath(), ex);
         }        catch (NoSuchAlgorithmException ex)
         {
-            Logger.getLogger(FileHashBySizeContent.class.getName()).log(Level.SEVERE, cause == null ? null : cause.getPath(), ex);
+            Logger.getLogger(PackedFileHash.class.getName()).log(Level.SEVERE, cause == null ? null : cause.getPath(), ex);
         }
         exception = true;
         return false;

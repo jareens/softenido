@@ -74,7 +74,7 @@ public class ParallelMessageDigest extends MessageDigest implements Cloneable
     {
         for(MessageDigest item: md)
         {
-            item.update(input,offset,len);
+            item.update(input, offset, len);
         }
     }
 

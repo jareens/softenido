@@ -19,7 +19,7 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.imageio;
+package com.softenido.cafe.image;
 
 import java.awt.Dimension;
 

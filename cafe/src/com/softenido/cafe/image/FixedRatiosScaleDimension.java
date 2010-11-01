@@ -1,7 +1,7 @@
 /*
- *  FixScaleDimension.java
+ *  FixedRatiosScaleDimension.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.imageio;
+package com.softenido.cafe.image;
 
 import java.awt.Dimension;
 
@@ -27,16 +27,18 @@ import java.awt.Dimension;
  *
  * @author franci
  */
-public class FixScaleDimension implements ScaleDimension
+public class FixedRatiosScaleDimension implements ScaleDimension
 {
-    final int max;
-    final int min;
-    final double[] ratios = { 1.0, 0.9, 0.8, 0.75, 2.0/3.0, 0.6, 0.5, 0.4, 1.0/3.0, 0.25, 0.1 };
+    private final int max;
+    private final int min;
+    private static double[] RATIOS = { 1.0, 0.9, 0.8, 0.75, 2.0/3.0, 0.6, 0.5, 0.4, 1.0/3.0, 0.25, 0.2, 0.1, 0.05, 0.025, 0.0125, 0.01};
+    private final double[] ratios;
 
-    public FixScaleDimension(int max, int min)
+    public FixedRatiosScaleDimension(int max, int min)
     {
         this.max = max;
         this.min = min;
+        this.ratios = RATIOS;
     }  
     
     public Dimension convert(Dimension size)

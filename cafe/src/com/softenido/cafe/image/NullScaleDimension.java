@@ -1,7 +1,7 @@
 /*
- *  ScaleDimension.java
+ *  NullScaleDimension.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.imageio;
+package com.softenido.cafe.image;
 
 import java.awt.Dimension;
 
@@ -27,7 +27,10 @@ import java.awt.Dimension;
  *
  * @author franci
  */
-public interface ScaleDimension
+public class NullScaleDimension implements ScaleDimension
 {
-    Dimension convert(Dimension size);
+    public Dimension convert(Dimension size)
+    {
+        return size;
+    }
 }

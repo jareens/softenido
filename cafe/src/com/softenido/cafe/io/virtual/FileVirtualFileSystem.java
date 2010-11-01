@@ -1,5 +1,5 @@
 /*
- *  FilePackedFileSystem.java
+ *  FileVirtualFileSystem.java
  *
  *  Copyright (C) 2010  Francisco Gómez Carrasco
  *
@@ -19,8 +19,9 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.io.packed;
+package com.softenido.cafe.io.virtual;
 
+import com.softenido.cafe.io.Files;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -30,15 +31,15 @@ import java.io.InputStream;
  *
  * @author franci
  */
-class FilePackedFileSystem implements PackedFileSystem
+class FileVirtualFileSystem implements VirtualFileSystem
 {
     final File file;
 
-    public FilePackedFileSystem(File file)
+    public FileVirtualFileSystem(File file)
     {
         this.file = file;
     }
-    public FilePackedFileSystem(String fileName)
+    public FileVirtualFileSystem(String fileName)
     {
         this.file = new File(fileName);
     }
@@ -66,7 +67,7 @@ class FilePackedFileSystem implements PackedFileSystem
     {
         return file.getPath();
     }
-    public File getFile()
+    public File getBaseFile()
     {
         return file;
     }
@@ -94,5 +95,55 @@ class FilePackedFileSystem implements PackedFileSystem
     public String getName()
     {
         return file.getName();
+    }
+
+    public FileVirtualFileSystem getCanonicalFile() throws IOException
+    {
+        File cf = file.getCanonicalFile();
+        if(!cf.equals(file))
+        {
+            return new FileVirtualFileSystem(cf);
+        }
+        return this;
+    }
+
+    public VirtualFileSystem getAbsoluteFile() throws IOException
+    {
+        File af = file.getAbsoluteFile();
+        if(!af.equals(file))
+        {
+            return new FileVirtualFileSystem(af);
+        }
+        return this;
+    }
+
+    public boolean isHidden()
+    {
+        return file.isHidden();
+    }
+
+    public boolean isFile()
+    {
+        return file.isFile();
+    }
+
+    public boolean isDirectory()
+    {
+        return file.isDirectory();
+    }
+
+    public boolean isLink() throws IOException
+    {
+        return Files.isLink(file);
+    }
+
+    public boolean isLink(boolean path) throws IOException
+    {
+        return Files.isLink(file, path);
+    }
+
+    public String[] splitPath()
+    {
+        return new String[]{file.toString()};
     }
 }

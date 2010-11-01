@@ -55,4 +55,9 @@ public class ActorSync<M,R> implements ActorBase<M,R>
     {
         task.run();
     }
+
+    public boolean prepare()
+    {
+        return true;
+    }
 }
