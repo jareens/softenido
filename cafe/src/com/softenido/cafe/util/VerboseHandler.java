@@ -23,12 +23,11 @@ package com.softenido.cafe.util;
 
 import java.io.OutputStream;
 import java.text.MessageFormat;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.StreamHandler;
@@ -69,12 +68,24 @@ public class VerboseHandler extends StreamHandler
             public String format(LogRecord record)
             {
                 String message = record.getMessage();
+                StringBuilder msg = new StringBuilder(prefix);
+                boolean space=false;
+
                 if(message!=null)
-                  return prefix + MessageFormat.format(record.getMessage(),record.getParameters())+"\n";
-                else if(record.getThrown() != null)
-                    return prefix + record.getThrown().getMessage()+"\n";
-                else
-                    return prefix + "\n";
+                {
+                    space=true;
+                    msg.append(MessageFormat.format(record.getMessage(),record.getParameters()));
+                }
+                
+                if(record.getThrown() != null)
+                {
+                    msg.append(space?" (":"(");
+                    msg.append(record.getThrown().getMessage());
+                    msg.append(")");
+                }
+
+                msg.append("\n");
+                return msg.toString();
             }
         });    
     }
@@ -112,8 +123,10 @@ public class VerboseHandler extends StreamHandler
     {
         final Logger root = Logger.getLogger("");
         final Level level = verboseLevel(verbosity);
+
         vh.setLevel(level);
-        root.setLevel(level);
+        root.setLevel(getLevelProperty(".level", level));
+        
         root.addHandler(vh);
         Handler[] rh = root.getHandlers();
         for(int i = 0; i < rh.length;i++)
@@ -125,4 +138,20 @@ public class VerboseHandler extends StreamHandler
             }
         }
      }
+    static Level getLevelProperty(String name, Level defaultValue)
+    {
+	String val = LogManager.getLogManager().getProperty(name);
+	if (val == null)
+        {
+	    return defaultValue;
+	}
+	try
+        {
+	    return Level.parse(val.trim());
+	} 
+        catch (Exception ex)
+        {
+	    return defaultValue;
+	}
+    }
 }

@@ -37,6 +37,7 @@ public class ForEachFileOptions
     boolean hidden;
     boolean directory;
     boolean file;
+    boolean fifo;
     boolean zip;
     boolean jar;
     boolean tar;
@@ -65,6 +66,7 @@ public class ForEachFileOptions
         hidden = false;
         directory = false;
         file = true;
+        fifo = false;
         zip = false;
         jar = false;
         tar = false;
@@ -95,6 +97,7 @@ public class ForEachFileOptions
         this.hidden = val.hidden;
         this.directory = val.directory;
         this.file = val.file;
+        this.fifo = val.fifo;
         this.zip = val.zip;
         this.jar = val.jar;
         this.tar = val.tar;
@@ -149,6 +152,16 @@ public class ForEachFileOptions
     public void setFile(boolean file)
     {
         this.file = file;
+    }
+
+    public boolean isFifo()
+    {
+        return fifo;
+    }
+
+    public void setFifo(boolean fifo)
+    {
+        this.fifo = fifo;
     }
 
     public FileFilter getFilter()

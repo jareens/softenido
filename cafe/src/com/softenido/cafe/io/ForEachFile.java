@@ -24,7 +24,7 @@ package com.softenido.cafe.io;
 import com.softenido.cafe.io.virtual.VirtualFile;
 import com.softenido.cafe.io.virtual.VirtualFileFilter;
 import com.softenido.cafe.io.virtual.VirtualFiles;
-import com.softenido.cafe.util.OSName;
+import com.softenido.core.util.OSName;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;
@@ -93,7 +93,7 @@ public abstract class ForEachFile implements Runnable
 
     public ForEachFile(File[] files, FileFilter filter, ForEachFileOptions opt) throws IOException
     {
-        this(VirtualFile.asPacketFile(files),VirtualFile.buildFilter(filter), opt);
+        this(VirtualFile.asVirtualFile(files),VirtualFile.buildFilter(filter), opt);
     }
     public ForEachFile(VirtualFile[] files, VirtualFileFilter filter, ForEachFileOptions opt) throws IOException
     {
@@ -243,6 +243,13 @@ public abstract class ForEachFile implements Runnable
         else if(file.isDirectory())
         {
             if(!options.directory)
+                return false;
+        }
+        else
+        {
+            if(!options.fifo)
+                return false;
+            if(!acceptSize(0))
                 return false;
         }
 

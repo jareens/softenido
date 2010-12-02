@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import org.apache.commons.compress.archivers.ArchiveException;
+import org.apache.commons.compress.archivers.ArchiveEntry;
 
 /**
  *
@@ -35,31 +36,88 @@ import org.apache.commons.compress.archivers.ArchiveException;
  */
 class ZipVirtualFileSystem implements VirtualFileSystem
 {
-    private static PackedPool pool = new PackedPool();
-    private final String[] items;
-    private final String path;
-    private final String name;
 
-    public ZipVirtualFileSystem(String[] items,String path)
+    private static VirtualFilePool pool = new VirtualFilePool();
+    private final String[] items;
+    private final String name;
+    private String path;
+    private final long length;
+    private final boolean directory;
+
+    public ZipVirtualFileSystem(String[] items, String path, ArchiveEntry entry)
     {
         this.items = items;
+        this.name = items[items.length - 1];
         this.path = path;
-        this.name = items[items.length-1];
+        if (entry != null)
+        {
+            this.length = entry.getSize();
+            this.directory = entry.isDirectory();
+        }
+        else
+        {
+            this.length = 0;
+            this.directory = false;
+        }
+    }
+    public ZipVirtualFileSystem(String[] items,String path)
+    {
+        this(items,path,null);
+    }
+
+    public ZipVirtualFileSystem(String[] items, ArchiveEntry entry)
+    {
+        this(items, null, entry);
+    }
+
+    public ZipVirtualFileSystem(String[] items)
+    {
+        this(items, (String) null);
     }
 
     public long length()
     {
-        return 0;//getZipEntry().getSize();
+        return length;
+    }
+
+    @Override
+    public boolean canRead()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean canWrite()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean delete()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean exists()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isDirectory()
+    {
+        return directory;
     }
 
     public String getCanonicalPath() throws IOException
     {
-        return path;//zFile.getCanonicalPath()+"!"+eName;
+        return getPath();//zFile.getCanonicalPath()+"!"+eName;
     }
 
     public String getAbsolutePath() throws IOException
     {
-        return path;//zFile.getCanonicalPath()+"!"+eName;
+        return getPath();//zFile.getCanonicalPath()+"!"+eName;
     }
 
     public InputStream getInputStream() throws IOException, FileNotFoundException, ArchiveException
@@ -69,8 +127,20 @@ class ZipVirtualFileSystem implements VirtualFileSystem
 
     public String getPath()
     {
+        if (path == null)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.append(items[0]);
+            for (int i = 1; i < items.length; i++)
+            {
+                sb.append(VirtualFileSystem.pathSeparator);
+                sb.append(items[i]);
+            }
+            path = sb.toString();
+        }
         return path;
     }
+
     public String[] splitPath()
     {
         return items;
@@ -81,30 +151,10 @@ class ZipVirtualFileSystem implements VirtualFileSystem
         return new File(items[0]);
     }
 
-    public boolean exists()
-    {
-        return true;//aki
-    }
-
-    public boolean canRead()
-    {
-        return true;//aki
-    }
-
-    public boolean canWrite()
-    {
-        return false;
-    }
-
-    public boolean delete()
-    {
-        return false;
-    }
-
     @Override
     public String toString()
     {
-        return path;
+        return getPath();
     }
 
     public String getName()
@@ -115,15 +165,15 @@ class ZipVirtualFileSystem implements VirtualFileSystem
     public VirtualFileSystem getCanonicalFile() throws IOException
     {
         String cf = new File(items[0]).getCanonicalPath();
-        if(!cf.equals(items[0]))
+        if (!cf.equals(items[0]))
         {
             String[] paths = new String[items.length];
             paths[0] = cf;
-            for(int i=1;i<paths.length;i++)
+            for (int i = 1; i < paths.length; i++)
             {
-                    paths[i] = items[i];
+                paths[i] = items[i];
             }
-            return new ZipVirtualFileSystem(paths,path);
+            return new ZipVirtualFileSystem(paths);
         }
         return this;
     }
@@ -131,15 +181,15 @@ class ZipVirtualFileSystem implements VirtualFileSystem
     public VirtualFileSystem getAbsoluteFile() throws IOException
     {
         String cf = new File(items[0]).getAbsolutePath();
-        if(!cf.equals(items[0]))
+        if (!cf.equals(items[0]))
         {
             String[] paths = new String[items.length];
             paths[0] = cf;
-            for(int i=1;i<paths.length;i++)
+            for (int i = 1; i < paths.length; i++)
             {
-                    paths[i] = items[i];
+                paths[i] = items[i];
             }
-            return new ZipVirtualFileSystem(paths,path);
+            return new ZipVirtualFileSystem(paths);
         }
         return this;
     }
@@ -149,14 +199,10 @@ class ZipVirtualFileSystem implements VirtualFileSystem
         return false;
     }
 
+    @Override
     public boolean isFile()
     {
-        return true;
-    }
-
-    public boolean isDirectory()
-    {
-        return false;
+        return (!directory);
     }
 
     public boolean isLink()
@@ -167,5 +213,69 @@ class ZipVirtualFileSystem implements VirtualFileSystem
     public boolean isLink(boolean path) throws IOException
     {
         return Files.isLink(new File(items[0]), path);
+    }
+
+    public int compareTo(VirtualFileSystem other)
+    {
+        String[] otherItems = other.splitPath();
+        int num = Math.min(items.length, otherItems.length);
+        for (int i = 0; i < num; i++)
+        {
+            int cmp = items[i].compareTo(otherItems[i]);
+            if (cmp != 0)
+            {
+                return cmp;
+            }
+        }
+        return (items.length < otherItems.length ? -1 : (items.length == otherItems.length ? 0 : 1));
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final ZipVirtualFileSystem other = (ZipVirtualFileSystem) obj;
+        if (!Arrays.deepEquals(this.items, other.items))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Arrays.deepHashCode(this.items);
+    }
+
+    public String getLastPath()
+    {
+        return items[items.length - 1];
+    }
+
+    public boolean isComplex()
+    {
+        return true;
+    }
+
+    public VirtualFileSystem getParentFile()
+    {
+        String[] parent = Arrays.copyOf(items, items.length-1);
+        if(parent.length>1)
+        {
+            return new ZipVirtualFileSystem(parent);
+        }
+        if(parent.length==1)
+        {
+            return new ZipVirtualFileSystem(parent);
+        }
+        return null;
     }
 }

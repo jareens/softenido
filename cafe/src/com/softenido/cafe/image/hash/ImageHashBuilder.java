@@ -24,8 +24,9 @@ package com.softenido.cafe.image.hash;
 import com.softenido.cafe.image.ScaleDimension;
 import com.softenido.cafe.imageio.ScaleImage;
 import com.softenido.cafe.image.SimpleScaleDimension;
+import com.softenido.cafe.io.Hash;
 import com.softenido.cafe.io.virtual.VirtualFile;
-import com.softenido.cafe.io.virtual.PackedPool;
+import com.softenido.cafe.io.virtual.VirtualFilePool;
 import com.softenido.cafe.security.ParallelMessageDigest;
 import com.softenido.cafe.util.ArrayUtils;
 import java.awt.image.BufferedImage;
@@ -39,6 +40,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import org.apache.commons.compress.archivers.ArchiveException;
 
 /**
@@ -54,23 +58,23 @@ public class ImageHashBuilder
         MD5, SHA1
     };
     private static final AtomicInteger count = new AtomicInteger();
-
-    private static final PackedPool pool = new PackedPool();
+    private static final VirtualFilePool pool = new VirtualFilePool();
 
     private final ScaleImage scale;
+    private final float colorThreshold;
+    private final float countThresold;
+    private final boolean gray;
  
-    public ImageHashBuilder(boolean gray, int size)
+    public ImageHashBuilder(boolean gray, int size, float colorThreshold, float countThreshold)
     {
-        ScaleDimension sd = (size==0)? null :new SimpleScaleDimension(size);
-        this.scale = new ScaleImage(sd,gray);
-    }
-
-    public ImageHashBuilder(boolean grey)
-    {
-        this(grey, 0);
+        ScaleDimension sd = (size == 0) ? null : new SimpleScaleDimension(size);
+        this.scale = new ScaleImage(sd, gray);
+        this.colorThreshold = colorThreshold;
+        this.countThresold = countThreshold;
+        this.gray = gray;
     }
     
-    public ImageHash buildHash(VirtualFile pf) throws FileNotFoundException, IOException, ArchiveException
+    public Hash buildHash(VirtualFile pf) throws FileNotFoundException, IOException, ArchiveException
     {
         if(pf.length()==0)
         {
@@ -96,20 +100,43 @@ public class ImageHashBuilder
             in.close();
         }
     }
-    public ImageHash buildHash(BufferedImage image)
+    public Hash buildHash(BufferedImage image)
     {
         count.incrementAndGet();
         image = scale.filter(image);
+
         int w = image.getWidth();
         int h = image.getHeight();
 
+//        JFrame frame = new JFrame();
+//        frame.setTitle("["+w+"x"+h+"]"+" ");
+//        frame.add(new JLabel(new ImageIcon(image)));
+//        frame.setVisible(true);
+//        frame.pack();
+
         int[] pixels = null;
-        //pixels = image.getData().getPixels(0, 0, w, h, pixels);
         pixels = image.getRGB(0, 0, w, h, pixels, 0, w);
-//        System.out.println(Arrays.toString(pixels));
-//        System.out.println(Arrays.toString(ArrayUtils.getByteArray(pixels)));
+        if(colorThreshold>0 && gray)
+        {
+            byte[] hash = new byte[pixels.length];
+            for(int i=0;i<hash.length;i++)
+            {
+                hash[i] = (byte) (pixels[i] & 0xff);
+            }
+            int hc = (w*h) + (w-h);
+//            System.out.println(Arrays.toString(hash));
+            return new StickyImageHash(w, h, hc, hash, colorThreshold, countThresold);
+        }
+        if(colorThreshold > 0)
+        {
+            byte[]hash = ArrayUtils.getByteArray(pixels);
+            int hc = (w*h) + (w-h);
+            System.out.println(Arrays.toString(hash));
+            return new StickyImageHash(w, h, hc, hash, colorThreshold, countThresold);
+        }
         byte[]hash = buildDigest(pixels);
         int hc = (w*h) + (w-h) + Arrays.hashCode(hash);
+        System.out.println(Arrays.toString(hash));
         return new ImageHash(w, h, hc, hash);
     }
     protected static byte[] buildDigest(int[] pixels)

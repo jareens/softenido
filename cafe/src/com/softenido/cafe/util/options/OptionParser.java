@@ -51,6 +51,7 @@ public class OptionParser
     private static final String ONE_HYPHEN = "-";
     private static final String TWO_HYPHEN = "--";
     private boolean ignoreShort = false;
+    private boolean ignoreUnknownShort = false;
     private boolean oneHyphen = true;
     private boolean twoHyphen = true;
     private boolean posixly = false;
@@ -159,7 +160,11 @@ public class OptionParser
             {
                 return (size - 1);
             }
-            throw new InvalidOptionException("Invalid option -- " + args[index].charAt(i));
+            if(ignoreUnknownShort)
+            {
+                return 0;
+            }
+            throw new InvalidOptionException("Invalid option -"+args[index].charAt(i));
         }
         return 1;
     }
@@ -172,6 +177,16 @@ public class OptionParser
     public void setIgnoreShort(boolean ignoreShort)
     {
         this.ignoreShort = ignoreShort;
+    }
+
+    public boolean isIgnoreUnknownShort()
+    {
+        return ignoreUnknownShort;
+    }
+
+    public void setIgnoreUnknownShort(boolean val)
+    {
+        this.ignoreUnknownShort = val;
     }
 
     private Option[] sort(Option[] list)

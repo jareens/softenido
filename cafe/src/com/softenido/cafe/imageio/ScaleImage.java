@@ -184,7 +184,7 @@ public class ScaleImage
     {
         BufferedImage scaledImage = new BufferedImage(w, h, gray?BufferedImage.TYPE_BYTE_GRAY:BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D = scaledImage.createGraphics();
-        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         graphics2D.drawImage(img, 0, 0, w, h, null);
         return scaledImage;
     }

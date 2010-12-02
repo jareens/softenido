@@ -35,6 +35,7 @@ public class LauncherOptions
     private boolean version= false;
     private String javaPath = null;
     private String homePath = null;
+    private String[] jvmOptions = new String[0];
 
     public boolean isAuto()
     {
@@ -115,5 +116,14 @@ public class LauncherOptions
     {
         this.version = version;
     }
-    
+
+    public String[] getJvmOptions()
+    {
+        return jvmOptions;
+    }
+
+    public void setJvmOptions(String[] jvmOptions)
+    {
+        this.jvmOptions = jvmOptions;
+    }
 }

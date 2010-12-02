@@ -146,4 +146,52 @@ class FileVirtualFileSystem implements VirtualFileSystem
     {
         return new String[]{file.toString()};
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final FileVirtualFileSystem other = (FileVirtualFileSystem) obj;
+        if (this.file != other.file && (this.file == null || !this.file.equals(other.file)))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return (this.file != null ? this.file.hashCode() : 0);
+    }
+
+    @Override
+    public String toString()
+    {
+        return file.toString();
+    }
+
+    public String getLastPath()
+    {
+        return file.getPath();
+    }
+
+    public boolean isComplex()
+    {
+        return false;
+    }
+
+    public FileVirtualFileSystem getParentFile()
+    {
+        File parent = file.getParentFile();
+        return (parent != null) ? new FileVirtualFileSystem(parent) : null;
+    }
+   
 }

@@ -21,7 +21,8 @@
  */
 package com.softenido.cafe.util.launcher;
 
-import com.softenido.cafe.util.OSName;
+import com.softenido.cafe.util.options.ArrayStringOption;
+import com.softenido.core.util.OSName;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
 import com.softenido.cafe.util.options.OptionParser;
@@ -68,8 +69,10 @@ public class LauncherParser
         StringOption installHome  = parser.add(new StringOption("install-home"));
         BooleanOption installPosix= parser.add(new BooleanOption("install-posix"));
         BooleanOption installVersion= parser.add(new BooleanOption("install-version"));
+        ArrayStringOption jvmOption= parser.add(new ArrayStringOption('J',"jvm-option"));
 
-        parser.setIgnoreShort(true);// no short options parsed in this parser
+        parser.setIgnoreShort(false);
+        parser.setIgnoreUnknownShort(true);
         args = parser.parse(args);
 
         options.setAuto(installAuto.isUsed());
@@ -77,6 +80,7 @@ public class LauncherParser
         options.setHome(installHome.isUsed());
         options.setPosix(installPosix.isUsed());
         options.setVersion(installVersion.isUsed());
+        options.setJvmOptions(jvmOption.getValues());
         
         if( !options.isAuto() && !options.isJava() && !options.isHome() && (options.isPosix() ||options.isVersion()) )
         {

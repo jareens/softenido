@@ -33,62 +33,40 @@ import org.apache.commons.compress.archivers.ArchiveException;
  *
  * @author franci
  */
-public class VirtualFile implements Comparable<VirtualFile>, Cloneable
+public class VirtualFile implements /*Comparable<VirtualFile>,*/ Cloneable
 {
-    public static final String pathSeparator   = "!";
-    public static final char pathSeparatorChar = '!';
-    private final String path;
-    private final String items[];
     private final VirtualFileSystem fs;
-    private final boolean complex;
 
     public VirtualFile(File file)
     {
-        this.path = file.toString();
-        this.items= new String[]{this.path};
         this.fs  = new FileVirtualFileSystem(file);
-        this.complex = false;
     }
     public VirtualFile(String pathname)
     {
-        this.path = pathname;
-        this.items = path.split(VirtualFile.pathSeparator);
-        this.fs   = pathname.contains(pathSeparator)?new ZipVirtualFileSystem(this.items,pathname):new FileVirtualFileSystem(pathname);
-        this.complex=(this.items.length>1);
+        String[] items = pathname.split(VirtualFileSystem.pathSeparator);
+        this.fs   = pathname.contains(VirtualFileSystem.pathSeparator)?new ZipVirtualFileSystem(items,pathname):new FileVirtualFileSystem(pathname);
     }
     public VirtualFile(VirtualFile parent, String child)
     {
-        this.path = parent.path+VirtualFile.pathSeparator+child;
-        this.items = Arrays.copyOf(parent.items, parent.items.length+1);
-        this.items[parent.items.length]=child;
-        this.fs = new ZipVirtualFileSystem(this.items,this.path);
-        this.complex=true;
+        String[] parentItems = parent.splitPath();
+        String[] items = Arrays.copyOf(parentItems, parentItems.length+1);
+        items[parentItems.length]=child;
+        this.fs = new ZipVirtualFileSystem(items);
     }
     public VirtualFile(VirtualFile parent, ArchiveEntry child)
     {
-        this.path = parent.path+VirtualFile.pathSeparator+child.getName();
-        this.items = Arrays.copyOf(parent.items, parent.items.length+1);
-        this.items[parent.items.length]=child.toString();
-        this.fs = new CachedZipVirtualFileSystem(this.items,this.path,child);
-        this.complex=true;
+        String[] parentItems = parent.splitPath();
+        String[] items = Arrays.copyOf(parentItems, parentItems.length+1);
+        items[parentItems.length]=child.toString();
+        this.fs = new ZipVirtualFileSystem(items,child);
     }
-    VirtualFile(String[] items, VirtualFileSystem fs, boolean complex)
+    VirtualFile(VirtualFileSystem fs)
     {
-        this.items = items;
-        StringBuilder pathBuilder=new StringBuilder();
-        pathBuilder.append(items[0]);
-        for(int i=1;i<items.length;i++)
-        {
-            pathBuilder.append(VirtualFile.pathSeparator);
-            pathBuilder.append(items[i]);
-        }
-        this.path = pathBuilder.toString();
-        this.complex = complex;
         this.fs = fs;
     }
     public String[] splitPath()
     {
-        return items;
+        return fs.splitPath();
     }
     public long length()
     {
@@ -109,9 +87,9 @@ public class VirtualFile implements Comparable<VirtualFile>, Cloneable
     public VirtualFile getCanonicalFile() throws IOException
     {
         VirtualFileSystem cf = fs.getCanonicalFile();
-        if(cf!=cf)
+        if(fs!=cf)
         {
-            return new VirtualFile(cf.splitPath(),cf,complex);
+            return new VirtualFile(cf);
         }
         return this;
     }
@@ -120,7 +98,7 @@ public class VirtualFile implements Comparable<VirtualFile>, Cloneable
         VirtualFileSystem af = fs.getAbsoluteFile();
         if(af!=af)
         {
-            return new VirtualFile(af.splitPath(),af,complex);
+            return new VirtualFile(af);
         }
         return this;
     }
@@ -149,31 +127,27 @@ public class VirtualFile implements Comparable<VirtualFile>, Cloneable
     {
         return fs.delete();
     }
-
     public boolean isHidden()
     {
         return fs.isHidden();
     }
-
     public boolean isFile()
     {
         return fs.isFile();
     }
-
     public boolean isDirectory()
     {
         return fs.isDirectory();
     }
-
     public boolean isComplex()
     {
-        return complex;
+        return fs.isComplex();
     }
 
     @Override
     public String toString()
     {
-        return path;
+        return fs.toString();
     }
 
     public String getName()
@@ -181,14 +155,9 @@ public class VirtualFile implements Comparable<VirtualFile>, Cloneable
         return fs.getName();
     }
 
-    public int compareTo(VirtualFile other)
-    {
-        return path.compareTo(other.path);
-    }
-
     public String getLastPath()
     {
-        return items[items.length-1];
+        return fs.getLastPath();
     }
 
     @Override
@@ -210,7 +179,7 @@ public class VirtualFile implements Comparable<VirtualFile>, Cloneable
         }
         return null;
     }
-    public static VirtualFile[] asPacketFile(File[] files)
+    public static VirtualFile[] asVirtualFile(File[] files)
     {
         if(files!=null)
         {
@@ -228,5 +197,44 @@ public class VirtualFile implements Comparable<VirtualFile>, Cloneable
     {
         return fs.isLink();
     }
+    //
+    public int compareTo(VirtualFile file)
+    {
+        // ES NECESARIO REPENSAR COMO COMPARAR FICHEROS DE DISTINTA INDOLE
+        return fs.toString().compareTo(file.toString());
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final VirtualFile other = (VirtualFile) obj;
+        if (this.fs != other.fs && (this.fs == null || !this.fs.equals(other.fs)))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return (this.fs != null ? this.fs.hashCode() : 0);
+    }
+
+    VirtualFile getParentFile()
+    {
+        VirtualFileSystem parent = fs.getParentFile();
+        return (parent != null) ? new VirtualFile(parent) : null;
+    }
+
+
 
 }

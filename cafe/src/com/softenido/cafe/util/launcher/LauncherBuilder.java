@@ -22,7 +22,7 @@
 package com.softenido.cafe.util.launcher;
 
 import com.softenido.cafe.io.Files;
-import com.softenido.cafe.util.OSName;
+import com.softenido.core.util.OSName;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -109,8 +109,15 @@ public abstract class LauncherBuilder
             jar = new File(System.getProperty(JAVA_CLASS_PATH)).getAbsolutePath().toString();
         }
         jar = escape(jar);
+
+        String[] opt = options.getJvmOptions();
+        StringBuilder sbOpt= new StringBuilder();
+        for(int i=0;i<opt.length;i++)
+        {
+            sbOpt.append(opt[i]).append(" ");
+        }
         
-        return buildLauncher(fileName, fileStmt, javaPath, jar, "");
+        return buildLauncher(fileName, fileStmt, javaPath, jar, sbOpt.toString());
     }
 
     private static boolean buildLauncher(String fileName, String fileStmt, String java, String jar, String opt) throws IOException

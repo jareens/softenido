@@ -145,7 +145,8 @@ public class FileDigest
 
             while (count < size)
             {
-                int r = Math.min(buf.length, (int) (size - count));
+                int r = (int) Math.min(buf.length, size - count);
+                assert (r>=0 && r<=buf.length);
                 r = data.read(buf, 0, r);
 
                 if(r<0)

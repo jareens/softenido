@@ -22,10 +22,10 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
  *
  * @author franci
  */
-public class PackedPool
+public class VirtualFilePool
 {
     private static final boolean zipOpt = true;
-    public PackedPool()
+    public VirtualFilePool()
     {
     }
 
@@ -101,7 +101,7 @@ public class PackedPool
         {
             for(int i=2;i<paths.length;i++)
             {
-                curPath.append(VirtualFile.pathSeparator).append(paths[i]);
+                curPath.append(VirtualFileSystem.pathSeparator).append(paths[i]);
                 in = getEntryInputStream(in, paths[i]);
                 if(in==null)
                 {

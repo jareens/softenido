@@ -22,8 +22,10 @@
 package com.softenido.cafe.io.virtual;
 
 import com.softenido.cafe.io.Files;
+import com.softenido.cafe.util.ArrayUtils;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,13 +34,13 @@ import java.io.IOException;
 public class VirtualFiles
 {
 
-    public static VirtualFile getNoDotFile(VirtualFile item) throws IOException
+    public static VirtualFile getNoDotFile(VirtualFile file) throws IOException
     {
-        if(!item.isComplex())
+        if(!file.isComplex())
         {
-            return new VirtualFile(Files.getNoDotFile(item.getBaseFile()));
+            return new VirtualFile(Files.getNoDotFile(file.getBaseFile()));
         }
-        return item;
+        return file;
     }
 
     public static boolean isParentOf(VirtualFile parent, VirtualFile child, boolean canonical) throws IOException
@@ -61,6 +63,24 @@ public class VirtualFiles
         }
         return true;
     }
-
     
+    public static VirtualFile[] getParentFiles(VirtualFile file, boolean includeFile)
+    {
+        VirtualFile item = file;
+        ArrayList<VirtualFile> parents = new ArrayList<VirtualFile>();
+        if(includeFile)
+        {
+            parents.add(item);
+        }
+        while((item = item.getParentFile()) != null)
+        {
+            parents.add(item);
+        }
+        return ArrayUtils.reverseCopyOf(parents.toArray(new VirtualFile[0]));
+    }
+
+    public static VirtualFile[] getParentFiles(VirtualFile file)
+    {
+        return getParentFiles(file, false);
+    }   
 }

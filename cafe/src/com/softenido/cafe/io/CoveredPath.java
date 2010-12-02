@@ -48,28 +48,38 @@ class CoveredPath
     }
     public boolean add(VirtualFile file, boolean base, boolean link) throws IOException
     {
-        if( base || link || symlinks)
+        final VirtualFile canonical = file.getCanonicalFile();
+        synchronized(lock)
         {
-            synchronized(lock)
+            if(paths.contains(canonical))
             {
-                final VirtualFile canonical = file.getCanonicalFile();
-                if(paths.contains(canonical))
+                Logger.getLogger(CoveredPath.class.getName()).log(Level.FINE,"refused=''{0}'' as ''{1}''",new Object[]{file,canonical});
+                return false;
+            }
+            //if( base || link || symlinks)
+            if( base || link )
+            {
+                VirtualFile[] parents = VirtualFiles.getParentFiles(canonical);
+                for (VirtualFile item : parents)
                 {
-                    return false;
-                }
-                if( base || link )
-                {
-                    for (VirtualFile item : paths)
+                    if(paths.contains(item))
                     {
-                        if (VirtualFiles.isParentOf(item, canonical, true))
-                        {
-                            return false;
-                        }
+                        Logger.getLogger(CoveredPath.class.getName()).log(Level.FINE,"refused=''{0}'' as ''{1}'' by ''{2}''",new Object[]{file,canonical,item});
+                        return false;
                     }
-                    paths.add(canonical);
-                    Logger.getLogger(CoveredPath.class.getName()).log(Level.FINE,"lockedPath={0}",canonical);
-                    return true;
                 }
+                
+                for (VirtualFile item : paths)
+                {
+                    if (VirtualFiles.isParentOf(item, canonical, true))
+                    {
+                        Logger.getLogger(CoveredPath.class.getName()).log(Level.FINE,"refused=''{0}'' as ''{1}'' by ''{2}''",new Object[]{file,canonical,item});
+                        return false;
+                    }
+                }
+                paths.add(canonical);
+                Logger.getLogger(CoveredPath.class.getName()).log(Level.FINE,"path=''{0}'' as ''{1}''",new Object[]{file,canonical});
+                return true;
             }
         }
         return true;

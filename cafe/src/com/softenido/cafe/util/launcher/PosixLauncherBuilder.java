@@ -36,7 +36,7 @@ public class PosixLauncherBuilder extends LauncherBuilder
     private static final String USER_BIN = "/usr/bin/";
     private static final String POSIX_STATEMENT =
             "#!/bin/sh\n" +
-            "{$java} -jar {$jar} {$opt} \"$@\"\n";
+            "{$java} {$opt} -jar {$jar} \"$@\"\n";
 
     public PosixLauncherBuilder(String osname)
     {

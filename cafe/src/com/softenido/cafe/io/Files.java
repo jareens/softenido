@@ -594,4 +594,14 @@ public class Files
         }
         return files;
     }
+    public static String[] briefPath(String[] fileNames,int max)
+    {
+//        comprobar si la longitud es menor del máximo, en ese caso no hacer nada
+//                en caso contrario se sustituye la parte del medio por ...
+        return fileNames;
+    }
+    public static String briefPath(String fileName,int max)
+    {
+        return fileName;
+    }
 }

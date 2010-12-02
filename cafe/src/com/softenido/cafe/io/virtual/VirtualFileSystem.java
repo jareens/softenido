@@ -30,8 +30,11 @@ import org.apache.commons.compress.archivers.ArchiveException;
  *
  * @author franci
  */
-interface VirtualFileSystem
+interface VirtualFileSystem //extends Comparable<VirtualFileSystem>
 {
+    static final String pathSeparator   = "!";
+    static final char pathSeparatorChar = '!';
+
     boolean canRead();
     boolean canWrite();
     boolean delete();
@@ -51,4 +54,7 @@ interface VirtualFileSystem
     long length();
     boolean isLink() throws IOException;
     boolean isLink(boolean path) throws IOException;
+    String getLastPath();
+    boolean isComplex();
+    VirtualFileSystem getParentFile();
 }

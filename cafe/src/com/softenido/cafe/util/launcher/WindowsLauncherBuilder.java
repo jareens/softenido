@@ -38,7 +38,7 @@ public class WindowsLauncherBuilder extends LauncherBuilder
             "shift\n" +
             "goto buildargs\n" +
             ":done\n" +
-            "call {$java} -jar {$jar} {$opt} %ARGS%\n";
+            "call {$java} {$opt} -jar {$jar} %ARGS%\n";
 
     public WindowsLauncherBuilder(String osname)
     {
