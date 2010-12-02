@@ -31,27 +31,7 @@ public abstract class EqualsDataBuilder<E,D> implements EqualsBuilder<E>
     public final EqualsData<E,D> build(E e)
     {
         D d = buildData(e);
-        if(d==null)
-        {
-            return null;
-        }
-        return new EqualsData<E,D>(e,d)
-        {
-            @Override
-            public boolean equals(Object obj)
-            {
-                if(obj instanceof EqualsData)
-                {
-                    return data.equals(((EqualsData)obj).data);
-                }
-                return false;
-            }
-            @Override
-            public int hashCode()
-            {
-                return data.hashCode();
-            }
-        };
+        return new EqualsData<E,D>(e,d);
     }
     public abstract D buildData(E e);
 }

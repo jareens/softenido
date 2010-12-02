@@ -35,7 +35,10 @@ import java.util.Set;
 public class EqualsHashMap<K,V> implements Map<K,V>
 {
     private final Map<Equals<K>,V> map = new HashMap<Equals<K>,V>();
-    final EqualsBuilder<K> wrapper;
+    private final EqualsBuilder<K> wrapper;
+
+//    CUANDO EL RESULTADO ES UN NULL NO SE DISTINGUE ENTRE SI NO EXISTE O NO PUEDE SER GENERADO
+//            HACER UN VALOR POR DEFECTO O CONTROLAR EL NULL DE ALGUNA MANERA
 
     public EqualsHashMap(EqualsBuilder<K> wrapper)
     {
@@ -58,7 +61,8 @@ public class EqualsHashMap<K,V> implements Map<K,V>
 
     public boolean containsKey(Object key)
     {
-        return map.containsKey(wrap(key));
+        Equals<K> e = wrap(key);
+        return map.containsKey(e);
     }
 
     @SuppressWarnings("element-type-mismatch")
@@ -69,17 +73,20 @@ public class EqualsHashMap<K,V> implements Map<K,V>
 
     public V get(Object key)
     {
-        return map.get(wrap(key));
+        Equals<K> e = wrap(key);
+        return (e==null)? null : map.get(e);
     }
 
     public V put(K key, V value)
     {
-        return map.put(wrap((K) key), value);
+        Equals<K> e = wrap(key);
+        return (e==null)?null:map.put(e, value);
     }
 
     public V remove(Object key)
     {
-        return map.remove(wrap(key));
+        Equals<K> e = wrap(key);
+        return (e==null)?null:map.remove(e);
     }
 
     public void putAll(Map<? extends K, ? extends V> m)

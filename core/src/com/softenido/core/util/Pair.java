@@ -1,7 +1,7 @@
 /*
- *  EqualsData.java
+ *  Pair.java
  *
- *  Copyright (C) 2010  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,29 +19,37 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.core.equals;
+package com.softenido.core.util;
 
 /**
  *
  * @author franci
  */
-public class EqualsData<E,D> extends Equals<E>
+public class Pair<K,V>
 {
-    protected final D data;
-    public EqualsData(E object, D data)
+    private final K key;
+    private final V val;
+
+    public Pair(K key, V val)
     {
-        super(object);
-        this.data = data;
+        this.key = key;
+        this.val = val;
     }
 
-    public D getData()
+    public K getKey()
     {
-        return data;
+        return key;
     }
+
+    public V getVal()
+    {
+        return val;
+    }
+
     @Override
     public boolean equals(Object obj)
     {
-        if( obj==null || data==null )
+        if (obj == null)
         {
             return false;
         }
@@ -50,12 +58,25 @@ public class EqualsData<E,D> extends Equals<E>
             return false;
         }
         @SuppressWarnings("unchecked")
-        final EqualsData<E,D> other = (EqualsData<E,D>) obj;
-        return data.equals(other.data);
+        final Pair<K, V> other = (Pair<K, V>) obj;
+        if (this.key != other.key && (this.key == null || !this.key.equals(other.key)))
+        {
+            return false;
+        }
+        if (this.val != other.val && (this.val == null || !this.val.equals(other.val)))
+        {
+            return false;
+        }
+        return true;
     }
+
     @Override
     public int hashCode()
     {
-        return (data!=null)?data.hashCode():0;
+        int hash = 7;
+        hash = 67 * hash + (this.key != null ? this.key.hashCode() : 0);
+        hash = 67 * hash + (this.val != null ? this.val.hashCode() : 0);
+        return hash;
     }
+    
 }
