@@ -48,7 +48,7 @@ import java.util.logging.Logger;
 public class FindRepePipe implements Runnable
 {
     private boolean lowmem=false;
-    private static final int thNum=ActorPool.CORES*2;
+    private final int thNum;
 
     //añadir criterio para enlaces y archivos ocultos
     private final boolean bugs;
@@ -75,6 +75,7 @@ public class FindRepePipe implements Runnable
 
         this.halfCmp = opt.getHalfCmp();
         this.fullCmp = opt.getFullCmp();
+        this.thNum = opt.isEager() ? ActorPool.CORES * 2 : 1;
     }
 
     private VirtualFile readable(VirtualFile item)

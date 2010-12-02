@@ -49,10 +49,10 @@ public class FileComparatorByImage extends EqualsDataBuilder<VirtualFile,Hash>
     private final ImageHashBuilder ihb;
 
 
-    public FileComparatorByImage(boolean half,boolean gray, int size, boolean blur)
+    public FileComparatorByImage(boolean half,boolean gray, int size, float colorThreshold, float countThreshold, boolean blur)
     {
         this.half = half;
-        this.ihb  = new ImageHashBuilder(gray,size);
+        this.ihb  = new ImageHashBuilder(gray,size,colorThreshold, countThreshold);
     }
 
     private Hash getHash(VirtualFile pf) throws FileNotFoundException, IOException, ArchiveException

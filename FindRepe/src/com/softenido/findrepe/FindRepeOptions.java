@@ -40,6 +40,7 @@ public class FindRepeOptions extends ForEachFileOptions
     private int minCount;
     private int maxCount;
     private long minWasted;
+    private boolean eager;
 
     private boolean hasFocusPaths;
     private final HashSet<File> focusPaths;
@@ -66,6 +67,7 @@ public class FindRepeOptions extends ForEachFileOptions
         super();
         minCount = 0;
         maxCount = Integer.MAX_VALUE;
+        eager    = false;
 
         hasFocusPaths = false;
         focusPaths = new HashSet<File>();
@@ -87,6 +89,7 @@ public class FindRepeOptions extends ForEachFileOptions
         super(val);
         minCount = 0;
         maxCount = Integer.MAX_VALUE;
+        eager    = false;
 
         hasFocusPaths = false;
         focusPaths = new HashSet<File>();
@@ -109,6 +112,7 @@ public class FindRepeOptions extends ForEachFileOptions
         minCount = val.minCount;
         maxCount = val.maxCount;
         minWasted = val.minWasted;
+        eager    = val.eager;
 
         hasFocusPaths       = val.hasFocusPaths;
         focusPaths          = new HashSet<File>(val.focusPaths);
@@ -154,6 +158,17 @@ public class FindRepeOptions extends ForEachFileOptions
     {
         this.minWasted = minWasted;
     }
+
+    public boolean isEager()
+    {
+        return eager;
+    }
+
+    public void setEager(boolean eager)
+    {
+        this.eager = eager;
+    }
+    
     
     public void addFocusPath(File path)
     {

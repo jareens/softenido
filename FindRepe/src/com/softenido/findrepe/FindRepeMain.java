@@ -21,6 +21,8 @@
  */
 package com.softenido.findrepe;
 
+import com.softenido.findrepe.showgroup.ImageShowGroup;
+import com.softenido.findrepe.showgroup.ConsoleShowGroup;
 import com.softenido.cafe.imageio.ImageFormat;
 import com.softenido.cafe.io.Files;
 import com.softenido.cafe.io.ForEachFileOptions;
@@ -39,18 +41,16 @@ import com.softenido.cafe.util.launcher.LauncherParser;
 import com.softenido.cafe.util.options.ArrayStringOption;
 import com.softenido.cafe.util.options.NumberOption;
 import com.softenido.cafe.util.options.SizeOption;
-import com.softenido.cafe.util.options.StringOption;
+import com.softenido.findrepe.showgroup.ShowGroup;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Scanner;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -61,7 +61,7 @@ public class FindRepeMain
     private static final String FINDREPE = "findrepe";
     private static final String VER = "0.11.1";
     private static final String VERSION =
-            "findrepe  version " + VER + " alpha (2010-09-21)\n"
+            "findrepe  version " + VER + " alpha (2010-12-02)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -116,6 +116,7 @@ public class FindRepeMain
             + "     --install-home[=path]   install a launcher using 'java.home' property\n"
             + "     --install-posix         posix flavor for install options when unknown\n"
             + "     --install-version       adds version to launcher name\n"
+            + " -J  --jvm-option=jvm_option pass jvm_option to JVM(for --install...)\n"
             + "     --unique                list only unique files (--count=1)\n"
             + "     --count=N               list files repeated N times  \n"
             + " -c  --min-count=N           files repeated at least N times\n"
@@ -142,6 +143,7 @@ public class FindRepeMain
             + " -e  --regex                 uses java regular expresions\n"
             + "     --wildcard              uses wildcards '*', '?' and '[]' (default)\n"
             + " -j  --jobs=N                limits thread use to N (0-1024, developers only)\n"
+//            + " -E  --eager                 eager use of CPU\n"
             + "     --bug                   show filenames with bugs\n"
             + "     --bug-fix               try to fix filenames with bugs\n"
             + "     --version               print version number\n"
@@ -159,7 +161,7 @@ public class FindRepeMain
             + "examples of findrepe usage:\n"
             + "\n"
             + " java -jar FindRepe.jar --install\n"
-            + " sudo java -jar FindRepe.jar --install\n"
+            + " sudo java -jar FindRepe.jar --install -Jmx1g\n"
             + " sudo /opt/jdk1.6/bin/java -jar FindRepe.jar --install-home\n"
             + " sudo /opt/jdk1.6/bin/java -jar FindRepe.jar --install-posix\n"
             + " findrepe backup\n"
@@ -227,16 +229,14 @@ public class FindRepeMain
         BooleanOption optByName = options.add(new BooleanOption("byname"));
         BooleanOption optByIName = options.add(new BooleanOption("byiname"));
         BooleanOption optByImage = options.add(new BooleanOption("byimage"));
-
-        StringOption optDiff = options.add(new StringOption("diff"));
-
         ArrayStringOption dirName = options.add(new ArrayStringOption("dir", File.pathSeparatorChar));
         ArrayStringOption fileName = options.add(new ArrayStringOption("file", File.pathSeparatorChar));
-        BooleanOption regex = options.add(new BooleanOption("regex"));
+        BooleanOption regex = options.add(new BooleanOption('e',"regex"));
         BooleanOption wildcard = options.add(new BooleanOption("wildcard"));
         BooleanOption bug = options.add(new BooleanOption("bug"));
         BooleanOption bugFix = options.add(new BooleanOption("bug-fix"));
         NumberOption opJobs = options.add(new NumberOption('j', "jobs"));
+        NumberOption opEager = options.add(new NumberOption('E', "eager"));
         BooleanOption optLowMem = options.add(new BooleanOption("lowmem"));
 
         BooleanOption version = options.add(new BooleanOption("version"));
@@ -419,15 +419,10 @@ public class FindRepeMain
                 //ImageIO.setUseCache(false);
                 opt.setComparators
                 (
-                    new FileComparatorByImage(true,false,64,false),
-                    new FileComparatorByImage(false,false,64,false)
+                    new FileComparatorByImage(true, true,64,0.05f,0.10f,false),
+                    new FileComparatorByImage(false,true,64,0.05f,0.10f,false)
                 );
                 opt.addAllowedFileName(ImageFormat.getImageFileFilter());
-            }
-            String diff=null;
-            if(optDiff.isUsed())
-            {
-                diff = optDiff.getValue();
             }
 
             // ignore groups of 1 unless it specified by options
@@ -456,20 +451,20 @@ public class FindRepeMain
                     ActorPool.setDefaultPoolSize(jobs);
                 }
             }
+            opt.setEager(opEager.isUsed());
             FindRepePipe findTask = new FindRepePipe(files, bugs, queueSize, opt);
             if(optLowMem.isUsed())
             {
                 findTask.setLowmem(true);
             }
-
+            
             new Thread(findTask).start();
 
             if (bugs)
             {
                 showBugs(findTask.getBugIterable(), fixBugs, vh);
             }
-            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed() ? sizeParser : null), autoDeleteFiles, vh, optAbsPath.isUsed(), diff);
-        }
+            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed() ? sizeParser : null), autoDeleteFiles, vh, optAbsPath.isUsed(), optByImage.isUsed());        }
         catch (MissingOptionParameterException ex)
         {
             System.err.println(FINDREPE + ":" + ex.getMessage());
@@ -688,10 +683,14 @@ public class FindRepeMain
         }
     }
 
-    private static void showGroups(FindRepeOptions opt, Iterable<VirtualFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete, VerboseHandler vh, boolean absPath, String diff)
+    private static void showGroups(FindRepeOptions opt, Iterable<VirtualFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete, VerboseHandler vh, boolean absPath, boolean byimage)
     {
         int groupId = 0;
         int deleteMin = opt.getMinCount();
+        
+        ShowGroup sg = (delete && byimage && !GraphicsEnvironment.isHeadless())
+                ? new ImageShowGroup(units, absPath, delete, deleteMin, autoDelete)
+                : new ConsoleShowGroup(units, absPath, delete, deleteMin, autoDelete);
 
         for (VirtualFile[] group : groupsList)
         {
@@ -702,7 +701,7 @@ public class FindRepeMain
                 try
                 {
                     VERIFY(group);
-                    showOneGroup(groupId, group, delete, units, deleteMin, autoDelete, absPath,diff);
+                    sg.showOneGroup(groupId, group);
                 }
                 catch (IOException ex)
                 {
@@ -715,141 +714,7 @@ public class FindRepeMain
                 groupId++;
             }
         }
-    }
-
-    private static void showOneGroup(int groupId, VirtualFile files[], boolean delete, SizeUnits units, int deleteMin, File[] autoDelete, boolean absPath,String diff) throws IOException
-    {
-        boolean showResult = false;
-        boolean[] deleted = new boolean[files.length];
-        Arrays.fill(deleted, false);
-        Scanner sc = new Scanner(System.in);
-
-        if (delete && autoDelete.length > 0 && files.length > 1 && files.length >= deleteMin)
-        {
-            int matches[] = new int[files.length];
-            Arrays.fill(matches, 0);
-            for (int i = 0; i < files.length; i++)
-            {
-                for (int j = 0; j < autoDelete.length; j++)
-                {
-                    if(files[i].canWrite() && Files.isParentOf(autoDelete[j], files[i].getBaseFile(),false))
-                    {
-                        matches[i]++;
-                    }
-                }
-            }
-            int sorted[] = Arrays.copyOf(matches, matches.length);
-            Arrays.sort(sorted);
-            int minVal = sorted[deleteMin - 2];
-            for (int i = 0; i < matches.length; i++)
-            {
-                if( (matches[i]>minVal) && files[i].canWrite())
-                {
-                    showResult = true;
-                    deleted[i] = true;
-                }
-            }
-        }
-        
-        while (true)
-        {
-            System.out.flush();
-            System.out.println();
-            for (int i = 0; i < files.length; i++)
-            {
-                String id = deleted[i] ? "-" : (files[i].canWrite() ? "" + i : "r");
-                String size = units == null ? "" : units.toString(files[i].length(), true);
-                String name = (absPath?files[i].getAbsolutePath():files[i].toString());
-                System.out.printf("[%s]%s %s\n", id, size, name);
-            }
-            if (!delete)
-            {
-                return;
-            }
-            String prompt = diff==null?"\nGroup %d, delete files [0 - %d, all, none]: ":
-                                       "\nGroup %d, delete files [0 - %d, all, none, diff]: ";
-            System.out.printf(prompt, groupId, files.length - 1);
-            String line = sc.nextLine();
-            if (line.length() == 0)
-            {
-                break;
-            }
-            if (line.trim().equalsIgnoreCase("all"))
-            {
-                for (int i = 0; i < deleted.length; i++)
-                {
-                    showResult = true;
-                    deleted[i] = true;
-                }
-            }
-            else if (line.trim().equalsIgnoreCase("none"))
-            {
-                for (int i = 0; i < deleted.length; i++)
-                {
-                    deleted[i] = false;
-                }
-            }
-            else if(diff != null && line.trim().equalsIgnoreCase("diff"))
-            {
-                try
-                {
-                    execDiff(diff, files);
-                }
-                catch (InterruptedException ex)
-                {
-                    Logger.getLogger(FindRepeMain.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            else
-            {
-                Scanner scLine = new Scanner(line);
-
-                while (scLine.hasNextInt())
-                {
-                    int index = scLine.nextInt();
-                    if (index >= 0 && index < files.length)
-                    {
-                        showResult = true;
-                        deleted[index] = true;
-                    }
-                    else
-                    {
-                        System.out.printf("%d ignored\n", index);
-                    }
-                }
-            }
-        }
-        if(showResult)
-        {
-            System.out.println();
-            int deletedCount = 0;
-            int notDeletedCount = 0;
-            for (int i = 0; i < files.length; i++)
-            {
-                boolean notdeleted = false;
-                if (deleted[i])
-                {
-                    if (!files[i].delete())
-                    {
-                        notdeleted = true;
-                        notDeletedCount++;
-                    }
-                    else
-                    {
-                        deletedCount++;
-                    }
-                }
-                System.out.printf("  [%s] %s\n", (notdeleted ? "e" : (deleted[i] ? "-" : "+")), files[i].toString());
-            }
-            if (deletedCount > 0)
-            {
-                System.out.printf("\n  files deleted: %d\n\n", deletedCount);
-            }
-            if (notDeletedCount > 0)
-            {
-                System.out.printf("\n  files not deleted: %d\n\n", notDeletedCount);
-            }
-        }
+        sg.close();
     }
 
     private static void VERIFY(VirtualFile[] group)
@@ -879,15 +744,4 @@ public class FindRepeMain
         }
     }
 
-    private static int execDiff(String diff,VirtualFile[] files) throws IOException, InterruptedException
-    {
-        String[] cmd = new String[files.length+1];
-        cmd[0]=diff;
-        for(int i=0;i<files.length;i++)
-        {
-            cmd[i+1] = files[i].toString();
-        }
-        Process child = Runtime.getRuntime().exec(cmd);
-        return child.waitFor();
-    }
 }
