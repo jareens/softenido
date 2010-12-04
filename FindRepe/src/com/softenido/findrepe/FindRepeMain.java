@@ -161,7 +161,7 @@ public class FindRepeMain
             + "examples of findrepe usage:\n"
             + "\n"
             + " java -jar FindRepe.jar --install\n"
-            + " sudo java -jar FindRepe.jar --install -Jmx1g\n"
+            + " sudo java -jar FindRepe.jar --install -J-mx1g\n"
             + " sudo /opt/jdk1.6/bin/java -jar FindRepe.jar --install-home\n"
             + " sudo /opt/jdk1.6/bin/java -jar FindRepe.jar --install-posix\n"
             + " findrepe backup\n"
@@ -170,6 +170,7 @@ public class FindRepeMain
             + " findrepe -nd c:\\backup e:\\img\n"
             + " findrepe -vn /opt/ /backup/tools \n"
             + " findrepe -vvn /opt/ --exclude=/opt/nb6.7" + File.pathSeparator + "/opt/nb6.8\n"
+            + " findrepe --byimage -znd photos\n"
             + "\n"
             + " send me yours to: <flikxxi@gmail.com>\n";
 
