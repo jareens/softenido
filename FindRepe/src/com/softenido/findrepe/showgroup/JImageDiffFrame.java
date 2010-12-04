@@ -334,6 +334,7 @@ class ImageTableModel extends AbstractTableModel
     void setDelete(int i, boolean b)
     {
         cells[i][DELETE_COLUMN] = b;
+        this.fireTableRowsUpdated(i, i);
     }
     boolean getDelete(int i)
     {

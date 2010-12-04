@@ -59,9 +59,9 @@ import java.util.logging.SimpleFormatter;
 public class FindRepeMain
 {
     private static final String FINDREPE = "findrepe";
-    private static final String VER = "0.11.1";
+    private static final String VER = "0.12.0.rc";
     private static final String VERSION =
-            "findrepe  version " + VER + " alpha (2010-12-02)\n"
+            "findrepe  version " + VER + " alpha (2010-12-04)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
