@@ -41,7 +41,7 @@ elif [ $1 -eq 2 ] ; then
       $filename/FindRepe.jar \
       $filename/lib/cafe.jar \
       $filename/lib/core.jar \
-      $filename/lib/commons-compress-1.0.jar \
+      $filename/lib/commons-compress-1.1.jar \
       $filename/GPLv3.txt \
       $filename/install-linux.sh \
       $filename/install-w7.bat \
@@ -56,7 +56,7 @@ else
       $filename/FindRepe.jar \
       $filename/lib/cafe.jar \
       $filename/lib/core.jar \
-      $filename/lib/commons-compress-1.0.jar \
+      $filename/lib/commons-compress-1.1.jar \
       $filename/GPLv3.txt \
       $filename/install-linux.sh \
       $filename/install-w7.bat \
