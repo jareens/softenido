@@ -1,4 +1,4 @@
-package com.softenido.wifix;
+package com.softenido.tradertoolbox;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +9,7 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import com.softenido.droid.admob.AdMob;
 
 public class Wifix extends Activity
 {

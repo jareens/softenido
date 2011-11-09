@@ -1,4 +1,4 @@
-package com.softenido.wifix;
+package com.softenido.droid.admob;
 
 import com.google.ads.AdView;
 

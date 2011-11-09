@@ -1,4 +1,4 @@
-package com.softenido.wifix;
+package com.softenido.droid.admob;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,7 +7,6 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
