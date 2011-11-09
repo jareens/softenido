@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
@@ -25,6 +26,7 @@ import org.apache.commons.compress.archivers.zip.ZipFile;
 public class VirtualFilePool
 {
     private static final boolean zipOpt = true;
+    private static final AtomicInteger fisActive = new AtomicInteger();
     public VirtualFilePool()
     {
     }
@@ -44,17 +46,20 @@ public class VirtualFilePool
     }
     private InputStream getEntryInputStream(File file, String entryName) throws FileNotFoundException, IOException, ArchiveException
     {
-        if( zipOpt && file.toString().toLowerCase().endsWith(".zip"))
+        String fileName = file.toString().toLowerCase();
+        if( zipOpt && ( fileName.endsWith(".zip") || fileName.endsWith(".jar")) )
         {
             return getZipEntryInputStream(file, entryName);
         }
         final FileInputStream fis = new FileInputStream(file);
         return new FilterInputStream(getEntryInputStream(new FileInputStream(file),entryName))
         {
+            final int id = fisActive.getAndIncrement();
             @Override
             public void close() throws IOException
             {
                 fis.close();
+                fisActive.getAndDecrement();
             }
         };
     }
@@ -69,10 +74,12 @@ public class VirtualFilePool
         }
         return new FilterInputStream(ze.getInputStream(zae))
         {
+            final int id = fisActive.getAndIncrement();
             @Override
             public void close() throws IOException
             {
                 ze.close();
+                fisActive.getAndDecrement();
             }
         };
     }
@@ -110,11 +117,13 @@ public class VirtualFilePool
             }
             in = new FilterInputStream(in)
             {
+                final int id = fisActive.getAndIncrement();
                 @Override
                 public void close() throws IOException
                 {
                     super.close();
                     fin.close();
+                    fisActive.getAndDecrement();
                 }
             };
             return in;

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+	xmlns:myapp="http://schemas.android.com/apk/res/com.softenido.wifix"
+    android:id="@+id/mainLayout"
+    android:baselineAligned="true"
+    android:orientation="vertical"
+	android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+	<Button android:text="@string/reassign" android:id="@+id/bReassign" android:drawableLeft="@drawable/reassign"
+		android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
+    <Button android:text="@string/reconnect" android:id="@+id/bReconnect" android:drawableLeft="@drawable/reconnect"
+        android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
+	<CheckBox android:text="@string/keepLock" android:id="@+id/checkBox1"
+		android:layout_height="wrap_content" android:layout_width="match_parent"></CheckBox>
+    <Button android:id="@+id/bAbout" android:text="@string/about" android:drawableLeft="@drawable/about" android:layout_height="wrap_content" android:layout_width="match_parent"/>
+    <Button android:text="@string/hide" android:id="@+id/bHide" android:drawableLeft="@drawable/hide" android:layout_height="wrap_content" android:layout_width="match_parent"/>
+
+	<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/relativeLayout1">
+	</RelativeLayout>
+</LinearLayout>

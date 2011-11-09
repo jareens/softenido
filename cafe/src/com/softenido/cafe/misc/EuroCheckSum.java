@@ -50,30 +50,35 @@ public class EuroCheckSum
         {"K","Suiza"},//
         {"J","Reino Unido"}    //
     };
-    /** Creates a new instance of EuroCheckSum */
     private EuroCheckSum()
     {
     }
-    public static boolean verifySerial(String serial)
+    public static boolean verify(String serial)
     {
         int i;
         int sum;
         
         if (serial.length() != 12)
+        {
             return false;
+        }
         
         for(sum=i=0;i<serial.length();i++)
         {
             char c = serial.charAt(i);
             
             if( c < '0' || c >'9' )
+            {
                 c = number.charAt(letter.indexOf(Character.toUpperCase(c)));
+            }
             
             sum += ( c - '0' );
             
         }
-        if( (sum % 9) == 0 )
+        if ((sum % 9) == 0)
+        {
             return true;
+        }
         
         return false;
         

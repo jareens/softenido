@@ -21,15 +21,14 @@
  */
 package com.softenido.findrepe;
 
-import com.softenido.cafe.io.virtual.VirtualFile;
-import com.softenido.core.equals.EqualsFilterBuilder;
+import com.softenido.cafe.io.packed.PackedFile;
 import java.util.Comparator;
 
 /**
  *
  * @author franci
  */
-public class FileComparatorByName extends EqualsFilterBuilder<VirtualFile> implements Comparator<VirtualFile>
+public class FileComparatorByName implements Comparator<PackedFile>
 {
     private final boolean half;
     private final boolean ignoreCase;
@@ -41,7 +40,7 @@ public class FileComparatorByName extends EqualsFilterBuilder<VirtualFile> imple
     }
 
     @Override
-    public int compare(VirtualFile pf1, VirtualFile pf2)
+    public int compare(PackedFile pf1, PackedFile pf2)
     {
         if(pf1==pf2)
         {
@@ -57,29 +56,5 @@ public class FileComparatorByName extends EqualsFilterBuilder<VirtualFile> imple
         }
         return ignoreCase?name1.compareToIgnoreCase(name2):name1.compareTo(name2);
     }
-
-    @Override
-    public int filterCode(VirtualFile e)
-    {
-        return e.getName().length();
-    }
-
-    @Override
-    public boolean filterEquals(VirtualFile pf1, VirtualFile pf2)
-    {
-        if(pf1==pf2)
-        {
-            return false;
-        }
-        String name1 = pf1.getName();
-        String name2 = pf2.getName();
-        if(half)
-        {
-            int size1 = name1.length();
-            int size2 = name2.length();
-            return (size1==size2);
-        }
-        return ignoreCase?name1.equalsIgnoreCase(name2):name1.equals(name2);
-    }
-   
+    
 }

@@ -23,7 +23,9 @@ package com.softenido.picbulk;
 
 import com.softenido.cafe.imageio.ScaleDimension;
 import com.softenido.cafe.imageio.SimpleScaleDimension;
-import java.io.Console; 
+import com.softenido.cafe.io.FakeConsole;
+import com.softenido.cafe.io.RealConsole;
+import com.softenido.cafe.io.VirtualConsole;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -31,10 +33,7 @@ import java.util.Arrays;
 import java.util.Properties;
 import com.softenido.cafe.misc.Gauge;
 import com.softenido.cafe.misc.ConsoleGauge;
-import com.softenido.cafe.util.OSName;
-import com.softenido.cafe.util.launcher.LauncherBuilder;
 import com.softenido.cafe.util.launcher.LauncherParser;
-import com.softenido.cafe.util.launcher.PosixLauncherBuilder;
 import com.softenido.cafe.util.options.BooleanOption;
 import com.softenido.cafe.util.options.InvalidOptionException;
 import com.softenido.cafe.util.options.Option;
@@ -43,9 +42,11 @@ import com.softenido.cafe.util.options.StringOption;
 
 public class PicBulk
 {
+    private static final String PICBULK = "picbulk";
+    private static final String VER = "0.0.2";
     private static final String VERSION =
-            "picbulk version 0.0.1 alpha  (2009-12-29)\n" +
-            "Copyright (C) 2007-2009 by Francisco Gómez Carrasco\n" +
+            "picbulk version "+VER+" alpha  (2010-06-15)\n" +
+            "Copyright (C) 2007-2010 by Francisco Gómez Carrasco\n" +
             "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
             "Report bugs to <flikxxi@gmail.com>\n" +
@@ -95,6 +96,7 @@ public class PicBulk
             "     --starttls=[true|false] use starttls for smtp\n" +
             "     --albumsize=N           max number of images by album or email\n" +
             "     --shrink=SIZE           shrink image to fit into SIZExSIZE\n" +
+            "     --grayscale             convert image to grayscale\n" +
             "     --skip=N                skip first N images\n" +
             "     --loadconf              load configuration (user, ... from .picbulk\n" +
             "     --saveconf              save configuration (user, ... from .picbulk\n" +
@@ -103,6 +105,7 @@ public class PicBulk
             "     --install-java[=path]   install a launcher using 'java' command\n" +
             "     --install-home[=path]   install a launcher using 'java.home' property\n" +
             "     --install-posix         posix flavor for install options when unknown\n" +
+            "     --install-version       adds version to launcher name\n" +
             "     --version               print version number\n" +
             "     --examples              print some useful examples\n" +
             "     --debug                 debug mode for developers\n" +
@@ -167,6 +170,8 @@ public class PicBulk
 
         Option license = options.add(new BooleanOption('L', "license"));
         StringOption shrink = options.add(new StringOption("shrink"));
+        BooleanOption grayscale = options.add(new BooleanOption('g', "grayscale"));
+
         StringOption skip   = options.add(new StringOption("skip"));
         StringOption albumsize = options.add(new StringOption("albumsize"));
         Option version = options.add(new BooleanOption("version"));
@@ -177,24 +182,9 @@ public class PicBulk
 
         try
         {
-            LauncherParser parser = new LauncherParser();
-            args = parser.parse(args);
-            if (parser.isInstall())
+            args = LauncherParser.parseInstall(PICBULK, null, VER, args);
+            if(args==null)
             {
-                LauncherBuilder builder = LauncherBuilder.getBuilder();
-                if(builder==null && parser.isPosix())
-                {
-                    builder = new PosixLauncherBuilder("posix");
-                }
-
-                if(builder==null)
-                {
-                    System.err.println("picbulk: Operating System '"+OSName.os.getName()+"' not supported for install options");
-                }
-                else if (builder.buildLauncher(parser,"picbulk"))
-                {
-                    System.out.println("picbulk: '" + builder.getFileName() + "' created");
-                }
                 return;
             }
             args = options.parse(args);
@@ -202,7 +192,7 @@ public class PicBulk
         catch (InvalidOptionException ex)
         {
             System.err.println(ex);
-            System.err.println("picbulk: Try --help for more information");
+            System.err.println(PICBULK+": Try --help for more information");
             return;
         }
 
@@ -284,13 +274,30 @@ public class PicBulk
             return;
         }
 
+        if(verboseLevel>0)
+        {
+            String title = args[0];
+            String dirname = args[1];
+            System.out.println("dirname=" + dirname);
+            System.out.println("title=" + title);
+        }
+
         String username = null;
         String password = null;
         String smtp     = null;
         String from     = null;
         Boolean ssl     = null;
         Boolean starttls= null;
-        Console cons    = System.console();
+
+        VirtualConsole cons = null;
+        if(System.console() != null)
+        {
+            cons = new RealConsole(System.console());
+        }
+        else if(debug.isUsed())
+        {
+            cons = new FakeConsole(System.in, System.out);
+        }
 
         if(optUser.isUsed())
         {
@@ -433,6 +440,7 @@ public class PicBulk
       
         File dir = new File(dirname);
 
+
         File[] files = dir.listFiles();
         long[] sizes = new long[files.length];
         Arrays.sort(files);
@@ -476,7 +484,7 @@ public class PicBulk
                     continue;
                 gauge.setPrefix(files[i].getName());
             
-                boolean photo = service.addPhoto(files[i],dim);
+                boolean photo = service.addPhoto(files[i],dim, grayscale.isUsed());
                 gauge.step((int) sizes[i]);
             }
             service.flush();

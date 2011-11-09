@@ -21,15 +21,14 @@
  */
 package com.softenido.findrepe;
 
-import com.softenido.cafe.image.hash.ImageHashBuilder;
+import com.softenido.cafe.imageio.ImageHash;
 import com.softenido.cafe.io.FileHash;
-import com.softenido.cafe.io.Hash;
-import com.softenido.cafe.io.virtual.VirtualFile;
-import com.softenido.core.equals.EqualsDataBuilder;
+import com.softenido.cafe.io.packed.PackedFile;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.logging.Level;
@@ -40,43 +39,39 @@ import org.apache.commons.compress.archivers.ArchiveException;
  *
  * @author franci
  */
-public class FileComparatorByImage extends EqualsDataBuilder<VirtualFile,Hash>
+public class FileComparatorByImage implements Comparator<PackedFile>
 {
     private final boolean half;
     private static final Object lock = new Object();
-    private static final Map<VirtualFile,WeakReference<Hash>> map = Collections.synchronizedMap(new WeakHashMap<VirtualFile,WeakReference<Hash>>());
-
-    private final ImageHashBuilder ihb;
+    private static final Map<PackedFile,WeakReference<ImageHash>> map = Collections.synchronizedMap(new WeakHashMap<PackedFile,WeakReference<ImageHash>>());
 
 
-    public FileComparatorByImage(boolean half,boolean gray, int size, float colorThreshold, float countThreshold, boolean blur)
+    private static int pc=100;
+    private static int fails=0;
+
+    public FileComparatorByImage(boolean half)
     {
         this.half = half;
-        this.ihb  = new ImageHashBuilder(gray,size,colorThreshold, countThreshold);
-    }
-
-    private Hash getHash(VirtualFile pf) throws FileNotFoundException, IOException, ArchiveException
-    {
-        WeakReference<Hash> wr = map.get(pf);
-        Hash fh = wr!=null?wr.get():null;
-        if(fh==null)
-        {
-            fh = ihb.buildHash(pf);
-            if(fh!=null)
-            {
-                map.put(pf, new WeakReference<Hash>(fh));
-            }
-            //fh = new FileHash(pf);
-        }
-        return fh;
     }
 
     @Override
-    public Hash buildData(VirtualFile e)
+    public int compare(PackedFile pf1, PackedFile pf2)
     {
+        if(pf1==pf2)
+        {
+            return 0;
+        }
+//        if(half)
+//        {
+//            long size1 = pf1.length();
+//            long size2 = pf2.length();
+//            return (size1<size2 ? -1 : (size1==size2 ? 0 : 1));
+//        }
         try
         {
-            return getHash(e);
+            ImageHash fh1 = getHash(pf1);
+            ImageHash fh2 = getHash(pf2);
+            return fh1.compareTo(fh2);
         }
         catch (FileNotFoundException ex)
         {
@@ -90,7 +85,29 @@ public class FileComparatorByImage extends EqualsDataBuilder<VirtualFile,Hash>
         {
             Logger.getLogger(FileComparatorByImage.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return pf1.compareTo(pf2);
+    }
+
+    private static ImageHash getHash(PackedFile pf) throws FileNotFoundException, IOException, ArchiveException
+    {
+        WeakReference<ImageHash> wr = map.get(pf);
+        ImageHash fh = wr!=null?wr.get():null;
+        if(fh==null)
+        {
+            synchronized(lock)
+            {
+                fh = new ImageHash(pf);
+                map.put(pf, new WeakReference<ImageHash>(fh));
+                fails++;
+                int curpc = (int)((map.size()*100.0)/fails);
+                if(curpc<pc)
+                {
+                    Logger.getLogger(FileComparatorByHash.class.getName()).log(Level.CONFIG, "{0}>{1} {2}%",new Integer[]{fails,map.size(),curpc});
+                    pc=curpc;
+                }
+            }
+        }
+        return fh;
     }
 
 }

@@ -31,7 +31,6 @@ import java.util.Set;
  */
 public class JavaProperty
 {
-
     /**
      * @param args the command line arguments
      */

@@ -39,13 +39,14 @@ public abstract class AbstractPicBulk implements PicBulkService
 {
     static boolean debug = true;
 
-    public boolean addPhoto(File file,ScaleDimension scale) throws FileNotFoundException, IOException, MalformedURLException, ServiceException, Exception
+    public boolean addPhoto(File file,ScaleDimension scale, boolean gray) throws FileNotFoundException, IOException, MalformedURLException, ServiceException, Exception
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         InputStream in = new FileInputStream(file);
         if(scale!=null)
         {
-            in = ScaleImage.scaleImage(in, scale);
+            String format = ScaleImage.getFormat(file);
+            in = new ScaleImage(scale,gray).filter(in,format);
         }
         byte buf[] = new byte[64*1024];
         int r;

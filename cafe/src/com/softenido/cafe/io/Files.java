@@ -75,9 +75,9 @@ public class Files
         },
     };
 
-    private static boolean equals(File a, File b,boolean useCanonical) throws IOException
+    private static boolean equals(File a, File b, boolean useCanonical) throws IOException
     {
-        if(useCanonical)
+        if (useCanonical)
         {
             a = a.getCanonicalFile();
             b = b.getCanonicalFile();
@@ -104,17 +104,15 @@ public class Files
                 // Transfer bytes from in to out
                 byte[] buf = new byte[8192];
                 int r;
-                while((r = in.read(buf)) > 0)
+                while ((r = in.read(buf)) > 0)
                 {
                     out.write(buf, 0, r);
                 }
-            }
-            finally
+            } finally
             {
                 out.close();
             }
-        }
-        finally
+        } finally
         {
             in.close();
         }
@@ -122,7 +120,7 @@ public class Files
 
     public static boolean move(File src, File dst) throws IOException
     {
-        if(src.renameTo(dst))
+        if (src.renameTo(dst))
         {
             return true;
         }
@@ -153,7 +151,6 @@ public class Files
 //        fef.run();
 //        return (String[]) v.toArray();
 //    }
-
     /**
      * Returns an array of strings naming the files and directories in the
      * directory denoted by this abstract pathname that satisfy the specified
@@ -195,7 +192,6 @@ public class Files
 //        }
 //        return v.toArray(new String[v.size()]);
 //    }
-
     /**
      * Returns an array of abstract pathnames denoting the files in the
      * directory denoted by this abstract pathname
@@ -229,7 +225,6 @@ public class Files
 //    {
 //        return listFiles((FileFilter) null);
 //    }
-
     /**
      * Returns an array of abstract pathnames denoting the files and
      * directories in the directory denoted by this abstract pathname that
@@ -277,7 +272,6 @@ public class Files
 //        fef.run();
 //        return v.toArray(new File[0]);
 //    }
-
     /**
      * Returns an array of abstract pathnames denoting the files and
      * directories in the directory denoted by this abstract pathname that
@@ -322,12 +316,11 @@ public class Files
 //        fef.run();
 //        return (File[]) v.toArray();
 //    }
-
     public static String escape(String name)
     {
-        for(String[] item : escapeCharacters)
+        for (String[] item : escapeCharacters)
         {
-            if(!File.separator.equals(item[0]))
+            if (!File.separator.equals(item[0]))
             {
                 name = name.replace(item[0], item[1]);
             }
@@ -349,7 +342,7 @@ public class Files
     {
         File[] items = getParentFiles(file, includeFile);
         String[] names = new String[items.length];
-        for(int i = 0; i < items.length; i++)
+        for (int i = 0; i < items.length; i++)
         {
             names[i] = items[i].toString();
         }
@@ -365,11 +358,11 @@ public class Files
     {
         File item = file;
         ArrayList<File> files = new ArrayList<File>();
-        if(includeFile)
+        if (includeFile)
         {
             files.add(item);
         }
-        while((item = item.getParentFile()) != null)
+        while ((item = item.getParentFile()) != null)
         {
             files.add(item);
         }
@@ -384,7 +377,7 @@ public class Files
     public static String getCommonParent(File a, File b)
     {
         File parent = getCommonParentFile(a, b);
-        if(parent != null)
+        if (parent != null)
         {
             return parent.toString();
         }
@@ -397,7 +390,7 @@ public class Files
         File[] listB = getParentFiles(b, true);
         int max = Math.min(listA.length, listB.length);
         File common = null;
-        for(int i = 0; i < max && listA[i].equals(listB[i]); i++)
+        for (int i = 0; i < max && listA[i].equals(listB[i]); i++)
         {
             common = listA[i];
         }
@@ -413,15 +406,15 @@ public class Files
     {
         File pa = parent.getAbsoluteFile();
         File ca = child.getAbsoluteFile();
-        if( pa.equals(getCommonParentFile(pa, ca)) )
+        if (pa.equals(getCommonParentFile(pa, ca)))
         {
             return true;
         }
-        if(canonical)
+        if (canonical)
         {
             File pc = parent.getCanonicalFile();
             File cc = child.getCanonicalFile();
-            if(pc.equals(parent) && cc.equals(child))
+            if (pc.equals(parent) && cc.equals(child))
             {
                 return false;
             }
@@ -434,22 +427,22 @@ public class Files
     {
         // se eliminan los duplicados
         File[] unique = ArrayUtils.uniqueCopyOf(list);
-        for(int i = 0; i < unique.length; i++)
+        for (int i = 0; i < unique.length; i++)
         {
-            for(int j = i + 1; j < unique.length; j++)
+            for (int j = i + 1; j < unique.length; j++)
             {
-                if(equals(unique[j],unique[i],true))
+                if (equals(unique[j], unique[i], true))
                 {
                     continue;
                 }
-                if(mergeWithParent)
+                if (mergeWithParent)
                 {
-                    if(unique[j].isDirectory() && isParentOf(unique[j], unique[i],canonical))
+                    if (unique[j].isDirectory() && isParentOf(unique[j], unique[i], canonical))
                     {
                         unique[i] = unique[j];
                         continue;
                     }
-                    if(unique[i].isDirectory() && isParentOf(unique[i], unique[j],canonical))
+                    if (unique[i].isDirectory() && isParentOf(unique[i], unique[j], canonical))
                     {
                         unique[j] = unique[i];
                         continue;
@@ -480,8 +473,9 @@ public class Files
      */
     public static boolean isLink(File file) throws IOException
     {
-        return isLink(file,false);
+        return isLink(file, false);
     }
+
     /**
      * Tests whether the file denoted by this abstract pathname is a link, or his path is in a link.
      * @param file
@@ -493,13 +487,13 @@ public class Files
         File c = file.getCanonicalFile();
         File a = file.getAbsoluteFile();
         boolean link = !c.equals(a);
-        if( !link || path)
+        if (!link || path)
         {
             return link;
         }
         File ap = a.getParentFile();
         File cp = c.getParentFile();
-        if(ap.equals(cp))
+        if (ap.equals(cp))
         {
             return true;
         }
@@ -509,47 +503,60 @@ public class Files
         link = !apcName.equals(c);
         return link;
     }
+
     public static File getNoDotFile(File file) throws IOException
     {
         // "." => ""
         File absolute = file.getAbsoluteFile();
         File canonical = file.getCanonicalFile();
-        if(absolute.equals(canonical))
+        if (absolute.equals(canonical))
+        {
             return file;
+        }
 
         // .../. => ...
         String name = file.getName();
-        while(name.equals("..")||name.equals("."))
+        while (name.equals("..") || name.equals("."))
         {
             File parent = file.getParentFile();
-            if(parent== null)
+            if (parent == null)
+            {
                 parent = file.getAbsoluteFile().getParentFile();
-            if(parent==null)
+            }
+            if (parent == null)
+            {
                 return canonical;
-            if(name.equals(".") && !canonical.equals(parent.getCanonicalFile()))
+            }
+            if (name.equals(".") && !canonical.equals(parent.getCanonicalFile()))
+            {
                 return canonical;
+            }
             file = parent;
             name = file.getName();
         }
         String path = file.getPath();
 
-        if(path.startsWith("."+File.separator) || path.startsWith(".."+File.separator))
+        if (path.startsWith("." + File.separator) || path.startsWith(".." + File.separator))
+        {
             return canonical;
-        if(path.contains(File.separator+"."+File.separator) || path.contains(File.separator+".."+File.separator))
+        }
+        if (path.contains(File.separator + "." + File.separator) || path.contains(File.separator + ".." + File.separator))
+        {
             return canonical;
+        }
         return file;
     }
 
     public static boolean isCyclicLink(File file) throws IOException
     {
-        if(file.isDirectory() && isLink(file))
+        if (file.isDirectory() && isLink(file))
         {
             File canonical = file.getCanonicalFile();
             File absolute = file.getAbsoluteFile();
             File[] parents = getParentFiles(absolute, false);
-            for(int i = 0; i < parents.length; i++)
+            for (int i = 0; i < parents.length; i++)
             {
-                if(canonical.equals(parents[i].getCanonicalFile()))
+                if (canonical.equals(parents[i].getCanonicalFile()))
                 {
                     return true;
                 }
@@ -564,7 +571,7 @@ public class Files
         InputStream in = new FileInputStream(file);
         byte buf[] = new byte[64 * 1024];
         int r;
-        while((r = in.read(buf)) > 0)
+        while ((r = in.read(buf)) > 0)
         {
             baos.write(buf, 0, r);
         }
@@ -574,7 +581,7 @@ public class Files
     public static File[] getAbsoluteFile(File[] files)
     {
         File[] abs = new File[files.length];
-        for(int i = 0; i < files.length; i++)
+        for (int i = 0; i < files.length; i++)
         {
             abs[i] = files[i].getAbsoluteFile();
         }
@@ -583,25 +590,43 @@ public class Files
 
     public static File[] toFileArray(String[] fileNames)
     {
-        if(fileNames == null)
+        if (fileNames == null)
         {
             return null;
         }
         File[] files = new File[fileNames.length];
-        for(int i = 0; i < files.length; i++)
+        for (int i = 0; i < files.length; i++)
         {
             files[i] = new File(fileNames[i]);
         }
         return files;
     }
-    public static String[] briefPath(String[] fileNames,int max)
+
+    public static String[] briefPath(String[] fileNames, int max)
     {
 //        comprobar si la longitud es menor del máximo, en ese caso no hacer nada
 //                en caso contrario se sustituye la parte del medio por ...
         return fileNames;
     }
-    public static String briefPath(String fileName,int max)
+
+    public static String briefPath(String fileName, int max)
     {
         return fileName;
+    }
+
+    public static boolean delete(File file)
+    {
+        if (file.isDirectory())
+        {
+            File[] childs = file.listFiles();
+            for (File item : childs)
+            {
+                if (!delete(item))
+                {
+                    return false;
+                }
+            }
+        }
+        return file.delete();
     }
 }

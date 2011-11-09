@@ -39,18 +39,32 @@ public class BooleanOption implements Option
     protected int lastUsed = 0;           //index of the last item using this option
     protected boolean oneHyphen = true;
     protected boolean twoHyphen = true;
+    protected boolean nonHyphen = false;
 
-    public BooleanOption(char shortName, String longName)
+    BooleanOption(char shortName, String longName, boolean command)
     {
         this.shortName = shortName;
         this.longName = longName;
         this._longName = "-" + longName;
         this.__longName = "--" + longName;
+        if(command)
+        {
+            oneHyphen = false;
+            twoHyphen = false;
+            nonHyphen = true;
+        }
     }
-
+    public BooleanOption(char shortName, String longName)
+    {
+        this(shortName,longName,false);
+    }
+    public BooleanOption(String longName, boolean command)
+    {
+        this((char) 0, longName, command);
+    }
     public BooleanOption(String longName)
     {
-        this((char) 0, longName);
+        this((char) 0, longName, false);
     }
 
     public String getLongName()
@@ -100,6 +114,14 @@ public class BooleanOption implements Option
             usedName = option;
             return 1;
         }
+        if (nonHyphen && option.equals(longName))
+        {
+            count++;
+            lastUsed = index;
+            usedName = option;
+            return 1;
+        }
+
         return 0;
     }
 
@@ -126,5 +148,4 @@ public class BooleanOption implements Option
     {
         return MessageFormat.format("--{0}={1} (count={2})",new Object[]{longName,(count>0),count});
     }
-
 }

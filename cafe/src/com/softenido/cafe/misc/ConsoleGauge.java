@@ -1,7 +1,7 @@
 /*
  *  ConsoleGauge.java
  *
- *  Copyright (C) 2007  Francisco G�mez Carrasco
+ *  Copyright (C) 2007  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

@@ -22,8 +22,7 @@
 package com.softenido.findrepe;
 
 import com.softenido.cafe.io.FileHash;
-import com.softenido.cafe.io.virtual.VirtualFile;
-import com.softenido.core.equals.EqualsDataBuilder;
+import com.softenido.cafe.io.packed.PackedFile;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.Comparator;
@@ -36,11 +35,11 @@ import java.util.logging.Logger;
  *
  * @author franci
  */
-public class FileComparatorByHash extends EqualsDataBuilder<VirtualFile,FileHash> implements Comparator<VirtualFile>
+public class FileComparatorByHash implements Comparator<PackedFile>
 {
     private final boolean half;
     private static final Object lock = new Object();
-    private static final Map<VirtualFile,WeakReference<FileHash>> map = Collections.synchronizedMap(new WeakHashMap<VirtualFile,WeakReference<FileHash>>());
+    private static final Map<PackedFile,WeakReference<FileHash>> map = Collections.synchronizedMap(new WeakHashMap<PackedFile,WeakReference<FileHash>>());
 
     
     private static int pc=100;
@@ -52,7 +51,7 @@ public class FileComparatorByHash extends EqualsDataBuilder<VirtualFile,FileHash
     }
 
     @Override
-    public int compare(VirtualFile pf1, VirtualFile pf2)
+    public int compare(PackedFile pf1, PackedFile pf2)
     {
         if(pf1==pf2)
         {
@@ -69,7 +68,7 @@ public class FileComparatorByHash extends EqualsDataBuilder<VirtualFile,FileHash
         return fh1.compareTo(fh2);
     }
 
-    private static FileHash getHash(VirtualFile pf)
+    private static FileHash getHash(PackedFile pf)
     {
         WeakReference<FileHash> wr = map.get(pf);
         FileHash fh = wr!=null?wr.get():null;
@@ -89,11 +88,5 @@ public class FileComparatorByHash extends EqualsDataBuilder<VirtualFile,FileHash
             }
         }
         return fh;
-    }
-
-    @Override
-    public FileHash buildData(VirtualFile pf)
-    {
-        return getHash(pf);
     }
 }

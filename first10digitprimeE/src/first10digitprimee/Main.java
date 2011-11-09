@@ -18,6 +18,7 @@
 */
 package first10digitprimee;
 
+import com.softenido.core.math.E;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 

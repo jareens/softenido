@@ -21,8 +21,6 @@
  */
 package com.softenido.cafe.imageio;
 
-import com.softenido.cafe.image.SimpleScaleDimension;
-import com.softenido.cafe.image.ScaleDimension;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -34,7 +32,6 @@ import java.awt.image.ColorConvertOp;
 import java.awt.image.ColorModel;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
-import java.awt.image.RGBImageFilter;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

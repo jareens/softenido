@@ -36,7 +36,7 @@ public interface PicBulkService
 {
 
     boolean addAlbum(int albumCount,int photoIndex) throws MalformedURLException, IOException, ServiceException;
-    boolean addPhoto(File file, ScaleDimension scale) throws FileNotFoundException, IOException, MalformedURLException, ServiceException, Exception;
+    boolean addPhoto(File file, ScaleDimension scale, boolean gray) throws FileNotFoundException, IOException, MalformedURLException, ServiceException, Exception;
     boolean addPhoto(File file, byte[] image) throws MalformedURLException, IOException, ServiceException;
     public void flush();
     //List<AlbumEntry> getAlbums() throws MalformedURLException, IOException, ServiceException;

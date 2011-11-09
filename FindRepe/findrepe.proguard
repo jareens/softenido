@@ -1,7 +1,7 @@
 -injars dist/FindRepe.jar
 -injars dist/lib/cafe.jar
 -injars dist/lib/core.jar
--injars dist/lib/commons-compress-1.1.jar
+-injars dist/lib/commons-compress-1.0.jar
 -outjars FindRepe.jar
 
 -libraryjars <java.home>/lib/rt.jar

@@ -24,7 +24,7 @@ package com.softenido.cafe.io;
 import com.softenido.cafe.io.virtual.VirtualFile;
 import com.softenido.cafe.io.virtual.VirtualFileFilter;
 import com.softenido.cafe.io.virtual.VirtualFiles;
-import com.softenido.core.util.OSName;
+import com.softenido.cafe.util.OSName;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileFilter;

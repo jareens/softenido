@@ -1,7 +1,9 @@
+package com.softenido.cafe.util.regex;
+
 /*
  *  RegExs.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +21,6 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafe.util.regex;
 
 import java.util.regex.Pattern;
 
@@ -70,7 +71,7 @@ public class RegExs
                             i++;
                         ch.append(wc[i]);
                     }
-                    regex.append("["+Pattern.quote(ch.toString())+"]");
+                    regex.append("[").append(Pattern.quote(ch.toString())).append("]");
                     break;
                 case '\\':
                     i++;

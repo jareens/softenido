@@ -34,7 +34,7 @@ public abstract class Messy<E>
     protected final E x;
     protected final E y;
 
-    private Messy(E x, E y)
+    Messy(E x, E y)
     {
         this.x = x;
         this.y = y;

@@ -27,6 +27,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveEntry;
 
@@ -41,7 +43,7 @@ class ZipVirtualFileSystem implements VirtualFileSystem
     private final String[] items;
     private final String name;
     private String path;
-    private final long length;
+    private volatile long length;
     private final boolean directory;
 
     public ZipVirtualFileSystem(String[] items, String path, ArchiveEntry entry)
@@ -77,6 +79,36 @@ class ZipVirtualFileSystem implements VirtualFileSystem
 
     public long length()
     {
+        if(length<0)
+        {
+            synchronized(this)
+            {
+                int r =0;
+                long count =0;
+                byte[] b = new byte[8*1024];
+                try
+                {
+                    InputStream data = getInputStream();
+                    try
+                    {
+                        while( (r=data.read(b))>0)
+                        {
+                            count+=r;
+                        }
+                        length=count;
+                    }
+                    finally
+                    {
+                        data.close();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    length=0;
+                    Logger.getLogger(ZipVirtualFileSystem.class.getName()).log(Level.WARNING, "ZipEntry={0}", this);
+                }
+            }
+        }
         return length;
     }
 

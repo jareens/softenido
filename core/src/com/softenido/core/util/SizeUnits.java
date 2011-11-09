@@ -21,30 +21,39 @@
  */
 package com.softenido.core.util;
 
-import com.softenido.core.util.AbstractUnits;
-
 /**
  *
  * @author franci
  */
 public class SizeUnits extends AbstractUnits
 {
-
-    final static long[] VALUES = new long[]
-    {
-        1L, 1024L, 1024L * 1024L, 1024L * 1024L * 1024L, 1024L * 1024L * 1024L * 1024L
-    };
+    public final static long Kb = 1024L;
+    public final static long Ks = 1000L;
+    final static long[] VALUES_BINARY   = new long[]{1L, Kb, Kb*Kb, Kb*Kb*Kb, Kb*Kb*Kb*Kb, Kb*Kb*Kb*Kb*Kb};
+    final static long[] VALUES_STANDARD = new long[]{1L, Ks, Ks*Ks, Ks*Ks*Ks, Ks*Ks*Ks*Ks, Ks*Ks*Ks*Ks*Ks};
     final static String[] SHORT_NAMES = new String[]
     {
-        "b", "k", "m", "g", "t"
+        "b", "k", "m", "g", "t", "p"
     };
     final static String[] LONG_NAMES = new String[]
     {
-        "", "kilo", "mega", "giga", "tera"
+        "", "kilo", "mega", "giga", "tera", "peta"
     };
 
     public SizeUnits()
     {
-        super(VALUES, SHORT_NAMES, LONG_NAMES);
+        super(VALUES_BINARY, SHORT_NAMES, LONG_NAMES);
+    }
+    private SizeUnits(long[] values)
+    {
+        super(values, SHORT_NAMES, LONG_NAMES);
+    }
+    static public SizeUnits getBinaryInstance()
+    {
+        return new SizeUnits(VALUES_BINARY);
+    }
+    static public SizeUnits getStandardInstance()
+    {
+        return new SizeUnits(VALUES_STANDARD);
     }
 }
