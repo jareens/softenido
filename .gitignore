@@ -1,3 +1,8 @@
+#ignore some file types
+*~
+*.class
+
+#ignore some paths
 /AndroidApplication1/bin/
 /AndroidApplication1/gen/
 /cafe/build/
