@@ -253,15 +253,15 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
      inkscape:cx="-90"
-     inkscape:cy="474.28569"
+     inkscape:cy="468.5714"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="615"
-     inkscape:window-height="503"
-     inkscape:window-x="659"
-     inkscape:window-y="470"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1280"
+     inkscape:window-height="950"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -282,9 +282,9 @@
        transform="matrix(1.996455,0,0,1.8891444,-422.21458,-273.05082)"
        id="layer1-5"
        inkscape:label="Layer 1"
-       inkscape:export-xdpi="4.0898714"
-       inkscape:export-ydpi="4.0898714"
-       inkscape:export-filename="/home/franci/src/wifix32.png">
+       inkscape:export-xdpi="61.919998"
+       inkscape:export-ydpi="61.919998"
+       inkscape:export-filename="/home/franci/src/softenido/Wifix/icon/wifix512.png">
       <g
          id="g6534">
         <g
@@ -375,9 +375,9 @@
        transform="matrix(8.8272027,0,0,8.2028033,259.43296,577.97341)"
        inkscape:transform-center-x="-94.285714"
        inkscape:transform-center-y="71.428571"
-       inkscape:export-xdpi="4.0898714"
-       inkscape:export-ydpi="4.0898714"
-       inkscape:export-filename="/home/franci/src/wifix32.png">
+       inkscape:export-xdpi="61.919998"
+       inkscape:export-ydpi="61.919998"
+       inkscape:export-filename="/home/franci/src/softenido/Wifix/icon/wifix512.png">
       <g
          id="g2884"
          transform="translate(0.08465608,0.338624)">
@@ -398,9 +398,9 @@
        x="31.428572"
        y="975.21924"
        id="text5361"
-       inkscape:export-filename="/home/franci/src/wifix32.png"
-       inkscape:export-xdpi="4.0898714"
-       inkscape:export-ydpi="4.0898714"><tspan
+       inkscape:export-filename="/home/franci/src/softenido/Wifix/icon/wifix512.png"
+       inkscape:export-xdpi="61.919998"
+       inkscape:export-ydpi="61.919998"><tspan
          sodipodi:role="line"
          id="tspan5363"
          x="31.428572"
@@ -412,9 +412,9 @@
        y="622.54224"
        id="text5365"
        transform="scale(1.1073598,0.90304889)"
-       inkscape:export-filename="/home/franci/src/wifix32.png"
-       inkscape:export-xdpi="4.0898714"
-       inkscape:export-ydpi="4.0898714"><tspan
+       inkscape:export-filename="/home/franci/src/softenido/Wifix/icon/wifix512.png"
+       inkscape:export-xdpi="61.919998"
+       inkscape:export-ydpi="61.919998"><tspan
          sodipodi:role="line"
          id="tspan5367"
          x="45.228928"
@@ -433,16 +433,16 @@
            x="-151.42857"
            y="-84.780678" /></flowRegion><flowPara
          id="flowPara5396" /></flowRoot>    <image
-       sodipodi:absref="/home/franci/src/softenido.master/Wifix/icon/aid_band.png"
+       sodipodi:absref="/home/franci/src/softenido/Wifix/icon/aid_band.png"
        xlink:href="aid_band.png"
-       y="402.07648"
-       x="541.14288"
-       id="image2899"
-       width="200"
+       inkscape:export-ydpi="61.919998"
+       inkscape:export-xdpi="61.919998"
+       inkscape:export-filename="/home/franci/src/softenido/Wifix/icon/wifix512.png"
        height="200"
-       inkscape:export-filename="/home/franci/src/wifix32.png"
-       inkscape:export-xdpi="4.0898714"
-       inkscape:export-ydpi="4.0898714" />
+       width="200"
+       id="image2899"
+       x="541.14288"
+       y="402.07648" />
     <flowRoot
        xml:space="preserve"
        id="flowRoot2959"
