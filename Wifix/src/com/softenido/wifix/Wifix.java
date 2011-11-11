@@ -1,4 +1,4 @@
-package com.softenido.tradertoolbox;
+package com.softenido.wifix;
 
 import android.app.Activity;
 import android.content.Context;
