@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Wifix.iml" filepath="$PROJECT_DIR$/Wifix.iml" />
       <module fileurl="file://$PROJECT_DIR$/../droid/droid.iml" filepath="$PROJECT_DIR$/../droid/droid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../droid/~generated_droid.iml" filepath="$PROJECT_DIR$/../droid/~generated_droid.iml" />
     </modules>
   </component>
 </project>
