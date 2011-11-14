@@ -3,11 +3,12 @@
     <string name="app_name">Wifix (lite)</string>
     <string name="reconnect">Reconnect</string>
     <string name="reassign">Reassign</string>
-    <string name="keepLock">Keep Lock</string>
+    <string name="keepLock">Keep Connection</string>
     <string name="exit">Exit</string>
     <string name="hide">Hide</string>
     <string name="about">About</string>
     <string name="about_description">Wifix (Lite)</string>
 
     <string name="ADMOB_PUBLISHER_ID">a14d7b4327493cd</string>
+    <string name="about_accept">Accept</string>
 </resources>

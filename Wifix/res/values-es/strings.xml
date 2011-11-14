@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reconnect">Reconectar</string>
+    <string name="reassign">Reasignar</string>
+    <string name="keepLock">Mantener Conexión</string>
+    <string name="exit">Salir</string>
+    <string name="hide">Ocultar</string>
+    <string name="about">Acerca de...</string>
+    <string name="about_accept">Aceptar</string>
+</resources>

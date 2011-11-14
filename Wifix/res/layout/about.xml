@@ -32,9 +32,9 @@
         android:text="This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
         android:paddingBottom="10sp" android:paddingTop="10sp" android:includeFontPadding="true"/>
 
-    <Button android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:layout_gravity="center"
-        android:id="@+id/bOk" android:text="  Accept  " />
+    <Button android:layout_gravity="center"
+        android:layout_width="100dip" android:layout_height="50dip"
+        android:id="@+id/bOk" android:text="@string/about_accept" />
  <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"

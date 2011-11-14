@@ -1,0 +1,17 @@
+v0.2.3 vc5 (2011-11-14)
+--------------------------
+- added spanish i18n
+- added singleInstance
+- added changelog
+
+v0.2.2 vc4 (2011-11-11)
+--------------------------
+
+v0.2.1 vc3 (2011-11-09)
+--------------------------
+
+v0.2.0 vc2 (2011-11-09)
+--------------------------
+- initial release
+- replaces WifiPing (Lite)
+
