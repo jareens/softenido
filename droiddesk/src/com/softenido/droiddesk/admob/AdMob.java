@@ -2,15 +2,18 @@ package com.softenido.droiddesk.admob;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.widget.LinearLayout;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
+import com.softenido.droiddesk.util.MetaData;
 
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static java.util.logging.Logger.getLogger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,38 +25,65 @@ import java.util.logging.Logger;
 public class AdMob
 {
     public static final String ADMOB_PUBLISHER_ID = "ADMOB_PUBLISHER_ID";
+    public static final String TEST_DEVICES       = "TEST_DEVICES";
+    public static final String NO_ADS_AT_ALL      = "NO_ADS_AT_ALL";
 
-    static volatile String adUnitId = null;
-    static final HashSet<String> testDev = new HashSet<String>();
-    static volatile boolean firstAd = true;
+    static volatile boolean initialized = false;
+    static volatile String id = null;
+    static final HashSet<String> testDevices = new HashSet<String>();
+    {
+        testDevices.add(AdRequest.TEST_EMULATOR);
+    }
     static volatile AdRequest request = null;
 
-    public static void init(Activity activity,int id,String[] testDevices)
+    private static void init(Context ctx)
     {
-        testDev.clear();
-        testDev.add(AdRequest.TEST_EMULATOR);
-        for(String dev: testDevices)
+        if(initialized==false)
         {
-            testDev.add(dev);
+            Bundle bundle = MetaData.getBundle(ctx);
+            if(id==null)
+            {
+                // get AdMob Publisher Id from AndroidManisfest metadata
+                id = (bundle!=null)?bundle.getString(ADMOB_PUBLISHER_ID):null;
+            }
+            // get Test Devices from AndroidManisfest metadata
+            String list = (bundle!=null)?bundle.getString(TEST_DEVICES):null;
+            String devs[]=(list!=null)  ?list.split(","):new String[0];
+            for(String item:devs)
+            {
+                testDevices.add(item);
+            }
+            request = new AdRequest();
+            request.setTestDevices(AdMob.testDevices);
+            initialized = true;
         }
-        Context ctx;
-        ctx = activity.getApplication().getBaseContext();
-        adUnitId = ctx.getResources().getString(id);
-        request = new AdRequest();
-        request.setTestDevices(testDev);
+    }
+
+    private static void init(Activity activity)
+    {
+        init(activity.getApplication().getBaseContext());
+    }
+
+    private static void setId(String val)
+    {
+        id = val;
+    }
+
+    public static void addTestDevice(String device)
+    {
+        testDevices.add(device);
     }
 
     static AdMob addAdView(Activity activity, AdSize adSize, LinearLayout layout)
     {
-        if(adUnitId==null)
+        init(activity);
+        if(id.equals(NO_ADS_AT_ALL))
         {
             return null;
         }
         try
         {
-
-            AdView adView = firstAd ? new AdView(activity, adSize, adUnitId) : new AdView(activity, adSize, adUnitId);
-
+            AdView adView = new AdView(activity, adSize, id);
             layout.addView(adView);
             adView.loadAd(request);
             return  new AdMobBanner(adView);
@@ -70,11 +100,8 @@ public class AdMob
     }
     public static AdMob addBanner(Activity activity, int layoutId)
     {
-        if(adUnitId!=null)
-        {
-            return  addBanner(activity, (LinearLayout) activity.findViewById(layoutId));
-        }
-        return null;
+        LinearLayout layout = (LinearLayout) activity.findViewById(layoutId);
+        return  addBanner(activity, layout);
     }
 
 }
