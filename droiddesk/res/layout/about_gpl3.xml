@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/aboutLayout"
+    android:baselineAligned="true"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="5sp">
+    <ScrollView android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:layout_weight="1">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center"
+                android:id="@+id/AboutAppLabel" android:text="AboutAppLabel"/>
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_gravity="center"
+                android:id="@+id/AboutAppVersionName" android:text="AboutAppVersionName" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:paddingBottom="10sp" android:layout_gravity="center"
+                android:id="@+id/AboutCopyRight" android:text="AboutCopyRight"/>
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_gravity="center"
+                android:id="@+id/AboutAppDescription" android:text="AboutAppDescription" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:paddingBottom="10sp" android:autoLink="web"
+                android:id="@+id/AboutWebUrl1" android:text="AboutWebUrl1"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:paddingBottom="10sp" android:autoLink="web"
+                    android:id="@+id/AboutWebUrl2" android:text="AboutWebUrl2"/>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
+                android:paddingBottom="10sp" android:paddingTop="10sp" android:includeFontPadding="true"/>
+
+            <Button android:layout_gravity="center"
+                android:layout_width="100dip" android:layout_height="50dip"
+                android:id="@+id/bAboutAccept" android:text="@string/about_accept" />
+        </LinearLayout>
+	</ScrollView>
+</LinearLayout>
+

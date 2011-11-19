@@ -3,7 +3,7 @@
       package="com.softenido.wifix"
       android:versionCode="5"
       android:versionName="0.2.3">
-    <uses-sdk android:minSdkVersion="8" />
+        <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="8" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -29,7 +29,10 @@
         </activity>
 
 		<!-- The application's publisher ID assigned by AdMob -->
+        <!--suppress AndroidDomInspection -->
         <activity android:name="com.google.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+        <meta-data android:name="ADMOB_PUBLISHER_ID" android:value="a14eb976d57f243"/>
+        <meta-data android:name="TEST_DEVICES" android:value="0E2C92F36B0311C7AED5DD1C16F90C2B,9488E92797A07819CC2D99917CD887CC"/>
   </application>
 
 

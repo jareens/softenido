@@ -9,7 +9,7 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import com.softenido.droid.admob.AdMob;
+import com.softenido.droiddesk.admob.AdMob;
 
 public class Wifix extends Activity
 {
@@ -18,7 +18,6 @@ public class Wifix extends Activity
     WifiManager wm=null;
     WifiManager.WifiLock wLock = null;
     private AdMob admob=null;
-    private String[] testDevices = {"0E2C92F36B0311C7AED5DD1C16F90C2B"};
 
     /** Called when the activity is first created. */
     @Override
@@ -27,7 +26,6 @@ public class Wifix extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        AdMob.init(this, R.string.ADMOB_PUBLISHER_ID, testDevices);
         admob = AdMob.addBanner(this,R.id.mainLayout);
 
         Context c;

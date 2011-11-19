@@ -4,6 +4,6 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Android 2.2 Platform"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/admob"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/droid"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/droiddesk"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
