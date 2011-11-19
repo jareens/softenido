@@ -3,12 +3,6 @@
 *.class
 
 #ignore some paths
-/cafe/build/
-/cafe/nbproject/private/
-/core/build/
-/core/dist/
-/droid/bin
-/droid/gen
 /EasyMail/build/
 /EchoServer/build/
 /FindRepe/build/
@@ -49,15 +43,9 @@
 /hardless/build/
 /headdesk/dist/
 /headdesk/build/
-/droiddesk/gen/
-/droiddesk/bin/
-/droiddesk/.idea/
-/droiddesk/nbandroid/
-/droiddesk (copia)/.idea/
-/droiddesk (copia)/bin/
-/droiddesk (copia)/gen/
-/droiddesk (copia)/nbandroid/
 /droidless/gen/
 /droidless/bin/
 /droidless/nbandroid/
 
+/droiddesk/gen/
+/droiddesk/bin/
