@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-	xmlns:myapp="http://schemas.android.com/apk/res/com.softenido.wifix"
+	xmlns:myapp="http://schemas.android.com/apk/res/com.softenido.tradertoolbox"
     android:id="@+id/mainLayout"
     android:baselineAligned="true"
     android:orientation="vertical"
@@ -10,14 +10,14 @@
     <ScrollView android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
             android:layout_weight="1">
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
-            <Button android:text="@string/reassign" android:id="@+id/bReassign" android:drawableLeft="@drawable/reassign"
+            <Button android:text="@string/riskmanager" android:id="@+id/bRiskManager" android:drawableLeft="@drawable/riskmanager"
                 android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
-            <Button android:text="@string/reconnect" android:id="@+id/bReconnect" android:drawableLeft="@drawable/reconnect"
-                android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
-            <CheckBox android:text="@string/keepLock" android:id="@+id/checkBox1"
-                android:layout_height="wrap_content" android:layout_width="match_parent"></CheckBox>
+            <Button android:text="@string/autoenvelope" android:id="@+id/bAutoEnvelope" android:drawableLeft="@drawable/autoenvelope"
+                android:layout_height="wrap_content" android:layout_width="match_parent" android:enabled="false"></Button>
+            <Button android:text="@string/autoenvelope" android:id="@+id/bAutoEnvelope" android:drawableLeft="@drawable/autoenvelope"
+                android:layout_height="wrap_content" android:layout_width="match_parent" android:enabled="false"></Button>
             <Button android:id="@+id/bAbout" android:text="@string/about" android:drawableLeft="@drawable/about" android:layout_height="wrap_content" android:layout_width="match_parent"/>
             <Button android:text="@string/hide" android:id="@+id/bHide" android:drawableLeft="@drawable/hide" android:layout_height="wrap_content" android:layout_width="match_parent"/>
         </LinearLayout>
-    </ScrollView>
+	</ScrollView>
 </LinearLayout>

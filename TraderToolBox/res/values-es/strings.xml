@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_description">Set de herramientas para traders</string>
+
+    <string name="riskmanager">Gestión de Riesgo</string>
+    <string name="autoenvelope">Autoenvolvente</string>
+    <string name="hide">Ocultar</string>
+    <string name="about">Acerca de</string>
+</resources>

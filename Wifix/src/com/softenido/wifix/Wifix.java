@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import com.softenido.droiddesk.admob.AdMob;
+import com.softenido.droiddesk.util.ui.AboutGPL3Activity;
 
 public class Wifix extends Activity
 {
@@ -73,7 +74,7 @@ public class Wifix extends Activity
                 vibrator.vibrate(33);
             }
         });
-        final Intent about = new Intent(this,About.class);
+        final Intent about = new Intent(this,AboutGPL3Activity.class);
         bAbout.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View view)

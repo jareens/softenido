@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TraderToolBox (lite)</string>
+    <string name="app_description">Set of Tools for traders</string>
+    <string name="riskmanager">Risk Management</string>
+    <string name="autoenvelope">Autoenvelope</string>
+    <string name="hide">Hide</string>
+    <string name="about">About</string>
+    <string name="about_description">TraderToolBox (Lite)</string>
+
+    <string name="trade_equity">Equity</string>
+    <string name="trade_risk">Risk</string>
+    <string name="trade_limit">Limit</string>
+    <string name="trade_stop">Stop</string>
+    <string name="trade_target">Target</string>
+    <string name="trade_ratio">Ratio</string>
+    <string name="trade_slippage">Slippage</string>
+    <string name="trade_comision">Commision</string>
+    <string name="trade_fee">Fee</string>
+    <string name="trade_shares">Shares</string>
+
+</resources>

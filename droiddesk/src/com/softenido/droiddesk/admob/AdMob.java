@@ -31,9 +31,6 @@ public class AdMob
     static volatile boolean initialized = false;
     static volatile String id = null;
     static final HashSet<String> testDevices = new HashSet<String>();
-    {
-        testDevices.add(AdRequest.TEST_EMULATOR);
-    }
     static volatile AdRequest request = null;
 
     private static void init(Context ctx)
@@ -54,7 +51,11 @@ public class AdMob
                 testDevices.add(item);
             }
             request = new AdRequest();
-            request.setTestDevices(AdMob.testDevices);
+            request.addTestDevice(AdRequest.TEST_EMULATOR);
+            for(String item:testDevices)
+            {
+                request.addTestDevice(item);
+            }
             initialized = true;
         }
     }
