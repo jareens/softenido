@@ -9,7 +9,7 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import com.softenido.droid.admob.AdMob;
+import com.softenido.droiddesk.admob.AdMob;
 
 public class Wifix extends Activity
 {

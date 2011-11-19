@@ -3,8 +3,6 @@
 *.class
 
 #ignore some paths
-/AndroidApplication1/bin/
-/AndroidApplication1/gen/
 /cafe/build/
 /cafe/nbproject/private/
 /core/build/
@@ -29,9 +27,37 @@
 /SvnHg/build/
 /TraderToolBox/bin/
 /TraderToolBox/gen/
-/Wifix/bin/
-/Wifix/gen/
-/Wifix/out/
-
 #edited in google code
 #edited in github
+/droidcore/bin/
+/droidcore/gen/
+/hardcore/build/
+/hardcore/dist/
+/commons/dist/
+/commons/build/
+/headless/build/
+/desktop/build/
+/headless/dist/
+/commons/nbproject/private/
+/headless/nbproject/private/
+/desktop/nbproject/private/
+/droidcore/.idea/
+/droidcore/nbandroid/
+/headdesk/nbproject/private/
+/hardless/nbproject/private/
+/hardless/dist/
+/hardless/build/
+/headdesk/dist/
+/headdesk/build/
+/droiddesk/gen/
+/droiddesk/bin/
+/droiddesk/.idea/
+/droiddesk/nbandroid/
+/droiddesk (copia)/.idea/
+/droiddesk (copia)/bin/
+/droiddesk (copia)/gen/
+/droiddesk (copia)/nbandroid/
+/droidless/gen/
+/droidless/bin/
+/droidless/nbandroid/
+
