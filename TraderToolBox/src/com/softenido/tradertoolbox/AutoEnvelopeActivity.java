@@ -23,7 +23,7 @@ public class AutoEnvelopeActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.preferences);
 
         admob = AdMob.addBanner(this,R.id.mainLayout);
 

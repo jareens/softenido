@@ -1,9 +1,36 @@
+/*
+ * AdMob.java
+ *
+ * Copyright (c) 2011  Francisco Gómez Carrasco
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Report bugs or new features to: flikxxi@gmail.com
+ */
+
 package com.softenido.droiddesk.admob;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
@@ -32,6 +59,7 @@ public class AdMob
     static volatile String id = null;
     static final HashSet<String> testDevices = new HashSet<String>();
     static volatile AdRequest request = null;
+    private static final String CONF_LOG_MSG = "add to AndroidManifest.xml <meta-data android:name=\"ADMOB_PUBLISHER_ID\" android:value=\"YOUR AdMob ID\"/>";
 
     private static void init(Context ctx)
     {
@@ -42,6 +70,10 @@ public class AdMob
             {
                 // get AdMob Publisher Id from AndroidManisfest metadata
                 id = (bundle!=null)?bundle.getString(ADMOB_PUBLISHER_ID):null;
+                if(id==null)
+                {
+                    Logger.getLogger(AdMob.class.getName()).log(Level.SEVERE,CONF_LOG_MSG);
+                }
             }
             // get Test Devices from AndroidManisfest metadata
             String list = (bundle!=null)?bundle.getString(TEST_DEVICES):null;
@@ -75,17 +107,24 @@ public class AdMob
         testDevices.add(device);
     }
 
-    static AdMob addAdView(Activity activity, AdSize adSize, LinearLayout layout)
+    static AdMob addAdView(Activity activity, AdSize adSize, LinearLayout parent, boolean top)
     {
         init(activity);
-        if(id.equals(NO_ADS_AT_ALL))
+        if(id==null || id.equals(NO_ADS_AT_ALL))
         {
             return null;
         }
         try
         {
             AdView adView = new AdView(activity, adSize, id);
-            layout.addView(adView);
+            if(top)
+            {
+                parent.addView(adView, 0);
+            }
+            else
+            {
+                parent.addView(adView);
+            }
             adView.loadAd(request);
             return  new AdMobBanner(adView);
         }
@@ -95,14 +134,23 @@ public class AdMob
             return null;
         }
     }
-    public static AdMob addBanner(Activity activity, LinearLayout layout)
+
+    public static AdMob addBanner(Activity activity, LinearLayout parent)
     {
-        return  addAdView(activity,AdSize.BANNER,layout);
+        return  addAdView(activity,AdSize.BANNER,parent,false);
+    }
+    public static AdMob addBanner(Activity activity, LinearLayout parent, boolean top)
+    {
+        return  addAdView(activity,AdSize.BANNER,parent, top);
     }
     public static AdMob addBanner(Activity activity, int layoutId)
     {
         LinearLayout layout = (LinearLayout) activity.findViewById(layoutId);
         return  addBanner(activity, layout);
     }
-
+    public static AdMob addBanner(Activity activity, int parentLayoutId, boolean top)
+    {
+        LinearLayout layout = (LinearLayout) activity.findViewById(parentLayoutId);
+        return  addBanner(activity, layout, top);
+    }
 }

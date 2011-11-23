@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="views">
+        <item>ListView Pure XML</item>
+        <item>ListView Code XML</item>
+        <item>About...</item>
+    </string-array>
+    <string-array name="listview_pure_xml_lines">
+        <item>First Line</item>
+        <item>Second Line</item>
+        <item>Third Line</item>
+        <item>Fourth Line</item>
+        <item>Fifth Line</item>
+        <item>Sixth Line</item>
+        <item>Seventh Line</item>
+        <item>Eighth Line</item>
+        <item>Ninth Line</item>
+        <item>Last Line</item>
+    </string-array>
+</resources>

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TraderToolBox.iml" filepath="$PROJECT_DIR$/TraderToolBox.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../trading/Trading.iml" filepath="$PROJECT_DIR$/../trading/Trading.iml" />
       <module fileurl="file://$PROJECT_DIR$/../droiddesk/droiddesk.iml" filepath="$PROJECT_DIR$/../droiddesk/droiddesk.iml" />
     </modules>
   </component>

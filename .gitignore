@@ -3,6 +3,10 @@
 *.class
 
 #ignore some paths
+/AndroidApiExamples/bin
+/AndroidApiExamples/gen
+/AndroidApiExamples/out
+
 /EasyMail/build/
 /EchoServer/build/
 /FindRepe/build/
@@ -53,3 +57,13 @@
 /TraderToolBox/out
 /TraderToolBox/gen
 /TraderToolBox/bin
+/trading/build/
+/trading/dist/
+/Wifix/.idea/
+/Wifix/nbandroid/
+/hardcore/.idea/
+/hardless/.idea/
+/headdesk/.idea/
+/headless/.idea/
+/trading/nbproject/private/
+/trading/.idea/
