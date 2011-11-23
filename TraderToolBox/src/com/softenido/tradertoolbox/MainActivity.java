@@ -23,6 +23,7 @@ package com.softenido.tradertoolbox;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -32,6 +33,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.softenido.droiddesk.admob.AdMob;
+import com.softenido.droiddesk.util.ui.AboutGPL3Activity;
 
 public class MainActivity extends Activity
 {
@@ -40,17 +42,41 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        ListView mainListView = (ListView) findViewById(R.id.news_list_view);
+        final Intent riskManager = new Intent(this,RiskManagerActivity.class);
+        final Intent autoEnvelope = new Intent(this,AutoEnvelopeActivity.class);
+        final Intent about = new Intent(this, AboutGPL3Activity.class);
+
+        ListView mainListView = (ListView) findViewById(R.id.main_list_view);
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
-            public void onItemClick(AdapterView arg0, View arg1,
-                int arg2, long arg3) {
-                Toast.makeText(getApplicationContext(),
-                        "You clicked on item " + arg2,
-                      Toast.LENGTH_LONG).show();
+            public void onItemClick(AdapterView parent, View view, int position, long id)
+            {
+                switch (position)
+                {
+                    case 0:
+                        startActivity(riskManager);
+                        break;
+                    case 1:
+                        startActivity(autoEnvelope);
+                        break;
+//                    case 1:
+//                        startActivity(accounts);
+//                        break;
+                    case 3:
+                        startActivity(about);
+                        break;
+                }
             }
         });
-        admob = AdMob.addBanner(this,R.id.mainLayout, true);
 
+        mainListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+        {
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Toast.makeText(getApplicationContext(), "Long Click item "+position,Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        admob = AdMob.addBanner(this, R.id.mainLayout, true);
     }
 }

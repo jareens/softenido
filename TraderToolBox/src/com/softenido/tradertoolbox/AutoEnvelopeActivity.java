@@ -23,55 +23,8 @@ public class AutoEnvelopeActivity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.preferences);
-
+        setContentView(R.layout.main);
         admob = AdMob.addBanner(this,R.id.mainLayout);
-
-        Context c;
-        c = this.getApplication().getBaseContext();
-        vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
-        wm = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
-
-        final Button bRiskManager = (Button) findViewById(R.id.bRiskManager);
-        final Button bAutoEnvelope= (Button) findViewById(R.id.bAutoEnvelope);
-        final Button bAbout= (Button) findViewById(R.id.bAbout);
-        final Button bHide = (Button) findViewById(R.id.bHide);
-
-        final Intent riskManager = new Intent(this,RiskManagerActivity.class);
-        final Intent autoenvelope = new Intent(this,AutoEnvelopeActivity.class);
-        final Intent about = new Intent(this,AboutGPL3Activity.class);
-
-        bAbout.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View view)
-            {
-                startActivity(riskManager);
-            }
-        });
-
-        bAbout.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View view)
-            {
-                startActivity(autoenvelope);
-            }
-        });
-        bAbout.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View view)
-            {
-                startActivity(about);
-            }
-        });
-        bHide.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View view)
-            {
-                final Intent home = new Intent(Intent.ACTION_MAIN);
-                home.addCategory(Intent.CATEGORY_HOME);
-                startActivity(home);
-            }
-        });
-    }
+   }
 
 }
