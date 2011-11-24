@@ -1,6 +1,7 @@
-v0.2.4 vc5 (2011-11-19)
+v0.2.4 vc6 (2011-11-24)
 --------------------------
 - minimal improved look&feel
+- soved discrepande between checkbox and wifiLock
 
 v0.2.3 vc5 (2011-11-14)
 --------------------------

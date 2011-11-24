@@ -2,70 +2,23 @@
 *~
 *.class
 
-/*/.idea/workspace.xml
+bin/
+gen/
+out/
+build/
+dist/
 
 #ignore some paths
-/AndroidApiExamples/bin
-/AndroidApiExamples/gen
-/AndroidApiExamples/out
 
-/EasyMail/build/
-/EchoServer/build/
-/FindRepe/build/
-/first10digitprimeE/build/
-/JarLaunch/build/
-/JarLaunch/dist/
-/JavaProperty/build/
-/JavaProperty/dist/
-/lait/build/
-/lait/dist/
-/MailBulk/build/
-/MailBulk/dist/
-/PicBulk/build/
-/ScaleImage/build/
-/ScaleImage/dist/
-/SvnHg/build/
-/TraderToolBox/bin/
-/TraderToolBox/gen/
-#edited in google code
-#edited in github
-/droidcore/bin/
-/droidcore/gen/
-/hardcore/build/
-/hardcore/dist/
-/commons/dist/
-/commons/build/
-/headless/build/
-/desktop/build/
-/headless/dist/
 /commons/nbproject/private/
 /headless/nbproject/private/
 /desktop/nbproject/private/
-/droidcore/.idea/
 /droidcore/nbandroid/
 /headdesk/nbproject/private/
 /hardless/nbproject/private/
-/hardless/dist/
-/hardless/build/
-/headdesk/dist/
-/headdesk/build/
-/droidless/gen/
-/droidless/bin/
 /droidless/nbandroid/
 
-/droiddesk/gen/
-/droiddesk/bin/
-
-/TraderToolBox/out
-/TraderToolBox/gen
-/TraderToolBox/bin
-/trading/build/
-/trading/dist/
-/Wifix/.idea/
 /Wifix/nbandroid/
-/hardcore/.idea/
-/hardless/.idea/
-/headdesk/.idea/
 /headless/.idea/
 /trading/nbproject/private/
 /trading/.idea/
