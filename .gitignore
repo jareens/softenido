@@ -2,6 +2,8 @@
 *~
 *.class
 
+/*/.idea/workspace.xml
+
 #ignore some paths
 /AndroidApiExamples/bin
 /AndroidApiExamples/gen

@@ -36,9 +36,6 @@ import com.softenido.droiddesk.util.ui.AboutGPL3Activity;
 public class Wifix extends Activity
 {
 
-    Vibrator vibrator=null;
-    WifiManager wm=null;
-    WifiManager.WifiLock wLock = null;
     private AdMob admob=null;
 
     /** Called when the activity is first created. */
@@ -50,33 +47,26 @@ public class Wifix extends Activity
 
         admob = AdMob.addBanner(this,R.id.mainLayout);
 
-        Context c;
-        c = this.getApplication().getBaseContext();
-        vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
-        wm = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
-
         final Button bConnect = (Button) findViewById(R.id.bReconnect);
         final Button bReassign= (Button) findViewById(R.id.bReassign);
         final CheckBox cbKeepLock= (CheckBox) findViewById(R.id.checkBox1);
         final Button bAbout= (Button) findViewById(R.id.bAbout);
         final Button bHide = (Button) findViewById(R.id.bHide);
 
-        wLock = wm.createWifiLock("WifiLock");
-
         bConnect.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View view)
             {
-                wm.reconnect();
-                vibrator.vibrate(33);
+                getWifiManager().reconnect();
+                vibrate(33);
             }
         });
         bReassign.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View view)
             {
-                wm.reassociate();
-                vibrator.vibrate(33);
+                getWifiManager().reassociate();
+                vibrate(33);
             }
         });
         cbKeepLock.setOnClickListener(new View.OnClickListener()
@@ -85,14 +75,14 @@ public class Wifix extends Activity
             {
                 if(cbKeepLock.isChecked())
                 {
-                    wLock.acquire();
+                    getWifiLock().acquire();
                 }
                 else
                 {
-                    wLock.release();
+                    getWifiLock().release();
 
                 }
-                vibrator.vibrate(33);
+                vibrate(33);
             }
         });
         final Intent about = new Intent(this,AboutGPL3Activity.class);
@@ -113,40 +103,45 @@ public class Wifix extends Activity
                 //finish();
             }
         });
-
-
-//        new Thread(new Runnable()
-//        {
-//            public void run()
-//            {
-//                while(true)
-//                {
-//                    int state = wm.getWifiState();
-//                    if(WifiManager.WIFI_STATE_ENABLED == state)
-//                    {
-//                        for(int i=0;i<state;i++)
-//                        {
-//                            vibrator.vibrate(50);
-//                            try
-//                            {
-//                                Thread.sleep(50);
-//                            } catch (InterruptedException e)
-//                            {
-//                                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//                            }
-//                        }
-//                    }
-//                    try
-//                    {
-//                        Thread.sleep(15000);
-//                    } catch (InterruptedException e)
-//                    {
-//                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//                    }
-//                }
-//
-//            }
-//        }).start();
     }
+
+    static volatile Vibrator vibrator =null;
+
+    void vibrate(int time)
+    {
+        if(vibrator ==null)
+        {
+            Context c = this.getApplication().getBaseContext();
+            vibrator = (Vibrator) c.getSystemService(Context.VIBRATOR_SERVICE);
+        }
+        vibrator.vibrate(time);
+    }
+
+    static volatile WifiManager.WifiLock wLock = null;
+    WifiManager.WifiLock getWifiLock()
+    {
+        if(wLock==null)
+        {
+            WifiManager wm = getWifiManager();
+            wLock = wm.createWifiLock("WifiLock");
+        }
+        return wLock;
+    }
+
+   static volatile WifiManager wm=null;
+   WifiManager getWifiManager()
+   {
+         if(wm==null)
+         {
+             Context c = this.getApplication().getBaseContext();
+             wm = (WifiManager) c.getSystemService(Context.WIFI_SERVICE);
+         }
+         return wm;
+    }
+
+
+
+
+
 
 }
