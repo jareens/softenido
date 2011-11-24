@@ -3,6 +3,7 @@
     <string-array name="views">
         <item>ListView Pure XML</item>
         <item>ListView Code XML</item>
+        <item>Tasks List</item>
         <item>About...</item>
     </string-array>
     <string-array name="listview_pure_xml_lines">

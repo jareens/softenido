@@ -43,7 +43,7 @@ public class MainActivity extends Activity
 
         final Intent listViewPureXml = new Intent(this,ListViewPureXmlActivity.class);
         final Intent listViewCodeXml = new Intent(this,ListViewCodeAndXmlActivity.class);
-
+        final Intent tasksList = new Intent(this,TasksListViewActivity.class);
         final Intent about = new Intent(this, AboutGPL3Activity.class);
 
 
@@ -61,6 +61,9 @@ public class MainActivity extends Activity
                         startActivity(listViewCodeXml);
                         break;
                     case 2:
+                        startActivity(tasksList);
+                        break;
+                    case 3:
                         startActivity(about);
                         break;
                 }
