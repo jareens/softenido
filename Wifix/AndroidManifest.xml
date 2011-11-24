@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.softenido.wifix"
-      android:versionCode="5"
-      android:versionName="0.2.3">
+      android:versionCode="6"
+      android:versionName="0.2.4">
         <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="8" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.VIBRATE"
-                     android:label="Etiqueta"
-        android:description="@string/app_name"
-        android:permissionGroup="android.permission-group.COST_MONEY"
-        android:protectionLevel="dangerous"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-
 
     <application
             android:icon="@drawable/wifix64"

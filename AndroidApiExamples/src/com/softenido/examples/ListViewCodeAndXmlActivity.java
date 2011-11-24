@@ -21,13 +21,11 @@
 
 package com.softenido.examples;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 import com.softenido.droiddesk.admob.AdMob;
 
@@ -39,10 +37,7 @@ public class ListViewCodeAndXmlActivity extends ListActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-
-        // se nececesita un layout tuneado que ponga el @android:id/list dentro de un linearlayout
-        // para que los banners puean ponerse correctamente
-        setContentView(R.layout.listview_listadapter);
+        admob = AdMob.addBanner(this,true);
 
         setListAdapter(ArrayAdapter.createFromResource(getApplicationContext(), R.array.listview_pure_xml_lines, R.layout.listview_listadapter_list_item));
 
@@ -62,8 +57,6 @@ public class ListViewCodeAndXmlActivity extends ListActivity
                 return true;
             }
         });
-
-        admob = AdMob.addBanner(this, R.id.mainLayout, true);
 
     }
 }

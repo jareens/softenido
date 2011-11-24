@@ -34,6 +34,7 @@ import android.widget.ListView;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
+import com.softenido.droid.R;
 import com.softenido.droiddesk.util.MetaData;
 
 import java.util.HashSet;
@@ -153,4 +154,10 @@ public class AdMob
         LinearLayout layout = (LinearLayout) activity.findViewById(parentLayoutId);
         return  addBanner(activity, layout, top);
     }
+    public static AdMob addBanner(Activity activity, boolean top)
+    {
+        activity.setContentView(R.layout.admob_listactivity_listview);
+        return  addBanner(activity, R.id.admob_listactivity_linearlayout, top);
+    }
+
 }
