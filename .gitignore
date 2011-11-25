@@ -8,19 +8,9 @@ out/
 build/
 dist/
 
-.idea/workspace.xml
+/**/.idea/workspace.xml
+/**/nbproject/private/
+/**/nbandroid/
+
 
 #ignore some paths
-
-/commons/nbproject/private/
-/headless/nbproject/private/
-/desktop/nbproject/private/
-/droidcore/nbandroid/
-/headdesk/nbproject/private/
-/hardless/nbproject/private/
-/droidless/nbandroid/
-
-/Wifix/nbandroid/
-/headless/.idea/
-/trading/nbproject/private/
-/trading/.idea/
