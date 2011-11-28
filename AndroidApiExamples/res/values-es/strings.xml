@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="battery_level_label">Nivel de Bateria:</string>
+    <string name="battery_display_plugged">AC:</string>
+    <string name="battery_display_status">Estado:</string>
+    <string name="battery_display_health">Salud</string>
+    <string name="battery_display_present">Presente:</string>
+    <string name="battery_display_level">Nivel:</string>
+    <string name="battery_display_technology">Technología:</string>
+    <string name="battery_display_temperature">Temperatura:</string>
+    <string name="battery_display_voltage">Voltage:</string>
+
+    <string name="text_to_speech_text">Texto</string>
+    <string name="text_to_speech_edit">En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no ha mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Una olla de algo más vaca que carnero, salpicón las más noches, duelos y quebrantos los sábados, lantejas los viernes, algún palomino de añadidura los domingos, consumían las tres partes de su hacienda.</string>
+    <string name="text_to_speech_say">Text to Speech</string>
+    <string name="text_to_speech_install">Install Speech Synthesis Engine</string>
+    <string name="text_to_speech_listen">Speech to Text</string>
+
+
+</resources>

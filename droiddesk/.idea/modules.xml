@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../droidcore/Droidcore.iml" filepath="$PROJECT_DIR$/../droidcore/Droidcore.iml" />
       <module fileurl="file://$PROJECT_DIR$/droiddesk.iml" filepath="$PROJECT_DIR$/droiddesk.iml" />
     </modules>
   </component>

@@ -44,8 +44,9 @@ public class MainActivity extends Activity
         final Intent listViewPureXml = new Intent(this,ListViewPureXmlActivity.class);
         final Intent listViewCodeXml = new Intent(this,ListViewCodeAndXmlActivity.class);
         final Intent tasksList = new Intent(this,TasksListViewActivity.class);
+        final Intent batteryList = new Intent(this,BatteryDisplayActivity.class);
+        final Intent speech = new Intent(this, SpeechActivity.class);
         final Intent about = new Intent(this, AboutGPL3Activity.class);
-
 
         ListView mainListView = (ListView) findViewById(R.id.main_list_view);
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -64,6 +65,12 @@ public class MainActivity extends Activity
                         startActivity(tasksList);
                         break;
                     case 3:
+                        startActivity(batteryList);
+                        break;
+                    case 4:
+                        startActivity(speech);
+                        break;
+                    case 5:
                         startActivity(about);
                         break;
                 }

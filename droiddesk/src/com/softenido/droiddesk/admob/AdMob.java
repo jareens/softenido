@@ -25,17 +25,12 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
 import com.softenido.droid.R;
-import com.softenido.droiddesk.util.MetaData;
+import com.softenido.droidcore.util.MetaData;
 
 import java.util.HashSet;
 import java.util.logging.Level;
@@ -136,25 +131,24 @@ public class AdMob
         }
     }
 
-    public static AdMob addBanner(Activity activity, LinearLayout parent)
-    {
-        return  addAdView(activity,AdSize.BANNER,parent,false);
-    }
     public static AdMob addBanner(Activity activity, LinearLayout parent, boolean top)
     {
         return  addAdView(activity,AdSize.BANNER,parent, top);
     }
-    public static AdMob addBanner(Activity activity, int layoutId)
+    public static AdMob addBanner(Activity activity, LinearLayout parent)
     {
-        LinearLayout layout = (LinearLayout) activity.findViewById(layoutId);
-        return  addBanner(activity, layout);
+        return  addBanner(activity,parent,false);
     }
     public static AdMob addBanner(Activity activity, int parentLayoutId, boolean top)
     {
         LinearLayout layout = (LinearLayout) activity.findViewById(parentLayoutId);
         return  addBanner(activity, layout, top);
     }
-    public static AdMob addBanner(Activity activity, boolean top)
+    public static AdMob addBanner(Activity activity, int parentLayoutId)
+    {
+        return  addBanner(activity, parentLayoutId, false);
+    }
+    public static AdMob addBanner(ListActivity activity, boolean top)
     {
         activity.setContentView(R.layout.admob_listactivity_listview);
         return  addBanner(activity, R.id.admob_listactivity_linearlayout, top);

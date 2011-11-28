@@ -14,3 +14,9 @@ dist/
 
 
 #ignore some paths
+/droidless/.idea/
+/hardcore/.idea/
+/hardless/.idea/
+/headdesk/.idea/
+/headless/.idea/
+/Wifix/.idea/

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/mainLayout"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+            <TableRow android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" >
+	            <TextView
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:text="@string/battery_display_plugged"
+	                android:textScaleX="2" />
+	
+	            <TextView
+	                android:id="@+id/battery_display_plugged"
+	                android:layout_height="wrap_content"
+	                android:layout_width="match_parent"
+	                android:textScaleX="2" />
+        	</TableRow>
+            <TableRow android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" >
+	            <TextView
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:text="@string/battery_display_status"
+	                android:textScaleX="2" />
+	
+	            <TextView
+	                android:id="@+id/battery_display_status"
+	                android:layout_height="wrap_content"
+	                android:layout_width="match_parent"
+	                android:textScaleX="2" />
+        	</TableRow>
+            <TableRow android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" >
+	            <TextView
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:text="@string/battery_display_present"
+	                android:textScaleX="2" />
+	
+	            <TextView
+	                android:id="@+id/battery_display_present"
+	                android:layout_height="wrap_content"
+	                android:layout_width="match_parent"
+	                android:textScaleX="2" />
+        	</TableRow>
+            <TableRow android:layout_width="wrap_content"
+                      android:layout_height="wrap_content" >
+	            <TextView
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:text="@string/battery_display_health"
+	                android:textScaleX="2" />
+	            <TextView
+	                android:id="@+id/battery_display_health"
+	                android:layout_height="wrap_content"
+	                android:layout_width="match_parent"
+	                android:textScaleX="2" />
+        	</TableRow>
+        <TableRow android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/battery_display_level"
+                android:textScaleX="2" />
+            <TextView
+                android:id="@+id/battery_display_level"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textScaleX="2" />
+    </TableRow>
+        <TableRow android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/battery_display_technology"
+                android:textScaleX="2" />
+
+            <TextView
+                android:id="@+id/battery_display_technology"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textScaleX="2" />
+    </TableRow>
+        <TableRow android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/battery_display_temperature"
+                android:textScaleX="2" />
+            <TextView
+                android:id="@+id/battery_display_temperature"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textScaleX="2" />
+    </TableRow>
+        <TableRow android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/battery_display_voltage"
+                android:textScaleX="2" />
+            <TextView
+                android:id="@+id/battery_display_voltage"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textScaleX="2" />
+    </TableRow>
+	</TableLayout>
+</LinearLayout>
