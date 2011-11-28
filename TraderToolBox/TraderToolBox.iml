@@ -32,6 +32,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="admob" level="project" />
     <orderEntry type="module" module-name="droiddesk" exported="" />
+    <orderEntry type="module" module-name="droidcore" exported="" />
+    <orderEntry type="module" module-name="trading" exported="" />
   </component>
 </module>
 

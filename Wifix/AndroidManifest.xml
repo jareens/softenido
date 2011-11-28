@@ -23,6 +23,7 @@
 
             </intent-filter>
         </activity>
+        <!--suppress AndroidDomInspection -->
         <activity android:name="com.softenido.droiddesk.util.ui.AboutGPL3Activity" android:label="@string/about"/>
 
 		<!-- The application's publisher ID assigned by AdMob -->
