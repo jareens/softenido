@@ -1,9 +1,6 @@
-v0.2.0 vc2 (2011-11-28)
---------------------------
-- added Tasks and Speech activities
-
-v0.1.0 vc1 (2011-11-23)
---------------------------
-- initial release
-
-
+v0.2.0
+- added Applications, Services and Tasks list
+- added Battery 
+- added Speech
+v0.1.0
+- first version
