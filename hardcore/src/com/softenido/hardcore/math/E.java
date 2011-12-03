@@ -1,7 +1,7 @@
 /*
  *  E.java
  *
- *  Copyright (C) 2007  Francisco Gómez Carrasco
+ *  Copyright (C) 2007-2011  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.hardless.math;
+package com.softenido.hardcore.math;
 
 import java.math.BigDecimal;
 import java.math.MathContext;

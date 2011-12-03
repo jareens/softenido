@@ -30,6 +30,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.softenido.droid.R;
+import com.softenido.droidcore.os.MetaData;
 import com.softenido.droiddesk.admob.AdMob;
 
 import java.util.logging.Logger;
@@ -38,6 +39,10 @@ import static java.util.logging.Level.SEVERE;
 
 public class AboutGPL3Activity extends Activity
 {
+    static final String METADATA_COPYRIGHT = "com.softenido.about.copyright";
+    static final String METADATA_URL1 = "com.softenido.about.url1";
+    static final String METADATA_URL2 = "com.softenido.about.url2";
+
     private AdMob admob=null;
     /** Called when the activity is first created. */
     @Override
@@ -51,6 +56,9 @@ public class AboutGPL3Activity extends Activity
         CharSequence label       = "aplication android:label";
         CharSequence description = "aplication android:description";
         CharSequence versionName = "manifest android:versionName";
+        String copyRight         = "meta-data "+METADATA_COPYRIGHT;
+        String url1              = "meta-data "+METADATA_URL1;
+        String url2              = "meta-data "+METADATA_URL2;
 
         try
         {
@@ -60,6 +68,10 @@ public class AboutGPL3Activity extends Activity
             versionName = packageInfo.versionName;
             label       = packageInfo.applicationInfo.loadLabel(context.getPackageManager());
             description = packageInfo.applicationInfo.loadDescription(context.getPackageManager());
+            Bundle bundle= MetaData.getBundle(context);
+            copyRight   = bundle.getString(METADATA_COPYRIGHT);
+            url1   = bundle.getString(METADATA_URL1);
+            url2   = bundle.getString(METADATA_URL2);
         }
         catch (PackageManager.NameNotFoundException e)
         {
@@ -76,12 +88,12 @@ public class AboutGPL3Activity extends Activity
         AboutAppDescription.setText(description);
 
         TextView AboutCopyRight = (TextView) findViewById(R.id.AboutCopyRight);
-        AboutCopyRight.setText("© 2011 Francisco Gómez Carrasco");
+        AboutCopyRight.setText(copyRight);
 
         TextView webUrl1Text = (TextView) findViewById(R.id.AboutWebUrl1);
-        webUrl1Text.setText("http://www.softenido.com/");
+        webUrl1Text.setText(url1);
         TextView webUrl2Text = (TextView) findViewById(R.id.AboutWebUrl2);
-        webUrl2Text.setText("http://softenido.googlecode.com/");
+        webUrl2Text.setText(url2);
 
         final Button bAccept= (Button) findViewById(R.id.bAboutAccept);
 
@@ -92,7 +104,5 @@ public class AboutGPL3Activity extends Activity
                 finish();
             }
         });
-
-
-    }
+   }
 }

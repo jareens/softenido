@@ -9,13 +9,19 @@
     android:layout_height="match_parent">
     <ScrollView android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
             android:layout_weight="1">
-        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+                android:padding="10dp">
             <Button android:text="@string/reassign" android:id="@+id/bReassign" android:drawableLeft="@drawable/reassign"
                 android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
             <Button android:text="@string/reconnect" android:id="@+id/bReconnect" android:drawableLeft="@drawable/reconnect"
-                android:layout_height="wrap_content" android:layout_width="match_parent"></Button>
-            <CheckBox android:text="@string/keepLock" android:id="@+id/checkBox1"
-                android:layout_height="wrap_content" android:layout_width="match_parent"></CheckBox>
+                android:layout_height="match_parent" android:layout_width="match_parent"></Button>
+            <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
+                <CheckBox android:id="@+id/cbKeepLock" android:text="@string/keepLock" android:layout_height="wrap_content" android:layout_width="wrap_content"/>
+                <TextView android:id="@+id/time_text"  android:text="" android:gravity="center" android:layout_height="wrap_content" android:layout_width="match_parent"/>
+            </LinearLayout>
+            <Spinner android:id="@+id/time_spinner" android:prompt="@string/spinner_time_prompt"
+                     android:layout_width="match_parent" android:layout_height="wrap_content"
+                     android:entries="@array/spinner_time_options"/>
             <Button android:id="@+id/bAbout" android:text="@string/about" android:drawableLeft="@drawable/about" android:layout_height="wrap_content" android:layout_width="match_parent"/>
             <Button android:text="@string/hide" android:id="@+id/bHide" android:drawableLeft="@drawable/hide" android:layout_height="wrap_content" android:layout_width="match_parent"/>
         </LinearLayout>

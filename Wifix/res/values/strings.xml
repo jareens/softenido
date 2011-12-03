@@ -9,6 +9,7 @@
     <string name="about">About</string>
     <string name="about_description">Wifix (Lite)</string>
 
-    <string name="ADMOB_PUBLISHER_ID">a14d7b4327493cd</string>
     <string name="about_accept">Accept</string>
+    <string name="notify_keep_text">This could draing the battery</string>
+    <string name="spinner_time_prompt">Keep Connection</string>
 </resources>

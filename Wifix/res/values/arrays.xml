@@ -1,0 +1,14 @@
+<resources>
+    <string-array name="spinner_time_options">
+        <item>5 minutes</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>6 hours</item>
+        <item>8 hours</item>
+        <item>12 hours</item>
+        <item>24 hours</item>
+        <item>Forever</item>
+    </string-array>
+</resources>

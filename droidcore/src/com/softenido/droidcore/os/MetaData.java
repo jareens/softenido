@@ -19,7 +19,7 @@
  * Report bugs or new features to: flikxxi@gmail.com
  */
 
-package com.softenido.droidcore.util;
+package com.softenido.droidcore.os;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

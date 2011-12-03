@@ -21,7 +21,7 @@
  */
 package com.softenido.headless.misc;
 
-import com.softenido.hardless.text.HumanMillisFormat;
+import com.softenido.hardcore.text.HumanMillisFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 

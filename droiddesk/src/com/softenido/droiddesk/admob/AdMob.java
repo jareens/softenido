@@ -30,7 +30,7 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
 import com.softenido.droid.R;
-import com.softenido.droidcore.util.MetaData;
+import com.softenido.droidcore.os.MetaData;
 
 import java.util.HashSet;
 import java.util.logging.Level;

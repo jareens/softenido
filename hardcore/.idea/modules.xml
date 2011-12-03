@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Hardcore.iml" filepath="$PROJECT_DIR$/Hardcore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hardcore.iml" filepath="$PROJECT_DIR$/hardcore.iml" />
     </modules>
   </component>
 </project>

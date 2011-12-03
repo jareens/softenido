@@ -19,10 +19,7 @@
  * Report bugs or new features to: flikxxi@gmail.com
  */
 
-package com.softenido.droidcore.util;
-
-import android.os.BatteryManager;
-import android.widget.TextView;
+package com.softenido.droidcore.os;
 
 /**
  * Created by IntelliJ IDEA.
