@@ -22,27 +22,21 @@
 package com.softenido.examples;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.*;
-import com.softenido.droidcore.util.BatteryChanged;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 import com.softenido.droiddesk.admob.AdMob;
 import com.softenido.droiddesk.speech.SpeechBuilder;
 import com.softenido.droiddesk.speech.SpeechHearer;
 import com.softenido.droiddesk.speech.SpeechSpeaker;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -52,7 +46,6 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class SpeechActivity extends Activity
@@ -62,7 +55,6 @@ public class SpeechActivity extends Activity
     static final int LISTEN_RESULT = 2;
 
     private AdMob admob=null;
-    private BatteryChanged bc=null;
     private SpeechBuilder speech = null;
     private AtomicBoolean cancel = new AtomicBoolean();
     private Handler handler = null;

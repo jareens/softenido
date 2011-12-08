@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/TraderToolBox.iml" filepath="$PROJECT_DIR$/TraderToolBox.iml" />
       <module fileurl="file://$PROJECT_DIR$/../droidcore/droidcore.iml" filepath="$PROJECT_DIR$/../droidcore/droidcore.iml" />
       <module fileurl="file://$PROJECT_DIR$/../droiddesk/droiddesk.iml" filepath="$PROJECT_DIR$/../droiddesk/droiddesk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../hardcore/hardcore.iml" filepath="$PROJECT_DIR$/../hardcore/hardcore.iml" />
       <module fileurl="file://$PROJECT_DIR$/../trading/trading.iml" filepath="$PROJECT_DIR$/../trading/trading.iml" />
     </modules>
   </component>

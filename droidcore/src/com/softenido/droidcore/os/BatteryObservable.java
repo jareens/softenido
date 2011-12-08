@@ -27,6 +27,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
 import com.softenido.droidcore.R;
+import com.softenido.hardcore.util.GenericObservable;
+import com.softenido.hardcore.util.GenericObserver;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,40 +40,34 @@ import java.util.logging.Logger;
  * Time: 11:49
  * To change this template use File | Settings | File Templates.
  */
-public class BatteryChanged implements BatteryChangedListener
+public class BatteryObservable<S>
 {
     final Object lock = new Object();
     final Context context;
-    final BatteryChangedListener listener;
     final BroadcastReceiver receiver;
     boolean active = false;
+    private volatile Battery battery=null;
+    final GenericObservable<S,Battery> genericObservable;
 
-
-    public BatteryChanged(Context context,boolean active, BatteryChangedListener listener)
+    public BatteryObservable(S sender,Context context, boolean active)
     {
+        this.genericObservable = new GenericObservable<S,Battery>(sender);
         this.context = context;
-        this.listener = (listener==null)?this:listener;
         this.receiver = new BroadcastReceiver()
         {
             public void onReceive(Context ctx, Intent intent)
             {
-                BatteryChanged.this.onReceive(ctx, intent);
+                BatteryObservable.this.onReceive(ctx, intent);
             }
         };
         if(active)
         {
-            open();
+            this.start();
         }
-    }
-
-    public BatteryChanged(Context context, boolean active)
-    {
-        this(context,active,null);
     }
 
     private void onReceive(Context ctx, Intent intent)
     {
-        Battery battery=null;
         try
         {
             final int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, 0);
@@ -87,16 +83,13 @@ public class BatteryChanged implements BatteryChangedListener
         }
         catch (Exception ex)
         {
-            Logger.getLogger(BatteryChanged.class.getName()).log(Level.SEVERE,"getting extra data",ex);
+            Logger.getLogger(BatteryObservable.class.getName()).log(Level.SEVERE,"getting extra data",ex);
         }
-        listener.onReceive(battery);
-    }
-    public void onReceive(Battery battery)
-    {
-        // for overriding
+        this.setChanged();
+        this.notifyObservers(battery);
     }
 
-    public void open()
+    public void start()
     {
         synchronized (lock)
         {
@@ -107,7 +100,7 @@ public class BatteryChanged implements BatteryChangedListener
             }
         }
     }
-    public void close()
+    public void stop()
     {
         synchronized (lock)
         {
@@ -122,7 +115,7 @@ public class BatteryChanged implements BatteryChangedListener
     @Override
     protected void finalize() throws Throwable
     {
-        close();
+        this.stop();
         super.finalize();
     }
     public String getPlugged(int plugged)
@@ -175,7 +168,7 @@ public class BatteryChanged implements BatteryChangedListener
                 return "code="+health;
         }
         return context.getString(id);
-    };
+    }
 
     public String getStatus(int status)
     {
@@ -213,5 +206,50 @@ public class BatteryChanged implements BatteryChangedListener
     public String getStatus(Battery battery)
     {
         return getStatus(battery.getStatus());
+    }
+
+    public Battery getBattery()
+    {
+        return battery;
+    }
+
+    public void addObserver(GenericObserver<S, Battery> observer)
+    {
+        genericObservable.addObserver(observer);
+    }
+
+    public int countObservers()
+    {
+        return genericObservable.countObservers();
+    }
+
+    public void deleteObserver(GenericObserver<S, Battery> observer)
+    {
+        genericObservable.deleteObserver(observer);
+    }
+
+    public void deleteObservers()
+    {
+        genericObservable.deleteObservers();
+    }
+
+    public boolean hasChanged()
+    {
+        return genericObservable.hasChanged();
+    }
+
+    public void notifyObservers()
+    {
+        genericObservable.notifyObservers();
+    }
+
+    public void notifyObservers(Object arg)
+    {
+        genericObservable.notifyObservers(arg);
+    }
+
+    void setChanged()
+    {
+        genericObservable.setChanged();
     }
 }

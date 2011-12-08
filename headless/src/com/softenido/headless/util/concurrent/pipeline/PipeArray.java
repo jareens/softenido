@@ -22,6 +22,7 @@
 package com.softenido.headless.util.concurrent.pipeline;
 
 import com.softenido.hardless.util.concurrent.Filter;
+
 import java.util.concurrent.ExecutionException;
 
 /**

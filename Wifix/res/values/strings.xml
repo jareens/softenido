@@ -3,13 +3,18 @@
     <string name="app_name">Wifix (lite)</string>
     <string name="reconnect">Reconnect</string>
     <string name="reassign">Reassign</string>
-    <string name="keepLock">Keep Connection</string>
+    <string name="keepLock">Keep WiFi</string>
     <string name="exit">Exit</string>
     <string name="hide">Hide</string>
     <string name="about">About</string>
     <string name="about_description">Wifix (Lite)</string>
 
     <string name="about_accept">Accept</string>
-    <string name="notify_keep_text">This could draing the battery</string>
-    <string name="spinner_time_prompt">Keep Connection</string>
+    <string name="notify_keep_text">WiFi connection may drain the battery</string>
+    <string name="spinner_time_prompt">Keep Connection for</string>
+    <string name="battery_spinner_prompt">Keep Connection untill battery level</string>
+    <string name="not_enough_battery">Not enough battery</string>
+    <string name="keep_during">During</string>
+    <string name="while_battery">Battery >=</string>
+
 </resources>

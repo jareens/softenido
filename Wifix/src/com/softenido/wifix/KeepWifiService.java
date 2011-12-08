@@ -27,8 +27,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.CountDownTimer;
+import android.widget.Toast;
+import com.softenido.droidcore.os.Battery;
+import com.softenido.droidcore.os.BatteryObservable;
 import com.softenido.droidcore.services.LocalService;
 import com.softenido.droiddesk.app.NotificationBuilder;
+import com.softenido.hardcore.util.GenericObservable;
+import com.softenido.hardcore.util.GenericObserver;
 
 import java.util.Date;
 
@@ -38,8 +43,33 @@ import java.util.Date;
  * Date: 29/11/11
  * Time: 10:17
  */
-public class KeepWifiService extends LocalService
+public class KeepWifiService extends LocalService implements GenericObserver<KeepWifiService,Battery>
 {
+    static public class Conf
+    {
+        Conf(long durationMillis, int batteryLevel)
+        {
+            this.durationMillis = durationMillis;
+            this.batteryLevel = batteryLevel;
+            this.finishTime = new Date(System.currentTimeMillis()+durationMillis);
+        }
+        final long durationMillis;
+        final Date finishTime;
+        final int batteryLevel;
+
+        public int getBatteryLevel()
+        {
+            return batteryLevel;
+        }
+        public long getDurationMillis()
+        {
+            return durationMillis;
+        }
+        public Date getFinishTime()
+        {
+            return finishTime;
+        }
+    }
     static final int NOTIFICATION_ID = 123456;
     static final long TICK_MILLIS = 5*60*1000;//every five minutes
 
@@ -48,11 +78,11 @@ public class KeepWifiService extends LocalService
     WifiManager.WifiLock wLock=null;
     private Intent intent;
 
-    private long finishMillis=0;
-    private Date finishTime= null;
     private volatile CountDownTimer countDown=null;
 
-    private Runnable update;
+    final private GenericObservable<KeepWifiService,Battery> observable = new GenericObservable<KeepWifiService,Battery>(this);
+    final private BatteryObservable<KeepWifiService> batteryObservable = new BatteryObservable<KeepWifiService>(this,this,false);
+    private Conf conf=null;
 
     @Override
     public void onCreate()
@@ -61,6 +91,7 @@ public class KeepWifiService extends LocalService
         intent = new Intent(this,KeepWifiService.class);
         WifiManager wm = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         wLock = wm.createWifiLock("Wifix.Lock");
+        batteryObservable.addObserver(this);
     }
 
     @Override
@@ -73,22 +104,29 @@ public class KeepWifiService extends LocalService
     @Override
     public void onDestroy()
     {
+        if(wLock.isHeld())
+        {
+            wLock.release();
+        }
         super.onDestroy();
     }
 
-    public void adquire(long millis, Runnable update)
+    public void adquire(long millis, int batteryLevel)
     {
         synchronized (lock)
         {
             if(keep==false)
             {
+                conf = new Conf(millis,batteryLevel);
                 wLock.acquire();
                 keep=true;
-                startCountDown(millis);
                 startService(intent);
+                startCountDown();
+                batteryObservable.start();
+                notifyStatus(true);
+                observable.setChanged();
+                observable.notifyObservers();
             }
-            notifyStatus(true);
-            setUpdate(update);
         }
     }
 
@@ -101,12 +139,12 @@ public class KeepWifiService extends LocalService
                 wLock.release();
                 keep=false;
                 stopService(intent);
-                if(countDown!=null)
-                {
-                    countDown.cancel();
-                }
+                stopCountDown();
+                batteryObservable.stop();
+                notifyStatus(false);
+                observable.setChanged();
+                observable.notifyObservers();
             }
-            notifyStatus(false);
         }
     }
 
@@ -144,18 +182,17 @@ public class KeepWifiService extends LocalService
 
     }
 
-    private void startCountDown(long finishMillis)
+    private void startCountDown()
     {
-        if(finishMillis>0)
+        if(conf!=null)
         {
-            countDown = new CountDownTimer(finishMillis, TICK_MILLIS)
+            countDown = new CountDownTimer(conf.durationMillis, TICK_MILLIS)
             {
                 @Override
                 public void onFinish()
                 {
-                    release();
                     countDown=null;
-                    runUpdate();
+                    release();
                 }
                 @Override
                 public void onTick(long l)
@@ -163,35 +200,44 @@ public class KeepWifiService extends LocalService
                     notifyStatus(keep);
                 }
             }.start();
-            finishTime = new Date(System.currentTimeMillis()+finishMillis);
         }
         else
         {
             countDown = null;
-            finishTime= null;
+        }
+    }
+    private void stopCountDown()
+    {
+        if(countDown!=null)
+        {
+            countDown.cancel();
+            countDown=null;
         }
     }
 
-    public Date getFinishTime()
+    public Conf getConf()
     {
-        return finishTime;
+        return conf;
+    }
+    
+
+    public void addObserver(GenericObserver<KeepWifiService, Battery> keepWifiServiceBatteryGenericObserver)
+    {
+        observable.addObserver(keepWifiServiceBatteryGenericObserver);
     }
 
-    public void setUpdate(Runnable update)
+    public void deleteObserver(GenericObserver<KeepWifiService, Battery> keepWifiServiceBatteryGenericObserver)
     {
-        synchronized(lock)
+        observable.deleteObserver(keepWifiServiceBatteryGenericObserver);
+    }
+
+    public void update(KeepWifiService sender, Battery battery)
+    {
+        if(conf!=null && battery.getLevel()<conf.batteryLevel)
         {
-            this.update = update;
+            Toast.makeText(this,R.string.not_enough_battery,Toast.LENGTH_LONG).show();
+            release();
         }
     }
-    public void runUpdate()
-    {
-        synchronized(lock)
-        {
-            if(update!=null)
-            {
-                update.run();
-            }
-        }
-    }
+
 }

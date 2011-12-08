@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="reconnect">Reconectar</string>
     <string name="reassign">Reasignar</string>
-    <string name="keepLock">Mantener Conexión</string>
+    <string name="keepLock">Mantener WiFi</string>
     <string name="exit">Salir</string>
     <string name="hide">Ocultar</string>
-    <string name="about">Acerca de...</string>
+    <string name="keep_for">Keep for</string>
 
     <string name="about_accept">Aceptar</string>
-    <string name="notify_keep_text">Esto podría vaciar la batería"</string>
-
+    <string name="notify_keep_text">La conexión WiFi podría agotar la batería"</string>
+    <string name="spinner_time_prompt">Mantener la Conexión durante</string>
+    <string name="battery_spinner_prompt">Mantener la Conexión hasta nivel de batería</string>
+    <string name="not_enough_battery">Batería insuficiente</string>
+    <string name="keep_during">Durante</string>
+    <string name="while_battery">Batería >=</string>
 </resources>

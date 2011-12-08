@@ -22,23 +22,19 @@
 package com.softenido.examples;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
-import com.softenido.droidcore.util.Battery;
-import com.softenido.droidcore.util.BatteryChanged;
-import com.softenido.droidcore.util.BatteryChangedListener;
+import com.softenido.droidcore.os.Battery;
+import com.softenido.droidcore.os.BatteryObservable;
 import com.softenido.droiddesk.admob.AdMob;
+import com.softenido.hardcore.util.GenericObserver;
 
 public class BatteryDisplayActivity extends Activity
 {
     private AdMob admob=null;
-    private BatteryChanged bc=null;
+
+    final BatteryObservable<BatteryDisplayActivity> bc= new BatteryObservable<BatteryDisplayActivity>(this,this,false);
 
     /** Called when the activity is first created. */
     @Override
@@ -59,42 +55,42 @@ public class BatteryDisplayActivity extends Activity
         final TextView temperature = (TextView) findViewById(R.id.battery_display_temperature);
         final TextView voltage = (TextView) findViewById(R.id.battery_display_voltage);
 
-        bc = new BatteryChanged(this.getApplicationContext(),false)
+        bc.addObserver(new GenericObserver<BatteryDisplayActivity, Battery>()
         {
-            @Override
-            public void onReceive(Battery battery)
+            public void update(BatteryDisplayActivity sender, Battery battery)
             {
-                plugged.setText(getPlugged(battery));
-                status.setText(getStatus(battery));
+                plugged.setText(bc.getPlugged(battery));
+                status.setText(bc.getStatus(battery));
                 present.setText(battery.isPresent()?"true":"false");
-                health.setText(getHealth(battery));
+                health.setText(bc.getHealth(battery));
                 level.setText(""+battery.getLevel()+"/"+battery.getScale());
                 technology.setText(battery.getTechnology());
                 String temp = String.format("%.1fºC",battery.getTemperature()/10.0);
                 temperature.setText(temp);
                 voltage.setText(""+battery.getVoltage()+"mV");
             }
-        };
+        });
     }
 
     @Override
     protected void onResume()
     {
         super.onResume();
-        bc.open();
+        bc.start();
     }
 
     @Override
     protected void onPause()
     {
         super.onPause();
-        bc.close();
+        bc.stop();
     }
 
     @Override
     protected void onDestroy()
     {
-        bc.close();
+        bc.stop();
         super.onDestroy();
     }
+
 }

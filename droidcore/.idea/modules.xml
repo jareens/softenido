@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/droidcore.iml" filepath="$PROJECT_DIR$/droidcore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../hardcore/hardcore.iml" filepath="$PROJECT_DIR$/../hardcore/hardcore.iml" />
     </modules>
   </component>
 </project>

@@ -32,34 +32,38 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+import com.softenido.droidcore.os.Battery;
 import com.softenido.droidcore.services.LocalService;
 import com.softenido.droidcore.services.LocalServiceConnection;
 import com.softenido.droiddesk.admob.AdMob;
 import com.softenido.droiddesk.util.ui.AboutGPL3Activity;
 import com.softenido.hardcore.text.HumanDateFormat;
+import com.softenido.hardcore.util.GenericObserver;
 
 import java.util.Date;
 
-public class Wifix extends Activity
+public class Wifix extends Activity implements GenericObserver<KeepWifiService,Battery>
 {
-    static final int M = 60*1000;
-    static final int H = 3600*1000;
-    static final int[] TIMES = {5*M, 15*M, 30*M, 1*M, 2*H,6*H, 8*H, 12*H, 24*H, 0};
+    static final long MIN = 60*1000;
+    static final long HOUR = 60*MIN;
+    static final long DAY = 24*HOUR;
+    static final long[] KEEP_MILLIS = {5*MIN, 15*MIN, 30*MIN, 1*HOUR, 2*HOUR, 6*HOUR, 8*HOUR, 12*HOUR, 1*DAY, 7*DAY, 30*DAY, 365*DAY};
+    static final int[] KEEP_LEVELS = {10, 20, 30, 40, 50, 60, 70, 80, 90};
 
     static volatile WifiManager wm=null;
     static volatile Vibrator vibrator =null;
-
 
     private AdMob admob=null;
 
     private volatile LocalServiceConnection connection =null;
     private volatile KeepWifiService keep =null;
     final HumanDateFormat hdf = HumanDateFormat.getShortInstance(new Date());
+    boolean initialized=false;
 
     CheckBox cbKeepLock;
-    Spinner spinnerTime;
+    Spinner timeSpinner;
+    Spinner batterySpinner;
     TextView textTime;
-    Runnable update=null;
 
     /** Called when the activity is first created. */
     @Override
@@ -68,17 +72,46 @@ public class Wifix extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        LocalService.setToastDebug(true);
+        //LocalService.setToastDebug(true);
 
         admob = AdMob.addBanner(this,R.id.mainLayout);
 
         final Button bConnect = (Button) findViewById(R.id.bReconnect);
         final Button bReassign= (Button) findViewById(R.id.bReassign);
         cbKeepLock= (CheckBox) findViewById(R.id.cbKeepLock);
-        spinnerTime = (Spinner) findViewById(R.id.time_spinner);
         textTime = (TextView) findViewById(R.id.time_text);
+        timeSpinner = (Spinner) findViewById(R.id.time_spinner);
+        batterySpinner = (Spinner) findViewById(R.id.battery_spinner);
         final Button bAbout= (Button) findViewById(R.id.bAbout);
         final Button bHide = (Button) findViewById(R.id.bHide);
+
+        // if there is no saved state from a previous instance, let set our preferred one
+        if(savedInstanceState==null)
+        {
+            cbKeepLock.setEnabled(false);
+            timeSpinner.setEnabled(false);
+            batterySpinner.setEnabled(false);
+            timeSpinner.setSelection(3);
+            batterySpinner.setSelection(3);
+            initialized=true;
+        }
+
+        // keep connection is created just once using Application context,
+        // and reused in every instance of this Activity
+        connection = new LocalServiceConnection(getApplicationContext(),KeepWifiService.class)
+        {
+            @Override
+            public void onConnected(LocalService service)
+            {
+                keep = (KeepWifiService) service;
+                if(service!=null)
+                {
+                    keep.addObserver(Wifix.this);
+                    loadKeep();
+                }
+            }
+        };
+        connection.bindService();
 
         if(vibrator==null)
         {
@@ -88,33 +121,6 @@ public class Wifix extends Activity
         {
             wm = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
         }
-        update = new Runnable()
-        {
-            public void run()
-            {
-                loadKeep();
-            }
-        };
-
-
-
-        loadKeep();
-
-        // keep connection is created just once using Application context,
-        // and reused in every instance of this Activity
-        connection = new LocalServiceConnection(getApplicationContext(),KeepWifiService.class)
-        {
-            @Override
-            public void onConnected(LocalService service)
-            {
-                Wifix.this.keep = (KeepWifiService) service;
-                if(service!=null)
-                {
-                    loadKeep();
-                }
-            }
-        };
-        connection.bindService();
 
         bConnect.setOnClickListener(new View.OnClickListener()
         {
@@ -140,14 +146,13 @@ public class Wifix extends Activity
             {
                 if(keep.isKeep()==false)
                 {
-                    int option = spinnerTime.getSelectedItemPosition();
-                    keep.adquire(TIMES[option], update);
-                    loadKeep();
+                    int timeOption = timeSpinner.getSelectedItemPosition();
+                    int batteryOption = batterySpinner.getSelectedItemPosition();
+                    keep.adquire(KEEP_MILLIS[timeOption], KEEP_LEVELS[batteryOption]);
                 }
                 else
                 {
                     keep.release();
-                    loadKeep();
                 }
                 vibrator.vibrate(33);
             }
@@ -171,7 +176,26 @@ public class Wifix extends Activity
             }
         });
     }
+    @Override
+    protected void onStart()
+    {
+        if(keep!=null)
+        {
+            keep.addObserver(this);
+            loadKeep();
+        }
+        super.onStart();
+    }
 
+    @Override
+    protected void onStop()
+    {
+        if(keep!=null)
+        {
+            keep.deleteObserver(this);
+        }
+        super.onStop();
+    }
     @Override
     protected void onDestroy()
     {
@@ -182,51 +206,60 @@ public class Wifix extends Activity
     {
         if(keep!=null)
         {
+            KeepWifiService.Conf conf = keep.getConf();
             cbKeepLock.setEnabled(true);
-            if(keep.isKeep())
+            boolean active = keep.isKeep();
+
+            if(cbKeepLock.isChecked() != active)
             {
-                if(!cbKeepLock.isChecked())
-                {
-                    cbKeepLock.setChecked(true);
-                }
-                spinnerTime.setEnabled(false);
-                textTime.setText(hdf.format(keep.getFinishTime()));
+                cbKeepLock.setChecked(active);
             }
-            else
+            timeSpinner.setEnabled(!active);
+            batterySpinner.setEnabled(!active);
+
+            if(conf!=null && (active || initialized) )
             {
-                if(cbKeepLock.isChecked())
-                {
-                    cbKeepLock.setChecked(false);
-                }
-                spinnerTime.setEnabled(true);
-                textTime.setText("");
+                timeSpinner.setSelection(getMillisOption(conf));
+                batterySpinner.setSelection(getBatteryOption(conf));
+                initialized = false;
             }
+            textTime.setText( active?hdf.format(keep.getConf().getFinishTime()):"");
         }
         else
         {
             cbKeepLock.setEnabled(false);
-            spinnerTime.setEnabled(true);
+            timeSpinner.setEnabled(true);
+            batterySpinner.setEnabled(true);
             textTime.setText("");
         }
     }
 
-    @Override
-    protected void onResume()
+    private int getMillisOption(KeepWifiService.Conf conf)
     {
-        if(keep!=null)
+        for(int i=0;i<KEEP_MILLIS.length;i++)
         {
-            keep.setUpdate(update);
+            if(KEEP_MILLIS[i]>=conf.getDurationMillis())
+            {
+                return i;
+            }
         }
-        super.onResume();
+        return 0;
+    }
+    private int getBatteryOption(KeepWifiService.Conf conf)
+    {
+        for(int i=0;i<KEEP_LEVELS.length;i++)
+        {
+            if(KEEP_LEVELS[i]>=conf.getBatteryLevel())
+            {
+                return  i;
+            }
+        }
+        return 0;
     }
 
-    @Override
-    protected void onPause()
+
+    public void update(KeepWifiService sender, Battery data)
     {
-        if(keep!=null)
-        {
-            keep.setUpdate(null);
-        }
-        super.onPause();
+        loadKeep();
     }
 }

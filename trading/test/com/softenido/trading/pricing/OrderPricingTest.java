@@ -6,11 +6,8 @@ package com.softenido.trading.pricing;
 
 import com.softenido.trading.OrderType;
 import com.softenido.trading.TransactionType;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+
 import static org.junit.Assert.*;
 
 /**

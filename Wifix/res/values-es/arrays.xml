@@ -8,7 +8,9 @@
         <item>6 horas</item>
         <item>8 horas</item>
         <item>12 horas</item>
-        <item>24 horas</item>
-        <item>Siempre</item>
+        <item>1 día</item>
+        <item>1 semana</item>
+        <item>1 mes</item>
+        <item>1 año</item>
     </string-array>
 </resources>
