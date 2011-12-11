@@ -6,6 +6,7 @@
     <string name="exit">Salir</string>
     <string name="hide">Ocultar</string>
     <string name="keep_for">Keep for</string>
+    <string name="about">Acerca de</string>
 
     <string name="about_accept">Aceptar</string>
     <string name="notify_keep_text">La conexión WiFi podría agotar la batería"</string>

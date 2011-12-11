@@ -1,5 +1,5 @@
 /*
- * GenericObserver.java
+ * KeepWifiServiceTest.java
  *
  * Copyright (c) 2011  Francisco Gómez Carrasco
  *
@@ -19,16 +19,41 @@
  * Report bugs or new features to: flikxxi@gmail.com
  */
 
-package com.softenido.hardcore.util;
+package com.softenido.wifix;
+
+import android.test.ServiceTestCase;
 
 /**
  * Created by IntelliJ IDEA.
  * User: franci
- * Date: 3/12/11
- * Time: 19:23
+ * Date: 8/12/11
+ * Time: 13:57
  * To change this template use File | Settings | File Templates.
  */
-public interface GenericObserver<S,D>
+public class KeepWifiServiceTest extends ServiceTestCase<KeepWifiService>
 {
-    void update(S sender, D data);
+    public KeepWifiServiceTest(Class<KeepWifiService> serviceClass)
+    {
+        super(serviceClass);
+    }
+
+    public void setUp() throws Exception
+    {
+
+    }
+
+    public void tearDown() throws Exception
+    {
+
+    }
+
+    public void testOnCreate() throws Exception
+    {
+
+    }
+
+    public void testSpinners() throws Exception
+    {
+
+    }
 }
