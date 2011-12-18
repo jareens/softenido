@@ -1,3 +1,11 @@
+v0.3.0 vc7 (2011-12-18)
+--------------------------
+- added time and battery limits to keep connection
+- keep connection implemented as a service
+- better synchronization between UI and Keep Connection status
+- added testing module
+
+
 v0.2.4 vc6 (2011-11-24)
 --------------------------
 - minimal improved look&feel
