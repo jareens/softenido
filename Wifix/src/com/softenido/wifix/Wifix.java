@@ -32,13 +32,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
+import com.softenido.cafecore.text.HumanDateFormat;
+import com.softenido.cafecore.util.GenericObserver;
 import com.softenido.droidcore.os.Battery;
 import com.softenido.droidcore.services.LocalService;
 import com.softenido.droidcore.services.LocalServiceConnection;
 import com.softenido.droiddesk.admob.AdMob;
 import com.softenido.droiddesk.util.ui.AboutGPL3Activity;
-import com.softenido.hardcore.text.HumanDateFormat;
-import com.softenido.hardcore.util.GenericObserver;
 
 import java.util.Date;
 

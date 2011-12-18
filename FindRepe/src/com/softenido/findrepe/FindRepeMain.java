@@ -1,7 +1,7 @@
 /*
  *  FindRepeMain.java
  *
- *  Copyright (C) 2009-2010 Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2011 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,24 +21,24 @@
  */
 package com.softenido.findrepe;
 
-import com.softenido.cafe.io.Files;
-import com.softenido.cafe.io.ForEachFileOptions;
-import com.softenido.cafe.io.packed.PackedFile;
-import com.softenido.cafe.util.ArrayUtils;
-import com.softenido.core.util.SizeUnits;
-import com.softenido.cafe.util.VerboseHandler;
-import com.softenido.cafe.util.concurrent.actor.Actor;
-import com.softenido.cafe.util.concurrent.actor.ActorPool;
-import com.softenido.cafe.util.options.BooleanOption;
-import com.softenido.cafe.util.options.InvalidOptionException;
-import com.softenido.cafe.util.options.InvalidOptionParameterException;
-import com.softenido.cafe.util.options.MissingOptionParameterException;
-import com.softenido.cafe.util.options.OptionParser;
-import com.softenido.cafe.util.launcher.LauncherParser;
-import com.softenido.cafe.util.options.ArrayStringOption;
-import com.softenido.cafe.util.options.NumberOption;
-import com.softenido.cafe.util.options.SizeOption;
-import com.softenido.cafe.util.options.StringOption;
+import com.softenido.cafedark.io.Files;
+import com.softenido.cafedark.io.ForEachFileOptions;
+import com.softenido.cafedark.io.packed.PackedFile;
+import com.softenido.cafedark.util.ArrayUtils;
+import com.softenido.cafedark.util.SizeUnits;
+import com.softenido.cafedark.util.VerboseHandler;
+import com.softenido.cafedark.util.concurrent.actor.Actor;
+import com.softenido.cafedark.util.concurrent.actor.ActorPool;
+import com.softenido.cafedark.util.launcher.LauncherParser;
+import com.softenido.cafedark.util.options.ArrayStringOption;
+import com.softenido.cafedark.util.options.BooleanOption;
+import com.softenido.cafedark.util.options.InvalidOptionException;
+import com.softenido.cafedark.util.options.InvalidOptionParameterException;
+import com.softenido.cafedark.util.options.MissingOptionParameterException;
+import com.softenido.cafedark.util.options.NumberOption;
+import com.softenido.cafedark.util.options.OptionParser;
+import com.softenido.cafedark.util.options.SizeOption;
+import com.softenido.cafedark.util.options.StringOption;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;

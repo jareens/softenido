@@ -36,8 +36,6 @@ import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.util.logging.Logger.getLogger;
-
 /**
  * Created by IntelliJ IDEA.
  * User: franci
@@ -86,11 +84,6 @@ public class AdMob
             }
             initialized = true;
         }
-    }
-
-    private static void init(Activity activity)
-    {
-        init(activity.getApplication().getBaseContext());
     }
 
     private static void setId(String val)

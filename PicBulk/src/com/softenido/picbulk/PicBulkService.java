@@ -1,7 +1,7 @@
 /*
  *  PicBulkService.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2011  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 package com.softenido.picbulk;
 
 import com.google.gdata.util.ServiceException;
-import com.softenido.cafe.imageio.ScaleDimension;
+import com.softenido.cafedark.image.ScaleDimension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;

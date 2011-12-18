@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/mainLayout"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+    <TableLayout
+            android:id="@+id/tableLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        <TableRow android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" >
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/os_name"/>
+            <TextView
+                    android:id="@+id/os_name"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+        </TableRow>
+        <TableRow android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" >
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/os_version"/>
+
+            <TextView
+                    android:id="@+id/os_version"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+        </TableRow>
+        <TableRow android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" >
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/os_arch" />
+
+            <TextView
+                    android:id="@+id/os_arch"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+        </TableRow>
+        <TableRow android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" >
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/os_jvm_version"/>
+
+            <TextView
+                    android:id="@+id/os_jvm_version"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+        </TableRow>
+        <TableRow android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" >
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/os_android_version"/>
+            <TextView
+                    android:id="@+id/os_android_version"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+        </TableRow>
+        <TableRow android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" >
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/os_android_api"/>
+            <TextView
+                    android:id="@+id/os_android_api"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

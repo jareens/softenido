@@ -16,4 +16,10 @@
     <string name="text_to_speech_say">Text to Speech</string>
     <string name="text_to_speech_install">Install Speech Synthesis Engine</string>
     <string name="text_to_speech_listen">Speech to Text</string>
+    <string name="os_name">OS Name</string>
+    <string name="os_arch">Arch</string>
+    <string name="os_version">OS Version</string>
+    <string name="os_jvm_version">JVM Version</string>
+    <string name="os_android_version">Android</string>
+    <string name="os_android_api">API Level</string>
 </resources>

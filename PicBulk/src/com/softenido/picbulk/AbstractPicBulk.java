@@ -1,7 +1,7 @@
 /*
  *  AbstractPicBulk.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2011  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,13 +27,14 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 
-import com.softenido.cafe.imageio.ScaleDimension;
-import com.softenido.cafe.imageio.ScaleImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import com.google.gdata.util.ServiceException;
+import com.softenido.cafedark.image.ScaleDimension;
+import com.softenido.cafedark.imageio.ImageFormat;
+import com.softenido.cafedark.imageio.ScaleImage;
 
 public abstract class AbstractPicBulk implements PicBulkService
 {
@@ -45,7 +46,7 @@ public abstract class AbstractPicBulk implements PicBulkService
         InputStream in = new FileInputStream(file);
         if(scale!=null)
         {
-            String format = ScaleImage.getFormat(file);
+            String format = ImageFormat.getFormat(file);
             in = new ScaleImage(scale,gray).filter(in,format);
         }
         byte buf[] = new byte[64*1024];

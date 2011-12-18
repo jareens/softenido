@@ -1,7 +1,7 @@
 /*
  *  ChildWrapper.java
  *
- *  Copyright (C) 2010  Francisco Gómez Carrasco
+ *  Copyright (C) 2010-2011 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,9 +21,9 @@
  */
 package com.softenido.svnhg;
 
-import com.softenido.cafe.io.Files;
-import com.softenido.cafe.io.VerboseInputStream;
-import com.softenido.cafe.io.VerboseOutputStream;
+import com.softenido.cafedark.io.Files;
+import com.softenido.cafedark.io.VerboseInputStream;
+import com.softenido.cafedark.io.VerboseOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

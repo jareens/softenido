@@ -38,6 +38,11 @@ public class MetaData
 {
     static public Bundle getBundle(Context ctx)
     {
+        if(ctx==null)
+        {
+            throw new IllegalArgumentException("ctx==null");
+        }
+
         Bundle bundle = null;
         ApplicationInfo ai = null;
         try

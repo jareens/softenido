@@ -1,7 +1,7 @@
 /*
  *  FindRepeOptions.java
  *
- *  Copyright (C) 2009-2010 Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2011 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,9 +22,9 @@
 
 package com.softenido.findrepe;
 
-import com.softenido.cafe.io.ForEachFileOptions;
-import com.softenido.cafe.io.NameFileFilter;
-import com.softenido.cafe.io.packed.PackedFile;
+import com.softenido.cafedark.io.ForEachFileOptions;
+import com.softenido.cafedark.io.NameFileFilter;
+import com.softenido.cafedark.io.packed.PackedFile;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.Comparator;

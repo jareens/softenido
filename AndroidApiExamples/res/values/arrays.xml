@@ -5,6 +5,7 @@
         <item>ListView Code XML</item>
         <item>Tasks List</item>
         <item>Battery Level</item>
+        <item>Operative System</item>
         <item>Text to Speech</item>
         <item>About...</item>
     </string-array>

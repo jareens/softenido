@@ -28,7 +28,7 @@ import android.widget.TextView;
 import com.softenido.droidcore.os.Battery;
 import com.softenido.droidcore.os.BatteryObservable;
 import com.softenido.droiddesk.admob.AdMob;
-import com.softenido.hardcore.util.GenericObserver;
+import com.softenido.cafecore.util.GenericObserver;
 
 public class BatteryDisplayActivity extends Activity
 {

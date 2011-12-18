@@ -1,7 +1,7 @@
 /*
  *  BucketMap.java
  *
- *  Copyright (C) 2009-2010 Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2011 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@
  */
 package com.softenido.findrepe;
 
-import com.softenido.core.equals.EqualsBuilder;
-import com.softenido.core.equals.EqualsHashMap;
+import com.softenido.cafedark.equals.EqualsBuilder;
+import com.softenido.cafedark.equals.EqualsHashMap;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;

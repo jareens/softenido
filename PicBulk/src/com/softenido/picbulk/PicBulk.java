@@ -1,7 +1,7 @@
 /*
  *  PicBulk.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2011  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,24 +21,24 @@
  */
 package com.softenido.picbulk;
 
-import com.softenido.cafe.imageio.ScaleDimension;
-import com.softenido.cafe.imageio.SimpleScaleDimension;
-import com.softenido.cafe.io.FakeConsole;
-import com.softenido.cafe.io.RealConsole;
-import com.softenido.cafe.io.VirtualConsole;
+import com.softenido.cafedark.image.ScaleDimension;
+import com.softenido.cafedark.image.SimpleScaleDimension;
+import com.softenido.cafedark.io.FakeConsole;
+import com.softenido.cafedark.io.RealConsole;
+import com.softenido.cafedark.io.VirtualConsole;
+import com.softenido.cafedark.misc.ConsoleGauge;
+import com.softenido.cafedark.misc.Gauge;
+import com.softenido.cafedark.util.launcher.LauncherParser;
+import com.softenido.cafedark.util.options.BooleanOption;
+import com.softenido.cafedark.util.options.InvalidOptionException;
+import com.softenido.cafedark.util.options.Option;
+import com.softenido.cafedark.util.options.OptionParser;
+import com.softenido.cafedark.util.options.StringOption;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.Properties;
-import com.softenido.cafe.misc.Gauge;
-import com.softenido.cafe.misc.ConsoleGauge;
-import com.softenido.cafe.util.launcher.LauncherParser;
-import com.softenido.cafe.util.options.BooleanOption;
-import com.softenido.cafe.util.options.InvalidOptionException;
-import com.softenido.cafe.util.options.Option;
-import com.softenido.cafe.util.options.OptionParser;
-import com.softenido.cafe.util.options.StringOption;
 
 public class PicBulk
 {

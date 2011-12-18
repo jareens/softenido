@@ -77,7 +77,7 @@
       <file leaf-file-name="BatteryObservable.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../droidcore/src/com/softenido/droidcore/os/BatteryObservable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="27" selection-start="1062" selection-end="1062" vertical-scroll-proportion="0.28957528">
+            <state line="29" column="27" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.028957529">
               <folding />
             </state>
           </provider>
@@ -183,16 +183,18 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Market2.2" />
     <property name="AndroidTargetDevices" value="HT93YKF07895" />
-    <property name="Repository.Attach.Sources" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="Downloaded.Files.Path" value="$PROJECT_DIR$/lib" />
     <property name="dynamic.classpath" value="false" />
+    <property name="Downloaded.Files.Path" value="$PROJECT_DIR$/lib" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -400,7 +402,6 @@
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32952693" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39831528" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -412,10 +413,11 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32952693" sideWeight="0.67108434" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32952693" sideWeight="0.67108434" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891566" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Android Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32952693" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32932693" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32932693" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -524,39 +526,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/RiskManagerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="714" selection-end="714" vertical-scroll-proportion="0.3448276">
-          <folding />
-        </state>
+        <state line="26" column="0" selection-start="714" selection-end="714" vertical-scroll-proportion="0.3448276" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="0" selection-start="2273" selection-end="2273" vertical-scroll-proportion="0.50695324">
-          <folding />
-        </state>
+        <state line="61" column="0" selection-start="2273" selection-end="2273" vertical-scroll-proportion="0.50695324" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="31" selection-start="133" selection-end="143" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="2" column="31" selection-start="133" selection-end="143" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="963" selection-end="963" vertical-scroll-proportion="0.39179105">
-          <folding />
-        </state>
+        <state line="21" column="0" selection-start="963" selection-end="963" vertical-scroll-proportion="0.39179105" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../trading/test/com/softenido/trading/pricing/OrderPricingTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="10" selection-start="401" selection-end="401" vertical-scroll-proportion="0.37926674">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="23" column="10" selection-start="401" selection-end="401" vertical-scroll-proportion="0.37926674" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/AutoEnvelopeActivity.java">
@@ -566,7 +556,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../droidcore/src/com/softenido/droidcore/os/BatteryObservable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="27" selection-start="1062" selection-end="1062" vertical-scroll-proportion="0.28957528">
+        <state line="29" column="27" selection-start="1082" selection-end="1082" vertical-scroll-proportion="0.028957529">
           <folding />
         </state>
       </provider>
@@ -636,7 +626,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>hardcore</last-edited>
+          <last-edited>trading</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

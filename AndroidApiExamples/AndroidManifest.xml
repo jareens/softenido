@@ -16,6 +16,7 @@
         <activity android:name=".ListViewCodeAndXmlActivity"/>
         <activity android:name=".TasksListViewActivity"/>
         <activity android:name=".BatteryDisplayActivity"/>
+        <activity android:name=".OperativeSystemActivity"/>
         <activity android:name=".SpeechActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.softenido.droiddesk.util.ui.AboutGPL3Activity"/>
         <!-- The application's publisher ID assigned by AdMob -->

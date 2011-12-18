@@ -32,8 +32,8 @@ import com.softenido.droidcore.os.Battery;
 import com.softenido.droidcore.os.BatteryObservable;
 import com.softenido.droidcore.services.LocalService;
 import com.softenido.droiddesk.app.NotificationBuilder;
-import com.softenido.hardcore.util.GenericObservable;
-import com.softenido.hardcore.util.GenericObserver;
+import com.softenido.cafecore.util.GenericObservable;
+import com.softenido.cafecore.util.GenericObserver;
 
 import java.util.Date;
 

@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import com.softenido.cafecore.net.Networks;
 import com.softenido.droiddesk.admob.AdMob;
 import com.softenido.droiddesk.speech.SpeechBuilder;
 import com.softenido.droiddesk.speech.SpeechHearer;
@@ -37,9 +38,7 @@ import com.softenido.droiddesk.speech.SpeechSpeaker;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -204,8 +203,22 @@ public class SpeechActivity extends Activity
 
     private void toastTelnetHelp(ServerSocket server) throws UnknownHostException
     {
-        String text = "telnet "+server.getInetAddress().getCanonicalHostName()+" 9999";
-        Toast.makeText(this.getApplicationContext(), text, Toast.LENGTH_LONG).show();
+        String address = null;
+        try
+        {
+            InetAddress ia=Networks.getFirstSiteAddress();
+            address = ia.getCanonicalHostName();
+            
+        }
+        catch (SocketException e)
+        {
+            address = "?.?.?.?";
+        }
+        if(address!=null)
+        {
+            String text = "telnet -E "+address+" 9999";
+            Toast.makeText(this.getApplicationContext(), text, Toast.LENGTH_LONG).show();
+        }
     }
 
     private void loopSocket(ServerSocket server, AtomicBoolean cancel) throws IOException

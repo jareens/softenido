@@ -34,7 +34,8 @@
     <orderEntry type="library" exported="" name="admob" level="project" />
     <orderEntry type="module" module-name="droiddesk" exported="" />
     <orderEntry type="module" module-name="droidcore" exported="" />
-    <orderEntry type="module" module-name="hardcore" />
+    <orderEntry type="module" module-name="cafecore" exported="" />
+    <orderEntry type="library" name="admob" level="project" />
   </component>
 </module>
 

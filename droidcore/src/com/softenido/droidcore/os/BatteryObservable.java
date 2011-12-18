@@ -26,9 +26,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import com.softenido.cafecore.util.GenericObservable;
+import com.softenido.cafecore.util.GenericObserver;
 import com.softenido.droidcore.R;
-import com.softenido.hardcore.util.GenericObservable;
-import com.softenido.hardcore.util.GenericObserver;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

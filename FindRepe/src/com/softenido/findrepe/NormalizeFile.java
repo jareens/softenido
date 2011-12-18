@@ -1,7 +1,7 @@
 /*
  *  NormalizeFile.java
  *
- *  Copyright (C) 2009-2010 Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2011 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  */
 package com.softenido.findrepe;
 
-import com.softenido.cafe.io.Files;
+import com.softenido.cafedark.io.Files;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

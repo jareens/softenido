@@ -45,6 +45,7 @@ public class MainActivity extends Activity
         final Intent listViewCodeXml = new Intent(this,ListViewCodeAndXmlActivity.class);
         final Intent tasksList = new Intent(this,TasksListViewActivity.class);
         final Intent batteryList = new Intent(this,BatteryDisplayActivity.class);
+        final Intent operativeSystem = new Intent(this,OperativeSystemActivity.class);
         final Intent speech = new Intent(this, SpeechActivity.class);
         final Intent about = new Intent(this, AboutGPL3Activity.class);
 
@@ -68,9 +69,12 @@ public class MainActivity extends Activity
                         startActivity(batteryList);
                         break;
                     case 4:
-                        startActivity(speech);
+                        startActivity(operativeSystem);
                         break;
                     case 5:
+                        startActivity(speech);
+                        break;
+                    case 6:
                         startActivity(about);
                         break;
                 }

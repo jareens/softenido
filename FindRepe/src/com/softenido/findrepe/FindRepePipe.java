@@ -1,7 +1,7 @@
 /*
  *  FindRepe.java
  *
- *  Copyright (C) 2009-2010 Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2011 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,14 +21,14 @@
  */
 package com.softenido.findrepe;
 
-import com.softenido.cafe.collections.IterableBuilder;
-import com.softenido.cafe.io.packed.PackedFile;
-import com.softenido.cafe.io.Files;
-import com.softenido.cafe.io.ForEachFilePipe;
-import com.softenido.cafe.util.ArrayUtils;
-import com.softenido.cafe.util.concurrent.pipeline.Pipe;
-import com.softenido.cafe.util.concurrent.pipeline.PipeArray;
-import com.softenido.cafe.util.concurrent.pipeline.PipeLine;
+import com.softenido.cafedark.collections.IterableBuilder;
+import com.softenido.cafedark.io.Files;
+import com.softenido.cafedark.io.ForEachFilePipe;
+import com.softenido.cafedark.io.packed.PackedFile;
+import com.softenido.cafedark.util.ArrayUtils;
+import com.softenido.cafedark.util.concurrent.pipeline.Pipe;
+import com.softenido.cafedark.util.concurrent.pipeline.PipeArray;
+import com.softenido.cafedark.util.concurrent.pipeline.PipeLine;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;

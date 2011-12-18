@@ -1,7 +1,7 @@
 /*
  *  SvnHg.java
  *
- *  Copyright (C) 2010  Francisco Gómez Carrasco
+ *  Copyright (C) 2010-2011  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,17 +21,17 @@
  */
 package com.softenido.svnhg;
 
-import com.softenido.cafe.util.launcher.LauncherParser;
-import com.softenido.cafe.util.options.ArrayStringOption;
-import com.softenido.cafe.util.options.BooleanOption;
-import com.softenido.cafe.util.options.InvalidOptionException;
-import com.softenido.cafe.util.options.MissingOptionParameterException;
-import com.softenido.cafe.util.options.Option;
-import com.softenido.cafe.util.options.OptionParser;
-import com.softenido.cafe.util.options.StringOption;
-import com.softenido.cafe.io.RealConsole;
-import com.softenido.cafe.io.VirtualConsole;
-import com.softenido.cafe.io.FakeConsole;
+import com.softenido.cafedark.io.FakeConsole;
+import com.softenido.cafedark.io.RealConsole;
+import com.softenido.cafedark.io.VirtualConsole;
+import com.softenido.cafedark.util.launcher.LauncherParser;
+import com.softenido.cafedark.util.options.ArrayStringOption;
+import com.softenido.cafedark.util.options.BooleanOption;
+import com.softenido.cafedark.util.options.InvalidOptionException;
+import com.softenido.cafedark.util.options.MissingOptionParameterException;
+import com.softenido.cafedark.util.options.Option;
+import com.softenido.cafedark.util.options.OptionParser;
+import com.softenido.cafedark.util.options.StringOption;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

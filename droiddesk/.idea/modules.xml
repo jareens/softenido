@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../cafecore/cafecore.iml" filepath="$PROJECT_DIR$/../cafecore/cafecore.iml" />
       <module fileurl="file://$PROJECT_DIR$/../droidcore/droidcore.iml" filepath="$PROJECT_DIR$/../droidcore/droidcore.iml" />
       <module fileurl="file://$PROJECT_DIR$/droiddesk.iml" filepath="$PROJECT_DIR$/droiddesk.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../hardcore/hardcore.iml" filepath="$PROJECT_DIR$/../hardcore/hardcore.iml" />
     </modules>
   </component>
 </project>
