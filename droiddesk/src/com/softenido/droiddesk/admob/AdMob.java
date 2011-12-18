@@ -29,7 +29,7 @@ import android.widget.LinearLayout;
 import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
-import com.softenido.droid.R;
+import com.softenido.droidcore.R;
 import com.softenido.droidcore.os.MetaData;
 
 import java.util.HashSet;
