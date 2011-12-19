@@ -5,11 +5,10 @@ v0.3.0 vc7 (2011-12-18)
 - better synchronization between UI and Keep Connection status
 - added testing module
 
-
 v0.2.4 vc6 (2011-11-24)
 --------------------------
 - minimal improved look&feel
-- soved discrepande between checkbox and wifiLock
+- solved discrepande between checkbox and wifiLock
 
 v0.2.3 vc5 (2011-11-14)
 --------------------------

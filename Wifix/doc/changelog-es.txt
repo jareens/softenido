@@ -1,0 +1,35 @@
+v0.3.0 vc7 (2011-12-18)
+--------------------------
+- añade límites de tiempo y batería
+- mantener la conexión implementado como servicio
+- mejor sincronización entre UI el estado de mantenera la conexión
+- añade un módulo de testing
+
+
+
+v0.2.4 vc6 (2011-11-24)
+--------------------------
+- mejoras mínimas del aspecto visual
+- solucionado Error por discrepancia entre el checkbox y wifiLock
+
+
+v0.2.3 vc5 (2011-11-14)
+--------------------------
+- añade textos en Español
+- añade singleInstance
+- añadido changelog
+
+
+
+v0.2.2 vc4 (2011-11-11)
+--------------------------
+- nuevo logo
+
+v0.2.1 vc3 (2011-11-09)
+--------------------------
+
+v0.2.0 vc2 (2011-11-09)
+--------------------------
+- release inicial
+- reemplaza a WifiPing (Lite)
+
