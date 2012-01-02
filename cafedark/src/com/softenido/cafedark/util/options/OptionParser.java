@@ -21,8 +21,8 @@
  */
 package com.softenido.cafedark.util.options;
 
+import com.softenido.cafecore.util.Arrays;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;

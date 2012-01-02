@@ -32,9 +32,9 @@ public class Dates
 {
     /**
      * 
-     * @param today
-     * @param other
-     * @return
+     * @param today the date to be considered as today
+     * @param other the date with is compared
+     * @return true if both dates contains the same day
      */
     static public boolean isToday(Calendar today, Calendar other)
     {
@@ -42,10 +42,10 @@ public class Dates
                today.get(Calendar.DAY_OF_YEAR) == other.get(Calendar.DAY_OF_YEAR);
     }
     /**
-     * 
-     * @param today
-     * @param other
-     * @return
+     *
+     * @param today the date to be considered as today
+     * @param other the date with is compared
+     * @return true if both dates contains the same day
      */
     static public boolean isToday(Date today, Date other)
     {
@@ -56,10 +56,10 @@ public class Dates
         return isToday(todayCalendar, otherCalendar);
     }
     /**
-     * 
-     * @param today
-     * @param other
-     * @return
+     *
+     * @param today the date to be considered as today
+     * @param other the date with is compared
+     * @return true if other is the previous day of today
      */
     static public boolean isYesterday(Calendar today, Calendar other)
     {
@@ -68,10 +68,10 @@ public class Dates
         return isToday(today,other);
     }
     /**
-     * 
-     * @param today
-     * @param other
-     * @return
+     *
+     * @param today the date to be considered as today
+     * @param other the date with is compared
+     * @return true if other is the previous day of today
      */
     static public boolean isYesterday(Date today, Date other)
     {
@@ -82,10 +82,10 @@ public class Dates
         return isYesterday(todayCalendar, otherCalendar);
     }
     /**
-     * 
-     * @param today
-     * @param other
-     * @return
+     *
+     * @param today the date to be considered as today
+     * @param other the date with is compared
+     * @return true if other is the next day of today
      */
     static public boolean isTomorrow(Calendar today, Calendar other)
     {
@@ -94,10 +94,10 @@ public class Dates
         return isToday(today,other);
     }
     /**
-     * 
-     * @param today
-     * @param other
-     * @return
+     *
+     * @param today the date to be considered as today
+     * @param other the date with is compared
+     * @return true if other is the next day of today
      */
     static public boolean isTomorrow(Date today, Date other)
     {

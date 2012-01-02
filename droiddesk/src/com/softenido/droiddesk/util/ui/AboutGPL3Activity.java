@@ -43,6 +43,7 @@ public class AboutGPL3Activity extends Activity
     static final String METADATA_URL1 = "com.softenido.about.url1";
     static final String METADATA_URL2 = "com.softenido.about.url2";
 
+    @SuppressWarnings("FieldCanBeLocal")
     private AdMob admob=null;
     /** Called when the activity is first created. */
     @Override

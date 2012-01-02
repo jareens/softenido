@@ -21,7 +21,7 @@
  */
 package com.softenido.mailbulk;
 
-import com.softenido.cafedark.util.SizeUnits;
+import com.softenido.cafecore.util.SizeUnits;
 import java.io.Console;
 import java.io.InputStream;
 import java.io.PrintStream;

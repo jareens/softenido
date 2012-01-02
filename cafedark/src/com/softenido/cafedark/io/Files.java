@@ -1,7 +1,7 @@
 /*
  *  Files.java
  *
- *  Copyright (C) 2007-2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2007-2011  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  */
 package com.softenido.cafedark.io;
 
-import com.softenido.cafedark.util.ArrayUtils;
+import com.softenido.cafecore.util.ArrayUtils;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;

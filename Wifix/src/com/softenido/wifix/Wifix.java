@@ -53,6 +53,7 @@ public class Wifix extends Activity implements GenericObserver<KeepWifiService,B
     static volatile WifiManager wm=null;
     static volatile Vibrator vibrator =null;
 
+    @SuppressWarnings("FieldCanBeLocal")
     private AdMob admob=null;
 
     private volatile LocalServiceConnection connection =null;

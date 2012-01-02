@@ -1,7 +1,7 @@
 /*
  *  FindRepeOptions.java
  *
- *  Copyright (C) 2009-2011 Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2010 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,12 +22,12 @@
 
 package com.softenido.findrepe;
 
+import com.softenido.cafecore.equals.EqualsBuilder;
 import com.softenido.cafedark.io.ForEachFileOptions;
 import com.softenido.cafedark.io.NameFileFilter;
-import com.softenido.cafedark.io.packed.PackedFile;
+import com.softenido.cafedark.io.virtual.VirtualFile;
 import java.io.File;
 import java.io.FileFilter;
-import java.util.Comparator;
 import java.util.HashSet;
 
 /**
@@ -39,6 +39,7 @@ public class FindRepeOptions extends ForEachFileOptions
     private int minCount;
     private int maxCount;
     private long minWasted;
+    private boolean eager;
 
     private boolean hasFocusPaths;
     private final HashSet<File> focusPaths;
@@ -52,19 +53,20 @@ public class FindRepeOptions extends ForEachFileOptions
     private boolean hasFileName;
     private final HashSet<FileFilter> fileName;
 
-    public final static Comparator<PackedFile> BYHASH_HALF_COMPARATOR = new FileComparatorByHash(true);
-    public final static Comparator<PackedFile> BYHASH_FULL_COMPARATOR = new FileComparatorByHash(false);
-    public final static Comparator<PackedFile> DEFAULT_HALF_COMPARATOR = BYHASH_HALF_COMPARATOR;
-    public final static Comparator<PackedFile> DEFAULT_FULL_COMPARATOR = BYHASH_FULL_COMPARATOR;
+    public final static EqualsBuilder<VirtualFile> BYHASH_HALF_COMPARATOR = new FileComparatorByHash(true);
+    public final static EqualsBuilder<VirtualFile> BYHASH_FULL_COMPARATOR = new FileComparatorByHash(false);
+    public final static EqualsBuilder<VirtualFile> DEFAULT_HALF_COMPARATOR = BYHASH_HALF_COMPARATOR;
+    public final static EqualsBuilder<VirtualFile> DEFAULT_FULL_COMPARATOR = BYHASH_FULL_COMPARATOR;
         
-    private Comparator<PackedFile> halfCmp;
-    private Comparator<PackedFile> fullCmp;
+    private EqualsBuilder<VirtualFile> halfCmp;
+    private EqualsBuilder<VirtualFile> fullCmp;
 
     public FindRepeOptions()
     {
         super();
         minCount = 0;
         maxCount = Integer.MAX_VALUE;
+        eager    = false;
 
         hasFocusPaths = false;
         focusPaths = new HashSet<File>();
@@ -86,6 +88,7 @@ public class FindRepeOptions extends ForEachFileOptions
         super(val);
         minCount = 0;
         maxCount = Integer.MAX_VALUE;
+        eager    = false;
 
         hasFocusPaths = false;
         focusPaths = new HashSet<File>();
@@ -108,6 +111,7 @@ public class FindRepeOptions extends ForEachFileOptions
         minCount = val.minCount;
         maxCount = val.maxCount;
         minWasted = val.minWasted;
+        eager    = val.eager;
 
         hasFocusPaths       = val.hasFocusPaths;
         focusPaths          = new HashSet<File>(val.focusPaths);
@@ -153,6 +157,17 @@ public class FindRepeOptions extends ForEachFileOptions
     {
         this.minWasted = minWasted;
     }
+
+    public boolean isEager()
+    {
+        return eager;
+    }
+
+    public void setEager(boolean eager)
+    {
+        this.eager = eager;
+    }
+    
     
     public void addFocusPath(File path)
     {
@@ -214,20 +229,19 @@ public class FindRepeOptions extends ForEachFileOptions
         return fileName.toArray(new FileFilter[0]);
     }
 
-    public void setComparators(Comparator<PackedFile> half, Comparator<PackedFile> full)
+    public void setComparators(EqualsBuilder<VirtualFile> half, EqualsBuilder<VirtualFile> full)
     {
         this.halfCmp = half;
         this.fullCmp = full;
     }
 
-    public Comparator<PackedFile> getFullCmp()
+    public EqualsBuilder<VirtualFile> getFullCmp()
     {
         return fullCmp;
     }
 
-    public Comparator<PackedFile> getHalfCmp()
+    public EqualsBuilder<VirtualFile> getHalfCmp()
     {
         return halfCmp;
     }
-
 }

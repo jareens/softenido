@@ -39,7 +39,6 @@ public class Gray
 {
     public static void main(String[] args) throws Exception
     {
-
         File img = new File(args[0]).getAbsoluteFile();
         File parent = img.getParentFile();
         File img2 = new File(parent,"gray-"+img.getName());

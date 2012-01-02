@@ -21,7 +21,7 @@
  */
 package com.softenido.cafedark.io;
 
-import com.softenido.cafedark.util.regex.RegExs;
+import com.softenido.cafecore.util.regex.RegExs;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.regex.Pattern;

@@ -22,7 +22,7 @@
 package com.softenido.echoserver;
 
 
-import com.softenido.cafedark.util.ArrayUtils;
+import com.softenido.cafecore.util.ArrayUtils;
 import com.softenido.cafedark.util.launcher.LauncherParser;
 import com.softenido.cafedark.util.options.BooleanOption;
 import com.softenido.cafedark.util.options.InvalidOptionException;

@@ -22,8 +22,8 @@
 package com.softenido.cafedark.io;
 
 import com.softenido.cafedark.io.virtual.VirtualFile;
-import com.softenido.cafedark.security.ParallelMessageDigest;
-import com.softenido.cafedark.util.ArrayUtils;
+import com.softenido.cafecore.security.ParallelMessageDigest;
+import com.softenido.cafecore.util.ArrayUtils;
 import com.softenido.cafedark.util.FileDigest;
 import java.io.FileNotFoundException;
 import java.io.IOException;

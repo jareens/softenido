@@ -1,7 +1,7 @@
 /*
  *  FileComparatorByName.java
  *
- *  Copyright (C) 2010-2011 Francisco Gómez Carrasco
+ *  Copyright (C) 2010  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,14 +21,15 @@
  */
 package com.softenido.findrepe;
 
-import com.softenido.cafedark.io.packed.PackedFile;
+import com.softenido.cafecore.equals.EqualsFilterBuilder;
+import com.softenido.cafedark.io.virtual.VirtualFile;
 import java.util.Comparator;
 
 /**
  *
  * @author franci
  */
-public class FileComparatorByName implements Comparator<PackedFile>
+public class FileComparatorByName extends EqualsFilterBuilder<VirtualFile> implements Comparator<VirtualFile>
 {
     private final boolean half;
     private final boolean ignoreCase;
@@ -40,7 +41,7 @@ public class FileComparatorByName implements Comparator<PackedFile>
     }
 
     @Override
-    public int compare(PackedFile pf1, PackedFile pf2)
+    public int compare(VirtualFile pf1, VirtualFile pf2)
     {
         if(pf1==pf2)
         {
@@ -56,5 +57,29 @@ public class FileComparatorByName implements Comparator<PackedFile>
         }
         return ignoreCase?name1.compareToIgnoreCase(name2):name1.compareTo(name2);
     }
-    
+
+    @Override
+    public int filterCode(VirtualFile e)
+    {
+        return e.getName().length();
+    }
+
+    @Override
+    public boolean filterEquals(VirtualFile pf1, VirtualFile pf2)
+    {
+        if(pf1==pf2)
+        {
+            return false;
+        }
+        String name1 = pf1.getName();
+        String name2 = pf2.getName();
+        if(half)
+        {
+            int size1 = name1.length();
+            int size2 = name2.length();
+            return (size1==size2);
+        }
+        return ignoreCase?name1.equalsIgnoreCase(name2):name1.equals(name2);
+    }
+   
 }

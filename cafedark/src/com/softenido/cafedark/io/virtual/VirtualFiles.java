@@ -22,7 +22,7 @@
 package com.softenido.cafedark.io.virtual;
 
 import com.softenido.cafedark.io.Files;
-import com.softenido.cafedark.util.ArrayUtils;
+import com.softenido.cafecore.util.ArrayUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

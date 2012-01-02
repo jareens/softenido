@@ -71,7 +71,7 @@ public class Networks
                 }
             }
         }
-        return list.toArray(new InetAddress[0]);
+        return list.toArray(new InetAddress[list.size()]);
     }
     static public InetAddress getFirstSiteAddress() throws SocketException
     {

@@ -22,12 +22,8 @@
 package com.softenido.tradertoolbox;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Vibrator;
-import android.preference.PreferenceActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -37,6 +33,7 @@ import com.softenido.droiddesk.util.ui.AboutGPL3Activity;
 
 public class MainActivity extends Activity
 {
+    @SuppressWarnings("FieldCanBeLocal")
     private AdMob admob=null;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

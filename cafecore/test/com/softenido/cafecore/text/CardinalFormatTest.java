@@ -255,7 +255,7 @@ public class CardinalFormatTest
         _(1023456789987654321L, "one quintillion twenty-three quadrillion four hundred fifty-six trillion seven hundred eighty-nine billion nine hundred eighty-seven million six hundred fifty-four thousand three hundred twenty-one"),
         _(9223372036854775807L ,"nine quintillion two hundred twenty-three quadrillion three hundred seventy-two trillion thirty-six billion eight hundred fifty-four million seven hundred seventy-five thousand eight hundred seven")
     };
-    static private T[] en_US_long =
+    static private T[] en_GB =
     {
         _(101, "one hundred and one"),
         _(201, "two hundred and one"),
@@ -316,13 +316,13 @@ public class CardinalFormatTest
         {
             Assert.assertEquals(Long.toString(e.num),e.text, instance.format(e.num));
         }
-        instance = CardinalFormat.getInstance(Locale.US,CardinalFormat.SHORT);
+        instance = CardinalFormat.getInstance(Locale.US);
         for(T e: en_US)
         {
             Assert.assertEquals(Long.toString(e.num),e.text, instance.format(e.num));
         }
-        instance = CardinalFormat.getInstance(Locale.US,CardinalFormat.LONG);
-        for(T e: en_US_long)
+        instance = CardinalFormat.getInstance(Locale.UK,CardinalFormat.LONG);
+        for(T e: en_GB)
         {
             Assert.assertEquals(Long.toString(e.num),e.text, instance.format(e.num));
         }

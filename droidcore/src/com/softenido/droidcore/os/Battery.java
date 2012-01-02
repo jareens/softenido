@@ -105,15 +105,23 @@ public class Battery
 
         Battery battery = (Battery) o;
 
-        if (health != battery.health) return false;
-        if (level != battery.level) return false;
-        if (plugged != battery.plugged) return false;
-        if (present != battery.present) return false;
-        if (scale != battery.scale) return false;
-        if (status != battery.status) return false;
-        if (temperature != battery.temperature) return false;
-        if (voltage != battery.voltage) return false;
-        if (technology != null ? !technology.equals(battery.technology) : battery.technology != null) return false;
+        if(health != battery.health) return false;
+        if(level != battery.level) return false;
+        if(plugged != battery.plugged) return false;
+        if(present != battery.present) return false;
+        if(scale != battery.scale) return false;
+        if(status != battery.status) return false;
+        if(temperature != battery.temperature) return false;
+        if(voltage != battery.voltage) return false;
+        if(technology != battery.technology)
+        {
+            //if one of the technology variables is null and the other is not,
+            //objects are different from each other
+            if(technology==null) return false;
+            if(battery.technology==null) return false;
+
+            return technology.equals(battery.technology);
+        }
 
         return true;
     }

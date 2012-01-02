@@ -21,7 +21,7 @@
  */
 package com.softenido.cafedark.util.options;
 
-import com.softenido.cafedark.util.SizeUnits;
+import com.softenido.cafecore.util.SizeUnits;
 
 /**
  *

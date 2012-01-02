@@ -35,7 +35,7 @@ class NumberRule
     private static final int EXACT=0;
     private static final int ADD=1;
     private static final int MUL=2;
-    static NumberRule identityRule = new NumberRule(0, null, null, null, null);
+    static final NumberRule identityRule = new NumberRule(0, null, null, null, null);
 
     final long value;
     
@@ -52,7 +52,6 @@ class NumberRule
         this.mul = mul;
         this.mulAdd = mulAdd;
     }
-
 
     static public NumberRule build(String id, ResourceBundle rb, CardinalFormat.Gender gender, int style)
     {
@@ -121,7 +120,6 @@ public class CardinalFormat
 {
     private final NumberRule[] rules;
     private final Gender gender;
-    private final Locale locale;
     private boolean identitiy=false;
     
     static public enum Gender
@@ -132,10 +130,14 @@ public class CardinalFormat
         {
             this.value = value;
         }
-    };
-    static public int SHORT = 0;
-    static public int LONG  = 1;
-    private Comparator<NumberRule> cmp = new Comparator<NumberRule>()
+    }
+    //this shoul be the default value, adding a default entry in property file "default=SHORT"
+    //so with the same rules US and GB files will give the apropiated default Cardinals
+    //static public int AUTO  = 1; 
+
+    static public final int SHORT = 1;
+    static public final int LONG  = 2;
+    static private final Comparator<NumberRule> cmp = new Comparator<NumberRule>()
     {
         public int compare(NumberRule o1, NumberRule o2)
         {
@@ -153,7 +155,6 @@ public class CardinalFormat
         {
             throw new InvalidParameterException();
         }
-        this.locale = locale;
         this.gender = gender;
         ResourceBundle rb = getResourceBundle( locale);
         ArrayList<NumberRule> tokens = new ArrayList<NumberRule>();
@@ -168,14 +169,13 @@ public class CardinalFormat
             }
             tokens.add(rule);
         }
-        this.rules = tokens.toArray(new NumberRule[0]);
+        this.rules = tokens.toArray(new NumberRule[tokens.size()]);
         Arrays.sort(rules,cmp);
     }
 
     ResourceBundle getResourceBundle(Locale locale)
     {
-        ResourceBundle rb = ResourceBundle.getBundle(CardinalFormat.class.getName(), locale);
-        return rb;
+        return ResourceBundle.getBundle(CardinalFormat.class.getName(), locale);
     }
     public String format(long num)
     {
