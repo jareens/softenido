@@ -307,29 +307,45 @@ public class ForEachFileOptions
         }
     }
 
+    public void addOmitedDirName(String dirName, NameFileFilter.Rule[] requiered)
+    {
+        VirtualFileFilter omitedDirFilter = VirtualFile.buildFilter(NameFileFilter.getStringInstance(dirName,requiered));
+        omitedDirNames.add(omitedDirFilter);
+        hasOmitedDirNames = true;
+    }
     public void addOmitedDirName(String dirName)
     {
-        VirtualFileFilter omitedDirFilter = VirtualFile.buildFilter(NameFileFilter.getStringInstance(dirName));
+        addOmitedDirName(dirName,null);
+    }
+    public void addOmitedDirName(String dirName,boolean wildcard,NameFileFilter.Rule[] requiered)
+    {
+        VirtualFileFilter omitedDirFilter = VirtualFile.buildFilter(wildcard?NameFileFilter.getWildCardInstance(dirName,requiered):NameFileFilter.getRegExInstance(dirName,requiered));
         omitedDirNames.add(omitedDirFilter);
         hasOmitedDirNames = true;
     }
     public void addOmitedDirName(String dirName,boolean wildcard)
     {
-        VirtualFileFilter omitedDirFilter = VirtualFile.buildFilter(wildcard?NameFileFilter.getWildCardInstance(dirName):NameFileFilter.getRegExInstance(dirName));
-        omitedDirNames.add(omitedDirFilter);
-        hasOmitedDirNames = true;
+        addOmitedDirName(dirName,wildcard,null);
+    }
+    public void addOmitedFileName(String fileName, NameFileFilter.Rule[] requiered)
+    {
+        VirtualFileFilter omitedFileFilter = VirtualFile.buildFilter(NameFileFilter.getStringInstance(fileName,requiered));
+        omitedFileNames.add(omitedFileFilter);
+        hasOmitedFileNames = true;
     }
     public void addOmitedFileName(String fileName)
     {
-        VirtualFileFilter omitedFileFilter = VirtualFile.buildFilter(NameFileFilter.getStringInstance(fileName));
+        addOmitedFileName(fileName,null);
+    }
+    public void addOmitedFileName(String fileName,boolean wildcard, NameFileFilter.Rule[] requiered)
+    {
+        VirtualFileFilter omitedFileFilter = VirtualFile.buildFilter(wildcard?NameFileFilter.getWildCardInstance(fileName,requiered):NameFileFilter.getRegExInstance(fileName,requiered));
         omitedFileNames.add(omitedFileFilter);
         hasOmitedFileNames = true;
     }
     public void addOmitedFileName(String fileName,boolean wildcard)
     {
-        VirtualFileFilter omitedFileFilter = VirtualFile.buildFilter(wildcard?NameFileFilter.getWildCardInstance(fileName):NameFileFilter.getRegExInstance(fileName));
-        omitedFileNames.add(omitedFileFilter);
-        hasOmitedFileNames = true;
+        addOmitedFileName(fileName,wildcard,null);
     }
     public void addAllowedFileName(FileFilter filter)
     {

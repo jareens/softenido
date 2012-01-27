@@ -21,14 +21,14 @@
  */
 package com.softenido.cafedark.image.hash;
 
+import com.softenido.cafecore.security.ParallelMessageDigest;
+import com.softenido.cafecore.util.ArrayUtils;
 import com.softenido.cafedark.image.ScaleDimension;
 import com.softenido.cafedark.image.SimpleScaleDimension;
 import com.softenido.cafedark.imageio.ScaleImage;
 import com.softenido.cafedark.io.Hash;
 import com.softenido.cafedark.io.virtual.VirtualFile;
 import com.softenido.cafedark.io.virtual.VirtualFilePool;
-import com.softenido.cafecore.security.ParallelMessageDigest;
-import com.softenido.cafecore.util.ArrayUtils;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;

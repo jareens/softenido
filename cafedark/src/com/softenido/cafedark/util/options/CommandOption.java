@@ -1,7 +1,7 @@
 /*
- *  Option.java
+ *  CommandOption.java
  *
- *  Copyright (C) 2009-2012  Francisco Gómez Carrasco
+ *  Copyright (C) 2012  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,26 +25,14 @@ package com.softenido.cafedark.util.options;
  *
  * @author franci
  */
-public interface Option
+public class CommandOption extends BooleanOption
 {
-    int getCount();
-
-    void addCount();
-
-    boolean isUsed();
-    
-    boolean isCommand();
-
-    int getLastUsed();
-
-    String getLongName();
-
-    char getShortName();
-
-    int parseLong(int index, String[] args);
-
-    int parseShort(int argIndex, int charIndex, String[] args);
-
-    String getUsedName();
-    
+    public CommandOption(String longName)
+    {
+        super((char) 0, longName,true,"","");
+    }
+    public CommandOption(char shortName, String longName)
+    {
+        super(shortName, longName,true,"","");
+    }
 }

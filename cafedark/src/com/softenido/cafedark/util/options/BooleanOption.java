@@ -1,7 +1,7 @@
 /*
  *  BooleanOption.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2012  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ import java.text.MessageFormat;
  */
 public class BooleanOption implements Option
 {
-
+    private final boolean command;
     private final char shortName;
     protected final String longName;
     protected final String _longName;
@@ -40,31 +40,40 @@ public class BooleanOption implements Option
     protected boolean oneHyphen = true;
     protected boolean twoHyphen = true;
     protected boolean nonHyphen = false;
+    protected String shortHelp = "";
+    protected String longHelp = "";
 
-    BooleanOption(char shortName, String longName, boolean command)
+    BooleanOption(char shortName, String longName, boolean command,String shortHelp, String longHelp)
     {
         this.shortName = shortName;
         this.longName = longName;
         this._longName = "-" + longName;
         this.__longName = "--" + longName;
+        this.command = command;
         if(command)
         {
             oneHyphen = false;
             twoHyphen = false;
             nonHyphen = true;
         }
-    }
-    public BooleanOption(char shortName, String longName)
-    {
-        this(shortName,longName,false);
-    }
-    public BooleanOption(String longName, boolean command)
-    {
-        this((char) 0, longName, command);
+        this.shortHelp = shortHelp;
+        this.longHelp  = longHelp;
     }
     public BooleanOption(String longName)
     {
-        this((char) 0, longName, false);
+        this((char) 0, longName, false,"","");
+    }
+    public BooleanOption(char shortName, String longName)
+    {
+        this(shortName,longName,false,"","");
+    }
+    public BooleanOption(String longName, String shortHelp, String longHelp)
+    {
+        this((char) 0, longName, false, shortHelp, longHelp);
+    }
+    public BooleanOption(char shortName, String longName, String shortHelp, String longHelp)
+    {
+        this(shortName,longName,false, shortHelp, longHelp);
     }
 
     public String getLongName()
@@ -147,5 +156,10 @@ public class BooleanOption implements Option
     public String toString()
     {
         return MessageFormat.format("--{0}={1} (count={2})",new Object[]{longName,(count>0),count});
+    }
+
+    public boolean isCommand()
+    {
+        return command;
     }
 }

@@ -1,7 +1,7 @@
 /*
  *  OptionParser.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2012  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,9 +22,7 @@
 package com.softenido.cafedark.util.options;
 
 import com.softenido.cafecore.util.Arrays;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,7 +45,7 @@ import java.util.logging.Logger;
  */
 public class OptionParser
 {
-
+    final String name;
     private static final String ONE_HYPHEN = "-";
     private static final String TWO_HYPHEN = "--";
     private boolean ignoreShort = false;
@@ -55,13 +53,19 @@ public class OptionParser
     private boolean oneHyphen = true;
     private boolean twoHyphen = true;
     private boolean posixly = false;
-    List<Option> optionList = new ArrayList<Option>();
+    final List<Option> optionList = new ArrayList<Option>();
     private final Option oneHyphenOption = new BooleanOption(ONE_HYPHEN);
     private final Option twoHyphenOption = new BooleanOption(TWO_HYPHEN);
 
+    public OptionParser(String name)
+    {
+        this.name = name;
+    }
     public OptionParser()
     {
+        this(null);
     }
+
     public <T extends Option> T add(T item)
     {
         optionList.add(item);
@@ -215,6 +219,5 @@ public class OptionParser
                 }
             }
         }
-    }
-
+    }   
 }
