@@ -1,7 +1,7 @@
 /*
  *  SwapColor.java
  *
- *  Copyright (C) 2009-2011  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2012  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package scaleimage;
+package com.softenido.imagewizard;
 
 import com.softenido.cafedark.image.SwapImageColor;
 import com.softenido.cafedark.imageio.ImageFormat;
