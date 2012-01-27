@@ -1,0 +1,234 @@
+com.google.ads.Ad:
+    public abstract boolean isReady()
+    public abstract void loadAd(com.google.ads.AdRequest)
+    public abstract void setAdListener(com.google.ads.AdListener)
+    public abstract void stopLoading()
+com.google.ads.AdActivity:
+    public static final java.lang.String BASE_URL_PARAM
+    public static final java.lang.String HTML_PARAM
+    public static final java.lang.String URL_PARAM
+    public static final java.lang.String INTENT_ACTION_PARAM
+    public static final java.lang.String TYPE_PARAM
+    public static final java.lang.String ORIENTATION_PARAM
+com.google.ads.AdRequest:
+    public static final java.lang.String VERSION
+    public static final java.lang.String LOGTAG
+    173:174:public void setGender(com.google.ads.AdRequest$Gender)
+    184:185:public void setBirthday(java.lang.String)
+    196:197:public void setPlusOneOptOut(boolean)
+    208:209:public void setKeywords(java.util.Set)
+    238:239:public void setExtras(java.util.Map)
+    267:268:public void setLocation(android.location.Location)
+    281:282:public void setTesting(boolean)
+    385:386:public void setTestDevices(java.util.Set)
+com.google.ads.AdSize:
+    38:39:public AdSize(int,int)
+com.google.ads.AdView:
+    478:482:public boolean isReady()
+    523:524:public void setAdListener(com.google.ads.AdListener)
+    535:536:public void stopLoading()
+com.google.ads.InterstitialAd:
+    private com.google.ads.d a
+    73:74:public InterstitialAd(android.app.Activity,java.lang.String)
+    88:91:public InterstitialAd(android.app.Activity,java.lang.String,boolean)
+    100:100:public boolean isReady()
+    112:113:public void loadAd(com.google.ads.AdRequest)
+    122:135:public void show()
+    146:147:public void setAdListener(com.google.ads.AdListener)
+    156:157:public void stopLoading()
+com.google.ads.R
+com.google.ads.R$attr
+com.google.ads.R$id
+com.google.ads.R$layout
+com.google.ads.d:
+    464:464:public final synchronized boolean o()
+    777:778:public final synchronized void y()
+com.google.ads.searchads.SearchAdRequest:
+    88:89:public void setQuery(java.lang.String)
+    98:104:public void setBackgroundColor(int)
+    116:122:public void setBackgroundGradient(int,int)
+    132:133:public void setHeaderTextColor(int)
+    143:144:public void setDescriptionTextColor(int)
+    154:155:public void setAnchorTextColor(int)
+    163:164:public void setFontFace(java.lang.String)
+    173:174:public void setHeaderTextSize(int)
+    184:185:public void setBorderColor(int)
+    192:193:public void setBorderType(com.google.ads.searchads.SearchAdRequest$BorderType)
+    202:203:public void setBorderThickness(int)
+com.softenido.cafecore.crypto.IDEACipher
+com.softenido.cafecore.equals.Equals
+com.softenido.cafecore.equals.EqualsBuilder
+com.softenido.cafecore.equals.EqualsData
+com.softenido.cafecore.equals.EqualsDataBuilder
+com.softenido.cafecore.equals.EqualsFilterBuilder
+com.softenido.cafecore.equals.EqualsFilterBuilder$1
+com.softenido.cafecore.equals.EqualsHashMap
+com.softenido.cafecore.equals.EqualsProxyBuilder
+com.softenido.cafecore.equals.EqualsProxyBuilder$1
+com.softenido.cafecore.math.E
+com.softenido.cafecore.math.FastMath
+com.softenido.cafecore.misc.EuroCheckSum
+com.softenido.cafecore.net.MailToBuilder
+com.softenido.cafecore.net.Networks:
+    88:93:public static java.lang.String getNetAddress(java.lang.String)
+    97:106:public static java.net.InetAddress getNetAddress(java.net.InetAddress)
+    110:115:public static java.lang.String getBroadCastAddress(java.lang.String)
+    119:124:public static java.net.InetAddress getBroadCastAddress(java.net.InetAddress)
+com.softenido.cafecore.os.OSName:
+    private static final java.lang.String OS_NAME
+    private static final java.lang.String DARWIN
+    private static final java.lang.String MAC
+    private static final java.lang.String MAC_OS_X
+    private static final java.lang.String OPENBSD
+    private static final java.lang.String LINUX
+    private static final java.lang.String SOLARIS
+    private static final java.lang.String SUNOS
+    private static final java.lang.String FREEBSD
+    private static final java.lang.String WINDOWS
+    private static final java.lang.String WINDOWS_98
+    private static final java.lang.String WINDOWS_98SE
+    private static final java.lang.String WINDOWS_ME
+    private static final java.lang.String WINDOWS_2000
+    private static final java.lang.String WINDOWS_XP
+    private static final java.lang.String WINDOWS_VISTA
+    private static final java.lang.String WINDOWS_CE
+    197:197:public static com.softenido.cafecore.os.OSName getInstance()
+    202:202:public static com.softenido.cafecore.os.OSName getInstance(java.lang.String)
+    207:207:public boolean isFreebsd()
+    212:212:public boolean isLinux()
+    217:217:public boolean isMacos()
+    222:222:public boolean isMacosx()
+    227:227:public boolean isOpenbsd()
+    232:232:public boolean isPosix()
+    237:237:public boolean isSolaris()
+    242:242:public boolean isUnknown()
+    247:247:public boolean isWindows()
+    252:252:public boolean isWindowsCE()
+    257:257:public boolean isWindowsXP()
+    262:262:public boolean isWindows2000()
+    267:267:public boolean isWindows98()
+    272:272:public boolean isWindows98SE()
+    277:277:public boolean isWindowsME()
+    282:282:public boolean isWindowsVista()
+    297:297:public boolean isAndroid()
+com.softenido.cafecore.security.CloneableMessageDigest
+com.softenido.cafecore.security.Messy
+com.softenido.cafecore.security.Messy$1
+com.softenido.cafecore.security.Messy$2
+com.softenido.cafecore.security.Messy$3
+com.softenido.cafecore.security.Messy$4
+com.softenido.cafecore.security.Messy$5
+com.softenido.cafecore.security.ParallelMessageDigest
+com.softenido.cafecore.security.SecureBitSet
+com.softenido.cafecore.stego.Cardinality
+com.softenido.cafecore.stego.StegoCipher
+com.softenido.cafecore.stego.StegoPack
+com.softenido.cafecore.stego.StegoPack0
+com.softenido.cafecore.stego.StegoTextJustify
+com.softenido.cafecore.stego.StgTxt
+com.softenido.cafecore.text.CardinalFormat
+com.softenido.cafecore.text.CardinalFormat$1
+com.softenido.cafecore.text.CardinalFormat$Gender
+com.softenido.cafecore.text.ConsoleAppendable
+com.softenido.cafecore.text.ConsoleAppendable$Options
+com.softenido.cafecore.text.HumanDateFormat
+com.softenido.cafecore.text.HumanMillisFormat
+com.softenido.cafecore.text.NumberRule
+com.softenido.cafecore.text.UnsupportedValueException
+com.softenido.cafecore.util.AbstractUnits
+com.softenido.cafecore.util.ArrayUtils
+com.softenido.cafecore.util.Arrays
+com.softenido.cafecore.util.BitSetReader
+com.softenido.cafecore.util.BitSetReader$1
+com.softenido.cafecore.util.BitSetReader$2
+com.softenido.cafecore.util.BitSetWriter
+com.softenido.cafecore.util.BitSetWriter$1
+com.softenido.cafecore.util.BitSetWriter$2
+com.softenido.cafecore.util.BitSets
+com.softenido.cafecore.util.Dates
+com.softenido.cafecore.util.GenericObservable:
+    88:88:public int countObservers()
+    93:95:public void deleteObserver(com.softenido.cafecore.util.GenericObserver)
+    99:100:public void deleteObservers()
+    104:104:public boolean hasChanged()
+    109:110:public void notifyObservers()
+    119:120:public void clearChanged()
+com.softenido.cafecore.util.Pair
+com.softenido.cafecore.util.RepeatedSet
+com.softenido.cafecore.util.SizeUnits
+com.softenido.cafecore.util.Strings
+com.softenido.cafecore.util.regex.RegExs
+com.softenido.droid.R
+com.softenido.droid.R$array
+com.softenido.droid.R$attr
+com.softenido.droid.R$drawable
+com.softenido.droid.R$id
+com.softenido.droid.R$layout
+com.softenido.droid.R$menu
+com.softenido.droid.R$string
+com.softenido.droidcore.R$array
+com.softenido.droidcore.R$attr
+com.softenido.droidcore.R$drawable
+com.softenido.droidcore.R$menu
+com.softenido.droidcore.os.BatteryObservable:
+    213:213:public com.softenido.droidcore.os.Battery getBattery()
+    223:223:public int countObservers()
+    228:229:public void deleteObserver(com.softenido.cafecore.util.GenericObserver)
+    233:234:public void deleteObservers()
+    238:238:public boolean hasChanged()
+    243:244:public void notifyObservers()
+com.softenido.droidcore.os.Execute:
+    69:87:public static boolean rootExec(java.lang.String)
+com.softenido.droidcore.services.LocalService:
+    60:61:public final android.os.IBinder onBind(android.content.Intent)
+    67:69:public void onCreate()
+    75:76:public final void onStart(android.content.Intent,int)
+    81:82:public int onStartCommand(android.content.Intent,int,int)
+    88:90:public void onDestroy()
+    95:97:public void onConfigurationChanged(android.content.res.Configuration)
+    102:104:public void onLowMemory()
+    109:110:public boolean onUnbind(android.content.Intent)
+    116:118:public void onRebind(android.content.Intent)
+    122:123:public static void setToastDebug(boolean)
+    127:128:public static void setToastLength(int)
+com.softenido.droidcore.services.LocalService$LocalBinder:
+    52:52:public com.softenido.droidcore.services.LocalService getService()
+com.softenido.droidcore.services.LocalServiceConnection
+com.softenido.droiddesk.admob.AdMob:
+    public static final java.lang.String ADMOB_PUBLISHER_ID
+    public static final java.lang.String TEST_DEVICES
+    public static final java.lang.String NO_ADS_AT_ALL
+    private static final java.lang.String CONF_LOG_MSG
+    91:92:private static void setId(java.lang.String)
+    96:97:public static void addTestDevice(java.lang.String)
+    133:133:public static com.softenido.droiddesk.admob.AdMob addBanner(android.app.Activity,android.widget.LinearLayout)
+com.softenido.droiddesk.app.NotificationBuilder
+com.softenido.droiddesk.speech.SpeechBuilder:
+    static final int DATA_CHECK_CODE
+    static final int RECOGNIZE_SPEECH
+    58:59:public SpeechBuilder(android.app.Activity)
+com.softenido.droiddesk.speech.SpeechHearer:
+    78:78:public java.util.ArrayList getText()
+    83:83:public boolean isHearing()
+com.softenido.droiddesk.speech.SpeechSpeaker:
+    120:120:public boolean isSpeaking()
+    125:125:public int stop()
+    130:130:public int setLanguage(java.util.Locale)
+    135:135:public java.util.Locale getLanguage()
+    140:140:public int isLanguageAvailable(java.util.Locale)
+    150:150:public boolean isInstallNeeded()
+com.softenido.droiddesk.util.ui.AboutGPL3Activity:
+    static final java.lang.String METADATA_COPYRIGHT
+    static final java.lang.String METADATA_URL1
+    static final java.lang.String METADATA_URL2
+com.softenido.examples.R
+com.softenido.examples.R$array
+com.softenido.examples.R$attr
+com.softenido.examples.R$drawable
+com.softenido.examples.R$id
+com.softenido.examples.R$layout
+com.softenido.examples.R$menu
+com.softenido.examples.R$string
+com.softenido.examples.SpeechActivity:
+    static final int SAY_RESULT
+    static final int LISTEN_RESULT
