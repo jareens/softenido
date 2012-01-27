@@ -1,3 +1,5 @@
+v0.3.1
+- issue 29 - Error pushing button "port 9999" in "Text to Speech" option.
 v0.3.0
 - added Operating System Activity
 - detect IP in Speech Activity
