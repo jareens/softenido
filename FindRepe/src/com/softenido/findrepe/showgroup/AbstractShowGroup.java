@@ -40,14 +40,16 @@ public abstract class AbstractShowGroup implements ShowGroup
     final SizeUnits units;
     final int deleteMin;
     final File[] autoDelete;
+    final boolean delete1Plus;
 
-    public AbstractShowGroup(SizeUnits units,boolean absPath,boolean delete,int deleteMin,File[] autoDelete)
+    public AbstractShowGroup(SizeUnits units,boolean absPath,boolean delete, int deleteMin,File[] autoDelete, boolean delete1Plus)
     {
         this.units  = units;
         this.absPath= absPath;
         this.delete = delete;
         this.deleteMin = deleteMin;
         this.autoDelete= autoDelete;
+        this.delete1Plus= delete1Plus;
     }
     
     @Override
@@ -61,7 +63,7 @@ public abstract class AbstractShowGroup implements ShowGroup
     private void markAndSort(boolean delete, File[] autoDelete, VirtualFile[] files, int deleteMin, boolean[] deleted) throws IOException
     {
         Arrays.fill(deleted, false);
-        if (delete && autoDelete.length > 0 && files.length > 1 && files.length >= deleteMin)
+        if(delete && (autoDelete.length > 0 || delete1Plus) && files.length > 1 && files.length >= deleteMin)
         {
             int[] matches = new int[files.length];
             Arrays.fill(matches, 0);
@@ -83,6 +85,21 @@ public abstract class AbstractShowGroup implements ShowGroup
                 if ((matches[i] > minVal) && files[i].canWrite())
                 {
                     deleted[i] = true;
+                }
+            }
+            if(delete1Plus)
+            {
+                int count=0; 
+                for(int i=0;i<deleted.length;i++)
+                {
+                    if(!deleted[i])
+                    {
+                        count++;
+                        if(files[i].canWrite())
+                        {
+                            deleted[i] = (count>=deleteMin);
+                        }
+                    }
                 }
             }
         }

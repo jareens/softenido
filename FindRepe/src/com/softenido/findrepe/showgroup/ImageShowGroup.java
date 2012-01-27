@@ -39,9 +39,9 @@ public class ImageShowGroup extends AbstractShowGroup
 {
     JImageDiffFrame frame = null;
 
-    public ImageShowGroup(SizeUnits units, boolean absPath, boolean delete, int deleteMin, File[] autoDelete)
+    public ImageShowGroup(SizeUnits units, boolean absPath, boolean delete, int deleteMin, File[] autoDelete, boolean delete1Plus)
     {
-        super(units, absPath, delete, deleteMin, autoDelete);
+        super(units, absPath, delete, deleteMin, autoDelete, delete1Plus);
     }
 
     @Override

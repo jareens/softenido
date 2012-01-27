@@ -26,6 +26,7 @@ import com.softenido.cafecore.util.SizeUnits;
 import com.softenido.cafedark.imageio.ImageFormat;
 import com.softenido.cafedark.io.Files;
 import com.softenido.cafedark.io.ForEachFileOptions;
+import com.softenido.cafedark.io.NameFileFilter;
 import com.softenido.cafedark.io.virtual.VirtualFile;
 import com.softenido.cafedark.util.VerboseHandler;
 import com.softenido.cafedark.util.concurrent.actor.Actor;
@@ -61,7 +62,7 @@ public class FindRepeMain
     private static final String FINDREPE = "findrepe";
     private static final String VER = "0.12.0.rc2";
     private static final String VERSION =
-            "findrepe  version " + VER + " alpha (2012-01-02)\n"
+            "findrepe  version " + VER + " alpha (2012-01-27)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
@@ -99,50 +100,59 @@ public class FindRepeMain
             + "\n"
             + "Options:\n"
             + " -v, --verbose               increase verbosity\n"
-            + " -V  --verbose-logger        format messages as a logger\n"
+            + " -V, --verbose-logger        format messages as a logger\n"
             + " -L, --license               display software license\n"
             + " -d, --delete                prompt user for files to delete\n"
             + "     --delete-auto=path      smart auto-selection of files for deletion\n"
+            + "     --delete-1+             selection of 1,2,3,... files for deletion\n"
             + " -n, --noempty               exclude zero-length files\n"
             + " -s, --symlinks              follow symlinks\n"
             + " -m, --min-size=size         exclude files shorter than size[bkmgt]\n"
             + " -M, --max-size=size         exclude files larger than size[bkmgt]\n"
-            + " -w  --min-wasted=size       minimum wasted size[bkmgt] copies, size*(n-1)\n"
-            + " -S  --size                  show size[bkmgt] of files\n"
-            + " -H  --nohide                ignore hide entries\n"
-            + " -A  --absolute-path         show absolute path of files\n"
+            + " -w, --min-wasted=size       minimum wasted size[bkmgt] copies, size*(n-1)\n"
+            + " -S, --size                  show size[bkmgt] of files\n"
+            + " -H, --nohide                ignore hide entries\n"
+            + " -A, --absolute-path         show absolute path of files\n"
             + "     --install               install a launcher\n"
             + "     --install-java[=path]   install a launcher using 'java' command\n"
             + "     --install-home[=path]   install a launcher using 'java.home' property\n"
             + "     --install-posix         posix flavor for install options when unknown\n"
             + "     --install-version       adds version to launcher name\n"
-            + " -J  --jvm-option=jvm_option pass jvm_option to JVM(for --install...)\n"
+            + " -J, --jvm-option=jvm_option pass jvm_option to JVM(for --install...)\n"
             + "     --unique                list only unique files (--count=1)\n"
             + "     --count=N               list files repeated N times  \n"
-            + " -c  --min-count=N           files repeated at least N times\n"
-            + " -C  --max-count=N           files repeated no more than N times\n"
+            + " -c, --min-count=N           files repeated at least N times\n"
+            + " -C, --max-count=N           files repeated no more than N times\n"
             + "     --noautoexclude         don't autoexclude some paths (/dev, /proc, ...)\n"
             + "     --exclude=path          don't follow path\n"
             + "     --exclude-dir=pattern   don't follow directories matching pattern\n"
             + "     --exclude-file=pattern  ignore files matching pattern\n"
+            + " -X, --exclude-rc-ide        ignore IDEs and RCs\n"
             + "     --exclude-rc            ignore revision control directories\n"
             + "     --exclude-svn           ignore subversion (.svn)\n"
             + "     --exclude-cvs           ignore cvs (CVS)\n"
             + "     --exclude-hg            ignore mercurial (.hg and .hgignore)\n"
-            + " -f  --focus=path            focus on files in path\n"
+            + "     --exclude-git           ignore git (.git and .gitignore)\n"
+            + "     --exclude-ide           ignore .idea files\n"
+            + "     --exclude-idea          ignore Intellij IDEA .idea files\n"
+            + "     --exclude-nb            ignore NetBeans nb files\n"
+            + "     --exclude-eclipse       ignore Eclipse files\n"
+            
+            + " -f, --focus=path            focus on files in path\n"
             + "     --focus-dir=pattern     focus on directories matching pattern\n"
             + "     --focus-file=pattern    focus on files matching pattern\n"
             + "     --dir=pattern           only directories matching pattern\n"
             + "     --file=pattern          only files matching pattern\n"
-            + " -z  --zip                   recurse into zip files (zip, jar, ...)(ALPHA)\n"
-            + " -Z  --zip-only              exclude files not added by option --zip\n"
-            //+ "     --diff=difftool         uses difftool with diff command\n"
+            + " -z, --zip                   recurse into zip files (zip, jar, ...)(ALPHA)\n"
+            + " -Z, --zip-only              exclude files not added by option --zip\n"
+            //+ "   --diff=difftool         uses difftool with diff command\n"
             + "     --byname                compares by file name not content\n"
             + "     --byiname               like --byname, but case insensitive\n"
             + "     --byimage               compares images like humans (bmp,gif,jpg,jpeg,png)\n"
-            + " -e  --regex                 uses java regular expresions\n"
+            + "     --byimage-size=N        size of the gray NxN grid used in --byimage (64 by default)\n"
+            + " -e, --regex                 uses java regular expresions\n"
             + "     --wildcard              uses wildcards '*', '?' and '[]' (default)\n"
-            + " -j  --jobs=N                limits thread use to N (0-1024, developers only)\n"
+            + " -j, --jobs=N                limits thread use to N (0-1024, developers only)\n"
 //            + " -E  --eager                 eager use of CPU\n"
             + "     --bug                   show filenames with bugs\n"
             + "     --bug-fix               try to fix filenames with bugs\n"
@@ -195,6 +205,7 @@ public class FindRepeMain
         BooleanOption license = options.add(new BooleanOption('L', "license"));
         BooleanOption delete = options.add(new BooleanOption('d', "delete"));
         ArrayStringOption deleteAuto = options.add(new ArrayStringOption("delete-auto", File.pathSeparatorChar));
+        BooleanOption delete1plus = options.add(new BooleanOption("delete-1+"));
         BooleanOption noempty = options.add(new BooleanOption('n', "noempty"));
         BooleanOption symlinks = options.add(new BooleanOption('s', "symlinks"));
 
@@ -210,11 +221,19 @@ public class FindRepeMain
         NumberOption minCount = options.add(new NumberOption('c', "min-count"));
         NumberOption maxCount = options.add(new NumberOption('C', "max-count"));
 
-        BooleanOption excludeRc = options.add(new BooleanOption("exclude-rc"));
-        BooleanOption excludeSvn = options.add(new BooleanOption("exclude-svn"));
-        BooleanOption excludeCvs = options.add(new BooleanOption("exclude-cvs"));
-        BooleanOption excludeHg = options.add(new BooleanOption("exclude-hg"));
+        BooleanOption excRcIde = options.add(new BooleanOption('X',"exclude-rc-ide"));
+        
+        BooleanOption excRc = options.add(new BooleanOption("exclude-rc"));
+        BooleanOption excSvn = options.add(new BooleanOption("exclude-svn"));
+        BooleanOption excCvs = options.add(new BooleanOption("exclude-cvs"));
+        BooleanOption excHg = options.add(new BooleanOption("exclude-hg"));
+        BooleanOption excGit = options.add(new BooleanOption("exclude-git"));
 
+        BooleanOption excIde = options.add(new BooleanOption("exclude-ide"));
+        BooleanOption excIdea= options.add(new BooleanOption("exclude-idea"));
+        BooleanOption excNb = options.add(new BooleanOption("exclude-nb"));
+        BooleanOption excEclipse = options.add(new BooleanOption("exclude-eclipse"));
+        
         ArrayStringOption excludeDirName = options.add(new ArrayStringOption("exclude-dir", File.pathSeparatorChar));
         ArrayStringOption excludeFileName = options.add(new ArrayStringOption("exclude-file", File.pathSeparatorChar));
 
@@ -230,6 +249,7 @@ public class FindRepeMain
         BooleanOption optByName = options.add(new BooleanOption("byname"));
         BooleanOption optByIName = options.add(new BooleanOption("byiname"));
         BooleanOption optByImage = options.add(new BooleanOption("byimage"));
+        NumberOption optByImageSize = options.add(new NumberOption("byimage-size"));
         ArrayStringOption dirName = options.add(new ArrayStringOption("dir", File.pathSeparatorChar));
         ArrayStringOption fileName = options.add(new ArrayStringOption("file", File.pathSeparatorChar));
         BooleanOption regex = options.add(new BooleanOption('e',"regex"));
@@ -380,7 +400,7 @@ public class FindRepeMain
             boolean fixBugs = bugFix.isUsed();
             boolean bugs = fixBugs || bug.isUsed();
 
-            excludeRc(opt, excludeRc, excludeSvn, excludeCvs, excludeHg, verboseLevel);
+            excludeRc(opt, excRcIde, excRc, excSvn, excCvs, excHg, excGit, excIde, excIdea, excNb, excEclipse, verboseLevel);
             excludeDirAndFile(opt, excludeDirName, excludeFileName, useRegEx);
             focusPathDirFile(opt, focusPath, focusDirName, focusFileName, useRegEx);
             dirFile(opt, dirName, fileName, useRegEx);
@@ -417,11 +437,15 @@ public class FindRepeMain
             }
             else if(optByImage.isUsed())
             {
+                int size = optByImageSize.intValue(64);
+                float colorThresold = size==0?0.001f:0.05f;
+                float countThresold = size==0?0.001f:0.10f;
+                            
                 //ImageIO.setUseCache(false);
                 opt.setComparators
                 (
-                    new FileComparatorByImage(true, true,64,0.05f,0.10f,false),
-                    new FileComparatorByImage(false,true,64,0.05f,0.10f,false)
+                    new FileComparatorByImage(true, true,size,colorThresold,countThresold,false),
+                    new FileComparatorByImage(false,true,size,colorThresold,countThresold,false)
                 );
                 opt.addAllowedFileName(ImageFormat.getImageFileFilter());
             }
@@ -465,7 +489,7 @@ public class FindRepeMain
             {
                 showBugs(findTask.getBugIterable(), fixBugs, vh);
             }
-            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), (optSize.isUsed() ? sizeParser : null), autoDeleteFiles, vh, optAbsPath.isUsed(), optByImage.isUsed());        }
+            showGroups(opt, findTask.getGroupsIterable(), delete.isUsed(), delete1plus.isUsed(),(optSize.isUsed() ? sizeParser : null), autoDeleteFiles, vh, optAbsPath.isUsed(), optByImage.isUsed());        }
         catch (MissingOptionParameterException ex)
         {
             System.err.println(FINDREPE + ":" + ex.getMessage());
@@ -548,9 +572,9 @@ public class FindRepeMain
         }
     }
 
-    private static void excludeRc(ForEachFileOptions opt, BooleanOption excludeRc, BooleanOption excludeSvn, BooleanOption excludeCvs, BooleanOption excludeHg, int verboseLevel)
+    private static void excludeRc(ForEachFileOptions opt, BooleanOption all, BooleanOption allRc, BooleanOption svn, BooleanOption cvs, BooleanOption hg, BooleanOption git, BooleanOption allIde, BooleanOption idea, BooleanOption nb, BooleanOption eclipse, int verboseLevel)
     {
-        if (excludeRc.isUsed() || excludeSvn.isUsed())
+        if(all.isUsed() || allRc.isUsed() || svn.isUsed())
         {
             opt.addOmitedDirName(".svn");
             if (verboseLevel > 0)
@@ -559,7 +583,7 @@ public class FindRepeMain
             }
 
         }
-        if (excludeRc.isUsed() || excludeCvs.isUsed())
+        if(all.isUsed() || allRc.isUsed() || cvs.isUsed())
         {
             opt.addOmitedDirName("CVS");
             if (verboseLevel > 0)
@@ -567,13 +591,53 @@ public class FindRepeMain
                 System.out.println(FINDREPE + ": excluded CVS files");
             }
         }
-        if (excludeRc.isUsed() || excludeHg.isUsed())
+        if(all.isUsed() || allRc.isUsed() || hg.isUsed())
         {
             opt.addOmitedDirName(".hg");
-            opt.addOmitedFileName(".hgignore");
+            opt.addOmitedFileName(".hgignore",new NameFileFilter.Rule[]{NameFileFilter.getDir(".hg", true)});
             if (verboseLevel > 0)
             {
                 System.out.println(FINDREPE + ": excluded mercurial files");
+            }
+        }
+        if(all.isUsed() || allRc.isUsed() || git.isUsed())
+        {
+            opt.addOmitedDirName(".git");
+            opt.addOmitedFileName(".gitignore",new NameFileFilter.Rule[]{NameFileFilter.getDir(".git", true)});
+            if (verboseLevel > 0)
+            {
+                System.out.println(FINDREPE + ": excluded git files");
+            }
+        }
+        if(all.isUsed() || allIde.isUsed() || idea.isUsed())
+        {
+            opt.addOmitedDirName(".idea");
+            opt.addOmitedFileName("*.iml",true, new NameFileFilter.Rule[]{NameFileFilter.getDir(".idea", true)});
+            opt.addOmitedDirName("out",new NameFileFilter.Rule[]{NameFileFilter.getDir(".idea", true)});
+            if (verboseLevel > 0)
+            {
+                System.out.println(FINDREPE + ": excluded Intellij IDEA files");
+            }
+        }
+        if(all.isUsed() || allIde.isUsed() || nb.isUsed())
+        {
+            opt.addOmitedDirName("nbproject",new NameFileFilter.Rule[]{NameFileFilter.getFile("build.xml", true)});
+            opt.addOmitedFileName("build.xml",new NameFileFilter.Rule[]{NameFileFilter.getDir("nbproject", true)});
+            opt.addOmitedDirName("dist",new NameFileFilter.Rule[]{NameFileFilter.getFile("build.xml", true),NameFileFilter.getDir("nbproject", true)});
+            opt.addOmitedDirName("build",new NameFileFilter.Rule[]{NameFileFilter.getFile("build.xml", true),NameFileFilter.getDir("nbproject", true)});
+            if (verboseLevel > 0)
+            {
+                System.out.println(FINDREPE + ": excluded git files");
+            }
+        }
+        if(all.isUsed() || allIde.isUsed() || eclipse.isUsed())
+        {
+            opt.addOmitedFileName(".classpath",new NameFileFilter.Rule[]{NameFileFilter.getFile(".project", true)});
+            opt.addOmitedFileName(".project",new NameFileFilter.Rule[]{NameFileFilter.getFile(".classpath", true)});
+            opt.addOmitedDirName(".settings",new NameFileFilter.Rule[]{NameFileFilter.getFile(".classpath", true),NameFileFilter.getFile(".project", true),});
+            if (verboseLevel > 0)
+            {
+                System.out.println(FINDREPE + ": excluded git files");
             }
         }
     }
@@ -684,14 +748,14 @@ public class FindRepeMain
         }
     }
 
-    private static void showGroups(FindRepeOptions opt, Iterable<VirtualFile[]> groupsList, boolean delete, SizeUnits units, File[] autoDelete, VerboseHandler vh, boolean absPath, boolean byimage)
+    private static void showGroups(FindRepeOptions opt, Iterable<VirtualFile[]> groupsList, boolean delete, boolean delete1Plus, SizeUnits units, File[] autoDelete, VerboseHandler vh, boolean absPath, boolean byimage)
     {
         int groupId = 0;
         int deleteMin = opt.getMinCount();
         
         ShowGroup sg = (delete && byimage && !GraphicsEnvironment.isHeadless())
-                ? new ImageShowGroup(units, absPath, delete, deleteMin, autoDelete)
-                : new ConsoleShowGroup(units, absPath, delete, deleteMin, autoDelete);
+                ? new ImageShowGroup(units, absPath, delete, deleteMin, autoDelete, delete1Plus)
+                : new ConsoleShowGroup(units, absPath, delete, deleteMin, autoDelete, delete1Plus);
 
         for (VirtualFile[] group : groupsList)
         {

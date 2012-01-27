@@ -38,9 +38,9 @@ public class ConsoleShowGroup extends AbstractShowGroup
 {
     private final Scanner sc;
     
-    public ConsoleShowGroup(SizeUnits units,boolean absPath,boolean delete,int deleteMin,File[] autoDelete)
+    public ConsoleShowGroup(SizeUnits units,boolean absPath,boolean delete,int deleteMin,File[] autoDelete, boolean delete1Plus)
     {
-        super(units,absPath,delete,deleteMin,autoDelete);
+        super(units,absPath,delete,deleteMin,autoDelete, delete1Plus);
         this.sc = new Scanner(System.in);
     }
 
@@ -119,6 +119,10 @@ public class ConsoleShowGroup extends AbstractShowGroup
                     }
                 }
             }
+        }
+        for(int i=0; !showResult && i<deleted.length ; i++)
+        {
+            showResult = deleted[i];
         }
         if(showResult)
         {

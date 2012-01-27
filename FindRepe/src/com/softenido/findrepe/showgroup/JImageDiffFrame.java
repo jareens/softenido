@@ -107,7 +107,7 @@ public class JImageDiffFrame extends javax.swing.JFrame
             }
         });
 
-        jbNone.setMnemonic('N');
+        jbNone.setMnemonic('o');
         jbNone.setText("None");
         jbNone.setMaximumSize(null);
         jbNone.setMinimumSize(null);
