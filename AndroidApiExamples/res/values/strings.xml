@@ -22,4 +22,6 @@
     <string name="os_jvm_version">JVM Version</string>
     <string name="os_android_version">Android</string>
     <string name="os_android_api">API Level</string>
+    <string name="os_root_access">Root Access</string>
+    <string name="about">About</string>
 </resources>

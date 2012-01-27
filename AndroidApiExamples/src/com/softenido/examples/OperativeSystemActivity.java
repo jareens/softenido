@@ -27,21 +27,23 @@ import android.os.Handler;
 import android.widget.TextView;
 import com.softenido.cafecore.os.OSName;
 import com.softenido.droidcore.os.AndroidVersion;
+import com.softenido.droidcore.os.Execute;
 import com.softenido.droiddesk.admob.AdMob;
 
-public class OperativeSystemActivity extends Activity
-{
-    private AdMob admob=null;
+public class OperativeSystemActivity extends Activity {
+    private AdMob admob = null;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.os_display);
-        admob = AdMob.addBanner(this, R.id.mainLayout,true);
+        admob = AdMob.addBanner(this, R.id.mainLayout, true);
 
-        final Handler handler= new Handler();
+        final Handler handler = new Handler();
 
         final TextView osName = (TextView) findViewById(R.id.os_name);
         final TextView osVersion = (TextView) findViewById(R.id.os_version);
@@ -49,12 +51,14 @@ public class OperativeSystemActivity extends Activity
         final TextView jvmVersion = (TextView) findViewById(R.id.os_jvm_version);
         final TextView androidVersion = (TextView) findViewById(R.id.os_android_version);
         final TextView api = (TextView) findViewById(R.id.os_android_api);
+        final TextView root = (TextView) findViewById(R.id.os_root_access);
 
         osName.setText(OSName.os.getName());
         arch.setText(System.getProperty("os.arch"));
         osVersion.setText(System.getProperty("os.version"));
         jvmVersion.setText(System.getProperty("java.vm.version"));
         androidVersion.setText(AndroidVersion.os.RELEASE + " " + AndroidVersion.os.NAME);
-        api.setText(""+AndroidVersion.os.SDK);
+        api.setText("" + AndroidVersion.os.SDK);
+        root.setText("" + Execute.hasRootAccess());
     }
 }

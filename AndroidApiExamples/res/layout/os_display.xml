@@ -10,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         <TableRow android:layout_width="wrap_content"
-                  android:layout_height="wrap_content" >
+                  android:layout_height="wrap_content">
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -18,7 +18,9 @@
             <TextView
                     android:id="@+id/os_name"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:textStyle="bold"/>
         </TableRow>
         <TableRow android:layout_width="wrap_content"
                   android:layout_height="wrap_content" >
@@ -26,23 +28,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/os_version"/>
-
             <TextView
                     android:id="@+id/os_version"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:textStyle="bold"/>
         </TableRow>
         <TableRow android:layout_width="wrap_content"
                   android:layout_height="wrap_content" >
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/os_arch" />
+                    android:text="@string/os_arch"/>
 
             <TextView
                     android:id="@+id/os_arch"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:textStyle="bold"/>
         </TableRow>
         <TableRow android:layout_width="wrap_content"
                   android:layout_height="wrap_content" >
@@ -54,7 +59,9 @@
             <TextView
                     android:id="@+id/os_jvm_version"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:textStyle="bold"/>
         </TableRow>
         <TableRow android:layout_width="wrap_content"
                   android:layout_height="wrap_content" >
@@ -65,7 +72,9 @@
             <TextView
                     android:id="@+id/os_android_version"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:textStyle="bold"/>
         </TableRow>
         <TableRow android:layout_width="wrap_content"
                   android:layout_height="wrap_content" >
@@ -76,7 +85,22 @@
             <TextView
                     android:id="@+id/os_android_api"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:textStyle="bold"/>
+        </TableRow>
+        <TableRow android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" >
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/os_root_access"/>
+            <TextView
+                    android:id="@+id/os_root_access"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:textStyle="bold"/>
         </TableRow>
     </TableLayout>
 </LinearLayout>

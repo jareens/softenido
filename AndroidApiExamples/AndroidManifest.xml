@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.softenido.examples"
-      android:versionCode="2"
-      android:versionName="0.2.0">
+      android:versionCode="3"
+      android:versionName="0.3.0"
+      android:installLocation="auto">
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="8"/>
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
         <activity android:name="MainActivity"
@@ -18,7 +19,11 @@
         <activity android:name=".BatteryDisplayActivity"/>
         <activity android:name=".OperativeSystemActivity"/>
         <activity android:name=".SpeechActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.softenido.droiddesk.util.ui.AboutGPL3Activity"/>
+        <activity android:name="com.softenido.droiddesk.util.ui.AboutGPL3Activity" android:label="@string/about"/>
+        <meta-data android:name="com.softenido.about.copyright" android:value="© 2011 Francisco Gómez Carrasco"/>
+        <meta-data android:name="com.softenido.about.url1" android:value="http://www.softenido.com/"/>
+        <meta-data android:name="com.softenido.about.url2" android:value="http://softenido.googlecode.com/"/>
+
         <!-- The application's publisher ID assigned by AdMob -->
         <!--suppress AndroidDomInspection -->
         <activity android:name="com.google.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
