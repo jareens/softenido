@@ -25321,7 +25321,7 @@ _____________________________________________________________________
 
 Interfaces (count = 0):
 
-Constant Pool (count = 252):
+Constant Pool (count = 254):
   - Integer [64000]
   - Integer [2130903049]
   - Integer [2131165193]
@@ -25332,6 +25332,7 @@ Constant Pool (count = 252):
   - Integer [2131165215]
   - String [ 9999]
   - String [?.?.?.?]
+  - String [Unavailable Network]
   - String [telnet -E ]
   - Class [android/app/Activity]
   - Class [android/os/Handler]
@@ -25511,6 +25512,7 @@ Constant Pool (count = 252):
   + Utf8 [Ljava/util/List;]
   + Utf8 [Ljava/util/concurrent/atomic/AtomicBoolean;]
   + Utf8 [StackMapTable]
+  + Utf8 [Unavailable Network]
   + Utf8 [a]
   + Utf8 [accept]
   + Utf8 [android/app/Activity]
@@ -25601,39 +25603,39 @@ Methods (count = 9):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 47, locals = 1, stack = 3):
       [0] aload_0 v0
-      [1] invokespecial #50
+      [1] invokespecial #51
         - Methodref [android/app/Activity.<init> ()V]
       [4] aload_0 v0
       [5] aconst_null
-      [6] putfield #44
+      [6] putfield #45
         - Fieldref [com/softenido/examples/SpeechActivity.a Lcom/softenido/droiddesk/b/a;]
       [9] aload_0 v0
       [10] aconst_null
-      [11] putfield #45
+      [11] putfield #46
         - Fieldref [com/softenido/examples/SpeechActivity.b Lcom/softenido/droiddesk/a/c;]
       [14] aload_0 v0
-      [15] new #43
+      [15] new #44
         - Class [java/util/concurrent/atomic/AtomicBoolean]
       [18] dup
-      [19] invokespecial #95
+      [19] invokespecial #96
         - Methodref [java/util/concurrent/atomic/AtomicBoolean.<init> ()V]
-      [22] putfield #46
+      [22] putfield #47
         - Fieldref [com/softenido/examples/SpeechActivity.c Ljava/util/concurrent/atomic/AtomicBoolean;]
       [25] aload_0 v0
       [26] aconst_null
-      [27] putfield #47
+      [27] putfield #48
         - Fieldref [com/softenido/examples/SpeechActivity.d Landroid/os/Handler;]
       [30] aload_0 v0
       [31] aconst_null
-      [32] putfield #48
+      [32] putfield #49
         - Fieldref [com/softenido/examples/SpeechActivity.e Ljava/net/ServerSocket;]
       [35] aload_0 v0
-      [36] new #40
+      [36] new #41
         - Class [java/util/ArrayList]
       [39] dup
-      [40] invokespecial #90
+      [40] invokespecial #91
         - Methodref [java/util/ArrayList.<init> ()V]
-      [43] putfield #49
+      [43] putfield #50
         - Fieldref [com/softenido/examples/SpeechActivity.f Ljava/util/List;]
       [46] return
       Code attribute exceptions (count = 0):
@@ -25645,149 +25647,149 @@ Methods (count = 9):
     + Code attribute instructions (code length = 198, locals = 8, stack = 9):
       [0] aload_0 v0
       [1] aload_1 v1
-      [2] invokespecial #51
+      [2] invokespecial #52
         - Methodref [android/app/Activity.onCreate (Landroid/os/Bundle;)V]
       [5] aload_0 v0
       [6] ldc #2
         - Integer [2130903049]
-      [8] invokevirtual #70
+      [8] invokevirtual #71
         - Methodref [com/softenido/examples/SpeechActivity.setContentView (I)V]
       [11] aload_0 v0
       [12] aload_0 v0
       [13] ldc #3
         - Integer [2131165193]
       [15] iconst_1
-      [16] invokestatic #66
+      [16] invokestatic #67
         - Methodref [com/softenido/droiddesk/b/a.a (Landroid/app/Activity;IZ)Lcom/softenido/droiddesk/b/a;]
-      [19] putfield #44
+      [19] putfield #45
         - Fieldref [com/softenido/examples/SpeechActivity.a Lcom/softenido/droiddesk/b/a;]
       [22] aload_0 v0
       [23] ldc #4
         - Integer [2131165211]
-      [25] invokevirtual #68
+      [25] invokevirtual #69
         - Methodref [com/softenido/examples/SpeechActivity.findViewById (I)Landroid/view/View;]
-      [28] checkcast #17
+      [28] checkcast #18
         - Class [android/widget/EditText]
       [31] astore_1 v1
       [32] aload_0 v0
       [33] ldc #5
         - Integer [2131165212]
-      [35] invokevirtual #68
+      [35] invokevirtual #69
         - Methodref [com/softenido/examples/SpeechActivity.findViewById (I)Landroid/view/View;]
-      [38] checkcast #16
+      [38] checkcast #17
         - Class [android/widget/Button]
       [41] astore_2 v2
       [42] aload_0 v0
       [43] ldc #6
         - Integer [2131165213]
-      [45] invokevirtual #68
+      [45] invokevirtual #69
         - Methodref [com/softenido/examples/SpeechActivity.findViewById (I)Landroid/view/View;]
-      [48] checkcast #16
+      [48] checkcast #17
         - Class [android/widget/Button]
       [51] astore_3 v3
       [52] aload_0 v0
       [53] ldc #7
         - Integer [2131165214]
-      [55] invokevirtual #68
+      [55] invokevirtual #69
         - Methodref [com/softenido/examples/SpeechActivity.findViewById (I)Landroid/view/View;]
-      [58] checkcast #16
+      [58] checkcast #17
         - Class [android/widget/Button]
       [61] astore v4
       [63] aload_0 v0
       [64] ldc #8
         - Integer [2131165215]
-      [66] invokevirtual #68
+      [66] invokevirtual #69
         - Methodref [com/softenido/examples/SpeechActivity.findViewById (I)Landroid/view/View;]
-      [69] checkcast #19
+      [69] checkcast #20
         - Class [android/widget/ToggleButton]
       [72] astore v5
       [74] aload_0 v0
-      [75] new #13
+      [75] new #14
         - Class [android/os/Handler]
       [78] dup
-      [79] invokespecial #53
+      [79] invokespecial #54
         - Methodref [android/os/Handler.<init> ()V]
-      [82] putfield #47
+      [82] putfield #48
         - Fieldref [com/softenido/examples/SpeechActivity.d Landroid/os/Handler;]
       [85] aload_2 v2
       [86] iconst_0
-      [87] invokevirtual #54
+      [87] invokevirtual #55
         - Methodref [android/widget/Button.setEnabled (Z)V]
       [90] aload_3 v3
       [91] iconst_0
-      [92] invokevirtual #54
+      [92] invokevirtual #55
         - Methodref [android/widget/Button.setEnabled (Z)V]
       [95] aload_0 v0
-      [96] new #26
+      [96] new #27
         - Class [com/softenido/examples/b]
       [99] dup
       [100] aload_0 v0
       [101] aload_0 v0
-      [102] invokestatic #91
+      [102] invokestatic #92
         - Methodref [java/util/Locale.getDefault ()Ljava/util/Locale;]
       [105] aload_3 v3
       [106] aload_2 v2
       [107] aload_1 v1
-      [108] invokespecial #72
+      [108] invokespecial #73
         - Methodref [com/softenido/examples/b.<init> (Lcom/softenido/examples/SpeechActivity;Landroid/app/Activity;Ljava/util/Locale;Landroid/widget/Button;Landroid/widget/Button;Landroid/widget/EditText;)V]
-      [111] putfield #45
+      [111] putfield #46
         - Fieldref [com/softenido/examples/SpeechActivity.b Lcom/softenido/droiddesk/a/c;]
       [114] aload_0 v0
-      [115] getfield #45
+      [115] getfield #46
         - Fieldref [com/softenido/examples/SpeechActivity.b Lcom/softenido/droiddesk/a/c;]
-      [118] invokevirtual #63
+      [118] invokevirtual #64
         - Methodref [com/softenido/droiddesk/a/c.b ()Lcom/softenido/droiddesk/a/a;]
       [121] astore v6
       [123] aload_0 v0
-      [124] getfield #45
+      [124] getfield #46
         - Fieldref [com/softenido/examples/SpeechActivity.b Lcom/softenido/droiddesk/a/c;]
-      [127] invokevirtual #64
+      [127] invokevirtual #65
         - Methodref [com/softenido/droiddesk/a/c.c ()Lcom/softenido/droiddesk/a/b;]
       [130] astore v7
       [132] aload v6
-      [134] invokevirtual #60
+      [134] invokevirtual #61
         - Methodref [com/softenido/droiddesk/a/a.a ()Z]
       [137] pop
       [138] aload_2 v2
-      [139] new #25
+      [139] new #26
         - Class [com/softenido/examples/a]
       [142] dup
       [143] aload_0 v0
       [144] aload v6
       [146] aload_1 v1
-      [147] invokespecial #71
+      [147] invokespecial #72
         - Methodref [com/softenido/examples/a.<init> (Lcom/softenido/examples/SpeechActivity;Lcom/softenido/droiddesk/a/a;Landroid/widget/EditText;)V]
-      [150] invokevirtual #55
+      [150] invokevirtual #56
         - Methodref [android/widget/Button.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [153] aload_3 v3
-      [154] new #28
+      [154] new #29
         - Class [com/softenido/examples/d]
       [157] dup
       [158] aload_0 v0
       [159] aload v6
-      [161] invokespecial #74
+      [161] invokespecial #75
         - Methodref [com/softenido/examples/d.<init> (Lcom/softenido/examples/SpeechActivity;Lcom/softenido/droiddesk/a/a;)V]
-      [164] invokevirtual #55
+      [164] invokevirtual #56
         - Methodref [android/widget/Button.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [167] aload v4
-      [169] new #27
+      [169] new #28
         - Class [com/softenido/examples/c]
       [172] dup
       [173] aload_0 v0
       [174] aload v7
-      [176] invokespecial #73
+      [176] invokespecial #74
         - Methodref [com/softenido/examples/c.<init> (Lcom/softenido/examples/SpeechActivity;Lcom/softenido/droiddesk/a/b;)V]
-      [179] invokevirtual #55
+      [179] invokevirtual #56
         - Methodref [android/widget/Button.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [182] aload v5
-      [184] new #30
+      [184] new #31
         - Class [com/softenido/examples/f]
       [187] dup
       [188] aload_0 v0
       [189] aload v5
-      [191] invokespecial #76
+      [191] invokespecial #77
         - Methodref [com/softenido/examples/f.<init> (Lcom/softenido/examples/SpeechActivity;Landroid/widget/ToggleButton;)V]
-      [194] invokevirtual #58
+      [194] invokevirtual #59
         - Methodref [android/widget/ToggleButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [197] return
       Code attribute exceptions (count = 0):
@@ -25798,12 +25800,12 @@ Methods (count = 9):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 11, locals = 4, stack = 4):
       [0] aload_0 v0
-      [1] getfield #45
+      [1] getfield #46
         - Fieldref [com/softenido/examples/SpeechActivity.b Lcom/softenido/droiddesk/a/c;]
       [4] iload_1 v1
       [5] iload_2 v2
       [6] aload_3 v3
-      [7] invokevirtual #62
+      [7] invokevirtual #63
         - Methodref [com/softenido/droiddesk/a/c.a (IILandroid/content/Intent;)V]
       [10] return
       Code attribute exceptions (count = 0):
@@ -25814,22 +25816,22 @@ Methods (count = 9):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 27, locals = 1, stack = 2):
       [0] aload_0 v0
-      [1] getfield #45
+      [1] getfield #46
         - Fieldref [com/softenido/examples/SpeechActivity.b Lcom/softenido/droiddesk/a/c;]
-      [4] invokevirtual #65
+      [4] invokevirtual #66
         - Methodref [com/softenido/droiddesk/a/c.d ()V]
       [7] aload_0 v0
-      [8] getfield #48
+      [8] getfield #49
         - Fieldref [com/softenido/examples/SpeechActivity.e Ljava/net/ServerSocket;]
       [11] ifnull +11 (target=22)
       [14] aload_0 v0
-      [15] getfield #46
+      [15] getfield #47
         - Fieldref [com/softenido/examples/SpeechActivity.c Ljava/util/concurrent/atomic/AtomicBoolean;]
       [18] iconst_1
-      [19] invokevirtual #97
+      [19] invokevirtual #98
         - Methodref [java/util/concurrent/atomic/AtomicBoolean.set (Z)V]
       [22] aload_0 v0
-      [23] invokespecial #52
+      [23] invokespecial #53
         - Methodref [android/app/Activity.onStop ()V]
       [26] return
       Code attribute exceptions (count = 0):
@@ -25840,83 +25842,100 @@ Methods (count = 9):
     Access flags: 0x2
       = private boolean a()
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 102, locals = 3, stack = 5):
+    + Code attribute instructions (code length = 128, locals = 3, stack = 5):
       [0] aload_0 v0
-      [1] new #43
+      [1] new #44
         - Class [java/util/concurrent/atomic/AtomicBoolean]
       [4] dup
-      [5] invokespecial #95
+      [5] invokespecial #96
         - Methodref [java/util/concurrent/atomic/AtomicBoolean.<init> ()V]
-      [8] putfield #46
+      [8] putfield #47
         - Fieldref [com/softenido/examples/SpeechActivity.c Ljava/util/concurrent/atomic/AtomicBoolean;]
       [11] aload_0 v0
-      [12] new #37
+      [12] new #38
         - Class [java/net/ServerSocket]
       [15] dup
       [16] sipush 9999
-      [19] invokespecial #85
+      [19] invokespecial #86
         - Methodref [java/net/ServerSocket.<init> (I)V]
-      [22] putfield #48
+      [22] putfield #49
         - Fieldref [com/softenido/examples/SpeechActivity.e Ljava/net/ServerSocket;]
       [25] aload_0 v0
       [26] astore_1 v1
-      [27] invokestatic #59
+      [27] invokestatic #60
         - Methodref [com/softenido/a/c/a.a ()Ljava/net/InetAddress;]
-      [30] invokevirtual #84
+      [30] dup
+      [31] astore_2 v2
+      [32] ifnull +10 (target=42)
+      [35] aload_2 v2
+      [36] invokevirtual #85
         - Methodref [java/net/InetAddress.getCanonicalHostName ()Ljava/lang/String;]
-      [33] astore_2 v2
-      [34] goto +7 (target=41)
-      [37] pop
-      [38] ldc #10
+      [39] goto +4 (target=43)
+      [42] aconst_null
+      [43] astore_2 v2
+      [44] goto +7 (target=51)
+      [47] pop
+      [48] ldc #10
         - String [?.?.?.?]
-      [40] astore_2 v2
-      [41] aload_2 v2
-      [42] ifnull +40 (target=82)
-      [45] new #34
+      [50] astore_2 v2
+      [51] aload_2 v2
+      [52] ifnull +43 (target=95)
+      [55] new #35
         - Class [java/lang/StringBuilder]
-      [48] dup
-      [49] invokespecial #79
+      [58] dup
+      [59] invokespecial #80
         - Methodref [java/lang/StringBuilder.<init> ()V]
-      [52] ldc #11
+      [62] ldc #12
         - String [telnet -E ]
-      [54] invokevirtual #80
+      [64] invokevirtual #81
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [57] aload_2 v2
-      [58] invokevirtual #80
+      [67] aload_2 v2
+      [68] invokevirtual #81
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [61] ldc #9
+      [71] ldc #9
         - String [ 9999]
-      [63] invokevirtual #80
+      [73] invokevirtual #81
         - Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [66] invokevirtual #81
+      [76] invokevirtual #82
         - Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [69] astore_2 v2
-      [70] aload_1 v1
-      [71] invokevirtual #69
+      [79] astore_2 v2
+      [80] aload_1 v1
+      [81] invokevirtual #70
         - Methodref [com/softenido/examples/SpeechActivity.getApplicationContext ()Landroid/content/Context;]
-      [74] aload_2 v2
-      [75] iconst_1
-      [76] invokestatic #56
+      [84] aload_2 v2
+      [85] iconst_1
+      [86] invokestatic #57
         - Methodref [android/widget/Toast.makeText (Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;]
-      [79] invokevirtual #57
+      [89] invokevirtual #58
         - Methodref [android/widget/Toast.show ()V]
-      [82] new #35
+      [92] goto +16 (target=108)
+      [95] aload_1 v1
+      [96] invokevirtual #70
+        - Methodref [com/softenido/examples/SpeechActivity.getApplicationContext ()Landroid/content/Context;]
+      [99] ldc #11
+        - String [Unavailable Network]
+      [101] iconst_1
+      [102] invokestatic #57
+        - Methodref [android/widget/Toast.makeText (Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;]
+      [105] invokevirtual #58
+        - Methodref [android/widget/Toast.show ()V]
+      [108] new #36
         - Class [java/lang/Thread]
-      [85] dup
-      [86] new #29
+      [111] dup
+      [112] new #30
         - Class [com/softenido/examples/e]
-      [89] dup
-      [90] aload_0 v0
-      [91] invokespecial #75
+      [115] dup
+      [116] aload_0 v0
+      [117] invokespecial #76
         - Methodref [com/softenido/examples/e.<init> (Lcom/softenido/examples/SpeechActivity;)V]
-      [94] invokespecial #82
+      [120] invokespecial #83
         - Methodref [java/lang/Thread.<init> (Ljava/lang/Runnable;)V]
-      [97] invokevirtual #83
+      [123] invokevirtual #84
         - Methodref [java/lang/Thread.start ()V]
-      [100] iconst_1
-      [101] ireturn
+      [126] iconst_1
+      [127] ireturn
       Code attribute exceptions (count = 1):
-      - ExceptionInfo (27 -> 34: 37):
+      - ExceptionInfo (27 -> 44: 47):
       - Class [java/net/SocketException]
       Code attribute attributes (attribute count = 0):
   + Method:       a(Lcom/softenido/examples/SpeechActivity;)Z
@@ -25925,7 +25944,7 @@ Methods (count = 9):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] invokespecial #67
+      [1] invokespecial #68
         - Methodref [com/softenido/examples/SpeechActivity.a ()Z]
       [4] ireturn
       Code attribute exceptions (count = 0):
@@ -25936,7 +25955,7 @@ Methods (count = 9):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #48
+      [1] getfield #49
         - Fieldref [com/softenido/examples/SpeechActivity.e Ljava/net/ServerSocket;]
       [4] areturn
       Code attribute exceptions (count = 0):
@@ -25947,7 +25966,7 @@ Methods (count = 9):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #46
+      [1] getfield #47
         - Fieldref [com/softenido/examples/SpeechActivity.c Ljava/util/concurrent/atomic/AtomicBoolean;]
       [4] areturn
       Code attribute exceptions (count = 0):
@@ -25964,7 +25983,7 @@ Methods (count = 9):
       [4] astore_1 v1
       [5] astore_0 v0
       [6] aload_2 v2
-      [7] invokevirtual #96
+      [7] invokevirtual #97
         - Methodref [java/util/concurrent/atomic/AtomicBoolean.get ()Z]
       [10] ifne +113 (target=123)
       [13] ldc #1
@@ -25972,70 +25991,70 @@ Methods (count = 9):
       [15] newarray 8
       [17] astore_3 v3
       [18] aload_1 v1
-      [19] invokevirtual #86
+      [19] invokevirtual #87
         - Methodref [java/net/ServerSocket.accept ()Ljava/net/Socket;]
       [22] dup
       [23] astore v4
-      [25] invokevirtual #89
+      [25] invokevirtual #90
         - Methodref [java/net/Socket.getInputStream ()Ljava/io/InputStream;]
       [28] astore v5
       [30] aload_2 v2
-      [31] invokevirtual #96
+      [31] invokevirtual #97
         - Methodref [java/util/concurrent/atomic/AtomicBoolean.get ()Z]
       [34] ifne +81 (target=115)
       [37] aload v5
       [39] aload_3 v3
-      [40] invokevirtual #77
+      [40] invokevirtual #78
         - Methodref [java/io/InputStream.read ([B)I]
       [43] dup
       [44] istore v6
       [46] ifle +69 (target=115)
-      [49] new #33
+      [49] new #34
         - Class [java/lang/String]
       [52] dup
       [53] aload_3 v3
       [54] iconst_0
       [55] iload v6
-      [57] invokespecial #78
+      [57] invokespecial #79
         - Methodref [java/lang/String.<init> ([BII)V]
       [60] astore v6
-      [62] new #42
+      [62] new #43
         - Class [java/util/Scanner]
       [65] dup
       [66] aload v6
-      [68] invokespecial #92
+      [68] invokespecial #93
         - Methodref [java/util/Scanner.<init> (Ljava/lang/String;)V]
       [71] astore v6
       [73] aload_2 v2
-      [74] invokevirtual #96
+      [74] invokevirtual #97
         - Methodref [java/util/concurrent/atomic/AtomicBoolean.get ()Z]
       [77] ifne +35 (target=112)
       [80] aload v6
-      [82] invokevirtual #93
+      [82] invokevirtual #94
         - Methodref [java/util/Scanner.hasNextLine ()Z]
       [85] ifeq +27 (target=112)
       [88] aload v6
-      [90] invokevirtual #94
+      [90] invokevirtual #95
         - Methodref [java/util/Scanner.nextLine ()Ljava/lang/String;]
       [93] astore v7
       [95] aload_0 v0
-      [96] getfield #45
+      [96] getfield #46
         - Fieldref [com/softenido/examples/SpeechActivity.b Lcom/softenido/droiddesk/a/c;]
-      [99] invokevirtual #63
+      [99] invokevirtual #64
         - Methodref [com/softenido/droiddesk/a/c.b ()Lcom/softenido/droiddesk/a/a;]
       [102] aload v7
       [104] iconst_0
-      [105] invokevirtual #61
+      [105] invokevirtual #62
         - Methodref [com/softenido/droiddesk/a/a.a (Ljava/lang/String;Z)I]
       [108] pop
       [109] goto -36 (target=73)
       [112] goto -82 (target=30)
       [115] aload v4
-      [117] invokevirtual #88
+      [117] invokevirtual #89
         - Methodref [java/net/Socket.close ()V]
       [120] goto -114 (target=6)
       [123] aload_1 v1
-      [124] invokevirtual #87
+      [124] invokevirtual #88
         - Methodref [java/net/ServerSocket.close ()V]
       [127] return
       Code attribute exceptions (count = 0):

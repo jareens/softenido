@@ -48,7 +48,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SpeechActivity extends Activity
-
 {
     static final int SAY_RESULT    = 1;
     static final int LISTEN_RESULT = 2;
@@ -207,8 +206,7 @@ public class SpeechActivity extends Activity
         try
         {
             InetAddress ia=Networks.getFirstSiteAddress();
-            address = ia.getCanonicalHostName();
-            
+            address = ia!=null?ia.getCanonicalHostName():null;
         }
         catch (SocketException e)
         {
@@ -218,6 +216,10 @@ public class SpeechActivity extends Activity
         {
             String text = "telnet -E "+address+" 9999";
             Toast.makeText(this.getApplicationContext(), text, Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            Toast.makeText(this.getApplicationContext(), "Unavailable Network", Toast.LENGTH_LONG).show();
         }
     }
 

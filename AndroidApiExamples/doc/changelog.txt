@@ -1,7 +1,6 @@
 v0.3.0
 - added Operating System Activity
 - detect IP in Speech Activity
-- added
 v0.2.0
 - added Applications, Services and Tasks list
 - added Battery
