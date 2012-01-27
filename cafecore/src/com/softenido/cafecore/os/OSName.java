@@ -68,7 +68,7 @@ public class OSName
     public static final OSName os = new OSName(System.getProperty(OSName.OS_NAME))
     {
         @Override
-        boolean android()
+        final boolean android()
         {
             try
             {
