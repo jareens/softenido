@@ -1,7 +1,7 @@
 /*
  * NotificationBuilder.java
  *
- * Copyright (c) 2011  Francisco Gómez Carrasco
+ * Copyright (c) 2011-2012 Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,11 +27,8 @@ import android.R;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.net.Uri;
-import android.view.View;
-import android.widget.RemoteViews;
 import android.widget.ProgressBar;
-
-import java.text.NumberFormat;
+import android.widget.RemoteViews;
 
 
 /**

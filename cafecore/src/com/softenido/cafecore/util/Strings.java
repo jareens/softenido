@@ -21,6 +21,8 @@
 
 package com.softenido.cafecore.util;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: franci
@@ -63,5 +65,29 @@ public abstract class Strings
     public static String fill(CharSequence cs,char c, int size)
     {
         return fill(new StringBuilder(cs),c,size,false).toString();
+    }
+    
+    public static <T> String delimiterSeparatedValues(Iterable<T> list, String sep)
+    {
+        String comma = "";
+        StringBuilder sb = new StringBuilder();
+        for(T item : list)
+        {
+            sb.append(comma).append(item.toString());
+            comma = sep;
+        }
+        return sb.toString();
+    }
+    public static <T> String delimiterSeparatedValues(T[] list, String sep)
+    {
+        return delimiterSeparatedValues(Arrays.asList(list),sep);
+    }
+    public static <T> String commaSeparatedValues(List<T> list)
+    {
+        return delimiterSeparatedValues(list, ",");
+    }
+    public static <T> String commaSeparatedValues(T[] list)
+    {
+        return delimiterSeparatedValues(Arrays.asList(list),",");
     }
 }

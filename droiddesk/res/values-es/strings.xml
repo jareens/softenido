@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="about_accept">Aceptar</string>
+    <string name="about_feedback">Observaciones</string>
+    <string name="about_feedback_title">Enviar Observaciones vía e-mail</string>
 </resources>

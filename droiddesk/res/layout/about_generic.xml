@@ -34,7 +34,7 @@
                     android:id="@+id/AboutWebUrl2" android:text="AboutWebUrl2"/>
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
+                android:text="This program has no license, so do not use it unless you are the owner"
                 android:paddingBottom="10sp" android:paddingTop="10sp" android:includeFontPadding="true"/>
             <LinearLayout android:orientation="horizontal" android:layout_width="match_parent" android:layout_height="wrap_content">
                 <Button android:layout_width="match_parent" android:layout_height="50dip" android:layout_gravity="left" android:layout_weight="1"

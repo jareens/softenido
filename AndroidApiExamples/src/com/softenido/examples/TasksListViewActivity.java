@@ -23,6 +23,9 @@ package com.softenido.examples;
 
 import android.app.ActivityManager;
 import android.app.ListActivity;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PermissionInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,11 +34,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import com.softenido.cafecore.util.Strings;
 import com.softenido.droiddesk.admob.AdMob;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.StringTokenizer;
+import java.util.Map;
 
 public class TasksListViewActivity extends ListActivity
 {
@@ -54,6 +59,8 @@ public class TasksListViewActivity extends ListActivity
         String title;
         int count =0;
         ActivityManager manager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        PackageManager pkgManager= (PackageManager) this.getPackageManager();
+
 
         final List<String> names = new ArrayList<String>();
         final List<String> texts = new ArrayList<String>();
@@ -110,6 +117,65 @@ public class TasksListViewActivity extends ListActivity
                         txt += "\ndescription: %s " +item.description.toString();
                     if(item.topActivity!=null)
                         txt += "\ntop: "+item.topActivity.toShortString();
+                    texts.add(txt);
+                }
+            }
+            case R.id.tasks_menu_pkg:
+            {
+                title = "Package List";
+                List <PackageInfo> pkgs=pkgManager.getInstalledPackages(PackageManager.GET_PERMISSIONS);
+                for(int i =0;i<pkgs.size();i++)
+                {
+                    count++;
+                    PackageInfo item = pkgs.get(i);
+
+                    names.add(item.packageName);
+
+                    String txt = "permissions: {";
+                    if(item.permissions==null)
+                    {
+                        txt += "null";
+                    }
+                    else
+                    {
+                        for( PermissionInfo pi : item.permissions)
+                        {
+                            txt += "[group="+pi.group+", level="+pi.protectionLevel+", name"+pi.toString()+"]";
+                        }
+                    }
+                    txt+="}";
+                    texts.add(txt);
+                }
+            }
+            case R.id.tasks_menu_perm:
+            {
+                title = "Permissions List";
+                List <PackageInfo> pkgs=pkgManager.getInstalledPackages(PackageManager.GET_PERMISSIONS);
+
+                Map<String,ArrayList<String>> map = new HashMap<String,ArrayList<String>>();
+                for(int i =0;i<pkgs.size();i++)
+                {
+                    PackageInfo item = pkgs.get(i);
+                    
+                    if(item.permissions==null)
+                        continue;
+                    for( PermissionInfo pi : item.permissions)
+                    {
+                        ArrayList<String> list = map.get(pi.toString());
+                        if(list==null)
+                        {
+                            list = new ArrayList<String>();
+                            map.put(pi.toString(),list);
+                        }
+                        list.add(item.packageName);
+                    }
+                }
+                for(Map.Entry<String, ArrayList<String>> e : map.entrySet())
+                {
+                    String txt = "Packages:{";
+                    Strings.commaSeparatedValues(e.getValue());
+                    txt +="}";
+                    names.add(e.getKey());
                     texts.add(txt);
                 }
             }

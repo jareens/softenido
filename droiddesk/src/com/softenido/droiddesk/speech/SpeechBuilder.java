@@ -1,7 +1,7 @@
 /*
- * TextToSpeech.java
+ * SpeechBuilder.java
  *
- * Copyright (c) 2011  Francisco Gómez Carrasco
+ * Copyright (c) 2011-2012  Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,6 @@ package com.softenido.droiddesk.speech;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.speech.RecognizerIntent;
-import android.speech.tts.TextToSpeech;
 
 import java.util.ArrayList;
 import java.util.Locale;

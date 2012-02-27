@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Softenido API Examples</string>
+    <string name="app_name">API Examples</string>
+    <string name="app_description">Examples using Softenido and Android  API</string>
     <string name="battery_level_label">Battery level:</string>
     <string name="battery_display_plugged">AC:</string>
     <string name="battery_display_status">Status:</string>

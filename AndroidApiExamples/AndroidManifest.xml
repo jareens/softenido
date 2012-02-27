@@ -6,8 +6,7 @@
       android:installLocation="auto">
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="8"/>
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher">
-        <activity android:name="MainActivity"
-                  android:label="@string/app_name">
+        <activity android:name="MainActivity" android:label="@string/app_name" android:description="@string/app_description">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,6 +22,7 @@
         <meta-data android:name="com.softenido.about.copyright" android:value="© 2011 Francisco Gómez Carrasco"/>
         <meta-data android:name="com.softenido.about.url1" android:value="http://www.softenido.com/"/>
         <meta-data android:name="com.softenido.about.url2" android:value="http://softenido.googlecode.com/"/>
+        <meta-data android:name="com.softenido.about.email" android:value="flikxxi@gmail.com"/>
 
         <!-- The application's publisher ID assigned by AdMob -->
         <!--suppress AndroidDomInspection -->

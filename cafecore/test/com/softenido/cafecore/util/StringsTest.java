@@ -20,6 +20,7 @@
  */
 package com.softenido.cafecore.util;
 
+import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.*;
 
@@ -162,6 +163,62 @@ public class StringsTest
         assertEquals("0044", Strings.fill("00", '4', 4).toString());
         assertEquals("00055", Strings.fill("000", '5', 5).toString());
         assertEquals("000066", Strings.fill("0000", '6', 6).toString());
+    }
+
+    /**
+     * Test of commaSeparatedValues method, of class Strings.
+     */
+    @Test
+    public void testDelimiterSeparatedValues_List_String()
+    {
+        List<Integer> list = Arrays.asList(new Integer[]{1,2,3,4,5,6,7,8,9,0});
+        List<Integer> empty = Arrays.asList(new Integer[]{});
+        List<Integer> one = Arrays.asList(new Integer[]{1});
+        assertEquals("1|2|3|4|5|6|7|8|9|0", Strings.delimiterSeparatedValues(list, "|"));
+        assertEquals("", Strings.delimiterSeparatedValues(empty, "|"));
+        assertEquals("1", Strings.delimiterSeparatedValues(one, "|"));
+    }
+
+    /**
+     * Test of delimiterSeparatedValues method, of class Strings.
+     */
+    @Test
+    public void testDelimiterSeparatedValues_GenericType_String()
+    {
+        Integer[] list = new Integer[]{1,2,3,4,5,6,7,8,9,0};
+        Integer[] empty = new Integer[]{};
+        Integer[] one = new Integer[]{1};
+        assertEquals("1|2|3|4|5|6|7|8|9|0", Strings.delimiterSeparatedValues(list, "|"));
+        assertEquals("", Strings.delimiterSeparatedValues(empty, "|"));
+        assertEquals("1", Strings.delimiterSeparatedValues(one, "|"));
+    }
+
+    /**
+     * Test of commaSeparatedValues method, of class Strings.
+     */
+    @Test
+    public void testCommaSeparatedValues_List()
+    {
+        List<Integer> list = Arrays.asList(new Integer[]{1,2,3,4,5,6,7,8,9,0});
+        List<Integer> empty = Arrays.asList(new Integer[]{});
+        List<Integer> one = Arrays.asList(new Integer[]{1});
+        assertEquals("1,2,3,4,5,6,7,8,9,0", Strings.commaSeparatedValues(list));
+        assertEquals("", Strings.commaSeparatedValues(empty));
+        assertEquals("1", Strings.commaSeparatedValues(one));
+    }
+
+    /**
+     * Test of commaSeparatedValues method, of class Strings.
+     */
+    @Test
+    public void testCommaSeparatedValues_GenericType()
+    {
+        Integer[] list = new Integer[]{1,2,3,4,5,6,7,8,9,0};
+        Integer[] empty = new Integer[]{};
+        Integer[] one = new Integer[]{1};
+        assertEquals("1,2,3,4,5,6,7,8,9,0", Strings.commaSeparatedValues(list));
+        assertEquals("", Strings.commaSeparatedValues(empty));
+        assertEquals("1", Strings.commaSeparatedValues(one));
     }
 
 }
