@@ -1,3 +1,7 @@
+v0.3.1 vc8 (2012-02-29)
+--------------------------
+- añadido boton de feedback
+
 v0.3.0 vc7 (2011-12-18)
 --------------------------
 - añade límites de tiempo y batería

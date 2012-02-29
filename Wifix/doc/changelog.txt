@@ -1,3 +1,7 @@
+v0.3.1 vc8 (2012-02-29)
+--------------------------
+- added feedback button
+
 v0.3.0 vc7 (2011-12-18)
 --------------------------
 - added time and battery limits to keep connection
