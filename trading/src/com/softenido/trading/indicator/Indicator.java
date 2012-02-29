@@ -1,5 +1,5 @@
 /*
- * Pricing.java
+ * Indicator.java
  *
  * Copyright (c) 2012  Francisco Gómez Carrasco
  *
@@ -19,16 +19,24 @@
  * Report bugs or new features to: flikxxi@gmail.com
  */
 
-package com.softenido.trading.pricing;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.softenido.trading.indicator;
 
-import com.softenido.trading.OrderType;
-import com.softenido.trading.TransactionType;
+import com.softenido.trading.stock.Stock;
+import java.util.Date;
 
 /**
  *
  * @author franci
  */
-public interface Pricing
+public interface Indicator
 {
-    double getCost(TransactionType tt,OrderType ot, double price, int shares);
+    String getName();
+    Stock getStock();
+    String[] getFields();   
+    Date[] getDates();
+    double[][] getValues();
 }

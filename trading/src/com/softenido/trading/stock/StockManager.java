@@ -1,5 +1,5 @@
 /*
- * Pricing.java
+ * StockManager.java
  *
  * Copyright (c) 2012  Francisco Gómez Carrasco
  *
@@ -19,16 +19,34 @@
  * Report bugs or new features to: flikxxi@gmail.com
  */
 
-package com.softenido.trading.pricing;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.softenido.trading.stock;
 
-import com.softenido.trading.OrderType;
-import com.softenido.trading.TransactionType;
+import java.io.*;
+import java.util.zip.GZIPInputStream;
 
 /**
  *
  * @author franci
  */
-public interface Pricing
+public class StockManager
 {
-    double getCost(TransactionType tt,OrderType ot, double price, int shares);
+    StockData loadYahoo(Stock stock, InputStream data)
+    {
+        return null;
+    }
+    StockData loadYahoo(Stock stock, File fd) throws FileNotFoundException, IOException
+    {
+        InputStream data = new FileInputStream(fd);
+        if(fd.getName().toLowerCase().endsWith("gz"))
+        {
+            data = new GZIPInputStream(data);
+        }
+        return loadYahoo(stock, data);
+    }
+//    importar de ficheros comprimidos, en el test, luego
+//    cargar StockData y luego IndicatorManager para generar los Indicadores.
 }

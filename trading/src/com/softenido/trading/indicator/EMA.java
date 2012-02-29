@@ -1,5 +1,5 @@
 /*
- * Pricing.java
+ * EMA.java
  *
  * Copyright (c) 2012  Francisco Gómez Carrasco
  *
@@ -19,16 +19,36 @@
  * Report bugs or new features to: flikxxi@gmail.com
  */
 
-package com.softenido.trading.pricing;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.softenido.trading.indicator;
 
-import com.softenido.trading.OrderType;
-import com.softenido.trading.TransactionType;
+import com.softenido.trading.stock.Stock;
+import java.util.Date;
 
 /**
  *
  * @author franci
  */
-public interface Pricing
+public class EMA extends AbstractIndicator
 {
-    double getCost(TransactionType tt,OrderType ot, double price, int shares);
+    final int periods;
+    final double k;
+
+    public EMA(int periods, double k, Stock stock, String[] fields, Date[] dates, double[][] values)
+    {
+        super("EMA", stock, fields, dates, values);
+        this.periods = periods;
+        this.k = k;
+    }
+    private double getEMA(double last, double price)
+    {
+        return price * k + last * (1-k);
+    }
+    static EMA build(int period, int field, boolean force, Prices prices)
+    {
+        return null;
+    }
 }
