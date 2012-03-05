@@ -1,9 +1,16 @@
-v0.3.0
+v0.3.1 vc8 (2012-02-29)
+--------------------------
+- added feedback button
+
+v0.3.1 vc4
+- verify
+
+v0.3.0 vc3
 - added Operating System Activity
 - detect IP in Speech Activity
-v0.2.0
+v0.2.0 vc2
 - added Applications, Services and Tasks list
 - added Battery
 - added Speech
-v0.1.0
+v0.1.0 vc1
 - first version
