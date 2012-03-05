@@ -156,7 +156,15 @@ com.softenido.cafecore.util.GenericObservable:
 com.softenido.cafecore.util.Pair
 com.softenido.cafecore.util.RepeatedSet
 com.softenido.cafecore.util.SizeUnits
-com.softenido.cafecore.util.Strings
+com.softenido.cafecore.util.Strings:
+    37:39:public static java.lang.String repeat(char,int)
+    43:48:public static java.lang.String repeat(java.lang.String,int)
+    53:55:public static java.lang.StringBuilder fill(java.lang.StringBuilder,char,int,boolean)
+    59:59:public static java.lang.String fill(java.lang.CharSequence,char,int,boolean)
+    63:63:public static java.lang.StringBuilder fill(java.lang.StringBuilder,char,int)
+    67:67:public static java.lang.String fill(java.lang.CharSequence,char,int)
+    83:83:public static java.lang.String delimiterSeparatedValues(java.lang.Object[],java.lang.String)
+    91:91:public static java.lang.String commaSeparatedValues(java.lang.Object[])
 com.softenido.cafecore.util.regex.RegExs
 com.softenido.droid.R
 com.softenido.droid.R$array
@@ -203,10 +211,21 @@ com.softenido.droiddesk.admob.AdMob:
     96:97:public static void addTestDevice(java.lang.String)
     133:133:public static com.softenido.droiddesk.admob.AdMob addBanner(android.app.Activity,android.widget.LinearLayout)
 com.softenido.droiddesk.app.NotificationBuilder
+com.softenido.droiddesk.app.SendEmailBuilder:
+    58:59:public com.softenido.droiddesk.app.SendEmailBuilder addAttach(java.util.Collection)
+    63:64:public com.softenido.droiddesk.app.SendEmailBuilder addAttach(java.io.File)
+    68:69:public com.softenido.droiddesk.app.SendEmailBuilder addAttach(java.io.File[])
+    74:75:public com.softenido.droiddesk.app.SendEmailBuilder addBcc(java.util.Collection)
+    84:85:public com.softenido.droiddesk.app.SendEmailBuilder addBcc(java.lang.String[])
+    96:97:public com.softenido.droiddesk.app.SendEmailBuilder addCc(java.util.Collection)
+    106:107:public com.softenido.droiddesk.app.SendEmailBuilder addCc(java.lang.String[])
+    118:119:public com.softenido.droiddesk.app.SendEmailBuilder addTo(java.util.Collection)
+    128:129:public com.softenido.droiddesk.app.SendEmailBuilder addTo(java.lang.String[])
+    138:139:public void setType(java.lang.String)
 com.softenido.droiddesk.speech.SpeechBuilder:
     static final int DATA_CHECK_CODE
     static final int RECOGNIZE_SPEECH
-    58:59:public SpeechBuilder(android.app.Activity)
+    56:57:public SpeechBuilder(android.app.Activity)
 com.softenido.droiddesk.speech.SpeechHearer:
     78:78:public java.util.ArrayList getText()
     83:83:public boolean isHearing()
@@ -217,10 +236,14 @@ com.softenido.droiddesk.speech.SpeechSpeaker:
     135:135:public java.util.Locale getLanguage()
     140:140:public int isLanguageAvailable(java.util.Locale)
     150:150:public boolean isInstallNeeded()
-com.softenido.droiddesk.util.ui.AboutGPL3Activity:
+com.softenido.droiddesk.util.ui.AboutActivity:
     static final java.lang.String METADATA_COPYRIGHT
     static final java.lang.String METADATA_URL1
     static final java.lang.String METADATA_URL2
+    static final java.lang.String METADATA_EMAIL
+com.softenido.droiddesk.util.ui.AboutGPL3Activity$1
+com.softenido.droiddesk.util.ui.AboutGPL3Activity$2
+com.softenido.droiddesk.util.ui.ShortCuts
 com.softenido.examples.R
 com.softenido.examples.R$array
 com.softenido.examples.R$attr

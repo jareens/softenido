@@ -1,10 +1,8 @@
-v0.3.1 vc8 (2012-02-29)
---------------------------
+v0.3.2 vc5 (2012-03-05)
 - added feedback button
-
+- added Packages and Permisions
 v0.3.1 vc4
 - verify
-
 v0.3.0 vc3
 - added Operating System Activity
 - detect IP in Speech Activity

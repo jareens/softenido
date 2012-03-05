@@ -500,10 +500,10 @@ com.softenido.cafecore.os.OSName -> com.softenido.a.a.a:
     boolean android() -> b
 com.softenido.cafecore.os.OSName$1 -> com.softenido.a.a.b:
     boolean android() -> b
-com.softenido.cafecore.util.ChangedObservable -> com.softenido.a.b.d:
+com.softenido.cafecore.util.ChangedObservable -> com.softenido.a.b.e:
     void setChanged() -> setChanged
     void clearChanged() -> clearChanged
-com.softenido.cafecore.util.GenericObservable -> com.softenido.a.b.c:
+com.softenido.cafecore.util.GenericObservable -> com.softenido.a.b.d:
     java.util.Map map -> a
     com.softenido.cafecore.util.ChangedObservable observable -> b
     java.lang.Object sender -> c
@@ -516,6 +516,8 @@ com.softenido.cafecore.util.ObserverWrapper -> com.softenido.a.b.b:
     java.lang.Object sender -> a
     com.softenido.cafecore.util.GenericObserver observer -> b
     void update(java.util.Observable,java.lang.Object) -> update
+com.softenido.cafecore.util.Strings -> com.softenido.a.b.c:
+    java.lang.String delimiterSeparatedValues(java.lang.Iterable,java.lang.String) -> a
 com.softenido.droidcore.R -> com.softenido.droidcore.a:
 com.softenido.droidcore.R$id -> com.softenido.droidcore.c:
     int AboutAppDescription -> a
@@ -527,88 +529,95 @@ com.softenido.droidcore.R$id -> com.softenido.droidcore.c:
     int aboutLayout -> g
     int admob_listactivity_linearlayout -> h
     int bAboutAccept -> i
-    int battery_display_health -> j
-    int battery_display_level -> k
-    int battery_display_plugged -> l
-    int battery_display_present -> m
-    int battery_display_status -> n
-    int battery_display_technology -> o
-    int battery_display_temperature -> p
-    int battery_display_voltage -> q
-    int editText -> r
-    int mainLayout -> s
-    int main_list_view -> t
-    int os_android_api -> u
-    int os_android_version -> v
-    int os_arch -> w
-    int os_jvm_version -> x
-    int os_name -> y
-    int os_root_access -> z
-    int os_version -> A
-    int tableLayout1 -> B
-    int tasks_listview -> C
-    int tasks_menu_app -> D
-    int tasks_menu_srv -> E
-    int tasks_menu_task -> F
-    int text_to_speech_edit -> G
-    int text_to_speech_install -> H
-    int text_to_speech_listen -> I
-    int text_to_speech_port -> J
-    int text_to_speech_say -> K
-com.softenido.droidcore.R$layout -> com.softenido.droidcore.b:
-    int about_gpl3 -> a
-    int admob_listactivity_listview -> b
-    int battery_display -> c
-    int listview_listadapter -> d
-    int listview_listadapter_list_item -> e
-    int listview_pure_xml -> f
-    int main -> g
-    int os_display -> h
-    int preferences -> i
-    int speech_tools -> j
-    int tasks_listview -> k
-    int tasks_listview_item -> l
-com.softenido.droidcore.R$string -> com.softenido.droidcore.d:
-    int about -> q
-    int about_accept -> r
-    int app_name -> s
-    int battery_display_health -> t
-    int battery_display_level -> u
-    int battery_display_plugged -> v
-    int battery_display_present -> w
-    int battery_display_status -> x
-    int battery_display_technology -> y
-    int battery_display_temperature -> z
-    int battery_display_voltage -> A
-    int battery_health_cold -> a
-    int battery_health_dead -> b
-    int battery_health_good -> c
-    int battery_health_over_voltage -> d
-    int battery_health_overheat -> e
-    int battery_health_unknown -> f
-    int battery_health_unspecified_failure -> g
-    int battery_level_label -> B
-    int battery_plugged_ac -> h
-    int battery_plugged_battery -> i
-    int battery_plugged_plugged -> j
-    int battery_plugged_usb -> k
-    int battery_status_charging -> l
-    int battery_status_discharging -> m
-    int battery_status_full -> n
-    int battery_status_not_charging -> o
-    int battery_status_unknown -> p
-    int os_android_api -> C
-    int os_android_version -> D
-    int os_arch -> E
-    int os_jvm_version -> F
-    int os_name -> G
-    int os_root_access -> H
-    int os_version -> I
+    int bAboutFeedback -> j
+    int battery_display_health -> k
+    int battery_display_level -> l
+    int battery_display_plugged -> m
+    int battery_display_present -> n
+    int battery_display_status -> o
+    int battery_display_technology -> p
+    int battery_display_temperature -> q
+    int battery_display_voltage -> r
+    int editText -> s
+    int mainLayout -> t
+    int main_list_view -> u
+    int os_android_api -> v
+    int os_android_version -> w
+    int os_arch -> x
+    int os_jvm_version -> y
+    int os_name -> z
+    int os_root_access -> A
+    int os_version -> B
+    int tableLayout1 -> C
+    int tasks_listview -> D
+    int tasks_menu_app -> E
+    int tasks_menu_perm -> F
+    int tasks_menu_pkg -> G
+    int tasks_menu_srv -> H
+    int tasks_menu_task -> I
     int text_to_speech_edit -> J
     int text_to_speech_install -> K
     int text_to_speech_listen -> L
-    int text_to_speech_say -> M
-    int text_to_speech_text -> N
+    int text_to_speech_port -> M
+    int text_to_speech_say -> N
+com.softenido.droidcore.R$layout -> com.softenido.droidcore.b:
+    int about_generic -> a
+    int about_gpl3 -> b
+    int admob_listactivity_listview -> c
+    int battery_display -> d
+    int listview_listadapter -> e
+    int listview_listadapter_list_item -> f
+    int listview_pure_xml -> g
+    int main -> h
+    int os_display -> i
+    int preferences -> j
+    int speech_tools -> k
+    int tasks_listview -> l
+    int tasks_listview_item -> m
+com.softenido.droidcore.R$string -> com.softenido.droidcore.d:
+    int about -> r
+    int about_accept -> s
+    int about_feedback -> t
+    int about_feedback_title -> a
+    int app_description -> u
+    int app_name -> v
+    int battery_display_health -> w
+    int battery_display_level -> x
+    int battery_display_plugged -> y
+    int battery_display_present -> z
+    int battery_display_status -> A
+    int battery_display_technology -> B
+    int battery_display_temperature -> C
+    int battery_display_voltage -> D
+    int battery_health_cold -> b
+    int battery_health_dead -> c
+    int battery_health_good -> d
+    int battery_health_over_voltage -> e
+    int battery_health_overheat -> f
+    int battery_health_unknown -> g
+    int battery_health_unspecified_failure -> h
+    int battery_level_label -> E
+    int battery_plugged_ac -> i
+    int battery_plugged_battery -> j
+    int battery_plugged_plugged -> k
+    int battery_plugged_usb -> l
+    int battery_status_charging -> m
+    int battery_status_discharging -> n
+    int battery_status_full -> o
+    int battery_status_not_charging -> p
+    int battery_status_unknown -> q
+    int os_android_api -> F
+    int os_android_version -> G
+    int os_arch -> H
+    int os_jvm_version -> I
+    int os_name -> J
+    int os_root_access -> K
+    int os_version -> L
+    int text_to_speech_edit -> M
+    int text_to_speech_install -> N
+    int text_to_speech_listen -> O
+    int text_to_speech_say -> P
+    int text_to_speech_text -> Q
 com.softenido.droidcore.os.AndroidVersion -> com.softenido.droidcore.a.a:
     com.softenido.droidcore.os.AndroidVersion os -> a
     int SDK -> b
@@ -664,7 +673,7 @@ com.softenido.droidcore.services.LocalService -> com.softenido.droidcore.service
     android.os.IBinder binder -> f
 com.softenido.droidcore.services.LocalService$LocalBinder -> com.softenido.droidcore.services.a:
     com.softenido.droidcore.services.LocalService this$0 -> a
-com.softenido.droiddesk.admob.AdMob -> com.softenido.droiddesk.b.a:
+com.softenido.droiddesk.admob.AdMob -> com.softenido.droiddesk.c.a:
     boolean initialized -> a
     java.lang.String id -> b
     java.util.HashSet testDevices -> c
@@ -673,9 +682,38 @@ com.softenido.droiddesk.admob.AdMob -> com.softenido.droiddesk.b.a:
     com.softenido.droiddesk.admob.AdMob addBanner(android.app.Activity,int,boolean) -> a
     com.softenido.droiddesk.admob.AdMob addBanner(android.app.Activity,int) -> a
     com.softenido.droiddesk.admob.AdMob addBanner$7ca34d27(android.app.ListActivity) -> a
-com.softenido.droiddesk.admob.AdMobBanner -> com.softenido.droiddesk.b.b:
+com.softenido.droiddesk.admob.AdMobBanner -> com.softenido.droiddesk.c.b:
     com.google.ads.AdView adView -> a
     void finalize() -> finalize
+com.softenido.droiddesk.app.SendEmail -> com.softenido.droiddesk.b.a:
+    java.lang.String[] emptyString -> a
+    java.io.File[] emptyFile -> b
+    java.lang.String chooserTitle -> c
+    android.content.Context context -> d
+    java.lang.String type -> e
+    java.lang.String[] to -> f
+    java.lang.String[] cc -> g
+    java.lang.String[] bcc -> h
+    java.lang.String subject -> i
+    java.lang.String body -> j
+    java.io.File[] attach -> k
+    void send() -> a
+com.softenido.droiddesk.app.SendEmailBuilder -> com.softenido.droiddesk.b.b:
+    java.lang.String chooserTitle -> a
+    android.content.Context context -> b
+    java.util.ArrayList to -> c
+    java.util.ArrayList cc -> d
+    java.util.ArrayList bcc -> e
+    java.lang.String subject -> f
+    java.lang.String body -> g
+    java.util.ArrayList attach -> h
+    java.lang.String type -> i
+    com.softenido.droiddesk.app.SendEmailBuilder addBcc(java.lang.String) -> a
+    com.softenido.droiddesk.app.SendEmailBuilder setBody(java.lang.String) -> b
+    com.softenido.droiddesk.app.SendEmailBuilder addCc(java.lang.String) -> c
+    com.softenido.droiddesk.app.SendEmailBuilder setSubject(java.lang.String) -> d
+    com.softenido.droiddesk.app.SendEmailBuilder addTo(java.lang.String) -> e
+    com.softenido.droiddesk.app.SendEmail build() -> a
 com.softenido.droiddesk.speech.SpeechBuilder -> com.softenido.droiddesk.a.c:
     android.app.Activity activity -> a
     java.util.Locale locale -> b
@@ -709,12 +747,27 @@ com.softenido.droiddesk.speech.SpeechSpeaker -> com.softenido.droiddesk.a.a:
     void onInit(int) -> onInit
     void shutdown() -> c
     int speak(java.lang.String,boolean) -> a
-com.softenido.droiddesk.util.ui.AboutGPL3Activity -> com.softenido.droiddesk.util.ui.AboutGPL3Activity:
-    com.softenido.droiddesk.admob.AdMob admob -> a
+com.softenido.droiddesk.util.ui.AboutActivity -> com.softenido.droiddesk.util.ui.AboutActivity:
+    int layout -> a
+    int bannerLayoutId -> b
+    java.lang.CharSequence label -> c
+    java.lang.CharSequence description -> f
+    java.lang.CharSequence versionName -> d
+    java.lang.String copyRight -> g
+    java.lang.String url1 -> h
+    java.lang.String url2 -> i
+    java.lang.String email -> e
+    com.softenido.droiddesk.admob.AdMob admob -> j
     void onCreate(android.os.Bundle) -> onCreate
-com.softenido.droiddesk.util.ui.AboutGPL3Activity$1 -> com.softenido.droiddesk.util.ui.a:
-    com.softenido.droiddesk.util.ui.AboutGPL3Activity this$0 -> a
+com.softenido.droiddesk.util.ui.AboutActivity$1 -> com.softenido.droiddesk.util.ui.b:
+    com.softenido.droiddesk.util.ui.AboutActivity this$0 -> a
     void onClick(android.view.View) -> onClick
+com.softenido.droiddesk.util.ui.AboutActivity$2 -> com.softenido.droiddesk.util.ui.a:
+    android.widget.Button val$bFeedback -> a
+    com.softenido.droiddesk.util.ui.AboutActivity this$0 -> b
+    void onClick(android.view.View) -> onClick
+com.softenido.droiddesk.util.ui.AboutGPL3Activity -> com.softenido.droiddesk.util.ui.AboutGPL3Activity:
+    void onCreate(android.os.Bundle) -> onCreate
 com.softenido.examples.BatteryDisplayActivity -> com.softenido.examples.BatteryDisplayActivity:
     com.softenido.droiddesk.admob.AdMob admob -> b
     com.softenido.droidcore.os.BatteryObservable bc -> a
@@ -770,6 +823,15 @@ com.softenido.examples.MainActivity$2 -> com.softenido.examples.i:
 com.softenido.examples.OperativeSystemActivity -> com.softenido.examples.OperativeSystemActivity:
     com.softenido.droiddesk.admob.AdMob admob -> a
     void onCreate(android.os.Bundle) -> onCreate
+com.softenido.examples.SendActivity -> com.softenido.examples.SendActivity:
+    com.softenido.droiddesk.admob.AdMob admob -> a
+    void onCreate(android.os.Bundle) -> onCreate
+com.softenido.examples.SendActivity$1 -> com.softenido.examples.p:
+    android.widget.EditText val$to -> a
+    android.widget.EditText val$subject -> b
+    android.widget.EditText val$body -> c
+    com.softenido.examples.SendActivity this$0 -> d
+    void onClick(android.view.View) -> onClick
 com.softenido.examples.SpeechActivity -> com.softenido.examples.SpeechActivity:
     com.softenido.droiddesk.admob.AdMob admob -> a
     com.softenido.droiddesk.speech.SpeechBuilder speech -> b
