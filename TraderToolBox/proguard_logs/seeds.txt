@@ -1,0 +1,37 @@
+com.google.ads.AdView
+com.google.ads.AdView: AdView(android.content.Context,android.util.AttributeSet)
+com.google.ads.AdView
+com.google.ads.AdView: AdView(android.content.Context,android.util.AttributeSet,int)
+com.google.ads.searchads.SearchAdRequest$BorderType: com.google.ads.searchads.SearchAdRequest$BorderType[] values()
+com.google.ads.searchads.SearchAdRequest$BorderType: com.google.ads.searchads.SearchAdRequest$BorderType valueOf(java.lang.String)
+com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode[] values()
+com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode valueOf(java.lang.String)
+com.softenido.trading.TransactionType: com.softenido.trading.TransactionType[] values()
+com.softenido.trading.TransactionType: com.softenido.trading.TransactionType valueOf(java.lang.String)
+com.softenido.trading.OrderStatus: com.softenido.trading.OrderStatus[] values()
+com.softenido.trading.OrderStatus: com.softenido.trading.OrderStatus valueOf(java.lang.String)
+com.softenido.trading.PositionType: com.softenido.trading.PositionType[] values()
+com.softenido.trading.PositionType: com.softenido.trading.PositionType valueOf(java.lang.String)
+com.google.ads.ab$b: com.google.ads.ab$b[] values()
+com.google.ads.ab$b: com.google.ads.ab$b valueOf(java.lang.String)
+com.softenido.trading.pricing.PricingGroup$Mode: com.softenido.trading.pricing.PricingGroup$Mode[] values()
+com.softenido.trading.pricing.PricingGroup$Mode: com.softenido.trading.pricing.PricingGroup$Mode valueOf(java.lang.String)
+com.google.ads.util.AdUtil$a: com.google.ads.util.AdUtil$a[] values()
+com.google.ads.util.AdUtil$a: com.google.ads.util.AdUtil$a valueOf(java.lang.String)
+com.softenido.trading.OrderType: com.softenido.trading.OrderType[] values()
+com.softenido.trading.OrderType: com.softenido.trading.OrderType valueOf(java.lang.String)
+com.google.ads.AdRequest$Gender: com.google.ads.AdRequest$Gender[] values()
+com.google.ads.AdRequest$Gender: com.google.ads.AdRequest$Gender valueOf(java.lang.String)
+com.softenido.cafecore.text.CardinalFormat$Gender: com.softenido.cafecore.text.CardinalFormat$Gender[] values()
+com.softenido.cafecore.text.CardinalFormat$Gender: com.softenido.cafecore.text.CardinalFormat$Gender valueOf(java.lang.String)
+com.google.ads.AdActivity
+com.softenido.tradertoolbox.MainActivity
+com.softenido.tradertoolbox.EquityRiskActivity
+com.softenido.droiddesk.util.ui.AboutActivity
+com.softenido.droiddesk.util.ui.AboutGPL3Activity
+com.softenido.tradertoolbox.AutoEnvelopeActivity
+com.softenido.tradertoolbox.TradeRiskActivity
+com.softenido.tradertoolbox.TraderToolBoxApp
+com.softenido.droidcore.services.LocalService
+com.google.ads.util.AdUtil$UserActivityReceiver
+com.google.ads.AdActivity: void onClick(android.view.View)

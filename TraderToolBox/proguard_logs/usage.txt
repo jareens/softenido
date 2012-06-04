@@ -1,0 +1,244 @@
+com.google.ads.Ad:
+    public abstract boolean isReady()
+    public abstract void loadAd(com.google.ads.AdRequest)
+    public abstract void setAdListener(com.google.ads.AdListener)
+    public abstract void stopLoading()
+com.google.ads.AdActivity:
+    public static final java.lang.String BASE_URL_PARAM
+    public static final java.lang.String HTML_PARAM
+    public static final java.lang.String URL_PARAM
+    public static final java.lang.String INTENT_ACTION_PARAM
+    public static final java.lang.String TYPE_PARAM
+    public static final java.lang.String ORIENTATION_PARAM
+com.google.ads.AdRequest:
+    public static final java.lang.String VERSION
+    public static final java.lang.String LOGTAG
+    173:174:public void setGender(com.google.ads.AdRequest$Gender)
+    184:185:public void setBirthday(java.lang.String)
+    196:197:public void setPlusOneOptOut(boolean)
+    208:209:public void setKeywords(java.util.Set)
+    238:239:public void setExtras(java.util.Map)
+    267:268:public void setLocation(android.location.Location)
+    281:282:public void setTesting(boolean)
+    385:386:public void setTestDevices(java.util.Set)
+com.google.ads.AdSize:
+    38:39:public AdSize(int,int)
+com.google.ads.AdView:
+    478:482:public boolean isReady()
+    523:524:public void setAdListener(com.google.ads.AdListener)
+    535:536:public void stopLoading()
+com.google.ads.InterstitialAd:
+    private com.google.ads.d a
+    73:74:public InterstitialAd(android.app.Activity,java.lang.String)
+    88:91:public InterstitialAd(android.app.Activity,java.lang.String,boolean)
+    100:100:public boolean isReady()
+    112:113:public void loadAd(com.google.ads.AdRequest)
+    122:135:public void show()
+    146:147:public void setAdListener(com.google.ads.AdListener)
+    156:157:public void stopLoading()
+com.google.ads.R
+com.google.ads.R$attr
+com.google.ads.R$id
+com.google.ads.R$layout
+com.google.ads.d:
+    464:464:public final synchronized boolean o()
+    777:778:public final synchronized void y()
+com.google.ads.searchads.SearchAdRequest:
+    88:89:public void setQuery(java.lang.String)
+    98:104:public void setBackgroundColor(int)
+    116:122:public void setBackgroundGradient(int,int)
+    132:133:public void setHeaderTextColor(int)
+    143:144:public void setDescriptionTextColor(int)
+    154:155:public void setAnchorTextColor(int)
+    163:164:public void setFontFace(java.lang.String)
+    173:174:public void setHeaderTextSize(int)
+    184:185:public void setBorderColor(int)
+    192:193:public void setBorderType(com.google.ads.searchads.SearchAdRequest$BorderType)
+    202:203:public void setBorderThickness(int)
+com.softenido.cafecore.crypto.IDEACipher
+com.softenido.cafecore.equals.Equals
+com.softenido.cafecore.equals.EqualsBuilder
+com.softenido.cafecore.equals.EqualsData
+com.softenido.cafecore.equals.EqualsDataBuilder
+com.softenido.cafecore.equals.EqualsFilterBuilder
+com.softenido.cafecore.equals.EqualsFilterBuilder$1
+com.softenido.cafecore.equals.EqualsHashMap
+com.softenido.cafecore.equals.EqualsProxyBuilder
+com.softenido.cafecore.equals.EqualsProxyBuilder$1
+com.softenido.cafecore.math.BigMath
+com.softenido.cafecore.math.FastMath
+com.softenido.cafecore.math.LongMath
+com.softenido.cafecore.misc.EuroCheckSum
+com.softenido.cafecore.net.MailToBuilder
+com.softenido.cafecore.net.Networks
+com.softenido.cafecore.os.OSName
+com.softenido.cafecore.os.OSName$1
+com.softenido.cafecore.security.CloneableMessageDigest
+com.softenido.cafecore.security.Messy
+com.softenido.cafecore.security.Messy$1
+com.softenido.cafecore.security.Messy$2
+com.softenido.cafecore.security.Messy$3
+com.softenido.cafecore.security.Messy$4
+com.softenido.cafecore.security.Messy$5
+com.softenido.cafecore.security.ParallelMessageDigest
+com.softenido.cafecore.security.SecureBitSet
+com.softenido.cafecore.stego.Cardinality
+com.softenido.cafecore.stego.StegoCipher
+com.softenido.cafecore.stego.StegoPack
+com.softenido.cafecore.stego.StegoPack0
+com.softenido.cafecore.stego.StegoTextJustify
+com.softenido.cafecore.stego.StgTxt
+com.softenido.cafecore.text.CardinalFormat
+com.softenido.cafecore.text.CardinalFormat$1
+com.softenido.cafecore.text.CardinalFormat$Gender
+com.softenido.cafecore.text.ConsoleAppendable
+com.softenido.cafecore.text.ConsoleAppendable$Options
+com.softenido.cafecore.text.HumanDateFormat
+com.softenido.cafecore.text.HumanMillisFormat
+com.softenido.cafecore.text.NumberRule
+com.softenido.cafecore.text.UnsupportedValueException
+com.softenido.cafecore.util.AbstractUnits
+com.softenido.cafecore.util.ArrayUtils
+com.softenido.cafecore.util.Arrays
+com.softenido.cafecore.util.BitSetReader
+com.softenido.cafecore.util.BitSetReader$1
+com.softenido.cafecore.util.BitSetReader$2
+com.softenido.cafecore.util.BitSetWriter
+com.softenido.cafecore.util.BitSetWriter$1
+com.softenido.cafecore.util.BitSetWriter$2
+com.softenido.cafecore.util.BitSets
+com.softenido.cafecore.util.ChangedObservable
+com.softenido.cafecore.util.Dates
+com.softenido.cafecore.util.GenericObservable
+com.softenido.cafecore.util.GenericObserver
+com.softenido.cafecore.util.ObserverWrapper
+com.softenido.cafecore.util.Pair
+com.softenido.cafecore.util.RepeatedSet
+com.softenido.cafecore.util.SizeUnits
+com.softenido.cafecore.util.Strings
+com.softenido.cafecore.util.regex.RegExs
+com.softenido.dao.Market
+com.softenido.dao.MarketDAO
+com.softenido.dao.MarketReader
+com.softenido.dao.MarketWriter
+com.softenido.dao.Quote
+com.softenido.dao.QuoteDAO
+com.softenido.dao.QuoteReader
+com.softenido.dao.QuoteWriter
+com.softenido.dao.Stock
+com.softenido.dao.StockDAO
+com.softenido.dao.StockReader
+com.softenido.dao.StockWriter
+com.softenido.droid.BuildConfig
+com.softenido.droid.R
+com.softenido.droid.R$array
+com.softenido.droid.R$attr
+com.softenido.droid.R$drawable
+com.softenido.droid.R$id
+com.softenido.droid.R$layout
+com.softenido.droid.R$string
+com.softenido.droid.R$styleable
+com.softenido.droidcore.BuildConfig
+com.softenido.droidcore.R$array
+com.softenido.droidcore.R$attr
+com.softenido.droidcore.R$drawable
+com.softenido.droidcore.R$styleable
+com.softenido.droidcore.os.AndroidVersion
+com.softenido.droidcore.os.Battery
+com.softenido.droidcore.os.BatteryObservable
+com.softenido.droidcore.os.BatteryObservable$1
+com.softenido.droidcore.os.Execute
+com.softenido.droidcore.services.LocalService:
+    60:61:public final android.os.IBinder onBind(android.content.Intent)
+    67:69:public void onCreate()
+    75:76:public final void onStart(android.content.Intent,int)
+    81:82:public int onStartCommand(android.content.Intent,int,int)
+    88:90:public void onDestroy()
+    95:97:public void onConfigurationChanged(android.content.res.Configuration)
+    102:104:public void onLowMemory()
+    109:110:public boolean onUnbind(android.content.Intent)
+    116:118:public void onRebind(android.content.Intent)
+    122:123:public static void setToastDebug(boolean)
+    127:128:public static void setToastLength(int)
+com.softenido.droidcore.services.LocalService$LocalBinder:
+    52:52:public com.softenido.droidcore.services.LocalService getService()
+com.softenido.droidcore.services.LocalServiceConnection
+com.softenido.droiddesk.admob.AdMob:
+    public static final java.lang.String ADMOB_PUBLISHER_ID
+    public static final java.lang.String TEST_DEVICES
+    public static final java.lang.String NO_ADS_AT_ALL
+    private static final java.lang.String CONF_LOG_MSG
+    91:92:private static void setId(java.lang.String)
+    96:97:public static void addTestDevice(java.lang.String)
+    133:133:public static com.softenido.droiddesk.admob.AdMob addBanner(android.app.Activity,android.widget.LinearLayout)
+    146:147:public static com.softenido.droiddesk.admob.AdMob addBanner(android.app.ListActivity,boolean)
+com.softenido.droiddesk.app.NotificationBuilder
+com.softenido.droiddesk.app.SendEmailBuilder:
+    58:59:public com.softenido.droiddesk.app.SendEmailBuilder addAttach(java.util.Collection)
+    63:64:public com.softenido.droiddesk.app.SendEmailBuilder addAttach(java.io.File)
+    68:69:public com.softenido.droiddesk.app.SendEmailBuilder addAttach(java.io.File[])
+    74:75:public com.softenido.droiddesk.app.SendEmailBuilder addBcc(java.util.Collection)
+    79:80:public com.softenido.droiddesk.app.SendEmailBuilder addBcc(java.lang.String)
+    84:85:public com.softenido.droiddesk.app.SendEmailBuilder addBcc(java.lang.String[])
+    90:91:public com.softenido.droiddesk.app.SendEmailBuilder setBody(java.lang.String)
+    96:97:public com.softenido.droiddesk.app.SendEmailBuilder addCc(java.util.Collection)
+    101:102:public com.softenido.droiddesk.app.SendEmailBuilder addCc(java.lang.String)
+    106:107:public com.softenido.droiddesk.app.SendEmailBuilder addCc(java.lang.String[])
+    118:119:public com.softenido.droiddesk.app.SendEmailBuilder addTo(java.util.Collection)
+    128:129:public com.softenido.droiddesk.app.SendEmailBuilder addTo(java.lang.String[])
+    138:139:public void setType(java.lang.String)
+com.softenido.droiddesk.speech.SpeechBuilder
+com.softenido.droiddesk.speech.SpeechHearer
+com.softenido.droiddesk.speech.SpeechSpeaker
+com.softenido.droiddesk.util.ui.AboutActivity:
+    static final java.lang.String METADATA_COPYRIGHT
+    static final java.lang.String METADATA_URL1
+    static final java.lang.String METADATA_URL2
+    static final java.lang.String METADATA_EMAIL
+com.softenido.droiddesk.util.ui.ShortCuts
+com.softenido.formulas.TradingFormulas:
+    22:25:public static double tradeRatio(double,double,double)
+    49:57:public static int tradeType(double,double,double)
+com.softenido.tradertoolbox.BuildConfig
+com.softenido.tradertoolbox.R
+com.softenido.tradertoolbox.R$array
+com.softenido.tradertoolbox.R$attr
+com.softenido.tradertoolbox.R$drawable
+com.softenido.tradertoolbox.R$id
+com.softenido.tradertoolbox.R$layout
+com.softenido.tradertoolbox.R$string
+com.softenido.tradertoolbox.R$styleable
+com.softenido.tradertoolbox.TradeRiskActivity:
+    static final java.lang.String BUYING_POWER
+    static final java.lang.String TRADE_RISK
+    static final java.lang.String TRADE_COMMISION
+    static final java.lang.String SHARE_SLIPPAGE
+    static final java.lang.String TRADE_RATIO2
+com.softenido.tradertoolbox.TraderToolBoxApp:
+    static final java.lang.String CONFIG
+com.softenido.trading.Account
+com.softenido.trading.Order
+com.softenido.trading.OrderStatus
+com.softenido.trading.OrderType
+com.softenido.trading.Position
+com.softenido.trading.PositionType
+com.softenido.trading.RiskManager
+com.softenido.trading.RiskManager$1
+com.softenido.trading.Trade
+com.softenido.trading.TransactionType
+com.softenido.trading.indicator.CachedIndicators
+com.softenido.trading.indicator.Indicators
+com.softenido.trading.indicator.Price
+com.softenido.trading.pricing.NullPricing
+com.softenido.trading.pricing.Pricing
+com.softenido.trading.pricing.PricingBuilder
+com.softenido.trading.pricing.PricingGroup
+com.softenido.trading.pricing.PricingGroup$1
+com.softenido.trading.pricing.PricingGroup$Mode
+com.softenido.trading.pricing.PricingScale
+com.softenido.trading.pricing.PricingTransactionType
+com.softenido.trading.pricing.PricingTransactionType$1
+com.softenido.trading.stock.Stock
+com.softenido.trading.stock.StockData
+com.softenido.trading.stock.StockManager
+com.softenido.trading.stock.StockPrice
