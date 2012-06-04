@@ -3,9 +3,10 @@
  
     <string-array name="main_options_list">
         <item>Risk Management</item>
+        <item>Trade Size</item>
         <item>Autoenvelope</item>
         <item>Accounts</item>
-        <item>About...</item>
+        <item>About</item>
     </string-array>
  
 </resources>

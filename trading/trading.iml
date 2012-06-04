@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.5" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" scope="TEST">
       <library>
@@ -17,6 +17,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="cafecore" exported="" />
   </component>
 </module>
 

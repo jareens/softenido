@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+	xmlns:myapp="http://schemas.android.com/apk/res/com.softenido.tradertoolbox"
+    android:id="@+id/traderiskmanagerLayout"
+    android:baselineAligned="true"
+    android:orientation="vertical"
+	android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ScrollView android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+        <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="vertical">
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
+                <TextView android:text="@string/buying_power" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45" />
+                <TextView android:text="$" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/buying_power" android:layout_height="wrap_content"  android:layout_width="0dp" android:layout_weight="50" android:numeric="decimal" android:maxLength="10" android:lines="1"/>
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
+                <TextView android:text="@string/trade_risk" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45"/>
+                <TextView android:text="$" android:layout_height="wrap_content" android:layout_width="0dp"  android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/trade_risk" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="50" android:numeric="decimal" android:maxLength="10" android:lines="1"/>
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
+                <TextView android:text="@string/trade_commision" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45"/>
+                <TextView android:text="$" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/trade_commision" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="50" android:numeric="decimal" android:maxLength="6" android:lines="1"/>
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
+                <TextView android:text="@string/share_slippage" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45"/>
+                <TextView android:text="$" android:layout_height="wrap_content"  android:layout_weight="5" android:layout_width="0dp" android:gravity="right" />
+                <EditText android:id="@+id/share_slippage" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="50" android:numeric="decimal" android:maxLength="6" android:lines="1"/>
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
+                <TextView android:text="@string/trade_target" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45"/>
+                <TextView android:text="\@" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/trade_target" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="50" android:numeric="decimal" android:maxLength="9" android:lines="1"/>
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
+                <TextView android:text="@string/stop_limit" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45" />
+                <TextView android:text="\@" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/stop_limit_stop" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="20" android:numeric="decimal" android:maxLength="9" android:lines="1" />
+                <TextView android:text="\@" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/stop_limit_limit" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="25" android:editable="false" android:focusable="false" android:lines="1" android:background="#eaeaea" />
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
+                <TextView android:text="@string/stop_loss" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45"/>
+                <TextView android:text="\@" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/stop_loss" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="50" android:numeric="decimal" android:maxLength="9" android:lines="1"/>
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
+                <TextView android:text="@string/trade_ratio" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45"/>
+                <TextView android:text="#" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/trade_ratio1" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="20" android:focusable="false" android:editable="false" android:background="#eaeaea" />
+                <TextView android:text="#" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/trade_ratio2" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="25" android:numeric="decimal" android:maxLength="5" android:lines="1"/>
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
+                <TextView android:text="@string/trade_size" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45"/>
+                <TextView android:text="#" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/trade_size" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="50" android:editable="false" android:focusable="false" android:background="#eaeaea" android:lines="1"/>
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal" >
+                <Button android:id="@+id/bReset" android:text="@string/trade_reset" android:layout_height="fill_parent"  android:layout_width="0dp" android:layout_weight="50" android:layout_margin="10dip" />
+                <Button android:id="@+id/bUpdate" android:text="@string/trade_update" android:layout_height="fill_parent"  android:layout_width="0dp" android:layout_weight="50" android:layout_margin="10dip" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

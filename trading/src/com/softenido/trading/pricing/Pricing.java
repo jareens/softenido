@@ -23,6 +23,7 @@ package com.softenido.trading.pricing;
 
 import com.softenido.trading.OrderType;
 import com.softenido.trading.TransactionType;
+import java.math.BigDecimal;
 
 /**
  *
@@ -30,5 +31,5 @@ import com.softenido.trading.TransactionType;
  */
 public interface Pricing
 {
-    double getCost(TransactionType tt,OrderType ot, double price, int shares);
+    BigDecimal getCost(TransactionType tt,OrderType ot, double price, int shares);
 }

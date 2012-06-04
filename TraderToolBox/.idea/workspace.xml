@@ -1,18 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYSIS_IN_BACKGROUND" value="true" />
+  </component>
   <component name="AndroidLayoutPreviewToolWindow">
     <option name="state">
       <GlobalState>
+        <option name="device" value="3.4in FWQVGA" />
+        <option name="dockMode" value="" />
+        <option name="localeLanguage" value="es" />
+        <option name="nightMode" value="notnight" />
+        <option name="targetHashString" value="android-14" />
         <option name="theme" value="Theme" />
       </GlobalState>
     </option>
   </component>
   <component name="AndroidLogFilters">
     <option name="TAB_LOG_LEVEL" value="WARN" />
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="WARN" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a835bbf9-2e39-40b7-8a00-1c8d73b72553" name="Default" comment="" />
+    <list default="true" id="a835bbf9-2e39-40b7-8a00-1c8d73b72553" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/.idea/.name" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/projectFilesBackup/TraderToolBox.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/layout/equityrisk.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/layout/traderisk.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/softenido/tradertoolbox/EquityRiskActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/softenido/tradertoolbox/TradeRiskActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/softenido/tradertoolbox/TraderToolBoxApp.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../cafecore/test/com/softenido/cafecore/math/BigMathTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../cafecore/test/com/softenido/cafecore/math/FastMathTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../doc/prorealtime/ImpulseSystem.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../doc/prorealtime/TripleScreen.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/.idea/ant.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/.idea/compiler.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/.idea/copyright/profiles_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/.idea/encodings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/.idea/scopes/scope_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/.idea/uiDesigner.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/.idea/vcs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/Trading.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/MarketDAO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/MarketReader.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/MarketWriter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/Quote.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/QuoteDAO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/QuoteReader.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/QuoteWriter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/Stock.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/StockDAO.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/StockReader.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/StockWriter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/formulas/TradingFormulas.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/trading/indicator/CachedIndicators.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/trading/indicator/Indicators.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/trading/indicator/Price.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/trading/pricing/PricingGroup.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/trading/pricing/PricingScale.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/trading/pricing/PricingTransactionType.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/test/com/softenido/formulas/TradingFormulasTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../trading/test/com/softenido/trading/pricing/PricingTransactionTypeTest.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/res/layout/riskmanager.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/com/softenido/tradertoolbox/RiskManagerActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../cafecore/src/com/softenido/cafecore/math/E.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../cafecore/test/com/softenido/cafecore/math/ETest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../cafedark/src/com/softenido/cafedark/math/MathInt.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../trading/src/com/softenido/trading/indicator/AbstractIndicator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../trading/src/com/softenido/trading/indicator/EMA.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../trading/src/com/softenido/trading/indicator/Indicator.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../trading/src/com/softenido/trading/indicator/MACD.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../trading/src/com/softenido/trading/indicator/Prices.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../trading/src/com/softenido/trading/indicator/Volume.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../trading/test/com/softenido/trading/pricing/OrderPricingTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../trading/test/com/softenido/trading/pricing/SimplePricingTest.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../trading/test/com/softenido/trading/pricing/TransactionPricingTest.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../cafedark/src/com/softenido/cafedark/math/MathBigInteger.java" afterPath="$PROJECT_DIR$/../cafecore/src/com/softenido/cafecore/math/BigMath.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../cafedark/src/com/softenido/cafedark/math/MathLong.java" afterPath="$PROJECT_DIR$/../cafecore/src/com/softenido/cafecore/math/LongMath.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../trading/src/com/softenido/trading/indicator/IndicatorManager.java" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/dao/Market.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/../trading/test/com/softenido/trading/indicator/PricesTest.java" afterPath="$PROJECT_DIR$/../trading/test/com/softenido/trading/indicator/PriceTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../AndroidApiExamples/.idea/misc.xml" afterPath="$PROJECT_DIR$/../AndroidApiExamples/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../First10DigitPrimeE/src/first10digitprimee/Main.java" afterPath="$PROJECT_DIR$/../First10DigitPrimeE/src/first10digitprimee/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TraderToolBox.iml" afterPath="$PROJECT_DIR$/TraderToolBox.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project.properties" afterPath="$PROJECT_DIR$/project.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values-es/arrays.xml" afterPath="$PROJECT_DIR$/res/values-es/arrays.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values-es/strings.xml" afterPath="$PROJECT_DIR$/res/values-es/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/arrays.xml" afterPath="$PROJECT_DIR$/res/values/arrays.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/softenido/tradertoolbox/AutoEnvelopeActivity.java" afterPath="$PROJECT_DIR$/src/com/softenido/tradertoolbox/AutoEnvelopeActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/softenido/tradertoolbox/MainActivity.java" afterPath="$PROJECT_DIR$/src/com/softenido/tradertoolbox/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Wifix/project.properties" afterPath="$PROJECT_DIR$/../Wifix/project.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ZooAndroid/.idea/misc.xml" afterPath="$PROJECT_DIR$/../ZooAndroid/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cafecore/.idea/misc.xml" afterPath="$PROJECT_DIR$/../cafecore/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cafecore/cafecore.iml" afterPath="$PROJECT_DIR$/../cafecore/cafecore.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cafecore/src/com/softenido/cafecore/math/FastMath.java" afterPath="$PROJECT_DIR$/../cafecore/src/com/softenido/cafecore/math/FastMath.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cafecore/src/com/softenido/cafecore/util/Arrays.java" afterPath="$PROJECT_DIR$/../cafecore/src/com/softenido/cafecore/util/Arrays.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cafedark/nbproject/genfiles.properties" afterPath="$PROJECT_DIR$/../cafedark/nbproject/genfiles.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../cafedark/nbproject/project.properties" afterPath="$PROJECT_DIR$/../cafedark/nbproject/project.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../droidcore/droidcore.iml" afterPath="$PROJECT_DIR$/../droidcore/droidcore.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../droiddesk/droiddesk.iml" afterPath="$PROJECT_DIR$/../droiddesk/droiddesk.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../droiddesk/project.properties" afterPath="$PROJECT_DIR$/../droiddesk/project.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/nbproject/build-impl.xml" afterPath="$PROJECT_DIR$/../trading/nbproject/build-impl.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/nbproject/genfiles.properties" afterPath="$PROJECT_DIR$/../trading/nbproject/genfiles.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/nbproject/project.properties" afterPath="$PROJECT_DIR$/../trading/nbproject/project.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/nbproject/project.xml" afterPath="$PROJECT_DIR$/../trading/nbproject/project.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/src/com/softenido/trading/RiskManager.java" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/trading/RiskManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/src/com/softenido/trading/pricing/NullPricing.java" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/trading/pricing/NullPricing.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/src/com/softenido/trading/pricing/Pricing.java" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/trading/pricing/Pricing.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/src/com/softenido/trading/pricing/PricingBuilder.java" afterPath="$PROJECT_DIR$/../trading/src/com/softenido/trading/pricing/PricingBuilder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/test/com/softenido/trading/RiskManagerTest.java" afterPath="$PROJECT_DIR$/../trading/test/com/softenido/trading/RiskManagerTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/test/com/softenido/trading/pricing/NullPricingTest.java" afterPath="$PROJECT_DIR$/../trading/test/com/softenido/trading/pricing/NullPricingTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/test/com/softenido/trading/pricing/PricingBuilderTest.java" afterPath="$PROJECT_DIR$/../trading/test/com/softenido/trading/pricing/PricingBuilderTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../trading/trading.iml" afterPath="$PROJECT_DIR$/../trading/trading.iml" />
+    </list>
     <ignored path="TraderToolBox.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,6 +135,73 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/AutoEnvelopeActivity.java" line="43" class="com.softenido.tradertoolbox.AutoEnvelopeActivity" package="com.softenido.tradertoolbox">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/AutoEnvelopeActivity.java" line="41" class="com.softenido.tradertoolbox.AutoEnvelopeActivity" package="com.softenido.tradertoolbox">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/TraderToolBoxApp.java" line="69" class="com.softenido.tradertoolbox.TraderToolBoxApp" package="com.softenido.tradertoolbox">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/TraderToolBoxApp.java" line="73" class="com.softenido.tradertoolbox.TraderToolBoxApp" package="com.softenido.tradertoolbox">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/../droiddesk/src/com/softenido/droiddesk/util/ui/AboutGPL3Activity.java" line="32" class="com.softenido.droiddesk.util.ui.AboutGPL3Activity" package="com.softenido.droiddesk.util.ui">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -69,42 +242,74 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AutoEnvelopeActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/AutoEnvelopeActivity.java">
+      <file leaf-file-name="TradeRiskActivity.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/TradeRiskActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="13" selection-start="1009" selection-end="1009" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#1484#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RiskManagerActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/RiskManagerActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="0" selection-start="922" selection-end="922" vertical-scroll-proportion="0.0">
+            <state line="92" column="0" selection-start="3362" selection-end="3362" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
+      <file leaf-file-name="traderisk.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/traderisk.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="13" selection-start="52" selection-end="52" vertical-scroll-proportion="0.03409091">
+            <state line="26" column="31" selection-start="2471" selection-end="2471" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BatteryObservable.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../droidcore/src/com/softenido/droidcore/os/BatteryObservable.java">
+      <file leaf-file-name="equityrisk.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/layout/equityrisk.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="26" selection-start="56" selection-end="56" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="20" column="54" selection-start="1722" selection-end="1722" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="86" selection-start="1653" selection-end="1653" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/res/values-es/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="50" selection-start="1143" selection-end="1143" vertical-scroll-proportion="0.65088755">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="arrays.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values-es/arrays.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="3" column="32" selection-start="71" selection-end="89" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="37" selection-start="922" selection-end="922" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="arrays.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/res/values/arrays.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="24" selection-start="158" selection-end="158" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -117,28 +322,34 @@
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="CHECKOUT_INCLUDE_TAGS" value="false" />
-    <option name="UPDATE_CHANGES_POLICY" value="STASH" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="expandStates">
+      <map>
+        <entry key="TraderToolBox" value="true" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/res/values-es/arrays.xml" />
-        <option value="$PROJECT_DIR$/res/layout/preferences.xml" />
-        <option value="$PROJECT_DIR$/project.properties" />
-        <option value="$PROJECT_DIR$/../droiddesk/src/com/softenido/droiddesk/util/MetaData.java" />
-        <option value="$PROJECT_DIR$/../droiddesk/src/com/softenido/droiddesk/util/ui/AboutGPL3Activity.java" />
-        <option value="$PROJECT_DIR$/../droiddesk/src/com/softenido/droiddesk/admob/AdMobBanner.java" />
-        <option value="$PROJECT_DIR$/../droiddesk/src/com/softenido/droiddesk/admob/AdMob.java" />
-        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/com/softenido/tradertoolbox/MainActivity2.java" />
-        <option value="$PROJECT_DIR$/res/layout/main.xml" />
-        <option value="$PROJECT_DIR$/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/res/values/arrays.xml" />
+        <option value="$PROJECT_DIR$/../trading/src/com/softenido/formulas/TradingFormulas.java" />
+        <option value="$PROJECT_DIR$/src/com/softenido/tradertoolbox/TraderToolBoxApplication.java" />
+        <option value="$PROJECT_DIR$/src/com/softenido/tradertoolbox/TraderToolBoxApp.java" />
         <option value="$PROJECT_DIR$/src/com/softenido/tradertoolbox/MainActivity.java" />
-        <option value="$PROJECT_DIR$/../trading/test/com/softenido/trading/pricing/OrderPricingTest.java" />
-        <option value="$PROJECT_DIR$/../droidcore/src/com/softenido/droidcore/os/BatteryObservable.java" />
+        <option value="$PROJECT_DIR$/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/res/values-es/arrays.xml" />
+        <option value="$PROJECT_DIR$/src/com/softenido/tradertoolbox/EquityRiskActivity.java" />
+        <option value="$PROJECT_DIR$/res/values/arrays.xml" />
+        <option value="$PROJECT_DIR$/res/layout/traderisk2.xml" />
+        <option value="$PROJECT_DIR$/src/com/softenido/tradertoolbox/TradeRiskActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/equityrisk.xml" />
         <option value="$PROJECT_DIR$/src/com/softenido/tradertoolbox/AutoEnvelopeActivity.java" />
+        <option value="$PROJECT_DIR$/res/layout/traderisk.xml" />
+        <option value="$PROJECT_DIR$/src/com/softenido/tradertoolbox/Prueba.java" />
+        <option value="$PROJECT_DIR$/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/res/values-es/strings.xml" />
       </list>
     </option>
   </component>
@@ -158,7 +369,7 @@
     <option name="width" value="1280" />
     <option name="height" value="974" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -184,7 +395,17 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -234,6 +455,28 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values-es" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TraderToolBox" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TraderToolBox" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -253,23 +496,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TraderToolBox" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TraderToolBox" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Favorites" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="project.structure.last.edited" value="Modules" />
+    <property name="OverrideImplement.combined" value="true" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="options.lastSelected" value="copyright.profiles" />
+    <property name="options.lastSelected" value="editor.preferences.completion" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="msm7627_ffa" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Market2.2" />
@@ -459,7 +716,7 @@
     </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
-  <component name="SvnConfiguration" maxAnnotateRevisions="500">
+  <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
     <option name="mySSHConnectionTimeout" value="30000" />
@@ -506,32 +763,34 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1280" height="974" extended-state="1" />
+    <frame x="0" y="25" width="1280" height="974" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32952693" sideWeight="0.60240966" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.67151517" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39759037" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39661428" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3272727" sideWeight="0.49756098" order="13" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32771084" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972324" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3272727" sideWeight="0.49674797" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889965" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32952693" sideWeight="0.60240966" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32891566" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32972324" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25853658" sideWeight="0.67151517" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32848486" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32932693" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32932693" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889965" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32932693" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889965" sideWeight="0.49674797" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39903265" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32889965" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -567,7 +826,10 @@
     <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
     <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
     <option name="LAST_COMMIT_MESSAGE" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -590,89 +852,100 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///opt/android-sdk-linux_86/platforms/android-14/android.jar!/android/app/Activity.class">
+    <entry file="file://$PROJECT_DIR$/../trading/nbproject/build-impl.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="148" column="29" selection-start="6724" selection-end="6724" vertical-scroll-proportion="0.0" />
+        <state line="442" column="29" selection-start="22739" selection-end="22739" vertical-scroll-proportion="0.31578946" />
       </provider>
     </entry>
-    <entry file="jar:///opt/android-sdk-linux_86/platforms/android-14/android.jar!/android/app/Instrumentation.class">
+    <entry file="file://$PROJECT_DIR$/../droiddesk/res/layout/preferences.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="16" selection-start="6167" selection-end="6167" vertical-scroll-proportion="0.3318182" />
+        <state line="1" column="1" selection-start="40" selection-end="40" vertical-scroll-proportion="0.03275109" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../droiddesk/src/com/softenido/droiddesk/util/ui/AboutGPL3Activity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="0" selection-start="1597" selection-end="1597" vertical-scroll-proportion="0.68877554" />
+        <state line="32" column="0" selection-start="1089" selection-end="1089" vertical-scroll-proportion="0.3821656" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../droiddesk/src/com/softenido/droiddesk/admob/AdMobBanner.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="0" selection-start="1287" selection-end="1287" vertical-scroll-proportion="0.8852041" />
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/../lib/GoogleAdMobAdsSdk-4.3.1.jar!/com/google/ads/AdSize.class">
+    <entry file="file://$PROJECT_DIR$/../droiddesk/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+    <entry file="jar:///opt/android-sdk-linux_86/platforms/android-14/android.jar!/android/graphics/Color.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="78" selection-start="922" selection-end="922" vertical-scroll-proportion="0.34177214" />
+        <state line="11" column="40" selection-start="425" selection-end="430" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/arrays.xml">
+    <entry file="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/EquityRiskActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="22" selection-start="190" selection-end="190" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../droiddesk/src/com/softenido/droiddesk/admob/AdMob.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="147" column="0" selection-start="4739" selection-end="4739" vertical-scroll-proportion="0.6883117" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="0" selection-start="2273" selection-end="2273" vertical-scroll-proportion="0.50695324" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="0" selection-start="963" selection-end="963" vertical-scroll-proportion="0.39179105" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../trading/test/com/softenido/trading/pricing/OrderPricingTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="10" selection-start="401" selection-end="401" vertical-scroll-proportion="0.37926674" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../droidcore/src/com/softenido/droidcore/os/BatteryObservable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="26" selection-start="56" selection-end="56" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="65" column="44" selection-start="2551" selection-end="2551" vertical-scroll-proportion="0.60674155" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/AutoEnvelopeActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="13" selection-start="1009" selection-end="1009" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#1484#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="42" column="41" selection-start="1424" selection-end="1424" vertical-scroll-proportion="0.5377358" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/RiskManagerActivity.java">
+    <entry file="file://$PROJECT_DIR$/src/com/softenido/tradertoolbox/TradeRiskActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="922" selection-end="922" vertical-scroll-proportion="0.0">
+        <state line="92" column="0" selection-start="3362" selection-end="3362" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/res/layout/main.xml">
+    <entry file="file://$PROJECT_DIR$/res/layout/traderisk.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="13" selection-start="52" selection-end="52" vertical-scroll-proportion="0.03409091">
+        <state line="26" column="31" selection-start="2471" selection-end="2471" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="86" selection-start="1653" selection-end="1653" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/layout/equityrisk.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="54" selection-start="1722" selection-end="1722" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/attrs.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values-es/arrays.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="32" selection-start="71" selection-end="89" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/arrays.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="24" selection-start="158" selection-end="158" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="37" selection-start="922" selection-end="922" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/values-es/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="50" selection-start="1143" selection-end="1143" vertical-scroll-proportion="0.65088755">
           <folding />
         </state>
       </provider>

@@ -9,7 +9,7 @@
             android:label="@string/app_name"
             android:description="@string/app_description"
             android:icon="@drawable/tradertoolbox64"
-            android:debuggable="false">
+            android:debuggable="false" android:name=".TraderToolBoxApp">
         <activity android:name=".MainActivity"
                   android:launchMode="singleInstance"
                   android:label="@string/app_name">
@@ -18,9 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.softenido.droiddesk.util.ui.AboutGPL3Activity" android:label="@string/about"/>
-        <activity android:name=".RiskManagerActivity" android:label="@string/riskmanager"/>
-		<!-- The application's publisher ID assigned by AdMob -->
+        <activity android:name="com.softenido.droiddesk.util.ui.AboutGPL3Activity" android:label="@string/about" android:configChanges="keyboardHidden"/>
+        <meta-data android:name="com.softenido.about.copyright" android:value="© 2012 Francisco Gómez Carrasco"/>
+        <meta-data android:name="com.softenido.about.url1" android:value="http://www.softenido.com/tradertoolbox"/>
+        <meta-data android:name="com.softenido.about.url2" android:value="http://softenido.googlecode.com/"/>
+        <meta-data android:name="com.softenido.about.email" android:value="flikxxi@gmail.com"/>
+
+        <activity android:name=".EquityRiskActivity" android:label="@string/equity_risk_manager"/>
+        <activity android:name=".TradeRiskActivity" android:label="@string/trade_risk_manager"/>
+
+        <!-- The application's publisher ID assigned by AdMob -->
         <!--suppress AndroidDomInspection -->
         <activity android:name="com.google.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
         <meta-data android:name="ADMOB_PUBLISHER_ID" android:value="a14eb976d57f243"/>

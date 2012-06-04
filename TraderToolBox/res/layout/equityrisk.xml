@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+	xmlns:myapp="http://schemas.android.com/apk/res/com.softenido.tradertoolbox"
+    android:id="@+id/equityriskmanagerLayout"
+    android:baselineAligned="true"
+    android:orientation="vertical"
+	android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ScrollView android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+        <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="vertical">
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent"  android:orientation="horizontal" android:layout_margin="5dp">
+                <TextView android:text="@string/trade_equity" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="55" />
+                <TextView android:text="$" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/equity" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="40" android:editable="true" android:numeric="decimal" android:maxLength="10" android:lines="1"/>
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal" android:layout_margin="5dp">
+                <TextView android:text="@string/low_trade_risk" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="55" />
+                <TextView android:text="$" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/low_trade_risk" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="40" android:editable="false" android:background="#eaeaea"/>
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal" android:layout_margin="5dp">
+                <TextView android:text="@string/mid_trade_risk" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="55"/>
+                <TextView android:text="$" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/mid_trade_risk" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="40" android:editable="false" android:background="#eaeaea" />
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal" android:layout_margin="5dp">
+                <TextView android:text="@string/max_trade_risk" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="55"/>
+                <TextView android:text="$" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/max_trade_risk" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="40" android:editable="false" android:background="#eaeaea" android:textStyle="bold"/>
+            </LinearLayout>
+            <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal" android:layout_margin="5dp">
+                <TextView android:text="@string/max_month_risk" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="55"/>
+                <TextView android:text="$" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
+                <EditText android:id="@+id/month_trade_risk" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="40" android:editable="false" android:background="#eaeaea" android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

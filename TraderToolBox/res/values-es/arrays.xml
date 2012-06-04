@@ -1,12 +1,11 @@
 <resources>
- <string-array name="items">
-        <item>"1952 Albert Schweitzer"</item>
-        <item>"1954 UN Office for Refugees"</item>
-        <item>"1962 Linus Pauling"</item>
-        <item>"1964 Martin Luther King"</item>
-        <item>"1975 Andrei Sakharov"</item>
-        <item>"1978 Anwar Sadat &amp; Menachem Begin"</item>
-        <item>"1977 Amnesty International"</item>
-        <item>"1979 Mother Teresa"</item>
+
+    <string-array name="main_options_list">
+        <item>Gestión del Riesgo</item>
+        <item>Tamaño de Operación</item>
+        <item>Autoenvolvente</item>
+        <item>Cuentas</item>
+        <item>Acerca de</item>
     </string-array>
+
 </resources>

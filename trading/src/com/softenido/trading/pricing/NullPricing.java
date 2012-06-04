@@ -27,6 +27,7 @@ package com.softenido.trading.pricing;
 
 import com.softenido.trading.OrderType;
 import com.softenido.trading.TransactionType;
+import java.math.BigDecimal;
 
 /**
  *
@@ -34,8 +35,8 @@ import com.softenido.trading.TransactionType;
  */
 public class NullPricing implements Pricing
 {
-    public double getCost(TransactionType tt, OrderType ot, double price, int shares)
+    public BigDecimal getCost(TransactionType tt, OrderType ot, double price, int shares)
     {
-        return 0;
+        return BigDecimal.ZERO;
     }
 }

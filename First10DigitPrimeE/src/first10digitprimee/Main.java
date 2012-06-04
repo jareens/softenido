@@ -1,5 +1,5 @@
 /*
-   Main.java calcula el primer primo de 10 digitos en digitos consecutivos de E
+   Main.java calcula el primer primo de 10 digitos en digitos consecutivos de BigMath
 
    Copyright (C) 2007  Francisco Gómez Carrasco
 
@@ -18,7 +18,7 @@
 */
 package first10digitprimee;
 
-import com.softenido.cafecore.math.E;
+import com.softenido.cafecore.math.BigMath;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -34,7 +34,7 @@ public class Main
      */
     public static void main(String[] args)
     {
-        BigDecimal e = E.buildE(1000);
+        BigDecimal e = BigMath.buildE(1000);
 
         BigDecimal base = BigDecimal.ONE.scaleByPowerOfTen(10);
 

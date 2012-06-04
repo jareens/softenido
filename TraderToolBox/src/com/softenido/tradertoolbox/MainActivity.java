@@ -39,7 +39,8 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        final Intent riskManager = new Intent(this,RiskManagerActivity.class);
+        final Intent equityRiskManager = new Intent(this,EquityRiskActivity.class);
+        final Intent tradeRiskManager = new Intent(this,TradeRiskActivity.class);
         final Intent autoEnvelope = new Intent(this,AutoEnvelopeActivity.class);
         final Intent about = new Intent(this, AboutGPL3Activity.class);
 
@@ -51,15 +52,20 @@ public class MainActivity extends Activity
                 switch (position)
                 {
                     case 0:
-                        startActivity(riskManager);
+                        startActivity(equityRiskManager);
                         break;
                     case 1:
-                        startActivity(autoEnvelope);
+                        startActivity(tradeRiskManager);
                         break;
-//                    case 1:
-//                        startActivity(accounts);
-//                        break;
+                    case 2:
+                        Toast.makeText(MainActivity.this,R.string.not_yet_implemented,Toast.LENGTH_LONG).show();
+//                        startActivity(autoEnvelope);
+                        break;
                     case 3:
+                        Toast.makeText(MainActivity.this,R.string.not_yet_implemented,Toast.LENGTH_LONG).show();
+//                        startActivity(accounts);
+                        break;
+                    case 4:
                         startActivity(about);
                         break;
                 }

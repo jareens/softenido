@@ -33,6 +33,54 @@ import java.util.List;
 public class Arrays
 {
     static private final java.util.Arrays array=null;
+
+    /**
+     * Copies the specified array, truncating or padding with zeros (if necessary)
+     * so the copy has the specified length.  For all indices that are
+     * valid in both the original array and the copy, the two arrays will
+     * contain identical values.  For any indices that are valid in the
+     * copy but not the original, the copy will contain <tt>0</tt>.
+     * Such indices will exist if and only if the specified length
+     * is greater than that of the original array.
+     *
+     * @param original the array to be copied
+     * @param newLength the length of the copy to be returned
+     * @return a copy of the original array, truncated or padded with zeros
+     *     to obtain the specified length
+     * @throws NegativeArraySizeException if <tt>newLength</tt> is negative
+     * @throws NullPointerException if <tt>original</tt> is null
+     * @since 1.6
+     */
+    public static int[] copyOf(int[] original, int newLength) 
+    {
+        int[] copy = new int[newLength];
+        System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
+        return copy;
+    }
+    
+    /**
+     * Copies the specified array, truncating or padding with zeros (if necessary)
+     * so the copy has the specified length.  For all indices that are
+     * valid in both the original array and the copy, the two arrays will
+     * contain identical values.  For any indices that are valid in the
+     * copy but not the original, the copy will contain <tt>0d</tt>.
+     * Such indices will exist if and only if the specified length
+     * is greater than that of the original array.
+     *
+     * @param original the array to be copied
+     * @param newLength the length of the copy to be returned
+     * @return a copy of the original array, truncated or padded with zeros
+     *     to obtain the specified length
+     * @throws NegativeArraySizeException if <tt>newLength</tt> is negative
+     * @throws NullPointerException if <tt>original</tt> is null
+     * @since 1.6
+     */
+    public static double[] copyOf(double[] original, int newLength) 
+    {
+        double[] copy = new double[newLength];
+        System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
+        return copy;
+    }
     
     private Arrays()
     {

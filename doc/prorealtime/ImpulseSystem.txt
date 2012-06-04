@@ -1,0 +1,50 @@
+// Tendencia semanal
+TIMEFRAME(weekly)
+Ema26W = ExponentialAverage[26](close)
+MacdHW = MACD[12, 26, 9](close)
+
+// EMA26 alcista 2 semanas
+bull1 = ( Ema26W > Ema26W[1] AND Ema26W[1] > Ema26W[2])
+REM MACD-H alcista y menor o cercana a 0
+bull2 = (MacdHW[1]<0 and MacdHW > MacdHW[1])
+
+// EMA26 bajista 2 semanas
+bear1 = ( Ema26W < Ema26W[1] and Ema26W[1]< Ema26W[2])
+REM MACD-H bajista y mayor o cercana a 0
+bear2 = (MacdHW[1]>0 and  MacdHW < MacdHW[1])
+
+// Onda diaria
+TIMEFRAME(daily)
+Ema13D = ExponentialAverage[13](close)
+Ema26D = ExponentialAverage[13](close)
+MacdhD =MACD[12, 26, 9](close)
+
+// se encuentra a menos del 2% de la zona de valor
+zone= AverageTrueRange[100](close)[0]/close[0]
+zoneUp = 1+zone
+zoneDown = 1-zone
+
+// EMA13 alcista 2 sesiones, cerca zona de valor y menor que el máximo de las últimas dos velas
+bull3 = Ema13D>Ema13D[1] and Ema13D[1]>Ema13D[2] and close<=max(Ema13D,Ema26D)*zoneUp and close<=max(high[1],high[2])
+// MACD-H alcista primera o segunda barra, no más
+bull4 = (MacdhD > MacdhD[1] and (MacdhD[1] >= MacdhD[2] xor MacdhD[2] >= MacdhD[3]) )
+// MACD-H alcista 3 barras y el force index por debajo de 0
+bull5 = MacdhD>MacdhD[1] and MacdhD[1]>=MacdhD[2] and MacdhD[2]>=MacdhD[3] and  ExponentialAverage[2](ForceIndex(close))<0
+
+// EMA13 bajista 2 sesiones, cerca de la zona de valor y mayor que el mínimo de las últimas dos velas
+bear3 = Ema13D<Ema13D[1] and Ema13D[1]<Ema13D[2] and close>=min(Ema13D,Ema26D)*zoneDown and close>=min(low[1],low[2])
+// MACD-H bajista primera o segunda barra, no más
+bear4 = (MacdhD < MacdhD[1]  and (MacdhD[1] <= MacdhD[2] xor MacdhD[2] <= MacdhD[3]) )
+// MACD-H bajista 3 barras y el force index por encima de 0
+bear5 = MacdhD < MacdhD[1] and MacdhD[1] <= MacdhD[2] and MacdhD[2] <= MacdhD[3] and  ExponentialAverage[2](ForceIndex(close))>0
+
+// volumen y precio mínimos
+vol = (Volume> 500000.0)
+price = (close>=5.0)
+
+bull = (bull1 or bull2) and bull3 and (bull4 or bull5) and not (bear1 and bear2)
+bear = (bear1 or bull2) and bear3 and (bear4 or bear5) and not (bull1 and bull2)
+
+SCREENER[ (bull or bear) and vol and price ] (bull*(bull1*100+bull2*10+1)+bear*(bear1*100+bear2*10) as "bull=1,bear=0")
+
+

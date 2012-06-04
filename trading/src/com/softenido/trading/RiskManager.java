@@ -85,8 +85,8 @@ public class RiskManager
         for(;shares>0;shares--)
         {
             double sharesCost= shares * entryPrice;
-            double entryCost = account.pricing.getCost(entryType, OrderType.LIMIT, entryPrice, shares);
-            double exitCost  = account.pricing.getCost(exitType, OrderType.STOP,  exitPrice,  shares);
+            double entryCost = account.pricing.getCost(entryType, OrderType.LIMIT, entryPrice, shares).doubleValue();
+            double exitCost  = account.pricing.getCost(exitType, OrderType.STOP,  exitPrice,  shares).doubleValue();
             double totalCost = sharesCost + entryCost + exitCost;
             if(totalCost<account.buyingPower)
                 break;
@@ -96,8 +96,8 @@ public class RiskManager
         for(;shares>0;shares--)
         {
             double sharesRisk= shares * (expectedLoss+trade.slippage);
-            double entryCost = account.pricing.getCost(entryType, OrderType.LIMIT, entryPrice, shares);
-            double exitCost  = account.pricing.getCost(exitType, OrderType.STOP,  exitPrice,  shares);
+            double entryCost = account.pricing.getCost(entryType, OrderType.LIMIT, entryPrice, shares).doubleValue();
+            double exitCost  = account.pricing.getCost(exitType, OrderType.STOP,  exitPrice,  shares).doubleValue();
             currentRisk = sharesRisk + entryCost + exitCost;
             if(currentRisk<allowedRisk)
                 break;

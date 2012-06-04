@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_description">Set de herramientas para traders</string>
 
-    <string name="riskmanager">Gestión de Riesgo</string>
+    <string name="app_name">TraderToolBox (lite)</string>
+    <string name="app_description">Set de herramientas para traders</string>
+    <string name="equity_risk_manager">Gestión del Riesgo</string>
+    <string name="trade_risk_manager">Tamaño de Operación</string>
     <string name="autoenvelope">Autoenvolvente</string>
     <string name="hide">Ocultar</string>
     <string name="about">Acerca de</string>
+    <string name="about_description">TraderToolBox (Lite)</string>
+
+    <string name="trade_equity">Capital</string>
+    <string name="trade_limit">Limit</string>
+    <string name="trade_stop">Stop</string>
+    <string name="low_trade_risk">riesgo bajo 0.5%</string>
+    <string name="mid_trade_risk">riesgo medio 1.0%</string>
+    <string name="max_trade_risk">riesgo máximo 2.0%</string>
+    <string name="max_month_risk">máximo mensual 6.0%</string>
+    <string name="buying_power">Capacidad de compra</string>
+    <string name="trade_risk">riesgo máximo</string>
+    <string name="trade_commision">costes de operación</string>
+    <string name="share_slippage">deslizamiento (1acc)</string>
+    <string name="trade_target">objetivo</string>
+    <string name="stop_limit">stop-limit (entrada)</string>
+    <string name="stop_loss">stop</string>
+    <string name="trade_ratio">ratio</string>
+    <string name="trade_size">acciones</string>
+    <string name="trade_reset">Limpiar</string>
+    <string name="trade_update">Calcular</string>
+    <string name="not_yet_implemented">No implementado aún</string>
+
 </resources>

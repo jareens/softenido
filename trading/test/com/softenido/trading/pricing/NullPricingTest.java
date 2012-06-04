@@ -27,6 +27,7 @@ package com.softenido.trading.pricing;
 
 import com.softenido.trading.OrderType;
 import com.softenido.trading.TransactionType;
+import java.math.BigDecimal;
 import org.junit.*;
 
 import static org.junit.Assert.assertEquals;
@@ -68,10 +69,11 @@ public class NullPricingTest
     @Test
     public void testGetCost()
     {
-        Pricing instance = new NullPricing();
-        assertEquals(0, instance.getCost(TransactionType.BUY, OrderType.LIMIT, 0, 0), 0.0);
-        assertEquals(0, instance.getCost(TransactionType.SELL, OrderType.MARKET, 0, 0), 0.0);
-        assertEquals(0, instance.getCost(TransactionType.SHORT, OrderType.STOP, 0, 0), 0.0);
-        assertEquals(0, instance.getCost(TransactionType.COVER, OrderType.STOP_LIMIT, 0, 0), 0.0);
+        Pricing zero = new NullPricing();
+        
+        assertEquals(BigDecimal.ZERO, zero.getCost(TransactionType.BUY, OrderType.LIMIT, 10.0, 1));
+        assertEquals(BigDecimal.ZERO, zero.getCost(TransactionType.SELL, OrderType.MARKET, 10.0, 1));
+        assertEquals(BigDecimal.ZERO, zero.getCost(TransactionType.SHORT, OrderType.STOP, 10.0, 1));
+        assertEquals(BigDecimal.ZERO, zero.getCost(TransactionType.COVER, OrderType.STOP_LIMIT, 10.0, 1));
     }
 }

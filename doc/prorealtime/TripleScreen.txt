@@ -1,0 +1,33 @@
+REM Tendencia semanal
+TIMEFRAME(weekly)
+Ema26W = ExponentialAverage[26](close)
+MacdHW = ExponentialAverage[1](MACD[37/3, 77/3, 9](close))
+bull1 = ( Ema26W>= Ema26W[1] )
+bull2 = (MacdHW >= MacdHW[1])
+bear1 = ( Ema26W<= Ema26W[1] )
+bear2 = (MacdHW <= MacdHW[1])
+
+REM Onda diaria
+TIMEFRAME(daily)
+fi2 = ExponentialAverage[2](ForceIndex(close))
+MacdhD = ExponentialAverage[1](MACD[37/3, 77/3, 9](close))
+
+bull3 = (fi2  < 0.0 AND fi2[1]>=0.0)
+bull4 = (MacdhD >= MacdhD[1])
+
+bear3 = (fi2  > 0.0 AND fi2[1]<=0.0)
+bear4 = (MacdhD <= MacdhD[1])
+
+REM lo cojemos en el inicio y mejor desde abajo arriba o viceversa
+firstBull = bull3 or (bull4 and (MacdhD[1] < MacdhD[2]) and (MacdhD<=0))
+firstBear = bull3 or (bear4 and (MacdhD[1] > MacdhD[2]) and (MacdhD>=0))
+
+REM volumen y precio mínimos
+vol = (Volume*close> 500000.0)
+price = (close>=5.0)
+
+bull = (bull1 or bull2) and bull3 and bull4 and not (bear1 and bear2)
+bear = (bear1 or bull2) and bear3 and bear4 and not (bull1 and bull2)
+
+SCREENER[ (bull or bear) and vol and price and (firstBull or firstBear) ] (bull as "bull")
+

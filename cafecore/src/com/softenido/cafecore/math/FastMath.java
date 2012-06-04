@@ -1,7 +1,7 @@
 /*
  *  FastMath.java
  *
- *  Copyright (C) 1998-2010  Francisco Gómez Carrasco
+ *  Copyright (C) 1998-2012  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -649,4 +649,57 @@ public class FastMath
     {
         return POW2[pow];
     }
+    
+    public static int gcd(int a, int b)
+    {
+       return (b==0)? a : gcd(b, a % b);
+    }
+    public static int gcd(int a, int ... b)
+    {
+        return gcd(a,gcd(b,0,b.length));
+    }
+    private static int gcd(int[] n,int from, int to)
+    {
+        if (from == to)
+        {
+            return 0;
+        }
+        if(from+1 == to)
+        {
+            return n[from];
+        }
+        if(from+2 == to)
+        {
+            return gcd(n[from],n[from+1]);
+        }
+        int mid = (from+to)/2;
+        return gcd(gcd(n,from,mid),gcd(n,mid,to));
+    }
+
+    public static int lcm(int a, int b)
+    {
+        return (a*b)/gcd(a,b);
+    }
+    public static int lcm(int a, int ... b)
+    {
+        return lcm(a,lcm(b,0,b.length));
+    }
+
+    private static int lcm(int[] n,int from, int to)
+    {
+        if (from == to)
+        {
+            return 0;
+        }
+        if(from+1 == to)
+        {
+            return n[from];
+        }
+        if(from+2 == to)
+        {
+            return lcm(n[from],n[from+1]);
+        }
+        int mid = (from+to)/2;
+        return lcm(lcm(n,from,mid),lcm(n,mid,to));
+    }    
 }

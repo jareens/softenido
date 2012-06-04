@@ -1,224 +1,96 @@
 /*
- * PricingBuilder.java
- *
- * Copyright (c) 2012  Francisco Gómez Carrasco
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Report bugs or new features to: flikxxi@gmail.com
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
-
 package com.softenido.trading.pricing;
 
-import com.softenido.trading.OrderType;
-import com.softenido.trading.TransactionType;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
-class SimplePricing implements Pricing
-{
-    final String name;
-    final double flatCost;
-    final double ratioCost;
-    final double shareCost;
-    final double minCost;
-    final double maxCost;
 
-    SimplePricing(String name)
-    {
-        this.name      = name;
-        this.flatCost  = 0;
-        this.ratioCost = 0;
-        this.shareCost = 0;
-        this.minCost   = 0;
-        this.maxCost   = Double.MAX_VALUE;
-    }
 
-    SimplePricing(String name, double amount, double ratio, double share, double min, double max)
-    {
-        this.name      = name;
-        this.flatCost  = amount;
-        this.ratioCost = ratio;
-        this.shareCost = share;
-        this.minCost = min;
-        this.maxCost = max;
-    }
-
-    public double getCost(TransactionType tt, OrderType ot, double price, int shares)
-    {
-        double cost = flatCost;
-
-        cost += (price * shares) * ratioCost;
-        cost += shareCost * shares;
-        cost = Math.max(cost, minCost);
-        cost = Math.min(cost, maxCost);
-
-        return cost;
-    }
-
-    SimplePricing setFlatCost(double val)
-    {
-        return new SimplePricing(name, val, ratioCost, shareCost, minCost, maxCost);
-    }
-
-    SimplePricing setRatioCost(double val)
-    {
-        return new SimplePricing(name, flatCost, val, shareCost, minCost, maxCost);
-    }
-
-    SimplePricing setShareCost(double val)
-    {
-        return new SimplePricing(name, flatCost, ratioCost, val, minCost, maxCost);
-    }
-
-    SimplePricing setMinCost(double val)
-    {
-        return new SimplePricing(name, flatCost, ratioCost, shareCost, val, maxCost);
-    }
-
-    SimplePricing setMaxCost(double val)
-    {
-        return new SimplePricing(name, flatCost, ratioCost, shareCost, minCost, val);
-    }
-}
-
-class TransactionPricing implements Pricing
-{
-    final String name;
-    final SimplePricing buyCost;
-    final SimplePricing sellCost;
-    final SimplePricing shortCost;
-    final SimplePricing coverCost;
-
-    public TransactionPricing(String name)
-    {
-        this.name      = name;
-        this.buyCost   = new SimplePricing(name+".buy");
-        this.sellCost  = new SimplePricing(name+".sell");
-        this.shortCost = new SimplePricing(name+".short");
-        this.coverCost = new SimplePricing(name+".conver");
-    }
-
-    public TransactionPricing(String name, SimplePricing buy, SimplePricing sell, SimplePricing sellShort, SimplePricing cover)
-    {
-        this.name      = name;
-        this.buyCost   = buy;
-        this.sellCost  = sell;
-        this.shortCost = sellShort;
-        this.coverCost = cover;
-    }
-
-    public double getCost(TransactionType tt, OrderType ot, double price, int shares)
-    {
-        switch(tt)
-        {
-            case BUY:
-                return buyCost.getCost(tt, ot, price, shares);
-            case SELL:
-                return sellCost.getCost(tt, ot, price, shares);
-            case SHORT:
-                return shortCost.getCost(tt, ot, price, shares);
-            case COVER:
-                return coverCost.getCost(tt, ot, price, shares);
-            default:
-                return 0;
-        }
-    }
-
-    TransactionPricing setFlatCost(double val)
-    {
-        return new TransactionPricing(name, buyCost.setFlatCost(val), sellCost.setFlatCost(val), shortCost.setFlatCost(val), coverCost.setFlatCost(val));
-    }
-
-    TransactionPricing setSellFlatCost(double val)
-    {
-        return new TransactionPricing(name, buyCost, sellCost.setFlatCost(val), shortCost, coverCost);
-    }
-
-    TransactionPricing setSellAndShortFlatCost(double val)
-    {
-        return new TransactionPricing(name, buyCost, sellCost.setFlatCost(val), shortCost.setFlatCost(val), coverCost);
-    }
-}
-
-class OrderPricing implements Pricing
-{
-    final String name;
-    final TransactionPricing commision;
-    final TransactionPricing fee;
-
-    OrderPricing(String name)
-    {
-        this.name      = name;
-        this.commision = new TransactionPricing(name+".commision");
-        this.fee       = new TransactionPricing(name+".fee");
-    }
-
-    OrderPricing(String name, TransactionPricing commision, TransactionPricing fee)
-    {
-        this.name      = name;
-        this.commision = commision;
-        this.fee = fee;
-    }
-
-    public double getCost(TransactionType tt, OrderType ot, double price, int shares)
-    {
-        return commision.getCost(tt, ot, price, shares) + fee.getCost(tt, ot, price, shares);
-    }
-
-    OrderPricing setFlatCommisionCost(double val)
-    {
-        return new OrderPricing(name, commision.setFlatCost(val), fee);
-    }
-
-    OrderPricing setSellAndShortFlatFeeCost(double val)
-    {
-        return new OrderPricing(name, commision, fee.setSellAndShortFlatCost(val));
-    }
-}
-
-/**
- *
- * @author franci
- */
 public class PricingBuilder
 {
+    static final BigDecimal _0_00 = BigDecimal.ZERO;
     final String name;
-    OrderPricing pricing;
+    final int cScale; 
+    final int rScale;
 
+    public PricingBuilder(String name, int cScale, int rScale)
+    {
+        this.name = name;
+        this.cScale = cScale;
+        this.rScale = rScale;
+    }
+
+    public PricingBuilder(String name, int scale)
+    {
+        this.name = name;
+        this.cScale = scale;
+        this.rScale = scale;
+    }
     public PricingBuilder(String name)
     {
         this.name = name;
-        this.pricing = new OrderPricing(name);
+        this.cScale = 6;
+        this.rScale = 2;
     }
-
-    public PricingBuilder setFlatCommisionCost(double val)
+    
+    public NullPricing zeroCost()
     {
-        pricing = pricing.setFlatCommisionCost(val);
-        return this;
+        return new NullPricing();
     }
-
-    public PricingBuilder setSellAndShortFlatFeeCost(double val)
+    
+    public PricingScale flatCost(double val)
     {
-        pricing = pricing.setSellAndShortFlatFeeCost(val);
-        return this;
+        return new PricingScale(name, cScale, rScale).add(0.0, BigDecimal.valueOf(val), BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.valueOf(Double.MAX_VALUE));
     }
-
-    public Pricing build()
+    public PricingScale ratioCost(double[] money, double[] flat, double[] ratio, double min, double max)
     {
-        return pricing;
+        PricingScale ps = new PricingScale(name, cScale, rScale);
+        for(int i=0;i<money.length;i++)
+        {
+            ps = ps.add(money[i], BigDecimal.valueOf(flat[i]), BigDecimal.valueOf(ratio[i]), BigDecimal.valueOf(min), BigDecimal.valueOf(max) );
+        }
+        return ps;
     }
-    public Pricing build(String name)
+    public PricingScale shareCost(int[] shares, double[] flat, double[] price, double min, double max)
     {
-        return new OrderPricing(name,pricing.commision,pricing.fee);
+        PricingScale ps = new PricingScale(name, cScale, rScale);
+        for(int i=0;i<shares.length;i++)
+        {
+            ps = ps.add(shares[i], BigDecimal.valueOf(flat[i]), BigDecimal.valueOf(price[i]), BigDecimal.valueOf(min), BigDecimal.valueOf(max) );
+        }
+        return ps;
+    }
+    
+    public PricingScale shareCost(double val, double min, double max)
+    {
+        return new PricingScale(name, cScale, rScale).add(0, BigDecimal.ZERO, BigDecimal.valueOf(val), BigDecimal.valueOf(min), BigDecimal.valueOf(max));
+    }
+    public PricingScale shareCost(double val)
+    {
+        return shareCost(val, 0.0, Double.MAX_VALUE);
+    }
+    public PricingGroup add(Pricing ... items)
+    {
+        return new PricingGroup(name, rScale, PricingGroup.Mode.ADD, items);
+    }
+    public PricingGroup min(Pricing ... items)
+    {
+        return new PricingGroup(name, rScale, PricingGroup.Mode.MIN, items);
+    }
+    public PricingGroup max(Pricing ... items)
+    {
+        return new PricingGroup(name, rScale, PricingGroup.Mode.MAX, items);
+    }
+    public PricingTransactionType transaction(Pricing buy, Pricing sell, Pricing sshort, Pricing cover)
+    {
+        return new PricingTransactionType(buy, sell, sshort, cover);
+    }
+    public PricingTransactionType transaction(Pricing buy, Pricing sell)
+    {
+        return new PricingTransactionType(buy, sell);
     }
 }
