@@ -1,6 +1,22 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * FastMathTest.java
+ *
+ * Copyright (c) 2012  Francisco Gómez Carrasco
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Report bugs or new features to: flikxxi@gmail.com
  */
 package com.softenido.cafecore.math;
 
@@ -91,14 +107,14 @@ public class FastMathTest
     public void testPow2()
     {
         assertEquals(1, FastMath.pow2(0));
-        assertEquals(1, FastMath.pow2(1));
-        assertEquals(1, FastMath.pow2(2));
-        assertEquals(1, FastMath.pow2(3));
-        assertEquals(1, FastMath.pow2(4));
-        assertEquals(1, FastMath.pow2(5));
-        assertEquals(1, FastMath.pow2(6));
-        assertEquals(1, FastMath.pow2(7));
-        assertEquals(1, FastMath.pow2(8));
+        assertEquals(2, FastMath.pow2(1));
+        assertEquals(4, FastMath.pow2(2));
+        assertEquals(8, FastMath.pow2(3));
+        assertEquals(16, FastMath.pow2(4));
+        assertEquals(32, FastMath.pow2(5));
+        assertEquals(64, FastMath.pow2(6));
+        assertEquals(128, FastMath.pow2(7));
+        assertEquals(256, FastMath.pow2(8));
     }
 
     /**
