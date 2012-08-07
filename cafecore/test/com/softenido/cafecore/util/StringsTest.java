@@ -1,7 +1,7 @@
 /*
  * StringsTest.java
  *
- * Copyright (c) 2012  Francisco Gómez Carrasco
+ * Copyright (c) 2012 Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -171,9 +171,9 @@ public class StringsTest
     @Test
     public void testDelimiterSeparatedValues_List_String()
     {
-        List<Integer> list = Arrays.asList(new Integer[]{1,2,3,4,5,6,7,8,9,0});
-        List<Integer> empty = Arrays.asList(new Integer[]{});
-        List<Integer> one = Arrays.asList(new Integer[]{1});
+        List<Integer> list = Arrays6.asList(new Integer[]{1,2,3,4,5,6,7,8,9,0});
+        List<Integer> empty = Arrays6.asList(new Integer[]{});
+        List<Integer> one = Arrays6.asList(new Integer[]{1});
         assertEquals("1|2|3|4|5|6|7|8|9|0", Strings.delimiterSeparatedValues(list, "|"));
         assertEquals("", Strings.delimiterSeparatedValues(empty, "|"));
         assertEquals("1", Strings.delimiterSeparatedValues(one, "|"));
@@ -199,9 +199,9 @@ public class StringsTest
     @Test
     public void testCommaSeparatedValues_List()
     {
-        List<Integer> list = Arrays.asList(new Integer[]{1,2,3,4,5,6,7,8,9,0});
-        List<Integer> empty = Arrays.asList(new Integer[]{});
-        List<Integer> one = Arrays.asList(new Integer[]{1});
+        List<Integer> list = Arrays6.asList(new Integer[]{1,2,3,4,5,6,7,8,9,0});
+        List<Integer> empty = Arrays6.asList(new Integer[]{});
+        List<Integer> one = Arrays6.asList(new Integer[]{1});
         assertEquals("1,2,3,4,5,6,7,8,9,0", Strings.commaSeparatedValues(list));
         assertEquals("", Strings.commaSeparatedValues(empty));
         assertEquals("1", Strings.commaSeparatedValues(one));

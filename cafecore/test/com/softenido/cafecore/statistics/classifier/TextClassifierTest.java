@@ -20,16 +20,21 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Scanner;
 import java.util.zip.GZIPInputStream;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -49,7 +54,8 @@ public class TextClassifierTest
         {"EN","google-terms-of-service-UK.txt.gz"},
         {"EN","google-terms-of-service-US.txt.gz"},
         {"NL","google-terms-of-service-NL.txt.gz"},
-        {"PT","google-terms-of-service-PT.txt.gz"}
+        {"PT","google-terms-of-service-PT.txt.gz"},
+        {"RU","google-terms-of-service-RU.txt.gz"}
     };
     static final String LINE = "^[A-Za-z0-9]+.+$";
     public static final String AMBIGUOUS = ".*(Copyright|Parkway|Google|escrito|EXEMPLARES|Estados *Unidos|vaststelt).*";
@@ -82,7 +88,7 @@ public class TextClassifierTest
      * Test of classify method, of class TextClassifier.
      */
     @Test
-    public void testClassify_InputStream() throws IOException
+    public void testClassify_InputStream() throws IOException, ClassifierFormatException, UnsupportedEncodingException, NoSuchAlgorithmException
     {
         TextClassifier classifier = new TextClassifier();
         
@@ -92,8 +98,18 @@ public class TextClassifierTest
             InputStream gz = new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(LEARN[i][1]));    
             classifier.coach(lang, gz);
         }
+        
+        //uncomment this line to get a dictionariy
+        classifier.save(new FileOutputStream("dictionary.txt"));
+        classifier.saveGZ(new FileOutputStream("dictionary.txt.gz"));
 
-        //classifier.export(System.out);
+        ByteArrayOutputStream out =  new ByteArrayOutputStream();
+        classifier.saveGZ(out);
+        ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+        TextClassifier classifier2 = new TextClassifier();
+        classifier2.loadGZ(in);
+        
+        assertEquals(classifier, classifier2);
         
         for(int i=0;i<LEARN.length;i++)
         {

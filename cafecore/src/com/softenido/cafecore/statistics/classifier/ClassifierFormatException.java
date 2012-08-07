@@ -1,5 +1,5 @@
 /*
- * Classifier.java
+ * ClassifierFormatException.java
  *
  * Copyright (c) 2012  Francisco Gómez Carrasco
  *
@@ -20,23 +20,21 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-
 /**
  *
  * @author franci
  */
-public interface Classifier
+class ClassifierFormatException extends Exception
 {
-    Score[] classify(Score[] scores, String... words);
-    Score classify(String... words);
-    void coach(String category, String word, int n);
-    void save(OutputStream out) throws UnsupportedEncodingException, NoSuchAlgorithmException;
-    void load(InputStream in) throws ClassifierFormatException, NoSuchAlgorithmException;
-    void saveGZ(OutputStream out) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException;
-    public void loadGZ(InputStream in) throws ClassifierFormatException, IOException, NoSuchAlgorithmException;
+
+    public ClassifierFormatException(String message)
+    {
+        super(message);
+    }
+
+    public ClassifierFormatException(String message, Throwable cause)
+    {
+        super(message, cause);
+    }
+    
 }

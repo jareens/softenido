@@ -77,7 +77,7 @@ public final class ArrayUtils
 
     public static <T> T[] reverseCopyOf(T[] original)
     {
-        T[] reverse = Arrays.copyOf(original, original.length);
+        T[] reverse = Arrays6.copyOf(original, original.length);
         for (int i = 0, j = original.length - 1; i < reverse.length; i++, j--)
         {
             reverse[i] = original[j];
@@ -103,7 +103,7 @@ public final class ArrayUtils
                 list.add(item);
             }
         }
-        return list.toArray(Arrays.copyOf(src, 0));
+        return list.toArray(Arrays6.copyOf(src, 0));
     }
     public static <T> T[][] splitEquals(T[] src,Comparator<T> cmp)
     {
@@ -120,7 +120,7 @@ public final class ArrayUtils
             }
             list.add(src[i]);
         }
-        T[] empty = Arrays.copyOf(src, 0);
+        T[] empty = Arrays6.copyOf(src, 0);
         T[][] dst = (T[][]) Array.newInstance(src.getClass(), map.size());
 
         List<T>[] values = map.values().toArray(new ArrayList[map.values().size()]);
@@ -155,7 +155,7 @@ public final class ArrayUtils
             T[][] split = splitEquals(src[i], cmp);
             Collections.addAll(list, split);
         }
-        return list.toArray(Arrays.copyOf(src, 0));
+        return list.toArray(Arrays6.copyOf(src, 0));
     }
     public static <T> T[][] splitAgainEquals(T[][] src)
     {
@@ -204,7 +204,7 @@ public final class ArrayUtils
                 size += src[i].length;
                 if(dst==null)
                 {
-                    dst = Arrays.copyOf(src[i],0);
+                    dst = Arrays6.copyOf(src[i],0);
                 }
             }
         }
@@ -212,7 +212,7 @@ public final class ArrayUtils
         {
             return null;
         }
-        dst = Arrays.copyOf(dst,size);
+        dst = Arrays6.copyOf(dst,size);
         for (int i = 0, w = 0; i < src.length; i++)
         {
             if (src[i] != null)
@@ -263,7 +263,7 @@ public final class ArrayUtils
     // reordena aleatoriamente
     public <T> void rand(T[] data, Random rand)
     {
-        List<T> list = Arrays.asList(data);
+        List<T> list = Arrays6.asList(data);
         Collections.shuffle(list, rand);
     }
     public static int compare(byte[] b1,byte[] b2)

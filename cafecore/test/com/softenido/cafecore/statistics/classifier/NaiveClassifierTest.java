@@ -1,7 +1,7 @@
 /*
  * NaiveClassifierTest.java
  *
- * Copyright (c) 2012  Francisco Gómez Carrasco
+ * Copyright (c) 2012 Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@ package com.softenido.cafecore.statistics.classifier;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.zip.GZIPInputStream;
 import org.junit.After;
@@ -50,7 +49,8 @@ public class NaiveClassifierTest
         {"EN","google-terms-of-service-UK.txt.gz"},
         {"EN","google-terms-of-service-US.txt.gz"},
         {"NL","google-terms-of-service-NL.txt.gz"},
-        {"PT","google-terms-of-service-PT.txt.gz"}
+        {"PT","google-terms-of-service-PT.txt.gz"},
+        {"RU","google-terms-of-service-RU.txt.gz"}
     };
     
     public NaiveClassifierTest()

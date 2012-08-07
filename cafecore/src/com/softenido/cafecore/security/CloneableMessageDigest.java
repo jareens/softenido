@@ -1,7 +1,7 @@
 /*
  *  CloneableMessageDigest.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2012 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,7 @@
  */
 package com.softenido.cafecore.security;
 
-import com.softenido.cafecore.util.ArrayUtils;
-import com.softenido.cafecore.util.Arrays;
+import com.softenido.cafecore.util.Arrays6;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -67,7 +66,7 @@ public class CloneableMessageDigest extends ParallelMessageDigest
     {
         if(md.length>=1)
         {
-            return new CloneableMessageDigest(getAlgorithm(), Arrays.copyOfRange(new CloneableMessageDigest[0], 1, md.length));
+            return new CloneableMessageDigest(getAlgorithm(), Arrays6.copyOfRange(new CloneableMessageDigest[0], 1, md.length));
         }
         throw new CloneNotSupportedException();
     }

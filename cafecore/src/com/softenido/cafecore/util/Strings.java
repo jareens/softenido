@@ -80,7 +80,7 @@ public abstract class Strings
     }
     public static <T> String delimiterSeparatedValues(T[] list, String sep)
     {
-        return delimiterSeparatedValues(Arrays.asList(list),sep);
+        return delimiterSeparatedValues(Arrays6.asList(list),sep);
     }
     public static <T> String commaSeparatedValues(List<T> list)
     {
@@ -88,6 +88,6 @@ public abstract class Strings
     }
     public static <T> String commaSeparatedValues(T[] list)
     {
-        return delimiterSeparatedValues(Arrays.asList(list),",");
+        return delimiterSeparatedValues(Arrays6.asList(list),",");
     }
 }

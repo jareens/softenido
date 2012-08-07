@@ -20,9 +20,11 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -79,7 +81,7 @@ public class TextClassifier
     {
         return classify(new Scanner(text));
     }
-    static final String FILTER = "[\\p{Punct}\\p{Digit}«»]";
+    static final String FILTER = "[\\p{Punct}\\p{Digit}«»“”„?’|]";
     static String filter(String word)
     {
         // at least a letter
@@ -100,9 +102,41 @@ public class TextClassifier
         return word;
     }
 
-    public void export(OutputStream out) throws UnsupportedEncodingException
+    public void save(OutputStream out) throws UnsupportedEncodingException, NoSuchAlgorithmException
     {
-        classifier.export(out);
+        classifier.save(out);
+    }
+
+    public void load(InputStream in) throws ClassifierFormatException, NoSuchAlgorithmException
+    {
+        classifier.load(in);
+    }
+
+    public void saveGZ(OutputStream out) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+    {
+        classifier.saveGZ(out);
+    }
+
+    public void loadGZ(InputStream in) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
+    {
+        classifier.loadGZ(in);
+    }
+
+    public int hashCode()
+    {
+        return classifier.hashCode();
+    }
+
+    public boolean equals(Object obj)
+    {
+        if(obj == this)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final TextClassifier other = (TextClassifier) obj;
+        return classifier.equals(other.classifier);
     }
     
 }

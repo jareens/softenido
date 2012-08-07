@@ -1,7 +1,7 @@
 /*
  * AbstractClassifier.java
  *
- * Copyright (c) 2012  Francisco Gómez Carrasco
+ * Copyright (c) 2012 Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,18 +20,44 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
+import com.softenido.cafecore.util.Arrays6;
 import com.softenido.cafecore.util.Pair;
-import com.sun.org.apache.xml.internal.serializer.WriterToUTF8;
-import java.awt.Graphics;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.io.Writer;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;       
+
+
+class CmpAtomicInteger extends AtomicInteger
+{
+    @Override
+    public int hashCode()
+    {
+        return this.get();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final CmpAtomicInteger other = (CmpAtomicInteger) obj;
+        if (this != other && this.get()!=other.get())
+            return false;
+        return true;
+    }
+    
+}
 
 class CellKey extends Pair<String,String>
 {
@@ -90,17 +116,17 @@ public abstract class AbstractClassifier implements Classifier
             
             if(c==null)
             {
-                c = new AtomicInteger();
+                c = new CmpAtomicInteger();
                 this.categories.put(category, c);
             }
             if(w==null)
             {
-                w = new AtomicInteger();
+                w = new CmpAtomicInteger();
                 this.words.put(word, w);
             }
             if(o==null)
             {
-                o = new AtomicInteger();
+                o = new CmpAtomicInteger();
                 this.cells.put(cell,o);
             }
             total+=n;
@@ -154,30 +180,129 @@ public abstract class AbstractClassifier implements Classifier
 
     abstract public Score[] classify(Score[] scores, String... words);
     
-    public void export(OutputStream out) throws UnsupportedEncodingException
+    static final String MD5 = "MD5";
+    public void save(OutputStream out) throws UnsupportedEncodingException, NoSuchAlgorithmException
     {
         PrintStream ps = new PrintStream(out);
+        
         String[] cats = this.categories.keySet().toArray(new String[0]);
         String[] words = this.words.keySet().toArray(new String[0]);
         
+        Arrays.sort(cats);
+        Arrays.sort(words);
+
+        ps.println("Classifier:"+this.total);
         ps.print("word");
         for(String  c : cats)
         {
             ps.print("|"+c);
         }
-        ps.println();
-            
+        ps.println();            
+        
+        int count = 0;
         for(String  w : words)
         {
-            ps.print(w);
+            StringBuilder line = new StringBuilder(w);
+            String sep = "";
+                    
             for(String  c : cats)
             {
                 AtomicInteger counter = this.cells.get(new CellKey(c, w));
                 int n = (counter!=null)? counter.get() : 0;
-                ps.print("|"+(n==0?"":n));
+                sep += "|";
+                if(n>0)
+                {
+                    line.append(sep).append(n);
+                    sep = "";
+                }
             }
-            ps.println();
+            ps.println(line.toString());
+            count++;
+        }
+        
+        ps.println("words="+count);
+        ps.flush();
+    }
+    public void load(InputStream in) throws ClassifierFormatException, NoSuchAlgorithmException
+    {
+        Scanner sc = new Scanner(in);
+        if( !sc.hasNextLine() || !sc.nextLine().startsWith("Classifier:") || !sc.hasNextLine() )
+        {
+            throw new ClassifierFormatException("wron't format");
+        }
+        String[] cats = sc.nextLine().split("\\|");
+        if(!cats[0].equals("word"))
+        {
+            throw new ClassifierFormatException("wron't format");
+        }
+        cats = Arrays6.copyOfRange(cats, 1, cats.length);
+        
+        int count=0;
+        String line=null;
+        while(sc.hasNextLine())
+        {
+            line = sc.nextLine();
+            if(!line.contains("|"))
+            {
+                break;
+            }
+            String[] counters = line.split("\\|");
+            String word = counters[0];
+            
+            for(int i=1;i<counters.length;i++)
+            {
+                if(counters[i].length()>0)
+                {
+                    this.coach(cats[i-1],word,Integer.valueOf(counters[i]));
+                }
+            }
+            count++;
+        }
+        if(line==null || !line.startsWith("words="+count))
+        {
+            throw new ClassifierFormatException("readed words="+count+" expected "+line);
         }
     }
     
+    public void saveGZ(OutputStream out) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+    {
+        save(new GZIPOutputStream(out));
+    }
+    public void loadGZ(InputStream in) throws IOException, ClassifierFormatException, NoSuchAlgorithmException
+    {
+        load(new GZIPInputStream(in));
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 31 * hash + this.total;
+        hash = 31 * hash + this.categories.size();
+        hash = 31 * hash + this.words.size();
+        hash = 31 * hash + this.cells.size();
+        return hash;
+    }
+
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(obj == this)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final AbstractClassifier other = (AbstractClassifier) obj;
+        if (this.total != other.total)
+            return false;
+        if (this.categories != other.categories && (this.categories == null || !this.categories.equals(other.categories)))
+            return false;
+        if (this.words != other.words && (this.words == null || !this.words.equals(other.words)))
+            return false;
+        if (this.cells != other.cells && (this.cells == null || !this.cells.equals(other.cells)))
+            return false;
+        return true;
+    }
 }

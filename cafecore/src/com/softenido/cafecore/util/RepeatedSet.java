@@ -1,7 +1,7 @@
 /*
  *  RepeatedSet.java
  *
- *  Copyright (C) 2009-2010 Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2012 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -93,7 +93,7 @@ public class RepeatedSet<E> implements Set<E>
         
         if(dst.length<values.length)
         {
-            dst = Arrays.copyOf(dst,values.length);
+            dst = Arrays6.copyOf(dst,values.length);
         }
 
         for (int i = 0; i < values.length; i++)

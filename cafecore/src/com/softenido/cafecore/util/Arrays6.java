@@ -1,5 +1,5 @@
 /*
-*  Arrays.java
+*  Arrays6.java
 *
 *  Copyright (C) 2011  Francisco Gómez Carrasco
 *
@@ -30,7 +30,7 @@ import java.util.List;
  * 
  * @author franci
  */
-public class Arrays
+public class Arrays6
 {
     static private final java.util.Arrays array=null;
 
@@ -82,7 +82,7 @@ public class Arrays
         return copy;
     }
     
-    private Arrays()
+    private Arrays6()
     {
         // empty, this is just to avoid class instantiation
     }
