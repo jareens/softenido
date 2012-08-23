@@ -1,7 +1,7 @@
 /*
  *  OptionParser.java
  *
- *  Copyright (C) 2009-2012  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2012 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  */
 package com.softenido.cafedark.util.options;
 
-import com.softenido.cafecore.util.Arrays;
+import com.softenido.cafecore.util.Arrays6;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -118,7 +118,7 @@ public class OptionParser
             }
             remainder[remainderSize++] = args[i];
         }
-        return Arrays.copyOf(remainder, remainderSize);
+        return Arrays6.copyOf(remainder, remainderSize);
     }
 
     public boolean isPosixly()
@@ -143,7 +143,7 @@ public class OptionParser
 
     private int parseShort(int index, String[] args, Option[] rules) throws InvalidOptionException
     {
-        if (!args[index].startsWith(ONE_HYPHEN))
+        if (args[index].equals(ONE_HYPHEN) || !args[index].startsWith(ONE_HYPHEN))
         {
             return 0;
         }
@@ -193,6 +193,22 @@ public class OptionParser
         this.ignoreUnknownShort = val;
     }
 
+    public boolean isOneHyphen()
+    {
+        return oneHyphen;
+    }
+
+    public void setOneHyphen(boolean oneHyphen)
+    {
+        this.oneHyphen = oneHyphen;
+    }
+    
+
+    public Option getOneHyphenOption()
+    {
+        return oneHyphenOption;
+    }
+
     private Option[] sort(Option[] list)
     {
         //reverse order longer options first
@@ -203,7 +219,7 @@ public class OptionParser
                 return opt2.getLongName().length() - opt1.getLongName().length();
             }
         };
-        Arrays.sort(list,cmp);
+        Arrays6.sort(list,cmp);
         return list;
     }
     public void log()

@@ -1,7 +1,7 @@
 /*
  *  LauncherParser.java
  *
- *  Copyright (C) 2009  Francisco Gómez Carrasco
+ *  Copyright (C) 2009-2012 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -71,6 +71,7 @@ public class LauncherParser
         BooleanOption installVersion= parser.add(new BooleanOption("install-version"));
         ArrayStringOption jvmOption= parser.add(new ArrayStringOption('J',"jvm-option"));
 
+        parser.setOneHyphen(false);
         parser.setIgnoreShort(false);
         parser.setIgnoreUnknownShort(true);
         args = parser.parse(args);
