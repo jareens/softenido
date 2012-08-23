@@ -81,7 +81,7 @@ public class ImageWizard
             + "imagewizard searches the given path for repeated files by content (not name). Such\n"
             + "files are found by comparing file sizes and MD5+SHA1 signatures.\n"
             + "\n"
-            + "usage: imagewizard [options] [directories]\n"
+            + "usage: imagewizard [command] [options] [directories]\n"
             + "       java -jar ImageWizard.jar [options] [directories]\n"
             + "\n"
             + "Commands:\n"
