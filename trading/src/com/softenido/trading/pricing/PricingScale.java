@@ -1,10 +1,26 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * PricingScale.java
+ *
+ * Copyright (c) 2012 Francisco Gómez Carrasco
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Report bugs or new features to: flikxxi@gmail.com
  */
 package com.softenido.trading.pricing;
 
-import com.softenido.cafecore.util.Arrays;
+import com.softenido.cafecore.util.Arrays6;
 import com.softenido.trading.OrderType;
 import com.softenido.trading.TransactionType;
 import java.math.BigDecimal;
@@ -55,25 +71,25 @@ public class PricingScale implements Pricing
         this.rScale = ps.rScale;
         this.steps = ps.steps+1;
         
-        this.money = Arrays.copyOf(ps.money, this.steps);
+        this.money = Arrays6.copyOf(ps.money, this.steps);
         this.money[ps.steps]= money;
         
-        this.shares = Arrays.copyOf(ps.shares, this.steps);
+        this.shares = Arrays6.copyOf(ps.shares, this.steps);
         this.shares[ps.steps] = shares;
         
-        this.flatCost = Arrays.copyOf(ps.flatCost, this.steps);
+        this.flatCost = Arrays6.copyOf(ps.flatCost, this.steps);
         this.flatCost[ps.steps] = flatCost;
         
-        this.ratioCost = Arrays.copyOf(ps.ratioCost, this.steps);
+        this.ratioCost = Arrays6.copyOf(ps.ratioCost, this.steps);
         this.ratioCost[ps.steps] = ratioCost;
         
-        this.shareCost = Arrays.copyOf(ps.shareCost, this.steps);
+        this.shareCost = Arrays6.copyOf(ps.shareCost, this.steps);
         this.shareCost[ps.steps] = shareCost;
         
-        this.minCost = Arrays.copyOf(ps.minCost, this.steps);
+        this.minCost = Arrays6.copyOf(ps.minCost, this.steps);
         this.minCost[ps.steps] = minCost;
 
-        this.maxCost = Arrays.copyOf(ps.maxCost, this.steps);
+        this.maxCost = Arrays6.copyOf(ps.maxCost, this.steps);
         this.maxCost[ps.steps] = maxCost;
     }
 
