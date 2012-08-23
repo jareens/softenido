@@ -1,7 +1,7 @@
 /*
  * ClassifierFormatException.java
  *
- * Copyright (c) 2012  Francisco Gómez Carrasco
+ * Copyright (c) 2012 Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ package com.softenido.cafecore.statistics.classifier;
  *
  * @author franci
  */
-class ClassifierFormatException extends Exception
+public class ClassifierFormatException extends Exception
 {
 
     public ClassifierFormatException(String message)

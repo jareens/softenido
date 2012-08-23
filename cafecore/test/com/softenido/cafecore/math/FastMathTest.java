@@ -183,4 +183,16 @@ public class FastMathTest
         assertEquals(24, FastMath.lcm(4,8,12));
     }
 
+    /**
+     * Test of log method, of class FastMath.
+     */
+    @Test
+    public void testLog()
+    {
+        for(int i=0;i<20000000;i++)
+        {
+            assertEquals(Math.log(i%300), FastMath.log(i%300), 0.0);
+        }
+    }
+
 }

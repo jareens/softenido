@@ -35,8 +35,11 @@ public interface Classifier
     Score[] classify(Score[] scores, String... words);
     Score classify(String... words);
     void coach(String category, String word, int n);
+    void coach(String category, String[] word, int[] n);
     void save(OutputStream out) throws UnsupportedEncodingException, NoSuchAlgorithmException;
     void load(InputStream in) throws ClassifierFormatException, NoSuchAlgorithmException;
+    void load(InputStream in,String[] allowedCategories) throws ClassifierFormatException, NoSuchAlgorithmException;
     void saveGZ(OutputStream out) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException;
     public void loadGZ(InputStream in) throws ClassifierFormatException, IOException, NoSuchAlgorithmException;
+    public void loadGZ(InputStream in,String[] allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException;
 }

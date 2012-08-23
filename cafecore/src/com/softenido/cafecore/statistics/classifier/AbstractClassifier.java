@@ -20,8 +20,8 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
-import com.softenido.cafecore.util.Arrays6;
-import com.softenido.cafecore.util.Pair;
+import com.softenido.cafecore.util.Pair;       
+import com.softenido.cafecore.util.SimpleInteger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -30,58 +30,10 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;       
-
-
-class CmpAtomicInteger extends AtomicInteger
-{
-    @Override
-    public int hashCode()
-    {
-        return this.get();
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        final CmpAtomicInteger other = (CmpAtomicInteger) obj;
-        if (this != other && this.get()!=other.get())
-            return false;
-        return true;
-    }
-    
-}
-
-class CellKey extends Pair<String,String>
-{
-    public CellKey(String category, String word)
-    {
-        super(category, word);
-    }
-
-    public String getCategory()
-    {
-        return getKey();
-    }
-
-    public String getWord()
-    {
-        return getVal();
-    }
-
-    @Override
-    public String toString()
-    {
-        return "["+getKey()+","+getVal()+"]";
-    }
-}
 
 /**
  *
@@ -89,76 +41,66 @@ class CellKey extends Pair<String,String>
  */
 public abstract class AbstractClassifier implements Classifier
 {
-    final Object lock = new Object();
     int total = 0;
-    final HashMap<String,AtomicInteger> categories = new HashMap<String,AtomicInteger>();
-    final HashMap<String,AtomicInteger> words = new HashMap<String,AtomicInteger>();
-    final HashMap<CellKey,AtomicInteger> cells = new HashMap<CellKey,AtomicInteger>();
+    final HashMap<String,SimpleInteger> categories = new HashMap<String,SimpleInteger>(64);
+    final HashMap<String,SimpleInteger> words = new HashMap<String,SimpleInteger>(8*1024);
+    final HashMap<Pair,SimpleInteger> cells = new HashMap<Pair,SimpleInteger>(16*1024);
     
-    public void coach(String category, String word, double probability, double weigh)
+    void coach(String category, String word, double probability, double weigh)
     {
         coach(category, word, probability * weigh);
     }
-    public void coach(String category, String word, double probability)
+    void coach(String category, String word, double probability)
     {
         int count = (int) Math.round(probability * (Integer.MAX_VALUE/1024) );
         coach(category, word, count);
     }
     public void coach(String category, String word, int n)
     {
-        synchronized(lock)
+        final Pair cell = new Pair(category,word);
+
+        SimpleInteger c = this.categories.get(category);
+        SimpleInteger w = this.words.get(word);
+        SimpleInteger o = this.cells.get(cell);
+
+        if(c==null)
         {
-            final CellKey cell = new CellKey(category,word);
-            
-            AtomicInteger c = this.categories.get(category);
-            AtomicInteger w = this.words.get(word);
-            AtomicInteger o = this.cells.get(cell);
-            
-            if(c==null)
-            {
-                c = new CmpAtomicInteger();
-                this.categories.put(category, c);
-            }
-            if(w==null)
-            {
-                w = new CmpAtomicInteger();
-                this.words.put(word, w);
-            }
-            if(o==null)
-            {
-                o = new CmpAtomicInteger();
-                this.cells.put(cell,o);
-            }
-            total+=n;
-            c.addAndGet(n);
-            w.addAndGet(n);
-            o.addAndGet(n);            
+            c = new SimpleInteger();
+            this.categories.put(category, c);
+        }
+        if(w==null)
+        {
+            w = new SimpleInteger();
+            this.words.put(word, w);
+        }
+        if(o==null)
+        {
+            o = new SimpleInteger();
+            this.cells.put(cell,o);
+        }
+        total+=n;
+        c.add(n);
+        w.add(n);
+        o.add(n);            
+    }
+    public void coach(String category, String[] word, int[] n)
+    {
+        for(int i=0;i<word.length;i++)
+        {
+            this.coach(category, word[i], n[i]);
         }
     }
-    int count(String category, String word)
+    
+    // no optimizar los if, jit mejora en esta disposición
+    int categoryCount(String category)
     {
-        synchronized(lock)
-        {
-            AtomicInteger counter;
-            if(category==null && word==null)
-            {
-                return this.total;
-            }
-            else if(category!=null && word==null)
-            {
-                counter = this.categories.get(category);
-            }
-            else if(category==null && word!=null)
-            {
-                counter = this.words.get(word);
-            }
-            else
-            {
-                CellKey key = new CellKey(category,word);
-                counter = this.cells.get(key);
-            }
-            return (counter!=null)?counter.get():0;
-        }
+        SimpleInteger counter = this.categories.get(category);
+        return (counter!=null)?counter.get():0;
+    }
+    int wordCount(String category,String word)
+    {
+        SimpleInteger counter = this.cells.get(new Pair(category,word));
+        return (counter!=null)?counter.get():0;
     }
     public Score classify(String ... words)
     {
@@ -186,10 +128,10 @@ public abstract class AbstractClassifier implements Classifier
         PrintStream ps = new PrintStream(out);
         
         String[] cats = this.categories.keySet().toArray(new String[0]);
-        String[] words = this.words.keySet().toArray(new String[0]);
+        String[] word = this.words.keySet().toArray(new String[0]);
         
         Arrays.sort(cats);
-        Arrays.sort(words);
+        Arrays.sort(word);
 
         ps.println("Classifier:"+this.total);
         ps.print("word");
@@ -200,14 +142,14 @@ public abstract class AbstractClassifier implements Classifier
         ps.println();            
         
         int count = 0;
-        for(String  w : words)
+        for(String  w : word)
         {
             StringBuilder line = new StringBuilder(w);
             String sep = "";
                     
             for(String  c : cats)
             {
-                AtomicInteger counter = this.cells.get(new CellKey(c, w));
+                SimpleInteger counter = this.cells.get(new Pair(c, w));
                 int n = (counter!=null)? counter.get() : 0;
                 sep += "|";
                 if(n>0)
@@ -225,7 +167,13 @@ public abstract class AbstractClassifier implements Classifier
     }
     public void load(InputStream in) throws ClassifierFormatException, NoSuchAlgorithmException
     {
+        load(in,null);
+    }    
+    
+    public void load(InputStream in, String[] allowedCategories) throws ClassifierFormatException, NoSuchAlgorithmException
+    {
         Scanner sc = new Scanner(in);
+        
         if( !sc.hasNextLine() || !sc.nextLine().startsWith("Classifier:") || !sc.hasNextLine() )
         {
             throw new ClassifierFormatException("wron't format");
@@ -235,7 +183,20 @@ public abstract class AbstractClassifier implements Classifier
         {
             throw new ClassifierFormatException("wron't format");
         }
-        cats = Arrays6.copyOfRange(cats, 1, cats.length);
+        
+        final boolean[] allowed = new boolean[cats.length];
+        if(allowedCategories==null)
+        {
+            Arrays.fill(allowed, true);
+        }
+        else
+        {
+            HashSet<String> set = new HashSet<String>(Arrays.asList(allowedCategories));
+            for(int i=1;i<allowed.length;i++)
+            {
+                allowed[i] = set.contains(cats[i]);
+            }
+        }
         
         int count=0;
         String line=null;
@@ -251,9 +212,9 @@ public abstract class AbstractClassifier implements Classifier
             
             for(int i=1;i<counters.length;i++)
             {
-                if(counters[i].length()>0)
+                if(allowed[i] && counters[i].length()>0)
                 {
-                    this.coach(cats[i-1],word,Integer.valueOf(counters[i]));
+                    this.coach(cats[i],word,Integer.valueOf(counters[i]));
                 }
             }
             count++;
@@ -266,11 +227,15 @@ public abstract class AbstractClassifier implements Classifier
     
     public void saveGZ(OutputStream out) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
     {
-        save(new GZIPOutputStream(out));
+        this.save(new GZIPOutputStream(out));
     }
     public void loadGZ(InputStream in) throws IOException, ClassifierFormatException, NoSuchAlgorithmException
     {
-        load(new GZIPInputStream(in));
+        this.load(new GZIPInputStream(in));
+    }
+    public void loadGZ(InputStream in, String[] allowedCategories) throws IOException, ClassifierFormatException, NoSuchAlgorithmException
+    {
+        this.load(new GZIPInputStream(in), allowedCategories);
     }
 
     @Override
@@ -283,7 +248,6 @@ public abstract class AbstractClassifier implements Classifier
         hash = 31 * hash + this.cells.size();
         return hash;
     }
-
 
     @Override
     public boolean equals(Object obj)
@@ -304,5 +268,99 @@ public abstract class AbstractClassifier implements Classifier
         if (this.cells != other.cells && (this.cells == null || !this.cells.equals(other.cells)))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "AbstractClassifier{" + "total=" + total + ", categories=" + categories.size() + ", words=" + words.size() + ", cells=" + cells.size() + '}';
+    }
+
+    public Classifier synchronizedClassifier()
+    {
+        return synchronizedClassifier(this);
+    }
+    static Classifier synchronizedClassifier(final Classifier classifier)
+    {
+        return new Classifier() 
+        {
+            private final Object lock = new Object();
+            public Score[] classify(Score[] scores, String... words)
+            {
+                synchronized(lock)
+                {
+                    return classifier.classify(scores, words);    
+                }
+            }
+            public Score classify(String... words)
+            {
+                synchronized(lock)
+                {
+                    return classifier.classify(words);
+                }
+            }
+            public void coach(String category, String word, int n)
+            {
+                synchronized(lock)
+                {
+                    classifier.coach(category, word, n);
+                }
+            }
+            public void coach(String category, String[] word, int[] n)
+            {
+                synchronized(lock)
+                {
+                    classifier.coach(category, word, n);
+                }
+            }
+            public void save(OutputStream out) throws UnsupportedEncodingException, NoSuchAlgorithmException
+            {
+                synchronized(lock)
+                {
+                    classifier.save(out);
+                }
+            }
+            public void load(InputStream in) throws ClassifierFormatException, NoSuchAlgorithmException
+            {
+                synchronized(lock)
+                {
+                    classifier.load(in);
+                }
+            }
+            public void load(InputStream in, String[] allowedCategories) throws ClassifierFormatException, NoSuchAlgorithmException
+            {
+                synchronized(lock)
+                {
+                    classifier.load(in, allowedCategories);
+                }
+            }
+            public void saveGZ(OutputStream out) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+            {
+                synchronized(lock)
+                {
+                    classifier.saveGZ(out);
+                }
+            }
+            public void loadGZ(InputStream in) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
+            {
+                synchronized(lock)
+                {
+                    classifier.loadGZ(in);
+                }
+            }
+            public void loadGZ(InputStream in, String[] allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
+            {
+                synchronized(lock)
+                {
+                    classifier.loadGZ(in, allowedCategories);
+                }
+            }
+
+            @Override
+            public String toString()
+            {
+                return classifier.toString();
+            }
+       };
     }
 }

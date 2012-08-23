@@ -1,7 +1,7 @@
 /*
  *  FastMath.java
  *
- *  Copyright (C) 1998-2012  Francisco Gómez Carrasco
+ *  Copyright (C) 1998-2012 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -701,5 +701,24 @@ public class FastMath
         }
         int mid = (from+to)/2;
         return lcm(lcm(n,from,mid),lcm(n,mid,to));
-    }    
+    }   
+    static final double[] log_cache=new double[256];
+    public static double log(int n)
+    {
+        if(n==1)
+        {
+            return 0;
+        }
+        if(n<0 || n>=log_cache.length)
+        {
+            return Math.log(n);
+        }
+        double val = log_cache[n];
+        if(val==0)
+        {
+            val = log_cache[n] = Math.log(n);
+        }
+        return val;
+    }
+    
 }

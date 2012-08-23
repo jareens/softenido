@@ -39,18 +39,19 @@ public class NaiveClassifierTest
 {
     String [][] LEARN= 
     {
-        {"CA","google-terms-of-service-CA.txt.gz"},
-        {"ES","google-terms-of-service-ES.txt.gz"},
-        {"EU","google-terms-of-service-EU.txt.gz"},
-        {"FR","google-terms-of-service-FR.txt.gz"},
-        {"GE","google-terms-of-service-GE.txt.gz"},
-        {"GL","google-terms-of-service-GL.txt.gz"},
-        {"IT","google-terms-of-service-IT.txt.gz"},
-        {"EN","google-terms-of-service-UK.txt.gz"},
-        {"EN","google-terms-of-service-US.txt.gz"},
-        {"NL","google-terms-of-service-NL.txt.gz"},
-        {"PT","google-terms-of-service-PT.txt.gz"},
-        {"RU","google-terms-of-service-RU.txt.gz"}
+        {"ca","google-terms-of-service-ca.txt.gz"},
+        {"es","google-terms-of-service-es.txt.gz"},
+        {"eu","google-terms-of-service-eu.txt.gz"},
+        {"fr","google-terms-of-service-fr.txt.gz"},
+        {"de","google-terms-of-service-de.txt.gz"},
+        {"gl","google-terms-of-service-gl.txt.gz"},
+        {"it","google-terms-of-service-it.txt.gz"},
+        {"en","google-terms-of-service-en_UK.txt.gz"},
+        {"en","google-terms-of-service-en_US.txt.gz"},
+        {"nl","google-terms-of-service-nl.txt.gz"},
+        {"pt","google-terms-of-service-pt_BR.txt.gz"},
+        {"pt","google-terms-of-service-pt_PT.txt.gz"},
+        {"RU","google-terms-of-service-ru.txt.gz"}
     };
     
     public NaiveClassifierTest()
@@ -78,6 +79,36 @@ public class NaiveClassifierTest
     }
 
     /**
+     * Test of probability method, of class NaiveClassifier.
+     */
+    @Test
+    public void testProbability()
+    {
+        NaiveClassifier instance = new NaiveClassifier();
+        
+        instance.coach("es","por", 1);
+        instance.coach("es","franci", 1);
+        instance.coach("ca","per", 1);
+        instance.coach("ca","franci", 1);
+        instance.coach("en","by", 1);
+        instance.coach("en","franci", 1);
+        
+        assertEquals("es", instance.classify("por","franci").getName());
+        
+        instance = new NaiveClassifier();
+        
+        instance.coach("es","por", 1);
+        instance.coach("es","franci", 1);
+        instance.coach("ca","per", 50);
+        instance.coach("ca","franci", 50);
+        instance.coach("en","by", 20);
+        instance.coach("en","franci", 20);
+        
+        assertEquals("es", instance.classify("por","franci").getName());
+
+    }
+    
+    /**
      * Test of classify method, of class Classifier.
      */
     @Test
@@ -97,12 +128,13 @@ public class NaiveClassifierTest
                 classifier.coach(lang, word, 1);
             }
         }
-        assertEquals("ES", classifier.classify("debes","seguir","las","políticas","disponibles","a","través","de","los","servicios").getName());
-        assertEquals("FR", classifier.classify("vous","devez","respecter","les","règles","applicables","aux","services","que","vous","utilisez").getName());
-        assertEquals("GE", classifier.classify("sie","sind","zur","einhaltung","der","richtlinien","verpflichtet","die","für","unsere","dienstegelten").getName());
-        assertEquals("IT", classifier.classify("è","necessario","seguire","tutte","le","norme","messe","a","disposizione","dell’utente","all’interno","dei","servizi").getName());
-        assertEquals("EN", classifier.classify("you","must","follow","any","policies","made","available","to","you","within","the","services","don't").getName());
-        assertEquals("EN", classifier.classify("you","must","follow","any","policies","made","available","to","you","within","the","services","do","not").getName());
-        assertEquals("EN", classifier.classify("you","xxx","no").getName());      
-    }
+        assertEquals("es", classifier.classify("debes","seguir","las","políticas","disponibles","a","través","de","los","servicios").getName());
+        assertEquals("fr", classifier.classify("vous","devez","respecter","les","règles","applicables","aux","services","que","vous","utilisez").getName());
+        assertEquals("de", classifier.classify("sie","sind","zur","einhaltung","der","richtlinien","verpflichtet","die","für","unsere","dienstegelten").getName());
+        assertEquals("it", classifier.classify("è","necessario","seguire","tutte","le","norme","messe","a","disposizione","dell’utente","all’interno","dei","servizi").getName());
+        assertEquals("en", classifier.classify("you","must","follow","any","policies","made","available","to","you","within","the","services","don't").getName());
+        assertEquals("en", classifier.classify("you","must","follow","any","policies","made","available","to","you","within","the","services","do","not").getName());
+        assertEquals("en", classifier.classify("you","xxx","no").getName());      
+    }    
+
 }

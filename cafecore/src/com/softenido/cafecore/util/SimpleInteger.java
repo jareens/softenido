@@ -1,5 +1,5 @@
 /*
- * Score.java
+ * SimpleInteger.java
  *
  * Copyright (c) 2012 Francisco Gómez Carrasco
  *
@@ -18,36 +18,65 @@
  *
  * Report bugs or new features to: flikxxi@gmail.com
  */
-package com.softenido.cafecore.statistics.classifier;
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.softenido.cafecore.util;
 
 /**
  *
  * @author franci
  */
-public class Score
+public class SimpleInteger
 {
-    final String name;
-    final double value;
+    int value;
 
-    Score(String name, double value)
+    public SimpleInteger(int value)
     {
-        this.name = name;
         this.value = value;
     }
-
-    public String getName()
+    public SimpleInteger()
     {
-        return name;
+        this(0);
     }
-
-    public double getValue()
+    @Override
+    public int hashCode()
     {
         return value;
     }
 
     @Override
-    public String toString()
+    public boolean equals(Object obj)
     {
-        return "Score{" + "name=" + name + ", value=" + value + '}';
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final SimpleInteger other = (SimpleInteger) obj;
+        if (this != other && this.get()!=other.get())
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public int get()
+    {
+        return value;
+    }
+    public void add(int n)
+    {
+        value += n;
+    }
+    public int addAndGet(int n)
+    {
+        value += n;
+        return value;
     }
 }
