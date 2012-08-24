@@ -151,8 +151,16 @@ public class TextClassifierTest
         }
         
         //uncomment this line to get a dictionariy
-        classifierAll.save(new FileOutputStream("dictionary.txt"));
+        //classifierAll.save(new FileOutputStream("dictionary.txt"));
         //classifier.saveGZ(new FileOutputStream("dictionary.txt.gz"));
+        
+        //la suma de los ficheros individuales es menor que agrupados en uno solo
+//        for(int i=0;i<LEARN.length;i++)
+//        {
+//            String lang = LEARN[i][0];
+//            String file = "dictionary-"+lang+".txt";
+//            classifierAll.save(new FileOutputStream(file),lang);
+//        }        
 
         ByteArrayOutputStream out =  new ByteArrayOutputStream();
         classifierAll.save(out);

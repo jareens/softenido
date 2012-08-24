@@ -124,73 +124,7 @@ public abstract class AbstractClassifier implements Classifier
 
     abstract public Score[] classify(Score[] scores, String... words);
     
-    static final String MD5 = "MD5";
-    static boolean optimize = false;
-    public void save(OutputStream out) throws UnsupportedEncodingException, NoSuchAlgorithmException
-    {
-        PrintStream ps = new PrintStream(out);
-        
-        String[] cats = this.categories.keySet().toArray(new String[0]);
-        String[] word = this.words.keySet().toArray(new String[0]);
-        
-        if(optimize)
-        {
-            int[] nums = new int[cats.length];
-            for(int i=0;i<cats.length;i++)
-            {
-                for(int j=0;j<word.length;j++)
-                {
-                    if(wordCount(cats[i], word[j])>0)
-                        nums[i]++;
-                }
-            }
-            Sorts.sort(nums, cats, true);
-        }
-        else
-        {
-            Arrays.sort(cats);    
-        }
-        
-        Arrays.sort(word);
-
-        ps.println("Classifier:"+this.total);
-        ps.print("word");
-        for(String  c : cats)
-        {
-            ps.print("|"+c);
-        }
-        ps.println();            
-        
-        int count = 0;
-        for(String  w : word)
-        {
-            StringBuilder line = new StringBuilder(w);
-            String sep = "";
-                    
-            for(String  c : cats)
-            {
-                SimpleInteger counter = this.cells.get(new Pair(c, w));
-                int n = (counter!=null)? counter.get() : 0;
-                sep += "|";
-                if(n>0)
-                {
-                    line.append(sep).append(n);
-                    sep = "";
-                }
-            }
-            ps.println(line.toString());
-            count++;
-        }
-        
-        ps.println("words="+count);
-        ps.flush();
-    }
-    public void load(InputStream in) throws ClassifierFormatException, NoSuchAlgorithmException
-    {
-        load(in,null);
-    }    
-    
-    public void load(InputStream in, String[] allowedCategories) throws ClassifierFormatException, NoSuchAlgorithmException
+    public void load(InputStream in, String... allowedCategories) throws ClassifierFormatException
     {
         Scanner sc = new Scanner(in);
         
@@ -203,20 +137,7 @@ public abstract class AbstractClassifier implements Classifier
         {
             throw new ClassifierFormatException("wron't format");
         }
-        
-        final boolean[] allowed = new boolean[cats.length];
-        if(allowedCategories==null)
-        {
-            Arrays.fill(allowed, true);
-        }
-        else
-        {
-            HashSet<String> set = new HashSet<String>(Arrays.asList(allowedCategories));
-            for(int i=1;i<allowed.length;i++)
-            {
-                allowed[i] = set.contains(cats[i]);
-            }
-        }
+        boolean[] allowed = getAllowed(cats, allowedCategories);
         
         int count=0;
         String line=null;
@@ -245,18 +166,89 @@ public abstract class AbstractClassifier implements Classifier
         }
     }
     
-    public void saveGZ(OutputStream out) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+    static boolean optimize = false;
+    public void save(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException
     {
-        this.save(new GZIPOutputStream(out));
+        PrintStream ps = new PrintStream(out);
+        
+        String[] cats = this.categories.keySet().toArray(new String[0]);
+        String[] word = this.words.keySet().toArray(new String[0]);
+        
+        if(optimize && (allowedCategories==null || allowedCategories.length>1) )
+        {
+            boolean[] allowed = getAllowed(cats, allowedCategories);
+            int[] nums = new int[cats.length];
+            for(int i=0;i<cats.length;i++)
+            {
+                if(allowed[i])
+                {
+                    for(int j=0;j<word.length;j++)
+                    {
+                        if(wordCount(cats[i], word[j])>0)
+                            nums[i]++;
+                    }
+                }
+            }
+            Sorts.sort(nums, cats, true);
+        }
+        else
+        {
+            Arrays.sort(cats);    
+        }
+        
+        boolean[] allowed = getAllowed(cats, allowedCategories);
+        Arrays.sort(word);
+
+        ps.println("Classifier:"+this.total);
+        ps.print("word");
+        for(int i=0;i<cats.length;i++)
+        {
+            if(allowed[i])
+                ps.print("|"+cats[i]);
+        }
+        ps.println();            
+        
+        int count = 0;
+        for(String  w : word)
+        {
+            StringBuilder line = new StringBuilder(w);
+            String sep = "";
+            boolean skip=true;
+                    
+            for(int i=0;i<cats.length;i++)
+            {
+                if(allowed[i])
+                {
+                    SimpleInteger counter = this.cells.get(new Pair(cats[i], w));
+                    int n = (counter!=null)? counter.get() : 0;
+                    sep += "|";
+                    if(n>0)
+                    {
+                        line.append(sep).append(n);
+                        sep = "";
+                        skip=false;
+                    }
+                }
+            }
+            if(!skip)
+            {
+                ps.println(line.toString());
+                count++;
+            }
+        }
+        
+        ps.println("words="+count);
+        ps.flush();
     }
-    public void loadGZ(InputStream in) throws IOException, ClassifierFormatException, NoSuchAlgorithmException
-    {
-        this.load(new GZIPInputStream(in));
-    }
-    public void loadGZ(InputStream in, String[] allowedCategories) throws IOException, ClassifierFormatException, NoSuchAlgorithmException
+    public void loadGZ(InputStream in, String... allowedCategories) throws IOException, ClassifierFormatException, NoSuchAlgorithmException
     {
         this.load(new GZIPInputStream(in), allowedCategories);
     }
+    public void saveGZ(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+    {
+        this.save(new GZIPOutputStream(out), allowedCategories);
+    }
+    
 
     @Override
     public int hashCode()
@@ -333,42 +325,14 @@ public abstract class AbstractClassifier implements Classifier
                     classifier.coach(category, word, n);
                 }
             }
-            public void save(OutputStream out) throws UnsupportedEncodingException, NoSuchAlgorithmException
-            {
-                synchronized(lock)
-                {
-                    classifier.save(out);
-                }
-            }
-            public void load(InputStream in) throws ClassifierFormatException, NoSuchAlgorithmException
-            {
-                synchronized(lock)
-                {
-                    classifier.load(in);
-                }
-            }
-            public void load(InputStream in, String[] allowedCategories) throws ClassifierFormatException, NoSuchAlgorithmException
+            public void load(InputStream in, String... allowedCategories) throws ClassifierFormatException
             {
                 synchronized(lock)
                 {
                     classifier.load(in, allowedCategories);
                 }
             }
-            public void saveGZ(OutputStream out) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
-            {
-                synchronized(lock)
-                {
-                    classifier.saveGZ(out);
-                }
-            }
-            public void loadGZ(InputStream in) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
-            {
-                synchronized(lock)
-                {
-                    classifier.loadGZ(in);
-                }
-            }
-            public void loadGZ(InputStream in, String[] allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
+            public void loadGZ(InputStream in, String... allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
             {
                 synchronized(lock)
                 {
@@ -376,11 +340,44 @@ public abstract class AbstractClassifier implements Classifier
                 }
             }
 
+            public void save(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException
+            {
+                synchronized(lock)
+                {
+                    classifier.save(out, allowedCategories);
+                }
+            }
+
+            public void saveGZ(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+            {
+                synchronized(lock)
+                {
+                    classifier.saveGZ(out, allowedCategories);
+                }
+            }
             @Override
             public String toString()
             {
                 return classifier.toString();
             }
        };
+    }
+
+    private boolean[] getAllowed(String[] cats, String[] allowedCategories)
+    {
+        final boolean[] allowed = new boolean[cats.length];
+        if(allowedCategories==null || allowedCategories.length==0)
+        {
+            Arrays.fill(allowed, true);
+        }
+        else
+        {
+            HashSet<String> set = new HashSet<String>(Arrays.asList(allowedCategories));
+            for(int i=0;i<allowed.length;i++)
+            {
+                allowed[i] = set.contains(cats[i]);
+            }
+        }
+        return allowed;
     }
 }

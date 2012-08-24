@@ -312,33 +312,21 @@ public class TextClassifier
 //        return word;
     }
     
-    public void save(OutputStream out) throws UnsupportedEncodingException, NoSuchAlgorithmException
-    {
-        classifier.save(out);
-    }
-
-    public void load(InputStream in) throws ClassifierFormatException, NoSuchAlgorithmException
-    {
-        classifier.load(in);
-    }
-    public void load(InputStream in, String[] allowedCategories) throws ClassifierFormatException, NoSuchAlgorithmException
+    public void load(InputStream in, String... allowedCategories) throws ClassifierFormatException
     {
         classifier.load(in, allowedCategories);
     }
-
-    public void saveGZ(OutputStream out) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+    public void save(OutputStream out,String... allowedCategories) throws UnsupportedEncodingException
     {
-        classifier.saveGZ(out);
+        classifier.save(out, allowedCategories);
     }
-
-    public void loadGZ(InputStream in) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
-    {
-        classifier.loadGZ(in);
-    }
-
-    public void loadGZ(InputStream in, String[] allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
+    public void loadGZ(InputStream in,String... allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
     {
         classifier.loadGZ(in, allowedCategories);
+    }
+    public void saveGZ(OutputStream out,String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+    {
+        classifier.saveGZ(out, allowedCategories);
     }
 
     public int hashCode()
@@ -438,50 +426,39 @@ public class TextClassifier
             }
 
             @Override
-            public void save(OutputStream out) throws UnsupportedEncodingException, NoSuchAlgorithmException
-            {
-                synchronized(lock)
-                {
-                    super.save(out);
-                }
-            }
-
-            @Override
-            public void load(InputStream in) throws ClassifierFormatException, NoSuchAlgorithmException
-            {
-                synchronized(lock)
-                {
-                    super.load(in);
-                }
-            }
-
-            @Override
-            public void load(InputStream in, String[] allowedCategories) throws ClassifierFormatException, NoSuchAlgorithmException
+            public void load(InputStream in,String... allowedCategories) throws ClassifierFormatException
             {
                 synchronized(lock)
                 {
                     super.load(in, allowedCategories);
                 }
             }
-
+            
             @Override
-            public void saveGZ(OutputStream out) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+            public void save(OutputStream out,String... allowedCategories) throws UnsupportedEncodingException
             {
                 synchronized(lock)
                 {
-                    super.saveGZ(out);
+                    super.save(out, allowedCategories);
                 }
             }
 
             @Override
-            public void loadGZ(InputStream in, String[] allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
+            public void loadGZ(InputStream in, String... allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
             {
                 synchronized(lock)
                 {
                     super.loadGZ(in, allowedCategories);
                 }
             }
-
+            @Override
+            public void saveGZ(OutputStream out,String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+            {
+                synchronized(lock)
+                {
+                    super.saveGZ(out, allowedCategories);
+                }
+            }
         };
     }
 
