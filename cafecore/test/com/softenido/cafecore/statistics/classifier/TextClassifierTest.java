@@ -56,6 +56,7 @@ public class TextClassifierTest
         {"el","google-terms-of-service-el.txt.gz"},//Modern Greek-Griego
         {"en_UK","google-terms-of-service-en_UK.txt.gz"},//inglés UK
         {"en_US","google-terms-of-service-en_US.txt.gz"},//inglés US
+        {"eo","Rakontoj-(Jakub Arbes)-eo.txt.gz"},//Esperanto
         {"es","google-terms-of-service-es.txt.gz"},//Spanish-español
         {"es","google-terms-of-service-es-419.txt.gz"},//Spanish-Español Latinoamerica
         {"et","google-terms-of-service-et.txt.gz"},//Estonian-Estonio-Eesti

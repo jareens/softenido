@@ -22,6 +22,7 @@ package com.softenido.cafecore.statistics.classifier;
 
 import com.softenido.cafecore.util.Pair;       
 import com.softenido.cafecore.util.SimpleInteger;
+import com.softenido.cafecore.util.Sorts;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -29,6 +30,7 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
@@ -123,6 +125,7 @@ public abstract class AbstractClassifier implements Classifier
     abstract public Score[] classify(Score[] scores, String... words);
     
     static final String MD5 = "MD5";
+    static boolean optimize = false;
     public void save(OutputStream out) throws UnsupportedEncodingException, NoSuchAlgorithmException
     {
         PrintStream ps = new PrintStream(out);
@@ -130,7 +133,24 @@ public abstract class AbstractClassifier implements Classifier
         String[] cats = this.categories.keySet().toArray(new String[0]);
         String[] word = this.words.keySet().toArray(new String[0]);
         
-        Arrays.sort(cats);
+        if(optimize)
+        {
+            int[] nums = new int[cats.length];
+            for(int i=0;i<cats.length;i++)
+            {
+                for(int j=0;j<word.length;j++)
+                {
+                    if(wordCount(cats[i], word[j])>0)
+                        nums[i]++;
+                }
+            }
+            Sorts.sort(nums, cats, true);
+        }
+        else
+        {
+            Arrays.sort(cats);    
+        }
+        
         Arrays.sort(word);
 
         ps.println("Classifier:"+this.total);

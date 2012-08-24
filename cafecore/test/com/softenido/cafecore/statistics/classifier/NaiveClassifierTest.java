@@ -136,5 +136,4 @@ public class NaiveClassifierTest
         assertEquals("en", classifier.classify("you","must","follow","any","policies","made","available","to","you","within","the","services","do","not").getName());
         assertEquals("en", classifier.classify("you","xxx","no").getName());      
     }    
-
 }

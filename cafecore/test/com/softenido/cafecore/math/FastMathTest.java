@@ -189,7 +189,7 @@ public class FastMathTest
     @Test
     public void testLog()
     {
-        for(int i=0;i<20000000;i++)
+        for(int i=0;i<1500;i++)
         {
             assertEquals(Math.log(i%300), FastMath.log(i%300), 0.0);
         }
