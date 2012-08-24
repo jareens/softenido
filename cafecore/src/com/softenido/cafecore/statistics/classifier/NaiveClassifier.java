@@ -37,11 +37,12 @@ public class NaiveClassifier extends AbstractClassifier
     public static double probability(int w, int c, int k, int m)//full
     {
          //los Ncw+1/Nc+nc son los mejores descatados los demás
-        double n = w + 1;
+        double n = w*k + 1;
         double d = c + k;
         double p = n / d;
         //los que hacen log del valor o un multiplo log(p)*m ó log(p*m) son los mejores
         //los que suman log(p+m) son sólo regulares (sobre todo con los CJK
+        //return Math.log(p*m);
         return Math.log(p*m);
     }
     // no ordenar, tarda más
