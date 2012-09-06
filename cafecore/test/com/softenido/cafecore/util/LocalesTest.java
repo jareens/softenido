@@ -20,7 +20,6 @@
  */
 package com.softenido.cafecore.util;
 
-import java.util.Arrays;
 import java.util.Locale;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -876,6 +875,27 @@ public class LocalesTest
         assertEquals("español (argentina)", Locales.getDisplayLanguageCountry(es_AR).toLowerCase());
         assertEquals("english (united states)", Locales.getDisplayLanguageCountry(en_US).toLowerCase());
         assertEquals("english (united kingdom)", Locales.getDisplayLanguageCountry(en_GB).toLowerCase());
+    }
+
+    /**
+     * Test of setDefault method, of class Locales.
+     */
+    @Test
+    public void testSetDefault()
+    {
+        final Locale original = Locale.getDefault();
+        final Locale tested1  = original==Locale.US?Locale.UK:Locale.US;
+        final Locale tested2  = original==Locale.FRANCE?Locale.UK:Locale.FRANCE;
+        
+        Locales.setDefault(tested1);
+        assertEquals(tested1, Locale.getDefault());
+
+        Locales.setDefault(tested2);
+        assertEquals(tested2, Locale.getDefault());
+
+        Locales.setDefault(null);
+        assertEquals(original, Locale.getDefault());
+        
     }
 
 }
