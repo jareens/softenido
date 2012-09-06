@@ -27,7 +27,7 @@ import java.util.Comparator;
  *
  * @author franci
  */
-public class Sorts
+public class Sorts<T>
 {
     public static void reverse(int[] a)
     {
@@ -307,5 +307,54 @@ public class Sorts
     public static <K,V> void sort(K[] key, V[] value, int fromIndex, int toIndex)
     {
         sort(key, value, fromIndex, toIndex, false);
+    }
+
+    public static <T> Comparator<T> asStringComparator()
+    {
+        return new Comparator<T>()
+        {
+            public int compare(T t1, T t2)
+            {
+                String s1 = t1.toString();
+                String s2 = t2.toString();
+                return s1.compareTo(s2);
+            }
+        };
+    }
+    public static <T> Comparator<T> asStringComparatorIgnoreCase()
+    {
+        return new Comparator<T>()
+        {
+            public int compare(T t1, T t2)
+            {
+                String s1 = t1.toString();
+                String s2 = t2.toString();
+                return s1.compareToIgnoreCase(s2);
+            }
+        };
+    }
+    public static <T> Comparator<T> asStringComparatorReverse()
+    {
+        return new Comparator<T>()
+        {
+            public int compare(T t1, T t2)
+            {
+                String s1 = t1.toString();
+                String s2 = t2.toString();
+                return s2.compareTo(s1);
+            }
+        };
+    }
+    public static <T> Comparator<T> asStringComparatorIgnoreCaseReverse()
+    {
+        return new Comparator<T>()
+        {
+            public int compare(T t1, T t2)
+            {
+                String s1 = t1.toString();
+                String s2 = t2.toString();
+                return s2.compareToIgnoreCase(s1);
+            }
+        };
     }
 }

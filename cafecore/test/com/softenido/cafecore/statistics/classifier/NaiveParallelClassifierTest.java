@@ -1,5 +1,5 @@
 /*
- * NaiveClassifierTest.java
+ * NaiveParallelClassifierTest.java
  *
  * Copyright (c) 2012 Francisco Gómez Carrasco
  *
@@ -35,7 +35,7 @@ import static org.junit.Assert.*;
  *
  * @author franci
  */
-public class NaiveClassifierTest
+public class NaiveParallelClassifierTest
 {
     String [][] LEARN= 
     {
@@ -54,7 +54,7 @@ public class NaiveClassifierTest
         {"RU","google-terms-of-service-ru.txt.gz"}
     };
     
-    public NaiveClassifierTest()
+    public NaiveParallelClassifierTest()
     {
     }
     
@@ -79,12 +79,13 @@ public class NaiveClassifierTest
     }
 
     /**
-     * Test of probability method, of class NaiveClassifier.
+     * Test of probability method, of class NaiveSerialClassifier.
      */
     @Test
     public void testProbability()
     {
-        NaiveClassifier instance = new NaiveClassifier();
+        String[] categories = {"es","ca","en"};
+        NaiveParallelClassifier instance = new NaiveParallelClassifier(categories);
         
         instance.coach("es","por", 1);
         instance.coach("es","franci", 1);
@@ -95,7 +96,7 @@ public class NaiveClassifierTest
         
         assertEquals("es", instance.classify("por","franci").getName());
         
-        instance = new NaiveClassifier();
+        instance = new NaiveParallelClassifier(3);
         
         instance.coach("es","por", 1);
         instance.coach("es","franci", 1);
@@ -114,12 +115,12 @@ public class NaiveClassifierTest
     @Test
     public void testClassify_StringArr() throws IOException
     {
-        NaiveClassifier classifier = new NaiveClassifier();
+        NaiveParallelClassifier classifier = new NaiveParallelClassifier(LEARN.length);
         
         for(int i=0;i<LEARN.length;i++)
         {
             String lang = LEARN[i][0];
-            InputStream gz = new GZIPInputStream(NaiveClassifierTest.class.getResourceAsStream(LEARN[i][1]));    
+            InputStream gz = new GZIPInputStream(NaiveParallelClassifierTest.class.getResourceAsStream(LEARN[i][1]));    
             Scanner sc = new Scanner(gz);
             
             while( sc.hasNext())

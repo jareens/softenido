@@ -48,7 +48,19 @@ public class TextClassifier
 
     public TextClassifier()
     {
-        this(new NaiveClassifier());
+        this.classifier = new NaiveSerialClassifier();
+    }
+    static public TextClassifier getSerialClassifier()
+    {
+        return new TextClassifier(new NaiveSerialClassifier());
+    }
+    static public TextClassifier getParallelClassifier(String[] categories)
+    {
+        return new TextClassifier(new NaiveParallelClassifier(categories));
+    }
+    static public TextClassifier getParallelClassifier(int categories)
+    {
+        return new TextClassifier(new NaiveParallelClassifier(categories));
     }
 
     public void coach(String category, String text)
@@ -139,9 +151,11 @@ public class TextClassifier
 
     Score classify(Scanner sc)
     {
+        boolean ok = false;
         ArrayList<String> samples = new ArrayList<String>();
         for (int i = 0; i < this.sampleLimit && sc.hasNext(); i++)
         {
+            ok=true;
             String[] words = split(sc.next());
             for(String w : words)
             {
@@ -151,6 +165,10 @@ public class TextClassifier
                     samples.add(w);
                 }
             }
+        }
+        if(!ok)
+        {
+            System.out.println(sc.nextLine());
         }
         return classifier.classify(samples.toArray(new String[0]));
     }
@@ -368,7 +386,7 @@ public class TextClassifier
     }
     static TextClassifier synchronizedClassifier(TextClassifier classifier)
     {
-        return new TextClassifier(AbstractClassifier.synchronizedClassifier(classifier.classifier))
+        return new TextClassifier(NaiveSerialClassifier.synchronizedClassifier(classifier.classifier))
         {
             final Object lock = new Object();
             @Override

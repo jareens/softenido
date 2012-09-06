@@ -20,6 +20,8 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
+import com.softenido.cafecore.util.Arrays6;
+import com.softenido.cafecore.util.Locales;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
@@ -27,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.zip.GZIPInputStream;
 import org.junit.After;
@@ -44,68 +47,68 @@ public class TextClassifierTest
 {
     static final String [][] LEARN= 
     {
-        {"af","google-terms-of-service-af.txt.gz"},//Afrikaans
-        {"am","google-terms-of-service-am.txt.gz"},//Amharic
-        {"ar","google-terms-of-service-ar.txt.gz"},//Arabic-Árabe
-        {"bg","google-terms-of-service-bg.txt.gz"},//Bulgarian-Búlgaro
-        {"bn","google-terms-of-service-bn.txt.gz"},//Bengali
-        {"ca","google-terms-of-service-ca.txt.gz"},//catalan
-        {"cs","google-terms-of-service-cs.txt.gz"},//Czech-Checo
-        {"da","google-terms-of-service-da.txt.gz"},//Danish-Danés
-        {"de","google-terms-of-service-de.txt.gz"},//German-Alemán
-        {"el","google-terms-of-service-el.txt.gz"},//Modern Greek-Griego
-        {"en_UK","google-terms-of-service-en_UK.txt.gz"},//inglés UK
-        {"en_US","google-terms-of-service-en_US.txt.gz"},//inglés US
-        {"eo","Rakontoj-(Jakub Arbes)-eo.txt.gz"},//Esperanto
-        {"es","google-terms-of-service-es.txt.gz"},//Spanish-español
-        {"es","google-terms-of-service-es-419.txt.gz"},//Spanish-Español Latinoamerica
-        {"et","google-terms-of-service-et.txt.gz"},//Estonian-Estonio-Eesti
-        {"eu","google-terms-of-service-eu.txt.gz"},//euskera
-        {"fa","google-terms-of-service-fa.txt.gz"},//Persian-Persa-Farsi
-        {"fi","google-terms-of-service-fi.txt.gz"},//Finnish-Finés-Suomi
-        {"fil","google-terms-of-service-fil.txt.gz"},//Filipino
-        {"fr","google-terms-of-service-fr.txt.gz"},//francés
-        {"fr","google-terms-of-service-fr_CA.txt.gz"},//francés
-        {"gl","google-terms-of-service-gl.txt.gz"},//Galician-gallego-galego    
-        {"gu","google-terms-of-service-gu.txt.gz"},//Gujarati
-        {"heb","google-terms-of-service-heb.txt.gz"},//(iw)Hebrew-Hebreo
-        {"hu","google-terms-of-service-hu.txt.gz"},//Hungarian-Húngaro-Magyar
-        {"hi","google-terms-of-service-hi.txt.gz"},//hindi
-        {"hr","google-terms-of-service-hr.txt.gz"},//Croatian-Croata-Hrvatski
-        {"id","google-terms-of-service-id.txt.gz"},//Indonesian-Indonesio
-        {"is","google-terms-of-service-is.txt.gz"},//Icelandic-Islandés-Íslenska
-        {"it","google-terms-of-service-it.txt.gz"},//italiano
-        {"ja","google-terms-of-service-ja.txt.gz"},//japones
-        {"ko","google-terms-of-service-ko.txt.gz"},//coreano
-        {"kn","google-terms-of-service-kn.txt.gz"},//Kannada
-        {"lt","google-terms-of-service-lt.txt.gz"},//Lithuanian-Lituano
-        {"lv","google-terms-of-service-lv.txt.gz"},//Latvian-Letón
-        {"ml","google-terms-of-service-ml.txt.gz"},//Malayalam
-        {"mr","google-terms-of-service-mr.txt.gz"},//Marathi
-        {"ms","google-terms-of-service-ms.txt.gz"},//Malay-Malayo
-        {"nl","google-terms-of-service-nl.txt.gz"},//Dutch-Neerlandes(holandes)-Nederlands
-        {"no","google-terms-of-service-no.txt.gz"},//Norwegian-Bokmal Noruego-Norsk
-        {"pl","google-terms-of-service-pl.txt.gz"},//Polish-Polaco
-        {"pt_BR","google-terms-of-service-pt_BR.txt.gz"},//Portugues(Brasil)
-        {"pt_PT","google-terms-of-service-pt_PT.txt.gz"},//Portugues(Portugal)
-        {"ro","google-terms-of-service-ro.txt.gz"},//Romanian-Rumano
-        {"ru","google-terms-of-service-ru.txt.gz"},//ruso
-        {"sk","google-terms-of-service-sk.txt.gz"},//Slovak-Eslovaco
-        {"sl","google-terms-of-service-sl.txt.gz"},//Sinhala-Esloveno
-        {"sr","google-terms-of-service-sr.txt.gz"},//Serbian-Serbio
-        {"sv","google-terms-of-service-sv.txt.gz"},//Swedish-Sueco
-        {"sw","google-terms-of-service-sw.txt.gz"},//Swahili-Swahili-Kiswahili
-        {"ta","google-terms-of-service-ta.txt.gz"},//Tamil
-        {"th","google-terms-of-service-th.txt.gz"},//Thai-Tailandés
-        {"te","google-terms-of-service-te.txt.gz"},//Telugu
-        {"tr","google-terms-of-service-tr.txt.gz"},//Turkish-Turco
-        {"uk","google-terms-of-service-uk.txt.gz"},//Ukrainian-Ucraniano
-        {"ur","google-terms-of-service-ur.txt.gz"},//Urdu
-        {"vi","google-terms-of-service-vi.txt.gz"},//Vietnamese-Vietnamita
-        {"zh_cn","google-terms-of-service-zh_CN.txt.gz"},//chino china
-        {"zh_hk","google-terms-of-service-zh_HK.txt.gz"},//chino hongkong
-        {"zh_tw","google-terms-of-service-zh_TW.txt.gz"},//chino taiwan
-        {"zu","google-terms-of-service-zu.txt.gz"},//Zulu-Isizulu
+        {"af", "af","google-terms-of-service-af.txt.gz"},//Afrikaans
+        {"am", "am","google-terms-of-service-am.txt.gz"},//Amharic
+        {"ar", "ar","google-terms-of-service-ar.txt.gz"},//Arabic-Árabe
+        {"bg", "bg","google-terms-of-service-bg.txt.gz"},//Bulgarian-Búlgaro
+        {"bn", "bn","google-terms-of-service-bn.txt.gz"},//Bengali
+        {"ca", "ca","google-terms-of-service-ca.txt.gz"},//catalan
+        {"cs", "cs","google-terms-of-service-cs.txt.gz"},//Czech-Checo
+        {"da", "da","google-terms-of-service-da.txt.gz"},//Danish-Danés
+        {"de", "de","google-terms-of-service-de.txt.gz"},//German-Alemán
+        {"el", "el","google-terms-of-service-el.txt.gz"},//Modern Greek-Griego
+        {"en", "en_UK","google-terms-of-service-en_UK.txt.gz"},//inglés UK
+        {"en", "en_US","google-terms-of-service-en_US.txt.gz"},//inglés US
+        {"eo", "eo","Rakontoj-(Jakub Arbes)-eo.txt.gz"},//Esperanto
+        {"es", "es","google-terms-of-service-es.txt.gz"},//Spanish-español
+        {"es", "es","google-terms-of-service-es-419.txt.gz"},//Spanish-Español Latinoamerica
+        {"et", "et","google-terms-of-service-et.txt.gz"},//Estonian-Estonio-Eesti
+        {"eu", "eu","google-terms-of-service-eu.txt.gz"},//euskera
+        {"fa", "fa","google-terms-of-service-fa.txt.gz"},//Persian-Persa-Farsi
+        {"fi", "fi","google-terms-of-service-fi.txt.gz"},//Finnish-Finés-Suomi
+        {"fil","fil","google-terms-of-service-fil.txt.gz"},//Filipino
+        {"fr", "fr","google-terms-of-service-fr.txt.gz"},//francés
+        {"fr", "fr","google-terms-of-service-fr_CA.txt.gz"},//francés
+        {"gl", "gl","google-terms-of-service-gl.txt.gz"},//Galician-gallego-galego    
+        {"gu", "gu","google-terms-of-service-gu.txt.gz"},//Gujarati
+        {"heb","heb","google-terms-of-service-heb.txt.gz"},//(iw)Hebrew-Hebreo
+        {"hu", "hu","google-terms-of-service-hu.txt.gz"},//Hungarian-Húngaro-Magyar
+        {"hi", "hi","google-terms-of-service-hi.txt.gz"},//hindi
+        {"hr", "hr","google-terms-of-service-hr.txt.gz"},//Croatian-Croata-Hrvatski
+        {"id", "id","google-terms-of-service-id.txt.gz"},//Indonesian-Indonesio
+        {"is", "is","google-terms-of-service-is.txt.gz"},//Icelandic-Islandés-Íslenska
+        {"it", "it","google-terms-of-service-it.txt.gz"},//italiano
+        {"ja", "ja","google-terms-of-service-ja.txt.gz"},//japones
+        {"ko", "ko","google-terms-of-service-ko.txt.gz"},//coreano
+        {"kn", "kn","google-terms-of-service-kn.txt.gz"},//Kannada
+        {"lt", "lt","google-terms-of-service-lt.txt.gz"},//Lithuanian-Lituano
+        {"lv", "lv","google-terms-of-service-lv.txt.gz"},//Latvian-Letón
+        {"ml", "ml","google-terms-of-service-ml.txt.gz"},//Malayalam
+        {"mr", "mr","google-terms-of-service-mr.txt.gz"},//Marathi
+        {"ms", "ms","google-terms-of-service-ms.txt.gz"},//Malay-Malayo
+        {"nl", "nl","google-terms-of-service-nl.txt.gz"},//Dutch-Neerlandes(holandes)-Nederlands
+        {"no", "no","google-terms-of-service-no.txt.gz"},//Norwegian-Bokmal Noruego-Norsk
+        {"pl", "pl","google-terms-of-service-pl.txt.gz"},//Polish-Polaco
+        {"pt", "pt_BR","google-terms-of-service-pt_BR.txt.gz"},//Portugues(Brasil)
+        {"pt", "pt_PT","google-terms-of-service-pt_PT.txt.gz"},//Portugues(Portugal)
+        {"ro", "ro","google-terms-of-service-ro.txt.gz"},//Romanian-Rumano
+        {"ru", "ru","google-terms-of-service-ru.txt.gz"},//ruso
+        {"sk", "sk","google-terms-of-service-sk.txt.gz"},//Slovak-Eslovaco
+        {"sl", "sl","google-terms-of-service-sl.txt.gz"},//Sinhala-Esloveno
+        {"sr", "sr","google-terms-of-service-sr.txt.gz"},//Serbian-Serbio
+        {"sv", "sv","google-terms-of-service-sv.txt.gz"},//Swedish-Sueco
+        {"sw", "sw","google-terms-of-service-sw.txt.gz"},//Swahili-Swahili-Kiswahili
+        {"ta", "ta","google-terms-of-service-ta.txt.gz"},//Tamil
+        {"th", "th","google-terms-of-service-th.txt.gz"},//Thai-Tailandés
+        {"te", "te","google-terms-of-service-te.txt.gz"},//Telugu
+        {"tr", "tr","google-terms-of-service-tr.txt.gz"},//Turkish-Turco
+        {"uk", "uk","google-terms-of-service-uk.txt.gz"},//Ukrainian-Ucraniano
+        {"ur", "ur","google-terms-of-service-ur.txt.gz"},//Urdu
+        {"vi", "vi","google-terms-of-service-vi.txt.gz"},//Vietnamese-Vietnamita
+        {"zh", "zh_cn","google-terms-of-service-zh_CN.txt.gz"},//chino china
+        {"zh", "zh_hk","google-terms-of-service-zh_HK.txt.gz"},//chino hongkong
+        {"zh", "zh_tw","google-terms-of-service-zh_TW.txt.gz"},//chino taiwan
+        {"zu", "zu","google-terms-of-service-zu.txt.gz"},//Zulu-Isizulu
     };
     static final String LINE = "^[A-Za-z0-9]+.+$";
     public static final String AMBIGUOUS = ".*(Copyright|Parkway|Google|escrito|EXEMPLARES|Estados *Unidos|vaststelt|Mountain View|Perlindungan Privasi|Laas gewysig|Ultima modifica|našich Službách).*";
@@ -140,62 +143,74 @@ public class TextClassifierTest
     @Test
     public void testClassify_InputStream() throws IOException, ClassifierFormatException, UnsupportedEncodingException, NoSuchAlgorithmException
     {
-        TextClassifier classifierAll = new TextClassifier();
-        TextClassifier classifierInc = new TextClassifier();
+        final boolean[] PARALLEL = {false, true};
         
-        for(int i=0;i<LEARN.length;i++)
+        for(boolean parallel: PARALLEL)
         {
-            String lang = LEARN[i][0];
-            InputStream gz = new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(LEARN[i][1]));
-            classifierAll.coach(lang, gz);
-        }
-        
-        //uncomment this line to get a dictionariy
-        //classifierAll.save(new FileOutputStream("dictionary.txt"));
-        //classifier.saveGZ(new FileOutputStream("dictionary.txt.gz"));
-        
-        //la suma de los ficheros individuales es menor que agrupados en uno solo
-//        for(int i=0;i<LEARN.length;i++)
-//        {
-//            String lang = LEARN[i][0];
-//            String file = "dictionary-"+lang+".txt";
-//            classifierAll.save(new FileOutputStream(file),lang);
-//        }        
+            TextClassifier classifierAll = parallel?TextClassifier.getParallelClassifier(LEARN.length):TextClassifier.getSerialClassifier();
+            TextClassifier classifierInc = parallel?TextClassifier.getParallelClassifier(LEARN.length):TextClassifier.getSerialClassifier();
 
-        ByteArrayOutputStream out =  new ByteArrayOutputStream();
-        classifierAll.save(out);
-        ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-        TextClassifier classifier2 = new TextClassifier();
-        classifier2.load(in);
-        
-        assertEquals(classifierAll, classifier2);
-        
-        classifierAll.classify("nou a elecció de google");
-        
-        for(int i=0;i<LEARN.length;i++)
-        {
-            String lang = LEARN[i][0];
-            classifierInc.coach(lang, new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(LEARN[i][1])));
-            
-            InputStream gz = new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(LEARN[i][1]));    
-            Scanner sc = new Scanner(gz);
-            int count=0;
-            while( sc.hasNextLine())
+            for(int i=0;i<LEARN.length;i++)
             {
-                count++;
-                String line=sc.nextLine().trim().replaceAll(" +"," " );
-                if(!line.matches(AMBIGUOUS) && line.length()>20)
+                String locale  = LEARN[i][1];
+                String file  = LEARN[i][2];
+                InputStream gz;
+                gz = new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(file));
+                classifierAll.coach(locale, gz);
+
+                //la suma de los ficheros individuales es menor que agrupados en uno solo
+                String lang3 = Locales.getISO3Language(LEARN[i][0]);
+                TextClassifier classifier = parallel?TextClassifier.getParallelClassifier(LEARN.length):TextClassifier.getSerialClassifier();
+                gz = new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(file));
+                classifier.coach(lang3, gz);
+                String file2 = "lang_"+lang3+".data";
+                classifier.save(new FileOutputStream(file2.toLowerCase()),lang3);
+            }
+            Locale.getISOCountries();
+            //uncomment this line to get a dictionariy
+            //classifierAll.save(new FileOutputStream("dictionary.txt"));
+            //classifier.saveGZ(new FileOutputStream("dictionary.txt.gz"));
+
+            ByteArrayOutputStream out =  new ByteArrayOutputStream();
+            classifierAll.save(out);
+            ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+            
+            String[] categories = ((AbstractClassifier)classifierAll.classifier).getCategories();
+            categories = Arrays6.copyOf(categories, LEARN.length);
+            
+            TextClassifier classifier2 = parallel?TextClassifier.getParallelClassifier(categories):TextClassifier.getSerialClassifier();
+            classifier2.load(in);
+
+            assertEquals(classifierAll, classifier2);       
+
+            classifierAll.classify("nou a elecció de google");
+
+            for(int i=0;i<LEARN.length;i++)
+            {
+                String lang = LEARN[i][1];
+                String file = LEARN[i][2];
+                classifierInc.coach(lang, new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(file)));
+
+                InputStream gz = new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(file));    
+                Scanner sc = new Scanner(gz);
+                int count=0;
+                while( sc.hasNextLine())
                 {
-                    String langAll= classifierAll.classify(line).getName();
-                    String langInc= classifierInc.classify(line).getName();
-                    //System.out.println(lang+"-"+lang2+"("+line+")");
-                    String msg = "lang="+lang+" text="+line;
-                    int n   =Math.min(3,lang.length());
-                    int nAll=Math.min(3,langAll.length());
-                    int nInc=Math.min(3,langInc.length());
-                    // por ahora confunde los chinos entre sí cuando hay pocas ocurrencias.
-                    assertEquals("all"+msg,lang.substring(0,n), langAll.substring(0,n));
-                    assertEquals("inc"+msg,lang.substring(0,n), langInc.substring(0,n));
+                    count++;
+                    String line=sc.nextLine().trim().replaceAll(" +"," " );
+                    if(!line.matches(AMBIGUOUS) && line.length()>20)
+                    {
+                        String langAll= classifierAll.classify(line).getName();
+                        String langInc= classifierInc.classify(line).getName();
+                        //System.out.println(lang+"-"+lang2+"("+line+")");
+                        String msg = "lang="+lang+" text="+line;
+                        int n   =Math.min(3,lang.length());
+                        int nAll=Math.min(3,langAll.length());
+                        int nInc=Math.min(3,langInc.length());
+                        // por ahora confunde los chinos entre sí cuando hay pocas ocurrencias.
+                        assertEquals("all"+msg,lang.substring(0,n), langAll.substring(0,n));
+                        assertEquals("inc"+msg,lang.substring(0,n), langInc.substring(0,n));
+                    }
                 }
             }
         }
@@ -234,12 +249,12 @@ public class TextClassifierTest
             {"查", "詢", "促", "進", "民", "間", "參", "與", "公", "共", "建", "設", "法", "210ＢＯＴ", "法"} //9
         };
                                  
-        TextClassifier classifier = new TextClassifier();
+        TextClassifier classifier = TextClassifier.getSerialClassifier();
+       
         for(int i=0;i<texts.length;i++)
         {
             String[] result = classifier.split(texts[i]);
             assertArrayEquals(expected[i], result);
         }
     }
-
 }

@@ -34,6 +34,7 @@ public interface Classifier
 {
     Score[] classify(Score[] scores, String... words);
     Score classify(String... words);
+    boolean containsCategory(String category);
     void coach(String category, String word, int n);
     void coach(String category, String[] word, int[] n);
     void load(InputStream in,String... allowedCategories) throws ClassifierFormatException;

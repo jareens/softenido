@@ -20,6 +20,9 @@
  */
 package com.softenido.cafecore.util;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Locale;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -41,7 +44,14 @@ public class SortsTest
     static final Integer[] INTEGER_UP= new Integer[SIZE];
     static final Integer[] INTEGER_DW= new Integer[SIZE];
     
-    
+    static final Integer[] INTEGER_ASC = {0,1,2,3,4,5,6,7,8,9};
+    static final Integer[] INTEGER_DES = {9,8,7,6,5,4,3,2,1,0};
+    static final Integer[] INTEGER_RND = {0,2,4,6,8,9,7,5,3,1};
+
+    static final Locale[] LOCALE_ASC = {Locale.UK,Locale.US,Locale.CHINA};
+    static final Locale[] LOCALE_DES = {Locale.CHINA,Locale.US,Locale.UK};
+    static final Locale[] LOCALE_RND = {Locale.US,Locale.CHINA,Locale.UK};
+
     public SortsTest()
     {
     }
@@ -375,6 +385,52 @@ public class SortsTest
         assertArrayEquals(INTEGER_UP, k);
         assertArrayEquals(INTEGER_DW, v);
     }
-    
+
+    /**
+     * Test of asStringComparator method, of class Sorts.
+     */
+    @Test
+    public void testAsStringComparator()
+    {
+        Comparator cmp = Sorts.asStringComparator();
+        
+        Integer[] tmp;
+        
+        tmp = INTEGER_ASC.clone();
+        Arrays.sort(tmp, cmp);
+        assertArrayEquals(INTEGER_ASC, tmp);
+
+        tmp = INTEGER_DES.clone();
+        Arrays.sort(tmp, cmp);
+        assertArrayEquals(INTEGER_ASC, tmp);
+        
+        tmp = INTEGER_RND.clone();
+        Arrays.sort(tmp, cmp);
+        assertArrayEquals(INTEGER_ASC, tmp);
+    }
+
+
+    /**
+     * Test of asStringComparatorReverse method, of class Sorts.
+     */
+    @Test
+    public void testAsStringComparatorReverse()
+    {
+        Comparator cmp = Sorts.asStringComparatorReverse();
+        
+        Integer[] tmp;
+        
+        tmp = INTEGER_ASC.clone();
+        Arrays.sort(tmp, cmp);
+        assertArrayEquals(INTEGER_DES, tmp);
+
+        tmp = INTEGER_DES.clone();
+        Arrays.sort(tmp, cmp);
+        assertArrayEquals(INTEGER_DES, tmp);
+        
+        tmp = INTEGER_RND.clone();
+        Arrays.sort(tmp, cmp);
+        assertArrayEquals(INTEGER_DES, tmp);
+    }
     
 }

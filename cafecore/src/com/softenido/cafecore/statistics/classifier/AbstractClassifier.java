@@ -20,8 +20,6 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
-import com.softenido.cafecore.util.Pair;       
-import com.softenido.cafecore.util.SimpleInteger;
 import com.softenido.cafecore.util.Sorts;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,8 +28,6 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.zip.GZIPInputStream;
@@ -43,49 +39,18 @@ import java.util.zip.GZIPOutputStream;
  */
 public abstract class AbstractClassifier implements Classifier
 {
-    int total = 0;
-    final HashMap<String,SimpleInteger> categories = new HashMap<String,SimpleInteger>(64);
-    final HashMap<String,SimpleInteger> words = new HashMap<String,SimpleInteger>(8*1024);
-    final HashMap<Pair,SimpleInteger> cells = new HashMap<Pair,SimpleInteger>(16*1024);
-    
-    void coach(String category, String word, double probability, double weigh)
+    final void coach(String category, String word, double probability, double weigh)
     {
         coach(category, word, probability * weigh);
     }
-    void coach(String category, String word, double probability)
+    final void coach(String category, String word, double probability)
     {
         int count = (int) Math.round(probability * (Integer.MAX_VALUE/1024) );
         coach(category, word, count);
     }
-    public void coach(String category, String word, int n)
-    {
-        final Pair cell = new Pair(category,word);
-
-        SimpleInteger c = this.categories.get(category);
-        SimpleInteger w = this.words.get(word);
-        SimpleInteger o = this.cells.get(cell);
-
-        if(c==null)
-        {
-            c = new SimpleInteger();
-            this.categories.put(category, c);
-        }
-        if(w==null)
-        {
-            w = new SimpleInteger();
-            this.words.put(word, w);
-        }
-        if(o==null)
-        {
-            o = new SimpleInteger();
-            this.cells.put(cell,o);
-        }
-        total+=n;
-        c.add(n);
-        w.add(n);
-        o.add(n);            
-    }
-    public void coach(String category, String[] word, int[] n)
+    public abstract void coach(String category, String word, int n);
+    
+    final public void coach(String category, String[] word, int[] n)
     {
         for(int i=0;i<word.length;i++)
         {
@@ -93,18 +58,12 @@ public abstract class AbstractClassifier implements Classifier
         }
     }
     
-    // no optimizar los if, jit mejora en esta disposición
-    int categoryCount(String category)
-    {
-        SimpleInteger counter = this.categories.get(category);
-        return (counter!=null)?counter.get():0;
-    }
-    int wordCount(String category,String word)
-    {
-        SimpleInteger counter = this.cells.get(new Pair(category,word));
-        return (counter!=null)?counter.get():0;
-    }
-    public Score classify(String ... words)
+    abstract int wordCount(String category,String word);
+    abstract int getTotal();
+    abstract String[] getCategories();
+    abstract String[] getWords();
+
+    public final Score classify(String ... words)
     {
         Score[] scores = classify(new Score[0],words);
         Score max = null;
@@ -124,7 +83,7 @@ public abstract class AbstractClassifier implements Classifier
 
     abstract public Score[] classify(Score[] scores, String... words);
     
-    public void load(InputStream in, String... allowedCategories) throws ClassifierFormatException
+    public final void load(InputStream in, String... allowedCategories) throws ClassifierFormatException
     {
         Scanner sc = new Scanner(in);
         
@@ -167,12 +126,12 @@ public abstract class AbstractClassifier implements Classifier
     }
     
     static boolean optimize = false;
-    public void save(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException
+    public final void save(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException
     {
         PrintStream ps = new PrintStream(out);
         
-        String[] cats = this.categories.keySet().toArray(new String[0]);
-        String[] word = this.words.keySet().toArray(new String[0]);
+        String[] cats = this.getCategories();
+        String[] word = this.getWords();
         
         if(optimize && (allowedCategories==null || allowedCategories.length>1) )
         {
@@ -199,7 +158,7 @@ public abstract class AbstractClassifier implements Classifier
         boolean[] allowed = getAllowed(cats, allowedCategories);
         Arrays.sort(word);
 
-        ps.println("Classifier:"+this.total);
+        ps.println("Classifier:"+this.getTotal());
         ps.print("word");
         for(int i=0;i<cats.length;i++)
         {
@@ -219,8 +178,7 @@ public abstract class AbstractClassifier implements Classifier
             {
                 if(allowed[i])
                 {
-                    SimpleInteger counter = this.cells.get(new Pair(cats[i], w));
-                    int n = (counter!=null)? counter.get() : 0;
+                    int n = this.wordCount(cats[i], w);
                     sep += "|";
                     if(n>0)
                     {
@@ -240,55 +198,16 @@ public abstract class AbstractClassifier implements Classifier
         ps.println("words="+count);
         ps.flush();
     }
-    public void loadGZ(InputStream in, String... allowedCategories) throws IOException, ClassifierFormatException, NoSuchAlgorithmException
+    public final void loadGZ(InputStream in, String... allowedCategories) throws IOException, ClassifierFormatException, NoSuchAlgorithmException
     {
         this.load(new GZIPInputStream(in), allowedCategories);
     }
-    public void saveGZ(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+    public final void saveGZ(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
     {
         this.save(new GZIPOutputStream(out), allowedCategories);
     }
-    
 
-    @Override
-    public int hashCode()
-    {
-        int hash = 7;
-        hash = 31 * hash + this.total;
-        hash = 31 * hash + this.categories.size();
-        hash = 31 * hash + this.words.size();
-        hash = 31 * hash + this.cells.size();
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if(obj == this)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        final AbstractClassifier other = (AbstractClassifier) obj;
-        if (this.total != other.total)
-            return false;
-        if (this.categories != other.categories && (this.categories == null || !this.categories.equals(other.categories)))
-            return false;
-        if (this.words != other.words && (this.words == null || !this.words.equals(other.words)))
-            return false;
-        if (this.cells != other.cells && (this.cells == null || !this.cells.equals(other.cells)))
-            return false;
-        return true;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "AbstractClassifier{" + "total=" + total + ", categories=" + categories.size() + ", words=" + words.size() + ", cells=" + cells.size() + '}';
-    }
-
-    public Classifier synchronizedClassifier()
+    public final Classifier synchronizedClassifier()
     {
         return synchronizedClassifier(this);
     }
@@ -309,6 +228,13 @@ public abstract class AbstractClassifier implements Classifier
                 synchronized(lock)
                 {
                     return classifier.classify(words);
+                }
+            }
+            public boolean containsCategory(String category)
+            {
+                synchronized(lock)
+                {
+                    return classifier.containsCategory(category);
                 }
             }
             public void coach(String category, String word, int n)
@@ -363,7 +289,7 @@ public abstract class AbstractClassifier implements Classifier
        };
     }
 
-    private boolean[] getAllowed(String[] cats, String[] allowedCategories)
+    private static boolean[] getAllowed(String[] cats, String[] allowedCategories)
     {
         final boolean[] allowed = new boolean[cats.length];
         if(allowedCategories==null || allowedCategories.length==0)
