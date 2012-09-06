@@ -23,6 +23,7 @@ package com.softenido.cafecore.util;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -354,5 +355,19 @@ public class Locales
             return lang;
         }
         return "("+country+")";
+    }
+    private enum DefaultHolder
+    {
+        INSTANCE;
+        private final Locale initial = Locale.getDefault();
+        void setDefault(Locale value)
+        {
+            Locale.setDefault(value==null?initial:value);
+        }
+    }
+    // sets a locale or the original one if null is passed as parameter
+    public static void setDefault(Locale value)
+    {
+        DefaultHolder.INSTANCE.setDefault(value);
     }
 }
