@@ -1,6 +1,6 @@
 <resources>
-    <string name="about_accept">"确定"</string>
-    <string name="about_feedback">"反馈"</string>
-    <string name="about_feedback_title">"通过e-mail发送反馈"</string>
-    <string name="gplv3_brief">"此软件为自由软件，你可以在自由软件基金会发布的GNU通用公共许可证（可以是第3版或者之后的任意版本）下重新分配以及修改它。"</string>
+    <string name="about_accept">确定</string>
+    <string name="about_feedback">反馈</string>
+    <string name="about_feedback_title">通过e-mail发送反馈</string>
+    <string name="gplv3_brief">此软件为自由软件，你可以在自由软件基金会发布的GNU通用公共许可证（第3版或者之后的任意版本）下重新分配以及修改它。</string>
 </resources>
