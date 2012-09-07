@@ -1,3 +1,7 @@
+v0.3.2 vc9 (2012-08-07)
+--------------------------
+- añadido Chino Simplificado (traducido por seazon)
+
 v0.3.1 vc8 (2012-02-29)
 --------------------------
 - añadido boton de feedback
