@@ -115,16 +115,28 @@ public class SendEmailBuilder
 
     public SendEmailBuilder addTo(Collection<String> to)
     {
+        if(to==null)
+        {
+            throw new NullPointerException("SendEmailBuilder.addTo(Collection<String>) expected a non null parameter");
+        }
         this.to.addAll(to);
         return this;
     }
     public SendEmailBuilder addTo(String to)
     {
+        if(to==null)
+        {
+            throw new NullPointerException("SendEmailBuilder.addTo(String) expected a non null parameter");
+        }
         this.to.add(to);
         return this;
     }
     public SendEmailBuilder addTo(String[] to)
     {
+        if(to==null)
+        {
+            throw new NullPointerException("SendEmailBuilder.addTo(String[]) expected a non null parameter");
+        }
         this.to.addAll(Arrays.asList(to));
         return this;
     }

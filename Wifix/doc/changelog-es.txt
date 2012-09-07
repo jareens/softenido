@@ -1,3 +1,7 @@
+v0.3.3 vc9 (2012-08-07)
+--------------------------
+- corregir bug que impedía enviar Observaciones
+
 v0.3.2 vc9 (2012-08-07)
 --------------------------
 - añadido Chino Simplificado (traducido por seazon)

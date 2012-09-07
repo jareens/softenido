@@ -1,3 +1,7 @@
+v0.3.3 vc9 (2012-08-07)
+--------------------------
+- fixed a bug that prevents from send feedback
+
 v0.3.2 vc9 (2012-08-07)
 --------------------------
 - added Simplified Chinese (translated by seazon)

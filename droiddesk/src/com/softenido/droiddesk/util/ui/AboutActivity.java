@@ -31,6 +31,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -128,6 +129,11 @@ public class AboutActivity extends Activity
             }
         });
         final Button bFeedback= (Button) findViewById(R.id.bAboutFeedback);
+        if(email==null || email.trim().length()==0)
+        {
+            Log.w(AboutActivity.class.getName(),"metadata "+METADATA_EMAIL+" is "+(email==null?"null":"empty"));
+            bFeedback.setEnabled(false);
+        }
         bFeedback.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View view)
