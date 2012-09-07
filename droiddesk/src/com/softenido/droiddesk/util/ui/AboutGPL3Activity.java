@@ -22,7 +22,7 @@
 package com.softenido.droiddesk.util.ui;
 
 import android.os.Bundle;
-import com.softenido.droidcore.R;
+import com.softenido.droiddesk.R;
 
 public class AboutGPL3Activity extends AboutActivity
 {

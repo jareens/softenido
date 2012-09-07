@@ -17,7 +17,7 @@
     <string name="mid_trade_risk">riesgo medio 1.0%</string>
     <string name="max_trade_risk">riesgo máximo 2.0%</string>
     <string name="max_month_risk">máximo mensual 6.0%</string>
-    <string name="buying_power">Capacidad de compra</string>
+    <string name="buying_power">Poder de compra</string>
     <string name="trade_risk">riesgo máximo</string>
     <string name="trade_commision">costes de operación</string>
     <string name="share_slippage">deslizamiento (1acc)</string>

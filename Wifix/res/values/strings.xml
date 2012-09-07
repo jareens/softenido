@@ -16,5 +16,4 @@
     <string name="not_enough_battery">Not enough battery</string>
     <string name="keep_during">During</string>
     <string name="while_battery">Battery >=</string>
-
 </resources>

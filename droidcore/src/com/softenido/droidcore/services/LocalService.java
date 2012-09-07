@@ -28,6 +28,10 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Created by IntelliJ IDEA.
  * User: franci
@@ -42,6 +46,8 @@ public abstract class LocalService extends Service
 
     private final boolean debug = toastDebug;
     private final int length = toastLength;
+    private volatile boolean sticky = false;
+    private final Object stickyLock = new Object();
 
     private final String name = getClass().getSimpleName();
 
@@ -85,6 +91,7 @@ public abstract class LocalService extends Service
     @Override
     public void onDestroy()
     {
+        setSticky(false);
         if(debug) Toast.makeText(this, name+".onDestroy", length).show();
         super.onDestroy();
     }
@@ -125,5 +132,49 @@ public abstract class LocalService extends Service
     public static void setToastLength(int toastLength)
     {
         LocalService.toastLength = toastLength;
+    }
+    protected void setSticky(boolean sticky)
+    {
+        this.sticky=sticky;
+        if(sticky)
+        {
+            new Thread(getStickyLoop()).start();
+        }
+        else
+        {
+            synchronized(stickyLock)
+            {
+                stickyLock.notifyAll();
+            }
+        }
+    }
+
+    protected boolean getSticky()
+    {
+        return sticky;
+    }
+    final int STICKY_LOOP_INTERVAL = 60000;
+    private Runnable getStickyLoop()
+    {
+        return new Runnable()
+        {
+            public void run()
+            {
+                synchronized(stickyLock)
+                {
+                    while(LocalService.this.sticky)
+                    {
+                        try
+                        {
+                            stickyLock.wait(STICKY_LOOP_INTERVAL);
+                        }
+                        catch (InterruptedException ex)
+                        {
+                            Logger.getLogger(LocalService.class.getName()).log(Level.WARNING,"spurious exception",ex);
+                        }
+                    }
+                }
+            }
+        };
     }
 }

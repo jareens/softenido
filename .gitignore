@@ -21,3 +21,4 @@ dist/
 /headless/.idea/
 /Wifix/.idea/
 /Wifix/proguard_logs/
+/EchoServer/build

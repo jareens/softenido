@@ -1,0 +1,28 @@
+<resources>
+    <string-array name="spinner_time_options">
+        <item>5分钟</item>
+        <item>15 分钟</item>
+        <item>30 分钟</item>
+        <item>1 小时</item>
+        <item>2 小时</item>
+        <item>6小时</item>
+        <item>8 小时</item>
+        <item>12 小时</item>
+        <item>1天</item>
+        <item>1 周</item>
+        <item>1个月</item>
+        <item>1年</item>
+    </string-array>
+
+    <string-array name="battery_spinner_options">
+        <item>10％</item>
+        <item>20％</item>
+        <item>30％</item>
+        <item>40%</item>
+        <item>50％</item>
+        <item>60%</item>
+        <item>70%</item>
+        <item>80%</item>
+        <item>90%</item>
+    </string-array>
+</resources>

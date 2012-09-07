@@ -34,7 +34,7 @@ import java.util.Locale;
  * Time: 21:38
  * To change this template use File | Settings | File Templates.
  */
-public class SpeechBuilder
+public class SpeechManager
 {
     final static int DATA_CHECK_CODE = 1234;
     final static int RECOGNIZE_SPEECH= 1235;
@@ -44,16 +44,24 @@ public class SpeechBuilder
     final SpeechSpeaker speaker;
     final SpeechHearer hearer;
 
-    public SpeechBuilder(Activity activity, Locale locale)
+//    private SpeechManager(Activity activity, Locale lang, SpeechSpeaker speaker, SpeechHearer hearer)
+//    {
+//        this.activity = activity;
+//        this.lang = lang;
+//        this.speaker = speaker;
+//        this.hearer = hearer;
+//    }
+
+    public SpeechManager(Activity activity, Locale locale)
     {
         this.activity= activity;
         this.locale = locale;
         speaker = new SpeechSpeaker(this, activity, locale);
         hearer  = new SpeechHearer(this, activity, locale);
     }
-    public SpeechBuilder(Activity activity)
+    public SpeechManager(Activity activity)
     {
-        this(activity,Locale.getDefault());
+        this(activity, Locale.getDefault());
     }
 
     public SpeechSpeaker getSpeaker()
@@ -64,7 +72,6 @@ public class SpeechBuilder
     {
         return hearer;
     }
-
 
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -77,7 +84,6 @@ public class SpeechBuilder
                 hearer.onActivityResult(requestCode, resultCode, data);
                 break;
         }
-
     }
 
     @Override
@@ -96,10 +102,16 @@ public class SpeechBuilder
     {
         //does nothing, for overriding
     }
+    public void onUtteranceCompleted(String utterance)
+    {
+        //does nothing, for overriding
+    }
+
     public void onHearerRecognized(ArrayList<String> text)
     {
         //does nothing, for overriding
     }
+
 
     public void shutdown()
     {

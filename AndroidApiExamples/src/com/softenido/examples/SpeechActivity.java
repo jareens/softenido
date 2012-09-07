@@ -32,7 +32,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import com.softenido.cafecore.net.Networks;
 import com.softenido.droiddesk.admob.AdMob;
-import com.softenido.droiddesk.speech.SpeechBuilder;
+import com.softenido.droiddesk.speech.SpeechManager;
 import com.softenido.droiddesk.speech.SpeechHearer;
 import com.softenido.droiddesk.speech.SpeechSpeaker;
 
@@ -53,7 +53,7 @@ public class SpeechActivity extends Activity
     static final int LISTEN_RESULT = 2;
 
     private AdMob admob=null;
-    private SpeechBuilder speech = null;
+    private SpeechManager speech = null;
     private AtomicBoolean cancel = new AtomicBoolean();
     private Handler handler = null;
     private ServerSocket server=null;
@@ -76,7 +76,7 @@ public class SpeechActivity extends Activity
         say.setEnabled(false);
         install.setEnabled(false);
 
-        speech = new SpeechBuilder(this,Locale.getDefault())
+        speech = new SpeechManager(this,Locale.getDefault())
         {
             @Override
             protected void onSpeekerInstallNeeded()
@@ -115,7 +115,7 @@ public class SpeechActivity extends Activity
         {
             public void onClick(View arg0)
             {
-                speaker.speak(edit.getText().toString(), true);
+                speaker.speak(edit.getText().toString(), true, false);
             }
         });
         install.setOnClickListener(new View.OnClickListener()
@@ -239,7 +239,7 @@ public class SpeechActivity extends Activity
                 while(!cancel.get() && sc.hasNextLine())
                 {
                     String line = sc.nextLine();
-                    speech.getSpeaker().speak(line,false);
+                    speech.getSpeaker().speak(line,false, false);
                 }
             }
             sock.close();

@@ -25,13 +25,18 @@
                 android:layout_height="wrap_content" android:layout_gravity="center"
                 android:id="@+id/AboutAppDescription" android:text="AboutAppDescription" />
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:paddingBottom="10sp" android:autoLink="web"
-                android:id="@+id/AboutWebUrl1" android:text="AboutWebUrl1"/>
+            <TextView android:id="@+id/AboutWebUrl1" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:paddingBottom="10sp" android:autoLink="web" android:bufferType="spannable"
+                      android:text="AboutWebUrl1"/>
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                      android:paddingBottom="10sp" android:autoLink="web"
-                    android:id="@+id/AboutWebUrl2" android:text="AboutWebUrl2"/>
+            <TextView android:id="@+id/AboutWebUrl2" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:paddingBottom="10sp" android:autoLink="all" android:bufferType="spannable"
+                      android:text="AboutWebUrl2"/>
+
+            <TextView android:id="@+id/AboutWebUrl2" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:paddingBottom="10sp" android:autoLink="all" android:bufferType="spannable"
+                      android:text="AboutWebUrl2"/>
+
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="This program has no license, so do not use it unless you are the owner"

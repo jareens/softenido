@@ -19,10 +19,11 @@
         <activity android:name=".OperativeSystemActivity"/>
         <activity android:name=".SpeechActivity" android:screenOrientation="portrait"/>
         <activity android:name="com.softenido.droiddesk.util.ui.AboutGPL3Activity" android:label="@string/about"/>
-        <meta-data android:name="com.softenido.about.copyright" android:value="© 2011 Francisco Gómez Carrasco"/>
-        <meta-data android:name="com.softenido.about.url1" android:value="http://www.softenido.com/"/>
-        <meta-data android:name="com.softenido.about.url2" android:value="http://softenido.googlecode.com/"/>
+        <meta-data android:name="com.softenido.about.copyright" android:value="© 2011-2012 Francisco Gómez Carrasco"/>
         <meta-data android:name="com.softenido.about.email" android:value="flikxxi@gmail.com"/>
+        <meta-data android:name="com.softenido.about.url1" android:value="market://details?id=com.softenido.examples"/>
+        <meta-data android:name="com.softenido.about.url2" android:value="market://search?q=pub:softenido"/>
+        <meta-data android:name="com.softenido.about.url3" android:value="http://www.softenido.com/examples"/>
 
         <!-- The application's publisher ID assigned by AdMob -->
         <!--suppress AndroidDomInspection -->

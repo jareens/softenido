@@ -39,13 +39,13 @@ public class SpeechHearer
 {
     final Activity activity;
     final Locale locale;
-    final SpeechBuilder builder;
+    final SpeechManager manager;
     ArrayList<String> text=null;
     volatile boolean hearing = false;
 
-    SpeechHearer(SpeechBuilder builder, Activity activity, Locale locale)
+    SpeechHearer(SpeechManager manager, Activity activity, Locale locale)
     {
-        this.builder = builder;
+        this.manager = manager;
         this.activity = activity;
         this.locale = locale;
     }
@@ -55,7 +55,7 @@ public class SpeechHearer
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, prompt);
-        activity.startActivityForResult(intent, SpeechBuilder.RECOGNIZE_SPEECH);
+        activity.startActivityForResult(intent, SpeechManager.RECOGNIZE_SPEECH);
         hearing = true;
     }
     void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -71,7 +71,7 @@ public class SpeechHearer
 
         }
         hearing = false;
-        builder.onHearerRecognized(text);
+        manager.onHearerRecognized(text);
     }
     public ArrayList<String> getText()
     {

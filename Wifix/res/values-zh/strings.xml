@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wifix(lite)</string>
+    <string name="reconnect">重新连接</string>
+    <string name="reassign">重新分配</string>
+    <string name="keepLock">保持无线网络</string>
+    <string name="exit">退出</string>
+    <string name="hide">隐藏</string>
+    <string name="about">关于</string>
+    <string name="about_description">Wifix(lite)</string>
+
+    <string name="about_accept">接受</string>
+    <string name="notify_keep_text">WiFi连接可能会耗尽电量</string>
+    <string name="spinner_time_prompt">保持连接时间</string>
+    <string name="battery_spinner_prompt">保持连接，直到电量降到</string>
+    <string name="not_enough_battery">电量不足</string>
+    <string name="keep_during">持续时间</string>
+    <string name="while_battery">电量&gt;=</string>
+
+</resources>

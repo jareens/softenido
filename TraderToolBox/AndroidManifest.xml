@@ -2,13 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.softenido.tradertoolbox"
       android:versionCode="1"
-      android:versionName="0.0.1">
+      android:versionName="0.0.1"
+      android:installLocation="auto">
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="8" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <application
             android:label="@string/app_name"
             android:description="@string/app_description"
-            android:icon="@drawable/tradertoolbox64"
+            android:icon="@drawable/tradertoolbox"
             android:debuggable="false" android:name=".TraderToolBoxApp">
         <activity android:name=".MainActivity"
                   android:launchMode="singleInstance"
@@ -20,8 +21,11 @@
         </activity>
         <activity android:name="com.softenido.droiddesk.util.ui.AboutGPL3Activity" android:label="@string/about" android:configChanges="keyboardHidden"/>
         <meta-data android:name="com.softenido.about.copyright" android:value="© 2012 Francisco Gómez Carrasco"/>
-        <meta-data android:name="com.softenido.about.url1" android:value="http://www.softenido.com/tradertoolbox"/>
-        <meta-data android:name="com.softenido.about.url2" android:value="http://softenido.googlecode.com/"/>
+
+        <meta-data android:name="com.softenido.about.url1" android:value="market://details?id=com.softenido.tradertoolbox"/>
+        <meta-data android:name="com.softenido.about.url2" android:value="market://search?q=pub:softenido"/>
+        <meta-data android:name="com.softenido.about.url3" android:value="http://www.softenido.com/tradertoolbox"/>
+
         <meta-data android:name="com.softenido.about.email" android:value="flikxxi@gmail.com"/>
 
         <activity android:name=".EquityRiskActivity" android:label="@string/equity_risk_manager"/>
@@ -30,7 +34,7 @@
         <!-- The application's publisher ID assigned by AdMob -->
         <!--suppress AndroidDomInspection -->
         <activity android:name="com.google.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
-        <meta-data android:name="ADMOB_PUBLISHER_ID" android:value="a14eb976d57f243"/>
+        <meta-data android:name="ADMOB_PUBLISHER_ID" android:value="a14fe6f34990597"/>
         <meta-data android:name="TEST_DEVICES" android:value="9A0F95E4EB91E3EF9D5ED44F29AE20EE"/>
   </application>
     <!-- AdMob SDK requires Internet permission -->

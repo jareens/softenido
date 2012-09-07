@@ -40,14 +40,14 @@
             <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
                 <TextView android:text="@string/stop_limit" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45" />
                 <TextView android:text="\@" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
-                <EditText android:id="@+id/stop_limit_stop" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="20" android:numeric="decimal" android:maxLength="9" android:lines="1" />
+                <EditText android:id="@+id/stop_limit_stop" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="25" android:numeric="decimal" android:maxLength="6" android:lines="1" />
                 <TextView android:text="\@" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
-                <EditText android:id="@+id/stop_limit_limit" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="25" android:editable="false" android:focusable="false" android:lines="1" android:background="#eaeaea" />
+                <EditText android:id="@+id/stop_limit_limit" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="20" android:editable="false" android:focusable="false" android:lines="1" android:background="#eaeaea" />
             </LinearLayout>
             <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
                 <TextView android:text="@string/stop_loss" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45"/>
                 <TextView android:text="\@" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="5" android:gravity="right" />
-                <EditText android:id="@+id/stop_loss" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="50" android:numeric="decimal" android:maxLength="9" android:lines="1"/>
+                <EditText android:id="@+id/stop_loss" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="50" android:numeric="decimal" android:maxLength="6" android:lines="1"/>
             </LinearLayout>
             <LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="horizontal">
                 <TextView android:text="@string/trade_ratio" android:layout_height="wrap_content" android:layout_width="0dp" android:layout_weight="45"/>

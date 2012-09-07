@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">Wifix (lite)</string>
     <string name="reconnect">Reconectar</string>
     <string name="reassign">Reasignar</string>
     <string name="keepLock">Mantener WiFi</string>
@@ -9,7 +10,7 @@
     <string name="about">Acerca de</string>
 
     <string name="about_accept">Aceptar</string>
-    <string name="notify_keep_text">La conexión WiFi podría agotar la batería"</string>
+    <string name="notify_keep_text">La conexión WiFi podría agotar la batería</string>
     <string name="spinner_time_prompt">Mantener la Conexión durante</string>
     <string name="battery_spinner_prompt">Mantener la Conexión hasta nivel de batería</string>
     <string name="not_enough_battery">Batería insuficiente</string>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.softenido.wifix"
-      android:versionCode="8"
-      android:versionName="0.3.1">
+      android:versionCode="9"
+      android:versionName="0.3.2"
+      android:installLocation="auto">
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="8" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
@@ -22,15 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <service android:name=".KeepWifiService"></service>
+        <service android:name=".KeepWifiService"/>
         <!--suppress AndroidDomInspection -->
         <activity android:name="com.softenido.droiddesk.util.ui.AboutGPL3Activity" android:label="@string/about" android:configChanges="keyboardHidden"/>
-        <meta-data android:name="com.softenido.about.copyright" android:value="© 2011 Francisco Gómez Carrasco"/>
-        <meta-data android:name="com.softenido.about.url1" android:value="http://www.softenido.com/"/>
-        <meta-data android:name="com.softenido.about.url2" android:value="http://softenido.googlecode.com/"/>
-        <meta-data android:name="com.softenido.about.email" android:value="flikxxi@gmail.com"/>
+        <meta-data android:name="com.softenido.about.copyright" android:value="© 2011-2012 Francisco Gómez Carrasco"/>
+        <meta-data android:name="com.softenido.about.url1" android:value="market://details?id=com.softenido.wifix"/>
+        <meta-data android:name="com.softenido.about.url2" android:value="market://search?q=pub:softenido"/>
+        <meta-data android:name="com.softenido.about.url3" android:value="http://www.softenido.com/wifix"/>
 
-		<!-- The application's publisher ID assigned by AdMob -->
+        <!-- The application's publisher ID assigned by AdMob -->
         <!--suppress AndroidDomInspection -->
         <activity android:name="com.google.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
         <meta-data android:name="ADMOB_PUBLISHER_ID" android:value="a14eb9111b4472b"/>

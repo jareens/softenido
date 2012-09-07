@@ -26,11 +26,16 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import com.softenido.droidcore.R;
 import com.softenido.droidcore.os.MetaData;
+import com.softenido.droiddesk.R;
 import com.softenido.droiddesk.admob.AdMob;
 import com.softenido.droiddesk.app.SendEmail;
 import com.softenido.droiddesk.app.SendEmailBuilder;
@@ -44,6 +49,7 @@ public class AboutActivity extends Activity
     static final String METADATA_COPYRIGHT = "com.softenido.about.copyright";
     static final String METADATA_URL1 = "com.softenido.about.url1";
     static final String METADATA_URL2 = "com.softenido.about.url2";
+    static final String METADATA_URL3 = "com.softenido.about.url3";
     static final String METADATA_EMAIL = "com.softenido.about.email";
 
     int layout = R.layout.about_generic;
@@ -55,6 +61,7 @@ public class AboutActivity extends Activity
     String copyRight         = "meta-data "+METADATA_COPYRIGHT;
     String url1              = "meta-data "+METADATA_URL1;
     String url2              = "meta-data "+METADATA_URL2;
+    String url3              = "meta-data "+METADATA_URL3;
     String email             = "meta-data "+METADATA_EMAIL;
 
     @SuppressWarnings("FieldCanBeLocal")
@@ -80,6 +87,7 @@ public class AboutActivity extends Activity
             copyRight   = bundle.getString(METADATA_COPYRIGHT);
             url1   = bundle.getString(METADATA_URL1);
             url2   = bundle.getString(METADATA_URL2);
+            url3   = bundle.getString(METADATA_URL3);
             email  = bundle.getString(METADATA_EMAIL);
         }
         catch (PackageManager.NameNotFoundException e)
@@ -100,9 +108,15 @@ public class AboutActivity extends Activity
         AboutCopyRight.setText(copyRight);
 
         TextView webUrl1Text = (TextView) findViewById(R.id.AboutWebUrl1);
-        webUrl1Text.setText(url1);
         TextView webUrl2Text = (TextView) findViewById(R.id.AboutWebUrl2);
+        TextView webUrl3Text = (TextView) findViewById(R.id.AboutWebUrl3);
+        webUrl1Text.setText(url1);
         webUrl2Text.setText(url2);
+        webUrl3Text.setText(url3);
+
+        MarketLinkify.addLinks(webUrl1Text);
+        MarketLinkify.addLinks(webUrl2Text);
+        MarketLinkify.addLinks(webUrl3Text);
 
         final Button bAccept= (Button) findViewById(R.id.bAboutAccept);
 
