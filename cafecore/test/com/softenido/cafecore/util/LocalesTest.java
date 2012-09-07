@@ -303,7 +303,7 @@ public class LocalesTest
     @Test
     public void testGetDisplayLanguage_String_Locale()
     {
-        assertNull(Locales.getDisplayLanguage(null,Locale.US));
+        assertNull(Locales.getDisplayLanguage((String)null,Locale.US));
         assertNull(Locales.getDisplayLanguage("garbaje not a country",Locale.US));
         
         Locale loc = new Locale("ES","","");
@@ -897,5 +897,4 @@ public class LocalesTest
         assertEquals(original, Locale.getDefault());
         
     }
-
 }

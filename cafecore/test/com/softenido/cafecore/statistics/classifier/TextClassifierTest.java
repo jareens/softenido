@@ -20,10 +20,12 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
+import com.softenido.cafecore.io.Files;
 import com.softenido.cafecore.util.Arrays6;
 import com.softenido.cafecore.util.Locales;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -143,6 +145,10 @@ public class TextClassifierTest
     @Test
     public void testClassify_InputStream() throws IOException, ClassifierFormatException, UnsupportedEncodingException, NoSuchAlgorithmException
     {
+        File home = Files.getHomeFile();
+        File dst  = new File(home,"cafecore-data");
+        dst.mkdir();
+        
         final boolean[] PARALLEL = {false, true};
         
         for(boolean parallel: PARALLEL)
@@ -164,7 +170,8 @@ public class TextClassifierTest
                 gz = new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(file));
                 classifier.coach(lang3, gz);
                 String file2 = "lang_"+lang3+".data";
-                classifier.save(new FileOutputStream(file2.toLowerCase()),lang3);
+                File   fd = new File(dst,file2.toLowerCase());
+                classifier.save(new FileOutputStream(fd),lang3);
             }
             Locale.getISOCountries();
             //uncomment this line to get a dictionariy

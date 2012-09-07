@@ -310,14 +310,41 @@ public class Locales
     {
         return LanguageHolder.INSTANCE.name(val);
     }
+    public static String[] getDisplayLanguage(String[] val)
+    {
+        String[] langs = new String[val.length];
+        for(int i=0;i<langs.length;i++)
+        {
+            langs[i] = getDisplayLanguage(val[i]);
+        }
+        return langs;
+    }
     public static String getDisplayLanguage(String val, Locale locale)
     {
         return LanguageHolder.INSTANCE.name(val, locale);
+    }
+    public static String[] getDisplayLanguage(String[] val, Locale locale)
+    {
+        String[] langs = new String[val.length];
+        for(int i=0;i<langs.length;i++)
+        {
+            langs[i] = getDisplayLanguage(val[i], locale);
+        }
+        return langs;
     }
     public static String getDisplayLanguage(String val, String language)
     {
         String iso2 = getISO2Language(language);
         return iso2!=null?getDisplayLanguage(val,new Locale(iso2,"","")):null;
+    }
+    public static String[] getDisplayLanguage(String[] val, String language)
+    {
+        String[] langs = new String[val.length];
+        for(int i=0;i<langs.length;i++)
+        {
+            langs[i] = getDisplayLanguage(val[i], language);
+        }
+        return langs;
     }
 
     public static String[] getDisplayLanguageCountry(Locale[] val)
@@ -339,6 +366,10 @@ public class Locales
     }
     public static String getDisplayLanguageCountry(Locale val, Locale locale)
     {
+        if(val==null)
+        {
+            return "";
+        }
         if(locale==null)
         {
             locale = val;
