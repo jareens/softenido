@@ -27,7 +27,9 @@ package com.softenido.cafecore.os;
  */
 public class OSName
 {
-    private static final String OS_NAME = "os.name";
+    private static final String OS_ARCH    = "os.arch";
+    private static final String OS_NAME    = "os.name";
+    private static final String OS_VERSION = "os.version";
 
     // string for os.name property only few tested
     private static final String DARWIN        = "darwin";
@@ -63,9 +65,14 @@ public class OSName
     private final boolean windowsVista;
     private final boolean windowsCE;
     private final boolean unknown;
-    
+
     private final String name;
-    public static final OSName os = new OSName(System.getProperty(OSName.OS_NAME))
+    private final String version;
+    private final String arch;
+    
+    private String name_version_arch=null;//use bening race condition for performance
+
+    public static final OSName os = new OSName(System.getProperty(OSName.OS_NAME),System.getProperty(OSName.OS_VERSION), System.getProperty(OSName.OS_ARCH))
     {
         @Override
         final boolean android()
@@ -81,10 +88,21 @@ public class OSName
             }
         }
     };
-            
+
     public OSName(String osName)
     {
-        name   = osName;
+        this(osName,"","");
+    }
+    public OSName(String osName, String version)
+    {
+        this(osName,version,"");
+    }
+    public OSName(String osName, String version, String arch)
+    {
+        this.name   = osName;
+        this.version= version;
+        this.arch   = arch;
+
         osName = osName.toLowerCase();
 
         boolean _linux = false;
@@ -295,5 +313,25 @@ public class OSName
     public boolean isAndroid()
     {
         return android;
+    }
+
+    public String getVersion()
+    {
+        return version;
+    }
+
+    public String getArch()
+    {
+        return arch;
+    }
+
+    @Override
+    public String toString()
+    {
+        if(name_version_arch==null)
+        {
+            name_version_arch = name +(version.length()>0?" "+version:"") + (arch.length()>0?" "+arch:"");
+        }
+        return name_version_arch;
     }
 }

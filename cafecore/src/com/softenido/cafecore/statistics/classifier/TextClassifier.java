@@ -380,6 +380,11 @@ public class TextClassifier
         TextClassifier.sampleLimit = sampleLimit;
     }
 
+    public boolean containsCategory(String category)
+    {
+        return classifier.containsCategory(category);
+    }
+
     public TextClassifier synchronizedClassifier()
     {
         return synchronizedClassifier(this);
@@ -440,6 +445,15 @@ public class TextClassifier
                 synchronized(lock)
                 {
                     return super.classify(text);
+                }
+            }
+
+            @Override
+            public boolean containsCategory(String category)
+            {
+                synchronized(lock)
+                {
+                    return super.containsCategory(category);
                 }
             }
 

@@ -23,7 +23,6 @@ package com.softenido.cafecore.profile;
 
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.Set;
 
 /*
  * To change this template, choose Tools | Templates
@@ -44,12 +43,11 @@ class NullProfiler extends Profiler
     }
 
     @Override
-    public void close(ProfileRecord rec)
+    public int close(ProfileRecord rec)
     {
         //do nothing
+        return 0;
     }
-    int k;
-
     @Override
     public String toString()
     {
@@ -59,13 +57,15 @@ class NullProfiler extends Profiler
 
 class NanoProfiler extends Profiler
 {
+    private static final int NANOS_PER_MILLIS = 1000000;
+
     private final Object lock = new Object();
-    private long count = 0;
-    private long nanos = 0;
-    private long min = Long.MAX_VALUE;
-    private long max = 0;
-    private long first = 0;
-    private long last = 0;
+    private long count   = 0;
+    private long nsSum = 0;
+    private long nsMin = Long.MAX_VALUE;
+    private long nsMax = 0;
+    private long nsFirst = 0;
+    private long nsLast = 0;
 
     NanoProfiler(String name)
     {
@@ -79,7 +79,7 @@ class NanoProfiler extends Profiler
     }
 
     @Override
-    public void close(ProfileRecord rec)
+    public int close(ProfileRecord rec)
     {
         if(rec!=null)
         {
@@ -87,52 +87,54 @@ class NanoProfiler extends Profiler
             synchronized(lock)
             {
                 count++;
-                nanos+=delta;
-                if(delta<min)
+                nsSum +=delta;
+                if(delta< nsMin)
                 {
-                    min = delta;
+                    nsMin = delta;
                 }
-                if(delta>max)
+                if(delta> nsMax)
                 {
-                    max = delta;
+                    nsMax = delta;
                 }
                 if(count==1)
                 {
-                    first = delta;
+                    nsFirst = delta;
                 }
-                last = delta;
+                nsLast = delta;
+                return (int)(delta/NANOS_PER_MILLIS);
             }
         }
+        return 0;
     }
     @Override
     public String toString()
     {
-        long num, millis, avgms, minms, maxms, firstms, lastms;
+        long num, msSum, msAvg, msMin, msMax, msFirst, msLast;
         synchronized(lock)
         {
             if(count==0)
             {
                 return "Profile{count=0}";
             }
-            num = count;
-            millis= nanos/1000000;
-            avgms = millis/num;
-            minms = min/1000000;
-            maxms = max/1000000;
-            firstms = max/1000000;
-            lastms = max/1000000;
+            num    = count;
+            msSum  = nsSum  / NANOS_PER_MILLIS;
+            msAvg  = msSum  / num;
+            msMin  = nsMin  / NANOS_PER_MILLIS;
+            msMax  = nsMax  / NANOS_PER_MILLIS;
+            msFirst= nsFirst/ NANOS_PER_MILLIS;
+            msLast = nsLast / NANOS_PER_MILLIS;
         }
         StringBuilder sb = new StringBuilder();
-        String ln  = lineFeed?"\n":" ";
-        String tab = lineFeed?"  ":"";
-
-        return "Profile["+name+"]{ num="+num+
-                  ", avg="+avgms+
-                "ms, sum="+millis+
-                "ms, min="+minms+
-                "ms, max="+maxms+
-                "ms, first="+firstms+
-                "ms, last="+lastms+"ms }";
+        String msSep = lineFeed?"ms,\n":"ms, ";
+        sb.append("Profile[").append(name).append("]{ num=").append(num).append(msSep)
+          .append("avg=").append(msAvg).append(msSep)
+                .append("sum=").append(msSum).append(msSep)
+                .append("nsMin=").append(msMin).append(msSep)
+                .append("nsMax=").append(msMax).append(msSep)
+                .append("nsFirst=").append(msFirst).append(msSep)
+                .append("nsLast=").append(msLast).append(msSep)
+                .append('}');
+        return sb.toString();
     }
     
 }
@@ -166,7 +168,7 @@ public abstract class Profiler
     }
     
     public abstract ProfileRecord open();
-    public abstract void close(ProfileRecord rec);
+    public abstract int close(ProfileRecord rec);
     
     static boolean lineFeed=false;//use lineFeed
 
