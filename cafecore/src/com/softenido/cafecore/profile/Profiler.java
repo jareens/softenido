@@ -125,15 +125,19 @@ class NanoProfiler extends Profiler
             msLast = nsLast / NANOS_PER_MILLIS;
         }
         StringBuilder sb = new StringBuilder();
+        String tab   = lineFeed?"  ":"";
+        String sep   = lineFeed?"\n":" ";
         String msSep = lineFeed?"ms,\n":"ms, ";
-        sb.append("Profile[").append(name).append("]{ num=").append(num).append(msSep)
-          .append("avg=").append(msAvg).append(msSep)
-                .append("sum=").append(msSum).append(msSep)
-                .append("nsMin=").append(msMin).append(msSep)
-                .append("nsMax=").append(msMax).append(msSep)
-                .append("nsFirst=").append(msFirst).append(msSep)
-                .append("nsLast=").append(msLast).append(msSep)
-                .append('}');
+        sb.append("Profile[").append(name).append(']').append(sep)
+          .append('{').append(sep)
+          .append(tab).append("num=").append(num).append(msSep)
+          .append(tab).append("avg=").append(msAvg).append(msSep)
+          .append(tab).append("sum=").append(msSum).append(msSep)
+          .append(tab).append("min=").append(msMin).append(msSep)
+          .append(tab).append("max=").append(msMax).append(msSep)
+          .append(tab).append("first=").append(msFirst).append(msSep)
+          .append(tab).append("last=").append(msLast).append(msSep)
+          .append('}');
         return sb.toString();
     }
     

@@ -63,10 +63,10 @@ public abstract class AbstractClassifier implements Classifier
     abstract String[] getCategories();
     abstract String[] getWords();
 
-    public final Score classify(String ... words)
+    public final Score classify(String[] words)
     {
-        Score[] scores = classify(new Score[0],words);
         Score max = null;
+        Score[] scores = classify(new Score[0],words);
         if(scores.length>0)
         {
             max = scores[0];
@@ -81,7 +81,7 @@ public abstract class AbstractClassifier implements Classifier
         return max;
     }
 
-    abstract public Score[] classify(Score[] scores, String... words);
+    abstract public Score[] classify(Score[] scores, String[] words);
     
     public final void load(InputStream in, String... allowedCategories) throws ClassifierFormatException
     {
@@ -216,14 +216,14 @@ public abstract class AbstractClassifier implements Classifier
         return new Classifier() 
         {
             private final Object lock = new Object();
-            public Score[] classify(Score[] scores, String... words)
+            public Score[] classify(Score[] scores, String[] words)
             {
                 synchronized(lock)
                 {
                     return classifier.classify(scores, words);    
                 }
             }
-            public Score classify(String... words)
+            public Score classify(String[] words)
             {
                 synchronized(lock)
                 {

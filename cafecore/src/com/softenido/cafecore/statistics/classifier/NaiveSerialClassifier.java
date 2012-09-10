@@ -175,7 +175,7 @@ public class NaiveSerialClassifier extends AbstractClassifier
     private static boolean cacheable = true;
     private static int     threshold = 1024;
     
-    public Score[] classify(Score[] scores,String ... words)
+    public Score[] classify(Score[] scores,String[] words)
     {
         final int k=this.categories.size();
         final int m=this.total;

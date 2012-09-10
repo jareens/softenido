@@ -25,8 +25,6 @@ import com.softenido.cafecore.util.SimpleInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
 
 /**
@@ -159,8 +157,12 @@ public class NaiveParallelClassifier extends AbstractClassifier
     private static boolean cacheable = true;
     private static int threshold = 1024;
 
-    public Score[] classify(Score[] scores, String... words)
+    public Score[] classify(Score[] scores, String[] words)
     {
+        if(this.count==0)
+        {
+            return new Score[0];
+        }
         final int k = this.count;
         final int m = this.total;
 

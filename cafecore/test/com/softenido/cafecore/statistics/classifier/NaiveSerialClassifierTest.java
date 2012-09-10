@@ -84,6 +84,7 @@ public class NaiveSerialClassifierTest
     @Test
     public void testProbability()
     {
+        String[] words = {"por","franci"};
         NaiveSerialClassifier instance = new NaiveSerialClassifier();
         
         instance.coach("es","por", 1);
@@ -93,7 +94,7 @@ public class NaiveSerialClassifierTest
         instance.coach("en","by", 1);
         instance.coach("en","franci", 1);
         
-        assertEquals("es", instance.classify("por","franci").getName());
+        assertEquals("es", instance.classify(words).getName());
         
         instance = new NaiveSerialClassifier();
         
@@ -104,7 +105,7 @@ public class NaiveSerialClassifierTest
         instance.coach("en","by", 20);
         instance.coach("en","franci", 20);
         
-        assertEquals("es", instance.classify("por","franci").getName());
+        assertEquals("es", instance.classify(words).getName());
 
     }
     
@@ -128,12 +129,12 @@ public class NaiveSerialClassifierTest
                 classifier.coach(lang, word, 1);
             }
         }
-        assertEquals("es", classifier.classify("debes","seguir","las","políticas","disponibles","a","través","de","los","servicios").getName());
-        assertEquals("fr", classifier.classify("vous","devez","respecter","les","règles","applicables","aux","services","que","vous","utilisez").getName());
-        assertEquals("de", classifier.classify("sie","sind","zur","einhaltung","der","richtlinien","verpflichtet","die","für","unsere","dienstegelten").getName());
-        assertEquals("it", classifier.classify("è","necessario","seguire","tutte","le","norme","messe","a","disposizione","dell’utente","all’interno","dei","servizi").getName());
-        assertEquals("en", classifier.classify("you","must","follow","any","policies","made","available","to","you","within","the","services","don't").getName());
-        assertEquals("en", classifier.classify("you","must","follow","any","policies","made","available","to","you","within","the","services","do","not").getName());
-        assertEquals("en", classifier.classify("you","xxx","no").getName());      
+        assertEquals("es", classifier.classify(new String[]{"debes","seguir","las","políticas","disponibles","a","través","de","los","servicios"}).getName());
+        assertEquals("fr", classifier.classify(new String[]{"vous","devez","respecter","les","règles","applicables","aux","services","que","vous","utilisez"}).getName());
+        assertEquals("de", classifier.classify(new String[]{"sie","sind","zur","einhaltung","der","richtlinien","verpflichtet","die","für","unsere","dienstegelten"}).getName());
+        assertEquals("it", classifier.classify(new String[]{"è","necessario","seguire","tutte","le","norme","messe","a","disposizione","dell’utente","all’interno","dei","servizi"}).getName());
+        assertEquals("en", classifier.classify(new String[]{"you","must","follow","any","policies","made","available","to","you","within","the","services","don't"}).getName());
+        assertEquals("en", classifier.classify(new String[]{"you","must","follow","any","policies","made","available","to","you","within","the","services","do","not"}).getName());
+        assertEquals("en", classifier.classify(new String[]{"you","xyz","no"}).getName());      
     }    
 }
