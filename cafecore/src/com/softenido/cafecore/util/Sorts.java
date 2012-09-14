@@ -27,7 +27,7 @@ import java.util.Comparator;
  *
  * @author franci
  */
-public class Sorts<T>
+public class Sorts
 {
     public static void reverse(int[] a)
     {
