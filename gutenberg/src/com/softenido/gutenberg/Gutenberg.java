@@ -1,6 +1,22 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Gutenberg.java
+ *
+ * Copyright (c) 2012 Francisco Gómez Carrasco
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Report bugs or new features to: flikxxi@gmail.com
  */
 package com.softenido.gutenberg;
 
@@ -21,12 +37,13 @@ public class Gutenberg
     {
         INSTANCE;
         private final String ISO3_LANGUAGES =
-                  "afr,amh,ara,ben,bul,cat,ces,dan,deu,ell,"
-                + "eng,epo,est,eus,fas,fil,fin,fra,glg,guj,"
-                + "heb,hin,hrv,hun,ind,isl,ita,jpn,kan,kor,"
-                + "lav,lit,mal,mar,msa,nld,nor,pol,por,ron,"
-                + "rus,slk,slv,spa,srp,swa,swe,tam,tel,tha,"
-                + "tur,ukr,urd,vie,zho,zul,";
+                    "deu,eng,fra,ita,jpn,kor,por,rus,spa,zho,";
+//                  "afr,amh,ara,ben,bul,cat,ces,dan,deu,ell,"
+//                + "ENG,epo,est,eus,fas,fil,fin,FRA,glg,guj,"
+//                + "heb,hin,hrv,hun,ind,isl,ITA,JPN,kan,KOR,"
+//                + "lav,lit,mal,mar,msa,nld,nor,pol,POR,ron,"
+//                + "RUS,slk,slv,SPA,srp,swa,swe,tam,tel,tha,"
+//                + "tur,ukr,urd,vie,ZHO,zul,";
         final String[] iso3Languages;
         Set<String> iso3Set;
         Holder()
@@ -53,7 +70,7 @@ public class Gutenberg
     {
         if(iso3!=null && iso3.length()>0 && Holder.INSTANCE.iso3Set.contains(iso3))
         {
-             String fileName = "lang_"+iso3+".data.gz";
+            String fileName = "lang_"+iso3+".data.gz";
             return new GZIPInputStream(Gutenberg.class.getResourceAsStream(fileName));
         }
         return null;
