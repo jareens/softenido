@@ -1,7 +1,7 @@
 /*
  * Dates.java
  *
- * Copyright (c) 2011  Francisco Gómez Carrasco
+ * Copyright (c) 2011-2012 Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,5 +106,30 @@ public class Dates
         todayCalendar.setTime(today);
         otherCalendar.setTime(other);
         return isTomorrow(todayCalendar, otherCalendar);
+    }
+
+    /**
+     * 
+     * @param today the date to be considered as today
+     * @param other the date with is compared
+     * @return true if both dates contains the same day
+     */
+    static public boolean isSameYear(Calendar today, Calendar other)
+    {
+        return today.get(Calendar.YEAR) == other.get(Calendar.YEAR);
+    }
+    /**
+     *
+     * @param today the date to be considered as today
+     * @param other the date with is compared
+     * @return true if both dates contains the same day
+     */
+    static public boolean isSameYear(Date today, Date other)
+    {
+        Calendar todayCalendar = new GregorianCalendar();
+        Calendar otherCalendar = new GregorianCalendar();
+        todayCalendar.setTime(today);
+        otherCalendar.setTime(other);
+        return isSameYear(todayCalendar, otherCalendar);
     }
 }

@@ -38,29 +38,24 @@ import java.util.Set;
  */
 public class TextClassifier
 {
-
     final Classifier classifier;
 
     TextClassifier(Classifier classifier)
     {
         this.classifier = classifier;
     }
-
-    public TextClassifier()
+    
+    public TextClassifier(String unmatched)
     {
-        this.classifier = new NaiveSerialClassifier();
+        this(new NaiveSerialClassifier(unmatched));
     }
-    static public TextClassifier getSerialClassifier()
+    public TextClassifier(String unmatched, String[] categories)
     {
-        return new TextClassifier(new NaiveSerialClassifier());
+        this(new NaiveParallelClassifier(unmatched, categories));
     }
-    static public TextClassifier getParallelClassifier(String[] categories)
+    public TextClassifier(String unmatched, int categories)
     {
-        return new TextClassifier(new NaiveParallelClassifier(categories));
-    }
-    static public TextClassifier getParallelClassifier(int categories)
-    {
-        return new TextClassifier(new NaiveParallelClassifier(categories));
+        this(new NaiveParallelClassifier(unmatched, categories));
     }
 
     public void coach(String category, String text)
@@ -144,11 +139,6 @@ public class TextClassifier
     }
     private static int sampleLimit = Integer.MAX_VALUE;
 
-    public Score classify(String... words)
-    {
-        return classifier.classify(words);
-    }
-
     Score classify(Scanner sc)
     {
         boolean ok = false;
@@ -222,7 +212,7 @@ public class TextClassifier
     {
         return asianCharsType.contains(UnicodeBlock.of(codepoint));
     }
-    String[] split(String text)
+    static String[] split(String text)
     {
         if(text.length()==0)
         {
@@ -391,7 +381,7 @@ public class TextClassifier
     }
     static TextClassifier synchronizedClassifier(TextClassifier classifier)
     {
-        return new TextClassifier(NaiveSerialClassifier.synchronizedClassifier(classifier.classifier))
+        return new TextClassifier(classifier.classifier)
         {
             final Object lock = new Object();
             @Override
@@ -409,15 +399,6 @@ public class TextClassifier
                 synchronized(lock)
                 {
                     super.coach(category, text);
-                }
-            }
-
-            @Override
-            public Score classify(String... words)
-            {
-                synchronized(lock)
-                {
-                    return super.classify(words);
                 }
             }
 
@@ -491,6 +472,24 @@ public class TextClassifier
                     super.saveGZ(out, allowedCategories);
                 }
             }
+
+            @Override
+            public String getUnmatched()
+            {
+                synchronized(lock)
+                {
+                    return super.getUnmatched();
+                }
+            }
+            @Override
+            public void setUnmatched(String unmatched)
+            {
+                synchronized(lock)
+                {
+                    super.setUnmatched(unmatched);
+                }
+            }
+            
         };
     }
 
@@ -503,5 +502,13 @@ public class TextClassifier
     {
         TextClassifier.group = group;
     }
-    
+
+    public void setUnmatched(String unmatched)
+    {
+        classifier.setUnmatched(unmatched);
+    }
+    public String getUnmatched()
+    {
+        return classifier.getUnmatched();
+    }
 }

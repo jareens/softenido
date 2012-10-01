@@ -42,8 +42,9 @@ public class NaiveParallelClassifier extends AbstractClassifier
     final HashMap<String, SimpleInteger> categoryIndex = new HashMap<String, SimpleInteger>(64);
     final HashMap<String, int[]> words = new HashMap<String, int[]>(8 * 1024);
 
-    public NaiveParallelClassifier(String[] categories)
+    public NaiveParallelClassifier(String unmatched, String[] categories)
     {
+        super(unmatched);
         this.size = categories.length;
         this.categoryName = categories.clone();
         this.categoryCount = new int[categories.length];
@@ -54,8 +55,9 @@ public class NaiveParallelClassifier extends AbstractClassifier
         }
     }
 
-    public NaiveParallelClassifier(int categories)
+    public NaiveParallelClassifier(String unmatched, int categories)
     {
+        super(unmatched);
         this.size = categories;
         this.categoryName = new String[categories];
         this.categoryCount = new int[categories];
@@ -127,23 +129,6 @@ public class NaiveParallelClassifier extends AbstractClassifier
     //k constant to elude divide by 0
     //m multiply to elude negative probability
     //note: no optimizar manualmente (pierde eficiencia), dejarlo a jit hace mejor trabajo
-    private static double probability(int w, int c, int k, int m)//full
-    {
-        //los Ncw+1/Nc+nc son los mejores descatados los demás
-        double n = w * k + 1;
-        double d = c + k;
-        double p = n / d;
-        //los que hacen log del valor o un multiplo log(p)*m ó log(p*m) son los mejores
-        //los que suman log(p+m) son sólo regulares (sobre todo con los CJK
-        //return Math.log(p*m);
-        return Math.log(p * m);
-    }
-
-    //w count of evidences given class and word
-    //c count of evidences given class
-    //k constant to elude divide by 0
-    //m multiply to elude negative probability
-    //note: no optimizar manualmente (pierde eficiencia), dejarlo a jit hace mejor trabajo
     private double[] probability(int[] w, int[] c, int k, int m)//full
     {
         double[] p = new double[size];
@@ -169,6 +154,13 @@ public class NaiveParallelClassifier extends AbstractClassifier
         final boolean cached = cacheable && (words.length >= threshold);
         ArrayList<Score> sc = new ArrayList<Score>(count);
         //Logger.getLogger(NaiveParallelClassifier.class.getName()).log(Level.INFO,"indexes:{0} words:{1} ",new Object[]{indexes.size(),words.length});
+
+        //add a poison value to denote unmatched
+        if(unmatched!=null)
+        {
+            // the minimun posible score plus float min value (double is maybe too small)
+            sc.add(new Score(unmatched,probability(0, 0, k, m) * words.length + Float.MIN_VALUE));
+        }
 
         final HashMap<String, double[]> cache = cached ? new HashMap<String, double[]>(words.length * 2) : null;
         double[] p = new double[size];
@@ -196,16 +188,11 @@ public class NaiveParallelClassifier extends AbstractClassifier
                 p[i] += pw[i];
             }
         }
-        if (scores.length < count)
-        {
-            scores = new Score[count];
-        }
-
         for (int i = 0; i < count; i++)
         {
-            scores[i] = new Score(categoryName[i], p[i]);
+            sc.add(new Score(categoryName[i], p[i]));
         }
-        return scores;
+        return sc.toArray(scores);
     }
 
     private int getIndex(String category)

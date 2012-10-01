@@ -39,6 +39,13 @@ import java.util.zip.GZIPOutputStream;
  */
 public abstract class AbstractClassifier implements Classifier
 {
+    String unmatched;
+
+    public AbstractClassifier(String unmatched)
+    {
+        this.unmatched = unmatched;
+    }
+    
     final void coach(String category, String word, double probability, double weigh)
     {
         coach(category, word, probability * weigh);
@@ -281,6 +288,23 @@ public abstract class AbstractClassifier implements Classifier
                     classifier.saveGZ(out, allowedCategories);
                 }
             }
+
+            public void setUnmatched(String unmatched)
+            {
+                synchronized(lock)
+                {
+                    classifier.setUnmatched(unmatched);
+                }
+            }
+
+            public String getUnmatched()
+            {
+                synchronized(lock)
+                {
+                    return classifier.getUnmatched();
+                }
+            }
+            
             @Override
             public String toString()
             {
@@ -306,4 +330,33 @@ public abstract class AbstractClassifier implements Classifier
         }
         return allowed;
     }
+    
+    //w count of evidences given class and word
+    //c count of evidences given class
+    //k constant to elude divide by 0
+    //m multiply to elude negative probability
+    //note: no optimizar manualmente (pierde eficiencia), dejarlo a jit hace mejor trabajo
+    static double probability(int w, int c, int k, int m)//full
+    {
+        //los Ncw+1/Nc+nc son los mejores descatados los demás
+        double n = w * k + 1;
+        //double d = (w>0)? (c + k) : (m + k);
+        double d = w>0? c + k : k + m;
+        double p = n / d;
+        //los que hacen log del valor o un multiplo log(p)*m ó log(p*m) son los mejores
+        //los que suman log(p+m) son sólo regulares (sobre todo con los CJK
+        return Math.log(p*m+1);
+    }
+
+    public String getUnmatched()
+    {
+        return unmatched;
+    }
+
+    public void setUnmatched(String unmatched)
+    {
+        this.unmatched = unmatched;
+    }
+
+    
 }

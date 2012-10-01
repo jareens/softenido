@@ -346,6 +346,19 @@ public class Locales
         }
         return langs;
     }
+    public static String getDisplayLanguageNative(String val)
+    {
+        return getDisplayLanguage(val,val);
+    }
+    public static String[] getDisplayLanguageNative(String[] val)
+    {
+        String[] langs = new String[val.length];
+        for(int i=0;i<langs.length;i++)
+        {
+            langs[i] = getDisplayLanguageNative(val[i]);
+        }
+        return langs;
+    }
 
     public static String[] getDisplayLanguageCountry(Locale[] val)
     {

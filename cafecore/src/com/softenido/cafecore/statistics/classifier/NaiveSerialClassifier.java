@@ -38,6 +38,15 @@ public class NaiveSerialClassifier extends AbstractClassifier
     final HashMap<String,SimpleInteger> words = new HashMap<String,SimpleInteger>(8*1024);
     final HashMap<Pair,SimpleInteger> cells = new HashMap<Pair,SimpleInteger>(16*1024);
 
+    public NaiveSerialClassifier(String unmatched)
+    {
+        super(unmatched);
+    }
+    public NaiveSerialClassifier()
+    {
+        super(null);
+    }
+
     public void coach(String category, String word, int n)
     {
         final Pair cell = new Pair(category,word);
@@ -155,22 +164,6 @@ public class NaiveSerialClassifier extends AbstractClassifier
         return this.total;
     }
 
-    //w count of evidences given class and word
-    //c count of evidences given class
-    //k constant to elude divide by 0
-    //m multiply to elude negative probability
-    //note: no optimizar manualmente (pierde eficiencia), dejarlo a jit hace mejor trabajo
-    public static double probability(int w, int c, int k, int m)//full
-    {
-         //los Ncw+1/Nc+nc son los mejores descatados los demás
-        double n = w*k + 1;
-        double d = c + k;
-        double p = n / d;
-        //los que hacen log del valor o un multiplo log(p)*m ó log(p*m) son los mejores
-        //los que suman log(p+m) son sólo regulares (sobre todo con los CJK
-        //return Math.log(p*m);
-        return Math.log(p*m);
-    }
     // no ordenar, tarda más
     private static boolean cacheable = true;
     private static int     threshold = 1024;
@@ -184,6 +177,12 @@ public class NaiveSerialClassifier extends AbstractClassifier
         ArrayList<Score> sc = new ArrayList<Score>(categories.size());
         //Logger.getLogger(NaiveSerialClassifier.class.getName()).log(Level.INFO,"categories:{0} words:{1} ",new Object[]{categories.size(),words.length});
 
+        //add a poison value to denote unmatched
+        if(unmatched!=null)
+        {
+            sc.add(new Score(unmatched,probability(0, 0, k, m) * words.length + Double.MIN_VALUE));
+        }
+                
         for(String c : categories.keySet())
         {
             final HashMap<String,Double> cache = cached?new HashMap<String,Double>(words.length*2):null;

@@ -147,4 +147,21 @@ public class DatesTest
         assertEquals(false, Dates.isYesterday(today1, today2));
         assertEquals(false, Dates.isYesterday(today2, today1));
     }
+
+    /**
+     * Test of isSameYear method, of class Dates.
+     */
+    @Test
+    public void testIsSameYear()
+    {
+        Calendar c21 = new GregorianCalendar(1972, 1, 1, 1, 1, 1);
+        Calendar c22 = new GregorianCalendar(1972, 2, 2, 2, 2, 2);
+        Calendar c33 = new GregorianCalendar(1973, 3, 3, 3, 3, 3);
+        Date d21 = c21.getTime();
+        Date d22 = c22.getTime();
+        Date d33 = c33.getTime();
+
+        assertEquals(true,  Dates.isSameYear(c22, c21));
+        assertEquals(false, Dates.isSameYear(c22, c33));
+    }
 }

@@ -1,0 +1,50 @@
+Dijkstra
+ “La belleza es más importante en informática que en ninguna otra tecnología debido a la gran complejidad del software. La belleza es la defensa definitiva contra la complejidad”
+-- David Gelernter
+ “La principal causa de complejidad en el software es que los fabricantes implementan casi todas las características que solicitan los usuarios”
+-- Niklaus Wirth
+ “La simplicidad es un prerequisito para la fiabilidad”
+-- Edsger W. Dijkstra   Calidad “Intentar mejorar la calidad del software incrementando el número de pruebas unitarias es como querer perder peso pesándote más a menudo”
+-- Steve McConnell
+ “Chicos, seamos honestos. Sturgeon era un optimista. Mucho más del 90% del código es una mierda”
+-- Viro (sobre la  Revelación de Sturgeon)
+ “Copiar código de internet y pegarlo en un sistema para producción es como usar un chicle encontrado en la calle”
+-- Mike Johnson
+ “Se trata más de ser suficientemente bueno que de ser bueno o malo”
+-- James Bach
+ “Todo el software apesta, ya sea código abierto o propietario. La cuestión es lo que puede hacerse con un trozo concreto de esa porquería, y ahí es donde tener el código fuente se vuelve importante”
+-- Al Viro
+ “Introducir automatización de pruebas es a veces como un romance: tormentoso, emocional, y que acaba siendo un fracaso espectacular o o un éxito espectacular”
+-- B. Bereza-Jarocinski
+  “Un test que revela un bug ha sido exitoso, no al revés”
+-- Boriz Beizer   Proyectos “Lo más importante para hacer las cosas es saber qué puede dejarse sin hacer”
+-- Oswald Chambers
+ “Una mala gestión puede incrementar los costes del software más rápidamente que cualquier otro factor”
+-- Barry Boehm
+  “Solemos sobreestimar lo que podemos conseguir en 1 año pero subestimamos lo que podemos conseguir en 10”
+-- Héctor García
+ “La mejor forma de que un proyecto se acabe más rápido es empezarlo antes”
+-- Jim Highsmith
+ “El prototipado reduce los costes y tiempos de desarrollo un 40%”
+-- Larry Bernstein
+  “¿Que cuándo usar desarrollo iterativo? Deberías usar un desarrollo iterativo sólo en los proyectos en los que quieras tener éxito”
+-- Martin Fowler
+ “Corrige los errores en las especificaciones lo antes posible. Si lo haces más tarde, costará un 500% más si te encuentras en la fase de diseño, 1000% más si estás codificando, 2.000% más en fase de pruebas, y 20.000% si el sistema está en producción”
+-- Barry Boehm
+  “Sólo entre el 40 y 60% de los requisitos de un sistema se conoce al comienzo del proyecto. El resto emerge con el uso. Barry Boehm acuñó el término ‘requisitos emergentes’ para describirlos”
+-- Larry Bernstein
+  “Un programa nunca está completo menos del 90%, ni más del 95%”
+-- Terry Baker
+ “La presión del tiempo corrompe gradualmente el estándar de calidad y perfección del ingeniero, y esto tiene un efecto muy negativo tanto en las personas como en los productos”
+-- Niklaus Wirth
+ “Construir grandes aplicaciones es todavía realmente difícil. Hacer que sean útiles a una organización durante años es casi imposible”
+-- Malcolm P. Atkinson
+ “Me gustan las fechas límite. Me encanta el zumbido que producen al pasar de largo”
+-- Douglas Adams   Desarrolladores “Una organización que trata a sus programadores como idiotas conseguirá pronto tener programadores dispuestos y capaces para comportarse como sólo como idiotas”
+-- Bjarne Stroustrup
+ “La validación de XHTML es puro masoquismo. Sólo recomendable a aquellos que disfrutan con el dolor. O a programadores. No siempre se puede notar la diferencia”
+-- Jeff Atwood
+ “Gran parte de la excitación que nos produce nuestro trabajo se debe a que realmente no sabemos lo que estamos haciendo”
+-- E. Dijkstra
+ “Los programadores de verdad pueden escribir código ensamblador en cualquier lenguaje”
+-- Larry Wall   Diseño “Si haces una afirmación, un programador dice ‘

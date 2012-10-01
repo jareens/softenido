@@ -20,11 +20,14 @@
  */
 package com.softenido.cafecore.text;
 
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import org.junit.*;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,18 +37,20 @@ import static org.junit.Assert.assertEquals;
  */
 public class HumanDateFormatTest
 {
-    Calendar yesterdayCalendar1;
-    Calendar yesterdayCalendar2;
-    Calendar todayCalendar1;
-    Calendar todayCalendar2;
-    Calendar tomorrowCalendar1;
-    Calendar tomorrowCalendar2;
-    Date yesterday1;
-    Date yesterday2;
-    Date today1;
-    Date today2;
-    Date tomorrow1;
-    Date tomorrow2;
+    
+    Calendar yesterdayCalendar;
+    Calendar todayCalendar;
+    Calendar nowCalendar;
+    Calendar tomorrowCalendar;
+    Calendar januaryCalendar;
+    Calendar februaryCalendar;
+    Date yesterday;
+    Date today;
+    Date now;
+    Date tomorrow;
+    Date january;
+    Date february;
+    
     public HumanDateFormatTest()
     {
     }
@@ -63,18 +68,22 @@ public class HumanDateFormatTest
     @Before
     public void setUp()
     {
-        yesterdayCalendar1 = new GregorianCalendar(1972, 11, 6, 1, 1, 1);
-        yesterdayCalendar2 = new GregorianCalendar(1972, 11, 6, 2, 2, 2);
-        todayCalendar1     = new GregorianCalendar(1972, 11, 7, 1, 1, 1);
-        todayCalendar2     = new GregorianCalendar(1972, 11, 7, 2, 2, 2);
-        tomorrowCalendar1  = new GregorianCalendar(1972, 11, 8, 1, 1, 1);
-        tomorrowCalendar2  = new GregorianCalendar(1972, 11, 8, 2, 2, 2);
-        yesterday1         = yesterdayCalendar1.getTime();
-        yesterday2         = yesterdayCalendar2.getTime();
-        today1             = todayCalendar1.getTime();
-        today2             = todayCalendar2.getTime();
-        tomorrow1          = tomorrowCalendar1.getTime();
-        tomorrow2          = tomorrowCalendar2.getTime();
+        int nov = Calendar.NOVEMBER;
+        int jan = Calendar.JANUARY;
+        int feb = Calendar.FEBRUARY;
+        yesterdayCalendar  = new GregorianCalendar(2011, nov, 6, 9, 19, 29);
+        todayCalendar      = new GregorianCalendar(2011, nov, 7, 9, 19, 29);
+        nowCalendar        = new GregorianCalendar(2011, nov, 7, 19, 29, 39);
+        tomorrowCalendar   = new GregorianCalendar(2011, nov, 8, 9, 19, 29);
+        januaryCalendar    = new GregorianCalendar(2011, jan, 11, 9, 19, 29);
+        februaryCalendar   = new GregorianCalendar(2012, feb, 22, 9, 19, 29);
+        
+        yesterday = yesterdayCalendar.getTime();
+        today     = todayCalendar.getTime();
+        now       = nowCalendar.getTime();
+        tomorrow  = tomorrowCalendar.getTime();
+        january   = januaryCalendar.getTime();
+        february  = februaryCalendar.getTime();
     }
     
     @After
@@ -88,14 +97,85 @@ public class HumanDateFormatTest
     @Test
     public void testFormat()
     {
-        HumanDateFormat shdf = (HumanDateFormat) HumanDateFormat.getShortInstance(today1);
-        assertEquals("2:02", shdf.format(today2));
-        assertEquals("Yesterday", shdf.format(yesterday2));
-        assertEquals("Tomorrow", shdf.format(tomorrow2));
+//        for(Locale loc : Locale.getAvailableLocales())
+//        {
+//            //if(loc.getCountry().length()==0)
+//            if(!loc.toString().startsWith("es_"))
+//                continue;
+//            System.out.println(loc.toString());
+//            DateFormat tsdf;
+//            DateFormat dsdf;
+//            for(int i=DateFormat.FULL;i<=DateFormat.SHORT;i++)
+//            {
+//                dsdf = SimpleDateFormat.getDateInstance(i,loc);
+//                tsdf = SimpleDateFormat.getTimeInstance(i,loc);
+//                Calendar c = tsdf.getCalendar();
+//                System.out.println("( "+dsdf.format(c.getTime())+" )( "+tsdf.format(c.getTime())+" )");
+//            }
+//        }
+        HumanDateFormat hdf;
+        hdf= (HumanDateFormat) HumanDateFormat.getShortInstance(now, Locale.US);
+        assertEquals("Nov 6", hdf.format(yesterday));
+        assertEquals("9:19 AM", hdf.format(today));
+        assertEquals("7:29 PM", hdf.format(now));
+        assertEquals("Nov 8", hdf.format(tomorrow));
+        assertEquals("Jan 11", hdf.format(january));
+        assertEquals("2012-02-22", hdf.format(february));
+        
+        hdf = (HumanDateFormat) HumanDateFormat.getShortInstance(now, new Locale("es_ES"));
+        assertEquals("nov 6", hdf.format(yesterday));
+        assertEquals("9:19", hdf.format(today));
+        assertEquals("19:29", hdf.format(now));
+        assertEquals("nov 8", hdf.format(tomorrow));
+        assertEquals("ene 11", hdf.format(january));
+        assertEquals("2012-02-22", hdf.format(february));
+        
+        hdf= (HumanDateFormat) HumanDateFormat.getMediumInstance(now, Locale.US);
+        assertEquals("Nov 6 9:19 AM", hdf.format(yesterday));
+        assertEquals("9:19:29 AM", hdf.format(today));
+        assertEquals("7:29:39 PM", hdf.format(now));
+        assertEquals("Nov 8 9:19 AM", hdf.format(tomorrow));
+        assertEquals("Jan 11 9:19 AM", hdf.format(january));
+        assertEquals("2012-02-22 9:19 AM", hdf.format(february));
+        
+        hdf = (HumanDateFormat) HumanDateFormat.getMediumInstance(now, new Locale("es_ES"));
+        assertEquals("nov 6 9:19", hdf.format(yesterday));
+        assertEquals("9:19:29", hdf.format(today));
+        assertEquals("19:29:39", hdf.format(now));
+        assertEquals("nov 8 9:19", hdf.format(tomorrow));
+        assertEquals("ene 11 9:19", hdf.format(january));
+        assertEquals("2012-02-22 9:19", hdf.format(february));
 
-        HumanDateFormat lhdf = (HumanDateFormat) HumanDateFormat.getLongInstance(today1);
-        assertEquals("Today 2:02", lhdf.format(today2));
-        assertEquals("Yesterday 2:02", lhdf.format(yesterday2));
-        assertEquals("Tomorrow 2:02", lhdf.format(tomorrow2));
+        hdf= (HumanDateFormat) HumanDateFormat.getLongInstance(now, Locale.US);
+        assertEquals("Nov 6 9:19:29 AM", hdf.format(yesterday));
+        assertEquals("9:19:29 AM", hdf.format(today));
+        assertEquals("7:29:39 PM", hdf.format(now));
+        assertEquals("Nov 8 9:19:29 AM", hdf.format(tomorrow));
+        assertEquals("Jan 11 9:19:29 AM", hdf.format(january));
+        assertEquals("2012-02-22 9:19:29 AM", hdf.format(february));
+        
+        hdf = (HumanDateFormat) HumanDateFormat.getLongInstance(today, new Locale("es_ES"));
+        assertEquals("nov 6 9:19:29", hdf.format(yesterday));
+        assertEquals("9:19:29", hdf.format(today));
+        assertEquals("19:29:39", hdf.format(now));
+        assertEquals("nov 8 9:19:29", hdf.format(tomorrow));
+        assertEquals("ene 11 9:19:29", hdf.format(january));
+        assertEquals("2012-02-22 9:19:29", hdf.format(february));
+
+        hdf= (HumanDateFormat) HumanDateFormat.getFullInstance(now, Locale.US);
+        assertEquals("2011-11-06 9:19:29 AM", hdf.format(yesterday));
+        assertEquals("2011-11-07 9:19:29 AM", hdf.format(today));
+        assertEquals("2011-11-07 7:29:39 PM", hdf.format(now));
+        assertEquals("2011-11-08 9:19:29 AM", hdf.format(tomorrow));
+        assertEquals("2011-01-11 9:19:29 AM", hdf.format(january));
+        assertEquals("2012-02-22 9:19:29 AM", hdf.format(february));
+
+        hdf = (HumanDateFormat) HumanDateFormat.getFullInstance(now, new Locale("es_ES"));
+        assertEquals("2011-11-06 9:19:29", hdf.format(yesterday));
+        assertEquals("2011-11-07 9:19:29", hdf.format(today));
+        assertEquals("2011-11-07 19:29:39", hdf.format(now));
+        assertEquals("2011-11-08 9:19:29", hdf.format(tomorrow));
+        assertEquals("2011-01-11 9:19:29", hdf.format(january));
+        assertEquals("2012-02-22 9:19:29", hdf.format(february));
     }
 }

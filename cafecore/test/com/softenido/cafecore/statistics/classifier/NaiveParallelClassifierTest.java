@@ -87,7 +87,7 @@ public class NaiveParallelClassifierTest
         String[] categories = {"es","ca","en"};
         String[] words = {"por","franci"};
 
-        NaiveParallelClassifier instance = new NaiveParallelClassifier(categories);
+        NaiveParallelClassifier instance = new NaiveParallelClassifier("",categories);
         
         instance.coach("es","por", 1);
         instance.coach("es","franci", 1);
@@ -98,7 +98,7 @@ public class NaiveParallelClassifierTest
         
         assertEquals("es", instance.classify(words).getName());
         
-        instance = new NaiveParallelClassifier(3);
+        instance = new NaiveParallelClassifier("",3);
         
         instance.coach("es","por", 1);
         instance.coach("es","franci", 1);
@@ -117,7 +117,7 @@ public class NaiveParallelClassifierTest
     @Test
     public void testClassify_StringArr() throws IOException
     {
-        NaiveParallelClassifier classifier = new NaiveParallelClassifier(LEARN.length);
+        NaiveParallelClassifier classifier = new NaiveParallelClassifier("",LEARN.length);
         
         for(int i=0;i<LEARN.length;i++)
         {

@@ -897,4 +897,35 @@ public class LocalesTest
         assertEquals(original, Locale.getDefault());
         
     }
+
+    /**
+     * Test of getDisplayLanguageNative method, of class Locales.
+     */
+    @Test
+    public void testGetDisplayLanguageNative_String()
+    {
+        String[] iso2 = Locale.getISOLanguages();
+        for(String code : iso2)
+        {
+            String expected = Locales.getDisplayLanguage(code,code);
+            String result = Locales.getDisplayLanguageNative(code);
+            assertEquals(expected, result);    
+        }
+    }
+
+    /**
+     * Test of getDisplayLanguageNative method, of class Locales.
+     */
+    @Test
+    public void testGetDisplayLanguageNative_StringArr()
+    {
+        String[] iso2 = Locale.getISOLanguages();
+        String[] expected = new String[iso2.length];
+        for(int i=0;i<iso2.length;i++)
+        {
+            expected[i] = Locales.getDisplayLanguageNative(iso2[i]);
+        }
+        String[] result = Locales.getDisplayLanguageNative(iso2);
+        assertArrayEquals(expected, result);
+    }
 }

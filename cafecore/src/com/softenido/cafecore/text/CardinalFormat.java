@@ -173,7 +173,7 @@ public class CardinalFormat
         Arrays.sort(rules,cmp);
     }
 
-    ResourceBundle getResourceBundle(Locale locale)
+    static ResourceBundle getResourceBundle(Locale locale)
     {
         return ResourceBundle.getBundle(CardinalFormat.class.getName(), locale);
     }

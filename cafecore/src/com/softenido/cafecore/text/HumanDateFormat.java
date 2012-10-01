@@ -1,7 +1,7 @@
 /*
  * HumanDateFormat.java
  *
- * Copyright (c) 2011  Francisco Gómez Carrasco
+ * Copyright (c) 2011-2012 Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -36,85 +38,134 @@ import java.util.GregorianCalendar;
  */
 public class HumanDateFormat extends DateFormat
 {
-    final GregorianCalendar today;
-    final DateFormat dFmt;
-    final DateFormat tFmt;
-    final DateFormat dtFmt;
-    final int style;
+    private final int style;
+    private final GregorianCalendar today;
+    private final DateFormat todayTime;
+    private final DateFormat sameYearDate;
+    private final DateFormat sameYearTime;
+    private final DateFormat absoluteDate;
+    private final DateFormat absoluteTime;
+    
 
-    HumanDateFormat(Date today, int style)
+    private HumanDateFormat(Date today, int style, Locale locale)
     {
         this.today = new GregorianCalendar();
         this.today.setTime(today);
-        this.style = style;
-        if(style == DateFormat.SHORT)
+        this.style=style;
+        switch(style)
         {
-            this.dFmt = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
-            this.tFmt = SimpleDateFormat.getTimeInstance(DateFormat.SHORT);
-            this.dtFmt = null;
+            default:
+            case DateFormat.SHORT:
+                this.todayTime = SimpleDateFormat.getTimeInstance(DateFormat.SHORT, locale);
+                this.sameYearDate = new SimpleDateFormat("MMM d", locale);
+                this.sameYearTime = null;
+                this.absoluteDate = new SimpleDateFormat("yyyy-MM-dd", locale);
+                this.absoluteTime = null;
+                break;
+            case DateFormat.MEDIUM:
+                this.todayTime = SimpleDateFormat.getTimeInstance(DateFormat.MEDIUM, locale);
+                this.sameYearDate = new SimpleDateFormat("MMM d", locale);
+                this.sameYearTime = SimpleDateFormat.getTimeInstance(DateFormat.SHORT, locale);
+                this.absoluteDate = new SimpleDateFormat("yyyy-MM-dd", locale);
+                this.absoluteTime = this.sameYearTime;
+                break;
+            case DateFormat.LONG:
+                this.todayTime = SimpleDateFormat.getTimeInstance(DateFormat.MEDIUM, locale);
+                this.sameYearDate = new SimpleDateFormat("MMM d", locale);
+                this.sameYearTime = this.todayTime;
+                this.absoluteDate = new SimpleDateFormat("yyyy-MM-dd", locale);
+                this.absoluteTime = this.sameYearTime;
+                break;
+            case DateFormat.FULL:
+                this.todayTime = null;
+                this.sameYearDate = null;
+                this.sameYearTime = null;
+                this.absoluteDate = new SimpleDateFormat("yyyy-MM-dd", locale);
+                this.absoluteTime = SimpleDateFormat.getTimeInstance(DateFormat.MEDIUM, locale);
+                // cuando sepa como hay que poner 9:19:29  como 09:19:29
+                break;
         }
-        else
-        {
-            this.dFmt = SimpleDateFormat.getDateInstance(DateFormat.SHORT);
-            this.tFmt = SimpleDateFormat.getTimeInstance(DateFormat.SHORT);
-            this.dtFmt = SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
-        }
+        
+    }
+    public static HumanDateFormat getFullInstance(Date today, Locale locale)
+    {
+        return new HumanDateFormat(today, DateFormat.FULL, locale);
+    }
+    public static HumanDateFormat getFullInstance(Date today)
+    {
+        return new HumanDateFormat(today,DateFormat.FULL, Locale.getDefault());
+    }
+    public static HumanDateFormat getLongInstance(Date today, Locale locale)
+    {
+        return new HumanDateFormat(today,DateFormat.LONG, locale);
     }
     public static HumanDateFormat getLongInstance(Date today)
     {
-        return new HumanDateFormat(today,DateFormat.LONG);
+        return new HumanDateFormat(today,DateFormat.LONG, Locale.getDefault());
+    }
+    public static HumanDateFormat getMediumInstance(Date today, Locale locale)
+    {
+        return new HumanDateFormat(today,DateFormat.MEDIUM, locale);
+    }
+    public static HumanDateFormat getMediumInstance(Date today)
+    {
+        return new HumanDateFormat(today,DateFormat.MEDIUM, Locale.getDefault());
+    }
+    public static HumanDateFormat getShortInstance(Date today, Locale locale)
+    {
+        return new HumanDateFormat(today,DateFormat.SHORT, locale);
     }
     public static HumanDateFormat getShortInstance(Date today)
     {
-        return new HumanDateFormat(today,DateFormat.SHORT);
+        return new HumanDateFormat(today,DateFormat.SHORT, Locale.getDefault());
     }
     @Override
     public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition pos)
     {
-        Calendar other = new GregorianCalendar();
-        other.setTime(date);
-        if(style==DateFormat.SHORT)
+        DateFormat dfDate;
+        DateFormat dfTime;
+        if(style==DateFormat.FULL)
         {
-            if(Dates.isToday(this.today,other))
-            {
-                return tFmt.format(date, toAppendTo, pos);
-            }
-            else if(Dates.isTomorrow(this.today,other))
-            {
-                return toAppendTo.append("Tomorrow");
-            }
-            else if(Dates.isYesterday(this.today,other))
-            {
-                return toAppendTo.append("Yesterday");
-            }
-            return dFmt.format(date, toAppendTo, pos);
+            dfDate = absoluteDate;
+            dfTime = absoluteTime;
         }
         else
         {
-            if(Dates.isToday(this.today,other))
+            Calendar other = new GregorianCalendar();
+            other.setTime(date);
+
+            if(todayTime!= null && Dates.isToday(this.today,other))
             {
-                toAppendTo.append("Today ");
-                return tFmt.format(date, toAppendTo, pos);
+                return todayTime.format(date, toAppendTo, pos);
             }
-            else if(Dates.isTomorrow(this.today,other))
+            if(Dates.isSameYear(this.today,other) )
             {
-                toAppendTo.append("Tomorrow ");
-                return tFmt.format(date, toAppendTo, pos);
+                dfDate = sameYearDate;
+                dfTime = sameYearTime;
             }
-            else if(Dates.isYesterday(this.today,other))
+            else
             {
-                toAppendTo.append("Yesterday ");
-                return tFmt.format(date, toAppendTo, pos);
+                dfDate = absoluteDate;
+                dfTime = absoluteTime;
             }
-            return dtFmt.format(date, toAppendTo, pos);
         }
-        
+        toAppendTo = dfDate.format(date, toAppendTo, pos);
+        if(dfTime!=null)
+        {
+            toAppendTo.append(' ');
+            pos.setEndIndex(pos.getEndIndex()+1);
+            toAppendTo = dfTime.format(date, toAppendTo, pos);
+        }
+        return toAppendTo;
     }
 
     @Override
     public Date parse(String source, ParsePosition pos)
     {
-        return dtFmt.parse(source, pos);
+        return absoluteDate.parse(source, pos);
     }
-    
+    static ResourceBundle getResourceBundle(Locale locale)
+    {
+        return ResourceBundle.getBundle(HumanDateFormat.class.getName(), locale);
+    }    
 }
