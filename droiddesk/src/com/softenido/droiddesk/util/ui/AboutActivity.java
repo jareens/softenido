@@ -25,6 +25,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -35,12 +36,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import com.softenido.cafecore.os.OSName;
+import com.softenido.cafecore.util.Locales;
+import com.softenido.droidcore.os.AndroidVersion;
 import com.softenido.droidcore.os.MetaData;
 import com.softenido.droiddesk.R;
 import com.softenido.droiddesk.admob.AdMob;
 import com.softenido.droiddesk.app.SendEmail;
 import com.softenido.droiddesk.app.SendEmailBuilder;
 
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
@@ -118,6 +123,10 @@ public class AboutActivity extends Activity
         MarketLinkify.addLinks(webUrl1Text);
         MarketLinkify.addLinks(webUrl2Text);
         MarketLinkify.addLinks(webUrl3Text);
+
+        TextView about_locale = (TextView) findViewById(R.id.about_locale);
+        final String os_locale = AndroidVersion.os.NAME+" "+AndroidVersion.os.RELEASE+" ("+Locale.getDefault()+")";
+        about_locale.setText(os_locale);
 
         final Button bAccept= (Button) findViewById(R.id.bAboutAccept);
 

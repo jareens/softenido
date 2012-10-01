@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="about_accept">Aceptar</string>
     <string name="about_feedback">Observaciones</string>
     <string name="about_feedback_title">Enviar Observaciones vía e-mail</string>
     <string name="gplv3_brief">Este programa es software libre: usted puede redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General GNU publicada por la Fundación para el Software Libre, ya sea la versión 3 de la Licencia, o (a su elección) cualquier versión posterior.</string>

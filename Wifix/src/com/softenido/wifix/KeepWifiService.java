@@ -127,7 +127,7 @@ public class KeepWifiService extends LocalService implements GenericObserver<Kee
                 observable.setChanged();
                 observable.notifyObservers();
             }
-            setSticky(keep);
+            //aki setSticky(keep);
         }
     }
 
@@ -146,7 +146,7 @@ public class KeepWifiService extends LocalService implements GenericObserver<Kee
                 observable.setChanged();
                 observable.notifyObservers();
             }
-            setSticky(keep);
+            //aki setSticky(keep);
         }
     }
 
@@ -161,7 +161,6 @@ public class KeepWifiService extends LocalService implements GenericObserver<Kee
 
         if(active)
         {
-
             NotificationBuilder nb = new NotificationBuilder(this);
 
             String ticker = getString(R.string.app_name)+" - "+getString(R.string.keepLock);
@@ -176,11 +175,14 @@ public class KeepWifiService extends LocalService implements GenericObserver<Kee
             android.app.Notification n = nb.getNotification();
 
             mgr.notify(NOTIFICATION_ID, n);
+            this.startForeground(NOTIFICATION_ID, n);
         }
         else
         {
             mgr.cancel(NOTIFICATION_ID);
+            this.stopForeground(true);
         }
+
     }
 
     private void startCountDown()

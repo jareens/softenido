@@ -112,7 +112,6 @@ public class SpeechManager
         //does nothing, for overriding
     }
 
-
     public void shutdown()
     {
         speaker.shutdown();

@@ -144,7 +144,7 @@ public class NotificationBuilder
 
     /**
      * Set the large number at the right-hand side of the notification.  This is
-     * equivalent to setContentInfo, although it might show the number in a different
+     * equivalent to setContentInfo, although it might toast the number in a different
      * font size for readability.
      */
     public NotificationBuilder setNumber(int number) {

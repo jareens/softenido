@@ -53,16 +53,21 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
     private boolean success;
     private final Object lock = new Object();
 
-    static private final int IDLE = 0;
-    static private final int PLAYING = 1;
-    static private final int PAUSED = 2;
-    static private final int STOPPED = 3;
-
-    private volatile int status = IDLE;
+    private static enum Status
+    {
+        IDLE, PLAYING, PAUSED, STOPPED;
+    }
+    private volatile Status status = Status.IDLE;
 
     public static final int LANG_AVAILABLE = TextToSpeech.LANG_AVAILABLE;
     public static final int LANG_COUNTRY_AVAILABLE = TextToSpeech.LANG_COUNTRY_AVAILABLE;
     public static final int LANG_COUNTRY_VAR_AVAILABLE = TextToSpeech.LANG_COUNTRY_VAR_AVAILABLE;
+
+    static interface OnSpeakingListener
+    {
+        void onSpeaking();
+    }
+    private final List<OnSpeakingListener> listener = Collections.synchronizedList(new ArrayList<OnSpeakingListener>());
 
     SpeechSpeaker(SpeechManager manager, Activity activity, Locale locale)
     {
@@ -248,8 +253,9 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
     {
         synchronized (lock)
         {
-            status = STOPPED;
-            tts.stop();
+            status = Status.STOPPED;
+            if(tts!=null)
+                tts.stop();
             lock.notifyAll();
         }
     }
@@ -258,7 +264,7 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
     {
         synchronized (lock)
         {
-            status = PAUSED;
+            status = Status.PAUSED;
             tts.stop();
         }
     }
@@ -266,7 +272,7 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
     {
         synchronized (lock)
         {
-            status = IDLE;
+            status = Status.IDLE;
             lock.notifyAll();
         }
     }
@@ -288,6 +294,7 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
 
     public String speak(String text, boolean flush, boolean wait)
     {
+        status = Status.PLAYING;
         return speak(text, flush, wait, Integer.toString(count.incrementAndGet()));
     }
     String speak(final String text, final boolean flush, final boolean wait, final String utterance)
@@ -304,7 +311,6 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
 
             //save utterance for completed event
             utteranceLock = utterance;
-
             int ret;
             if(text.startsWith(SILENCE))
             {
@@ -315,8 +321,11 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
             {
                 ret = tts.speak(text, flush?TextToSpeech.QUEUE_FLUSH:TextToSpeech.QUEUE_ADD, params);
             }
-
-            if(ret!=TextToSpeech.SUCCESS || status==PAUSED || status==STOPPED)
+            for(OnSpeakingListener item:listener)
+            {
+                item.onSpeaking();
+            }
+            if(ret!=TextToSpeech.SUCCESS || status==Status.PAUSED || status==Status.STOPPED)
             {
                 return null;
             }
@@ -324,12 +333,13 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
             {
                 if(wait)
                 {
+                    Log.d("utterance","utterance="+utterance+" lock.wait()");
                     lock.wait();
                 }
             }
             catch(InterruptedException ex)
             {
-                Logger.getLogger(SpeechSpeaker.class.getName()).log(Level.WARNING,"Exception waitting utterance {0}",utterance);
+                Logger.getLogger(SpeechSpeaker.class.getName()).log(Level.SEVERE,"Exception waitting utterance {0}",utterance);
             }
             return utterance;
         }
@@ -341,7 +351,12 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
         {
             if(utterance.equals(this.utteranceLock))
             {
+                Log.d("utterance","utterance="+utterance+" lock.notifyAll()");
                 lock.notifyAll();
+            }
+            else
+            {
+                Logger.getLogger(SpeechSpeaker.class.getName()).log(Level.SEVERE,"onUtteranceCompleted waiting for utterance "+this.utteranceLock+" found "+utterance);
             }
             manager.onUtteranceCompleted(utterance);
         }
@@ -350,6 +365,7 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
     private final Object playLock = new Object();
     public String[] speak(final String[] text, final boolean flush, boolean wait)
     {
+        status = Status.PLAYING;
         // create utterances id for text
         final String utterances[] = new String[text.length];
         for(int i=0;i<text.length;i++)
@@ -365,7 +381,7 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
                 {
                     synchronized(lock)
                     {
-                        for(int i = 0; i < text.length && status!=STOPPED && tts!=null; i++)
+                        for(int i = 0; i < text.length && status!=Status.STOPPED && tts!=null; i++)
                         {
                             do
                             {
@@ -383,19 +399,19 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
                                             Log.e(SpeechSpeaker.class.getName(), "Exception in PAUSED status");
                                         }
                                     case IDLE:
-                                        status= PLAYING;
+                                        status=Status.PLAYING;
                                     case PLAYING:
                                         speak(text[i], i==0?flush:false, true, utterances[i] );
                                         break;
                                     default:
                                         Log.w(SpeechSpeaker.class.getName(),"Unknown status "+status);
-                                        status=IDLE;
+                                        status=Status.IDLE;
                                         break;
                                 }
                             }
-                            while( status==PAUSED);
+                            while( status==Status.PAUSED);
                         }
-                        status = IDLE;
+                        status = Status.IDLE;
                     }
                 }
             }
@@ -412,5 +428,13 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
         }
 
         return utterances;
+    }
+    public void registerOnSpeakingListener(OnSpeakingListener listener)
+    {
+        this.listener.add(listener);
+    }
+    public void unregisterOnSpeakingListener(OnSpeakingListener listener)
+    {
+        this.listener.remove(listener);
     }
 }

@@ -1,7 +1,7 @@
 /*
  * Wifix.java
  *
- * Copyright (c) 2011  Francisco Gómez Carrasco
+ * Copyright (c) 2012  Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.*;
 import com.softenido.cafecore.text.HumanDateFormat;
@@ -43,9 +44,9 @@ import java.util.Locale;
 
 public class Wifix extends Activity implements GenericObserver<KeepWifiService,Battery>
 {
-    static final long MIN = 60*1000;
+    static final long MIN  = 60*1000;
     static final long HOUR = 60*MIN;
-    static final long DAY = 24*HOUR;
+    static final long DAY  = 24*HOUR;
     static final long[] KEEP_MILLIS = {5*MIN, 15*MIN, 30*MIN, 1*HOUR, 2*HOUR, 6*HOUR, 8*HOUR, 12*HOUR, 1*DAY, 7*DAY, 30*DAY, 365*DAY};
     static final int[] KEEP_LEVELS = {10, 20, 30, 40, 50, 60, 70, 80, 90};
 
@@ -55,9 +56,9 @@ public class Wifix extends Activity implements GenericObserver<KeepWifiService,B
     @SuppressWarnings("FieldCanBeLocal")
     private AdMob admob=null;
 
-    private volatile LocalServiceConnection connection =null;
-    private volatile KeepWifiService keep =null;
-    final HumanDateFormat hdf = HumanDateFormat.getShortInstance(new Date());
+    private static volatile LocalServiceConnection connection =null;
+    private static volatile KeepWifiService keep =null;
+    final HumanDateFormat hdf = HumanDateFormat.getMediumInstance(new Date());
     boolean initialized=false;
 
     CheckBox cbKeepLock;
@@ -70,11 +71,10 @@ public class Wifix extends Activity implements GenericObserver<KeepWifiService,B
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main);
-
-        //LocalService.setToastDebug(true);
-
         admob = AdMob.addBanner(this,R.id.mainLayout);
+        //LocalService.setToastDebug(true);
 
         final Button bConnect = (Button) findViewById(R.id.bReconnect);
         final Button bReassign= (Button) findViewById(R.id.bReassign);
@@ -223,7 +223,7 @@ public class Wifix extends Activity implements GenericObserver<KeepWifiService,B
                 batterySpinner.setSelection(getBatteryOption(conf));
                 initialized = false;
             }
-            textTime.setText( active?hdf.format(keep.getConf().getFinishTime()):"");
+            textTime.setText( active?hdf.format(keep.getConf().getFinishTime()).toLowerCase():"");
         }
         else
         {
@@ -256,7 +256,6 @@ public class Wifix extends Activity implements GenericObserver<KeepWifiService,B
         }
         return 0;
     }
-
 
     public void update(KeepWifiService sender, Battery data)
     {
