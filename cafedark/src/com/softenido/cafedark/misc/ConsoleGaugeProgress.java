@@ -1,7 +1,7 @@
 /*
- *  ConsoleGauge.java
+ *  ConsoleGaugeProgress.java
  *
- *  Copyright (C) 2007  Francisco Gómez Carrasco
+ *  Copyright (C) 2007-2012 Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,13 +21,14 @@
  */
 package com.softenido.cafedark.misc;
 
+import com.softenido.cafecore.misc.AbstractGaugeProgress;
 import java.io.Console;
 
 /**
  *
  * @author franci
  */
-public class ConsoleGauge extends AbstractGauge
+public class ConsoleGaugeProgress extends AbstractGaugeProgress
 {
 
     private int lastLen = 0;
@@ -36,14 +37,14 @@ public class ConsoleGauge extends AbstractGauge
     private boolean prefixBreak = true;
     private boolean newLine = false;
 
-    public ConsoleGauge()
+    public ConsoleGaugeProgress()
     {
         super();
     }
 
     public void paint(double done, String txt)
     {
-        StringBuffer buf = new StringBuffer("\r");
+        StringBuilder buf = new StringBuilder("\r");
         buf.append(txt);
         for (int i = txt.length(); i < lastLen; i++)
         {
