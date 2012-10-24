@@ -83,15 +83,23 @@ public class GutenbergTest
     @Test
     public void testGetLanguageData() throws IOException
     {
+        InputStream data;
         String[] iso3 = Gutenberg.getISO3Languages();
         for(int i=0;i<iso3.length;i++)
         {
-            InputStream data = Gutenberg.getLanguageDataStream(iso3[i]);
+            data = Gutenberg.getLanguageDataStream(iso3[i],false);
+            assertNotNull(data);
+            data.close();
+
+            data = Gutenberg.getLanguageDataStream(iso3[i],true);
             assertNotNull(data);
             data.close();
         }
-        assertNull(Gutenberg.getLanguageDataStream(null));
-        assertNull(Gutenberg.getLanguageDataStream(""));
-        assertNull(Gutenberg.getLanguageDataStream("a file that not exists"));
+        assertNull(Gutenberg.getLanguageDataStream(null, false));
+        assertNull(Gutenberg.getLanguageDataStream(null, true));
+        assertNull(Gutenberg.getLanguageDataStream("", false));
+        assertNull(Gutenberg.getLanguageDataStream("", true));
+        assertNull(Gutenberg.getLanguageDataStream("a file that not exists", false));
+        assertNull(Gutenberg.getLanguageDataStream("a file that not exists", true));
     }
 }

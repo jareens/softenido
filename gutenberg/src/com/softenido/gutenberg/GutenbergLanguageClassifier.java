@@ -24,6 +24,8 @@ import com.softenido.cafecore.statistics.classifier.AbstractLanguageClassifier;
 import com.softenido.cafecore.statistics.classifier.ClassifierFormatException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,7 +35,13 @@ import java.util.logging.Logger;
  */
 public class GutenbergLanguageClassifier extends AbstractLanguageClassifier
 {
-
+    private static final String HI = ".hi";
+    private static final String LO = ".lo";
+    private final HashSet<String> categoryLock = new HashSet<String>();
+    private volatile boolean twoPasses = false;
+    private final ArrayList<String> langsLo = new ArrayList<String>();
+    private final Object lock = new Object();
+    
     public GutenbergLanguageClassifier(String unmatched)
     {
         super(unmatched);
@@ -48,17 +56,49 @@ public class GutenbergLanguageClassifier extends AbstractLanguageClassifier
     {
         super(unmatched, languages);
     }
-    
+    public boolean add(final String... languages)
+    {
+        if(twoPasses)
+        {
+            String[] langs = new String[languages.length];
+            for(int i=0;i<languages.length;i++)
+            {
+                langs[i] = languages[i]+HI;
+                langsLo.add(languages[i]+LO);
+            }
+            return super.add(langs);
+        }
+        else
+        {
+            return super.add(languages);
+        }
+    }
+
     protected boolean initialize(String item)
     {
+        boolean hi = item.endsWith(HI) || !item.endsWith(LO);
+        boolean lo = item.endsWith(LO) || !item.endsWith(HI);
+        String lang = (hi!=lo)? item.substring(0, item.length()-3) : item;
         try
         {
-            //los gz son descomprimidos automáticamente por la plataforma
             InputStream in;
-            in = Gutenberg.getLanguageDataStream(item);
-            if(in!=null)
+            if(hi && !categoryLock.contains(lang+HI))
             {
-                this.load(in);
+                in = Gutenberg.getLanguageDataStream(lang, false);
+                if(in!=null)
+                {
+                    this.load(in, false);
+                    categoryLock.add(item+HI);
+                }
+            }
+            if(lo && !categoryLock.contains(lang+LO))
+            {
+                in = Gutenberg.getLanguageDataStream(lang, true);
+                if(in!=null)
+                {
+                    this.load(in, false);
+                    categoryLock.add(item+LO);
+                }
             }
             return true;
         }
@@ -71,5 +111,32 @@ public class GutenbergLanguageClassifier extends AbstractLanguageClassifier
             Logger.getLogger(GutenbergLanguageClassifier.class.getName()).log(Level.SEVERE,"dictionary has wrong format", ex);
         }
         return false;
+    }
+
+    @Override
+    public boolean containsCategory(String category)
+    {
+        return categoryLock.contains(category);
+    }
+
+    public boolean isTwoPasses()
+    {
+        return twoPasses;
+    }
+
+    public void setTwoPasses(boolean twoPasses)
+    {
+        this.twoPasses = twoPasses;
+    }
+
+    public boolean firstPass()
+    {
+        return initialize();
+    }
+    public boolean secondPass()
+    {
+        super.add(langsLo.toArray(new String[0]));
+        langsLo.clear();
+        return initialize();
     }
 }

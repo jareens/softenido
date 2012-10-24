@@ -22,6 +22,7 @@ package com.softenido.gutenberg;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.SequenceInputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -65,14 +66,16 @@ public class Gutenberg
     {
         return Holder.INSTANCE.iso3Languages.clone();
     }
-
-    public static InputStream getLanguageDataStream(String iso3) throws IOException
+    public static boolean gz = false;
+    public static InputStream getLanguageDataStream(String iso3, boolean low) throws IOException
     {
         if(iso3!=null && iso3.length()>0 && Holder.INSTANCE.iso3Set.contains(iso3))
         {
-            String fileName = "lang_"+iso3+".data.gz";
-            return new GZIPInputStream(Gutenberg.class.getResourceAsStream(fileName));
+            String fileName = "lang_"+iso3+".data."+(low?"lo":"hi");
+            InputStream is = Gutenberg.class.getResourceAsStream(fileName);
+            return gz ? new GZIPInputStream(is) : is; 
         }
         return null;
     }
 }
+

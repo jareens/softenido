@@ -20,6 +20,9 @@
  */
 package com.softenido.gutenberg;
 
+import com.softenido.cafecore.statistics.classifier.ClassifierFormatException;
+import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -79,16 +82,35 @@ public class GutenbergLanguageClassifierTest
     public void tearDown()
     {
     }
-
+    
     @Test
     public void testSomeMethod()
     {
         String[] langs = Gutenberg.getISO3Languages();
-        GutenbergLanguageClassifier classifier = new GutenbergLanguageClassifier("(null)", langs);
+        final AtomicInteger counterInitialize= new AtomicInteger();
+        final AtomicInteger counterLoad= new AtomicInteger();
         
+        GutenbergLanguageClassifier classifier = new GutenbergLanguageClassifier("(null)", langs)
+        {
+            @Override
+            protected boolean initialize(String item)
+            {
+                counterInitialize.incrementAndGet();
+                return super.initialize(item);
+            }
+
+            @Override
+            public void load(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException
+            {
+                counterLoad.incrementAndGet();
+                super.load(in, strict, allowedCategories);
+            }
+        };
         for(String[] item:data)
         {
             assertEquals(item[0], classifier.classify(item[1]).getName());
         }
+        // there are only 15 files 10 hi and 5 lo
+        assertEquals(15, counterLoad.get());
     }
 }
