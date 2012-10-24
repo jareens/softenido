@@ -25,6 +25,7 @@
  */
 package com.softenido.cafecore.text;
 
+import com.softenido.cafecore.util.Strings;
 import java.util.ArrayList;
 
 /**
@@ -35,7 +36,7 @@ public class Paragraphs
 {
     static final String SEP = "\n[\\s]*\n";
     static final String UFFF = "[\ufff0-\uffff]+";
-    static final String TRIM = "(^\\s+)|(\\s+$)";
+    //static final String TRIM = "(^\\s+)|(\\s+$)";
     
 
     public static String[] split(String doc)
@@ -47,14 +48,14 @@ public class Paragraphs
         //clean dirty characters
         doc = cleanUnicode?doc.replaceAll(UFFF, " "):doc;
         //trim
-        doc = doc.replaceAll(TRIM, "");
+        doc = Strings.trimWhitespaces(doc);
         //split into paragraphs
         String[] array = doc.split(SEP);
         
         ArrayList<String> list = new ArrayList<String>(array.length);
         for(String item : array)
         {
-            item = item.replaceAll(TRIM, "");
+            item = Strings.trimWhitespaces(item);
             if(item.length()>0)
             {
                 list.add(item);

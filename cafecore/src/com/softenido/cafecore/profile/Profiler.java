@@ -161,6 +161,11 @@ public abstract class Profiler
     {
         return manager.demandLogger(name);
     }
+    public static Profiler getProfiler(Profiler profiler, String name)
+    {
+        return (profiler!=null) ? profiler : manager.demandLogger(name);
+    }
+
     public static void setActive(boolean value)
     {
         manager = ProfileManager.getProfileManager(value);

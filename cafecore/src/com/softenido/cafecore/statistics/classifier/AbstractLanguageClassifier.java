@@ -20,6 +20,10 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
+import com.softenido.cafecore.misc.GaugeProgress;
+import com.softenido.cafecore.misc.NullGaugeProgress;
+import com.softenido.cafecore.misc.ProxyGaugeProgress;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,16 +38,19 @@ import java.util.concurrent.LinkedBlockingQueue;
  *
  * @author franci
  */
-public abstract class AbstractLanguageClassifier extends TextClassifier
+public abstract class AbstractLanguageClassifier extends BaseTextClassifier implements LanguageClassifier
 {
+    private volatile boolean initialized = false;
     private final Object lock = new Object();    
-    final Queue<String> langs = new LinkedBlockingQueue<String>();
+    private final Queue<String> langs = new LinkedBlockingQueue<String>();
+
+    private volatile ProxyGaugeProgress gaugeProgress = new ProxyGaugeProgress();
 
     public AbstractLanguageClassifier(String unmatched)
     {
         super(unmatched);
+        initialized=false;
     }
-
     public AbstractLanguageClassifier(String unmatched, String[] languages)
     {
         super(unmatched, languages.length);//use number to let the initialize do it work properly
@@ -51,41 +58,56 @@ public abstract class AbstractLanguageClassifier extends TextClassifier
         {
             langs.addAll(Arrays.asList(languages));
         }
+        initialized=false;
     }
-
     public AbstractLanguageClassifier(String unmatched, int languages)
     {
         super(unmatched, languages);
     }
-    public void add(final String... languages)
+    public boolean add(final String... languages)
     {
         synchronized(lock)
         {
-            langs.addAll(Arrays.asList(languages));
-        }
-    }
-    public final void prepare()
-    {
-        new Thread(new Runnable() 
-        {
-            public void run()
+            if(langs.addAll(Arrays.asList(languages)))
             {
-                initialize();
+                initialized=false;
+                return true;
             }
-        }).start();
+        }
+        return false;
     }
-    public void initialize()
+
+    public boolean initialize()
     {
+        if(initialized)
+        {
+            return false;
+        }
+        boolean ret = false;
         synchronized (lock)
         {
-            for(String item=langs.poll();item!=null;item=langs.poll())
+            if(langs.size()>0)
             {
-                if(!this.containsCategory(item))
+                int i=0;
+                gaugeProgress.setPrefix("loading...");
+                gaugeProgress.start(langs.size());
+                for(String item=langs.poll();item!=null;item=langs.poll())
                 {
-                    initialize(item);
+                    ret=true;
+                    gaugeProgress.setPrefix("loading ["+item+"]");
+                    gaugeProgress.setMax(langs.size()+i+1);
+                    gaugeProgress.setVal(i);
+                    if(!this.containsCategory(item))
+                    {
+                        initialize(item);
+                    }
+                    gaugeProgress.setVal(++i);
                 }
+                gaugeProgress.close();
             }
+            initialized=true;
         }
+        return ret;
     }
     protected abstract boolean initialize(String item);    
     
@@ -111,16 +133,21 @@ public abstract class AbstractLanguageClassifier extends TextClassifier
     }
 
     @Override
-    public void save(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException
+    public void save(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException
     {
         initialize();
-        super.save(out, allowedCategories);
+        super.save(out, min, max,  allowedCategories);
     }
 
     @Override
-    public void saveGZ(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+    public void saveGZ(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
     {
         initialize();
-        super.saveGZ(out, allowedCategories);
+        super.saveGZ(out, min, max, allowedCategories);
+    }
+
+    public void setGaugeProgress(GaugeProgress gp)
+    {
+        this.gaugeProgress.setProxy(gp);
     }
 }

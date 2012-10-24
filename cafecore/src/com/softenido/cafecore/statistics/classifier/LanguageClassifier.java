@@ -1,5 +1,5 @@
 /*
- * Classifier.java
+ * LanguageClassifier.java
  *
  * Copyright (c) 2012  Francisco Gómez Carrasco
  *
@@ -20,6 +20,7 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
+import com.softenido.cafecore.misc.GaugeProgress;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -30,17 +31,14 @@ import java.security.NoSuchAlgorithmException;
  *
  * @author franci
  */
-public interface Classifier
+public interface LanguageClassifier
 {
-    Score[] classify(Score[] scores, String[] words);
-    Score classify(String[] words);
-    boolean containsCategory(String category);
-    void setUnmatched(String unmatched);
-    String getUnmatched();
-    void coach(String category, String word, int n);
-    void coach(String category, String[] word, int[] n);
-    void load(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException;
+    boolean add(final String... languages);
+    Score classify(String text);
+    Score classify(InputStream text);
     void save(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException;
-    void loadGZ(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException;
     void saveGZ(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException;
+    void setGaugeProgress(GaugeProgress gp);
+    boolean firstPass();
+    boolean secondPass();
 }

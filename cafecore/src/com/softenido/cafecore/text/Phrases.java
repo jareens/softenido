@@ -26,8 +26,11 @@
 package com.softenido.cafecore.text;
 
 
+import com.softenido.cafecore.util.Strings;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,69 +40,46 @@ import java.util.regex.Pattern;
  */
 public class Phrases
 {
+    private static final Logger logger = Logger.getLogger(Phrases.class.getName());
     //(phrase)+(punct)+(spaces)+(phrases)
 
-    static final String OPEN   = "¿¡({\\[";
-    static final String CLOSE  = "。.:;?!)}\\]";
-    static final String ALL  = ".:;¿?¡!。\"“”()\\[\\]{}";
+    static final String OPEN   = "¿¡({\\[«";
+    static final String CLOSE  = "。.:;?!)}\\]…|»";
     static final String NEXT   = "($|(.|\n)+)";
-    static final String QUOTE  = "\"“”";
+    static final String QUOTES  = "\"“”»«";
+    static final String QUOTE  = "'‘’";
+    static final String TABSPACE  = " \t";
+    static final String ANYSPACE  = "\\s\u00a0";
+    static final String ALL  = OPEN+CLOSE+QUOTES;
+    
 
     private static String _(String exp)
     {
         String regex = exp.replace("A", ALL)
-                          .replace("a", ALL+"'")
+                          .replace("a", ALL+QUOTE)
                           .replace("O", OPEN)
                           .replace("C", CLOSE)
                           .replace("c", CLOSE+",")
-                          .replace("Q", QUOTE)
-                          .replace("q", "'")
+                          .replace("Q", QUOTES)
+                          .replace("q", QUOTE)
                           .replace("N", NEXT)
-                          .replace("S","\\s\u00a0")//all kind of spaces
-                          .replace("s"," \t");//spaces in the same line;
+                          .replace("s",TABSPACE)//spaces in the same line
+                          .replace("S",ANYSPACE);//all kind of spaces
         return regex;
     }
     //simple
     static final String[] REGEX =
     {
-        "([S]*[q]+[^a]+[C]*[s]*[q]+[s]*[c]*)([S]N)",
-        "([^a]+[S]+)([q]N)",
-        "([S]*[O]+[^A]+[C]+)([S]N)",
-        
-        "([^A]+)($)",
-        "([O]*[^A]+[C]+[s]*[,]*)(N)",
-        "([^A]+[S]+)([Q]N)",
-        "([^A]+[s]+)([O]N)",
-
-        "([S]*[Q]+[^A]+[C]*[s]*[Q]+[s]*[c]*)([S]N)",
-        
-        "([S]*[O]+[s]*[Q]+[^A]+[C]*[s]*[Q]+[s]*[C]+)([ ]N)",
-//        "([ ]*[Q]+[ ]*[O]+[^P]+[C]+[ ]*[Q]+[ ]*[C]*)([ ]N)",
-        "([S]*[O]+[s]*[Q]+[^A]+[C]+)([ ]N)",
-
-//        "( *[B]+[Q]+[^P]+[Q]+[b]+)( N)",
-        
-//        "([^P]+? +)([“]N)",        
-
-        
-//        "( *[^P]+ +)([Q]+N)",
-//        "( *[^P]+[Q]+)N",
-
-//        "( *[Q]+[^P]+)($)",
-//        "( *[Q]+[^P]+[C]+)N",
-//        "( *[¿]+[^P]+[?]+)N",
-//        "( *[¡]+[^P]+[!]+)N",
-//        "( *[“][^P]+[”]+)N",
-//        "( *[(]+[^P]+[)]+)N",
-//        "( *[¿]+[^P]+[?]+)N",
-//        "( *[¡]+[^P]+[!]+)N",
-//        "( *[“][^P]+)N",
-//        "( *[(]+[^P]+)N",
-//        "( *[¿]+[^P]+)N",
-//        "( *[¡]+[^P]+)N",
-        
+        "([^A]+[.]+)",//1
+        "([OQqS]*[^A]+[cQqS]*([S]|$))",//2 ([open|quote]+text+[close|quote))+(quote+text)
+        "([OQqS]*[^A]+[cQqS]*[Qq]([S]|$))",//3 ([open|quote]+text+[close|quote))+(quote+text)
+        "([OQqS]*[^A]+[cQqS]*)",//4
+        "([OQqS]*?[^A]+?[cQqS]*?)",//5 ([open|quote]+text+[close|quote))+(open+text)
     };
+    
     static Pattern[] patterns = null;
+    static int[] statistics = null;
+    static volatile int failures = 0;
     static Pattern[] getPatterns()
     {
         if(patterns==null)
@@ -109,124 +89,170 @@ public class Phrases
             {
                 patterns[i] = Pattern.compile(_(REGEX[i]));
             }
+            statistics = new int[patterns.length];
         }
         return patterns;
-    }
-    
+    }   
+   
     public static List<String> splitByPattern(String paragraph)
     {
         ArrayList<String> phrases = new ArrayList<String>();
-        
-        Pattern[] patterns = getPatterns();
-                
+        Pattern[] patterns = getPatterns();        
+        int index=0;
+        int count=0;
         while(paragraph!=null && paragraph.length()>0)
         {
-            if(paragraph.trim().length()==0)
+            if(paragraph.length()<=index)
             {
                 break;
             }
             
             Matcher matcher=null;
-            
             for(int i=0;i<patterns.length;i++)
             {
                 matcher = patterns[i].matcher(paragraph);
-                if(matcher.matches())
+                if(matcher.find(index) && matcher.start()==index)
                 {
-//                    System.out.println("----------");
-//                    System.out.println(REGEX[i]+" -> "+matcher.pattern().pattern());
-//                    System.out.println("----------");
+                    statistics[i]++;
+//                    System.out.println("regex[i]="+i+"-> "+REGEX[i]);
                     break;
                 }
                 matcher = null;
             }
             if(matcher != null)
             {
-                String match = matcher.group(1);
-                String next  = matcher.group(2);
-                System.out.println("++++++++++");
-                System.out.println(match);
+                String match = matcher.group();
+                index = matcher.end();
                 phrases.add(match);
-                paragraph = next;
+                logger.log(Level.CONFIG, "phrase.match({0})={1}",new Object[]{count++,match});
                 continue;
             }
-            System.out.println("++++++++++");
-            System.out.println(paragraph);
-            System.out.println("++++++++++");
-            System.out.println("++++++++++");
-            System.out.println("-fin-");
-            phrases.add(paragraph);
+//            System.out.println("..........");
+            String nomatch = paragraph.substring(index);
+            phrases.add(nomatch);
+            logger.log(Level.CONFIG, "phrase.unmatch({0})={1}",new Object[]{count++,nomatch});
+            failures++;
             break;
         }
+        if(logger.isLoggable(Level.CONFIG))
+        {
+            logger.log(Level.CONFIG, Arrays.toString(statistics) );
+        }
+        System.out.println(Arrays.toString(statistics));
         return phrases;
     }
+    public static List<String> splitByPattern(List<String> paragraphs)
+    {
+        ArrayList<String> phrases = new ArrayList<String>(paragraphs.size());
+        for(String item : paragraphs)
+        {
+            List<String> cuts = splitByPattern(item);
+            phrases.addAll(cuts);
+        }
+        paragraphs = phrases;
+        phrases = new ArrayList<String>(paragraphs.size());
+        return paragraphs;
+    }
+
     public static String[] split(String paragraph)
     {
         return split(paragraph, 0);
     }
-    
-    public static String[] split(String paragraph, int minSize)
+    private static class Phrase
     {
-        if(paragraph.length()<minSize)
+        final String full;
+        final String trim;
+        final int size;
+
+        public Phrase(String full)
+        {
+            this.full = full;
+            this.trim = Strings.trimWhitespaces(full);
+            this.size = this.trim.length();
+        }
+    }
+    
+    public static String[] split(String paragraph, int min)
+    {
+        if(paragraph.length()<min)
         {
             return new String[]{paragraph};
         }
-
-        List<String> cuts = splitByPattern(paragraph);
-        ArrayList<String> join = new ArrayList<String>();
+        int count = 0;
+        
+        List<String> cuts = splitByPattern(Arrays.asList(new String[]{paragraph}));
+        ArrayList<Phrase> join = new ArrayList<Phrase>();
 
         //join possible abbreviations
         while(cuts.size()>0)
         {
             String p0 = cuts.get(0);
-            if(p0.length()==0 || p0.trim().length()==0)
+            int n0 = p0.trim().length();
+            if(n0==0)
             {
                 cuts.remove(0);
                 continue;
             }
             if(cuts.size()==1)
             {
-                join.add(cuts.remove(0).trim());                
+                join.add(new Phrase(cuts.remove(0)));
                 break;
             }
             String p1 = cuts.get(1);
-            if(p1.length()==0)
+            int n1 = p1.trim().length();
+            if(n1==0)
             {
                 cuts.remove(1);
                 continue;
-            }
-            boolean merge = ( p0.endsWith(".") && ( !Character.isSpaceChar(p1.codePointAt(0)) || dotContinued(p1) ) ) ||
-                            ( p0.endsWith(".") && ( !Character.isSpaceChar(p1.codePointAt(0)) || dotContinued(p1) ) ) ;
-            if(merge)
+            }            
+            boolean dot = p0.endsWith(".");// the last character is a dot
+            boolean dotm = dot && !Character.isWhitespace(p1.codePointAt(0));
+            boolean abb  = dot || p0.trim().endsWith("."); // the last non-space character is a dot
+            boolean abbm = abb && dotContinued(p1);
+            
+            if(dotm || abbm)
             {
                 String p=p0+p1;
-                cuts.set(0, p.trim());
+                cuts.set(0, p);
                 cuts.remove(1);
                 continue;
             }
-            join.add(cuts.remove(0).trim());
+            join.add(new Phrase(cuts.remove(0)));
         }
-        return join.toArray(new String[0]);
-    }
-    private static boolean endsWithLatinAbbreviation(String phrase)
-    {
-        if(phrase.length()==0)
+                
+        List<String> merge = new ArrayList<String>();
+        //merge short phrases
+        while(join.size()>0)
         {
-            return false;
+            int n = join.size();
+            Phrase p0 = join.get(0);
+            Phrase p1 = (n>1)?join.get(1):null;
+            Phrase p2 = (n>2)?join.get(2):null;
+            Phrase p3 = (n>2)?join.get(2):null;
+            
+            //this would be a bug
+            if(p0.size==0)
+            {
+                Logger.getLogger(Phrases.class.getName()).log(Level.WARNING,"p0.size==0 means a bug");
+                join.remove(0);
+                continue;
+            }
+            
+            // n0+N1+... = n0N1+...
+            if(n>1)
+            {
+                if( p0.size<min || (n==2 && p1.size<min) || (n>=3 && p1.size<min && p0.size+p1.size<p1.size+p2.size) || (n>=4 && p1.size<min && p1.size+p2.size+p3.size<min))
+                {
+                    join.set(0, new Phrase(p0.full+p1.full));
+                    join.remove(1);
+                    continue;
+                }
+            }
+            assert (p0.size>=min || merge.isEmpty()):"(p0.size>=min || merge.isEmpty())";
+            merge.add(p0.trim);
+            join.remove(0);
         }
-        int i = phrase.codePointCount(0, phrase.length())-1;
-        //dot
-        int codepoint = phrase.codePointAt(i--);
-        if(codepoint!='.')
-        {
-            return false;
-        }
-        codepoint = phrase.codePointAt(i--);
-        while(i>=0 && Character.isLowerCase(codepoint))
-        {
-            codepoint = phrase.codePointAt(i--);
-        }
-        return Character.isUpperCase(codepoint);
+        return merge.toArray(new String[0]);
     }
     private static boolean dotContinued(String phrase)
     {
@@ -250,6 +276,9 @@ public class Phrases
         int codepoint = phrase.codePointAt(i);
         return Character.isLowerCase(codepoint);
     }
-    
-    
+
+    public static int getFailures()
+    {
+        return failures;
+    }
 }

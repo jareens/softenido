@@ -21,6 +21,7 @@
 package com.softenido.cafecore.statistics.classifier;
 
 import com.softenido.cafecore.util.Sorts;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -90,7 +91,7 @@ public abstract class AbstractClassifier implements Classifier
 
     abstract public Score[] classify(Score[] scores, String[] words);
     
-    public final void load(InputStream in, String... allowedCategories) throws ClassifierFormatException
+    public final void load(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException
     {
         Scanner sc = new Scanner(in);
         
@@ -126,14 +127,15 @@ public abstract class AbstractClassifier implements Classifier
             }
             count++;
         }
-        if(line==null || !line.startsWith("words="+count))
+        if(strict && (line==null || !line.startsWith("words="+count)) )
         {
             throw new ClassifierFormatException("readed words="+count+" expected "+line);
         }
     }
-    
+
+    static int saveThresold = 0;
     static boolean optimize = false;
-    public final void save(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException
+    public final void save(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException
     {
         PrintStream ps = new PrintStream(out);
         
@@ -187,7 +189,7 @@ public abstract class AbstractClassifier implements Classifier
                 {
                     int n = this.wordCount(cats[i], w);
                     sep += "|";
-                    if(n>0)
+                    if(n>0 && n>=min && n<=max)
                     {
                         line.append(sep).append(n);
                         sep = "";
@@ -205,13 +207,13 @@ public abstract class AbstractClassifier implements Classifier
         ps.println("words="+count);
         ps.flush();
     }
-    public final void loadGZ(InputStream in, String... allowedCategories) throws IOException, ClassifierFormatException, NoSuchAlgorithmException
+    public final void loadGZ(InputStream in, boolean strict, String... allowedCategories) throws IOException, ClassifierFormatException, NoSuchAlgorithmException
     {
-        this.load(new GZIPInputStream(in), allowedCategories);
+        this.load(new GZIPInputStream(in), strict, allowedCategories);
     }
-    public final void saveGZ(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+    public final void saveGZ(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
     {
-        this.save(new GZIPOutputStream(out), allowedCategories);
+        this.save(new GZIPOutputStream(out), min, max, allowedCategories);
     }
 
     public final Classifier synchronizedClassifier()
@@ -258,34 +260,34 @@ public abstract class AbstractClassifier implements Classifier
                     classifier.coach(category, word, n);
                 }
             }
-            public void load(InputStream in, String... allowedCategories) throws ClassifierFormatException
+            public void load(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException
             {
                 synchronized(lock)
                 {
-                    classifier.load(in, allowedCategories);
+                    classifier.load(in, strict, allowedCategories);
                 }
             }
-            public void loadGZ(InputStream in, String... allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
+            public void loadGZ(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
             {
                 synchronized(lock)
                 {
-                    classifier.loadGZ(in, allowedCategories);
-                }
-            }
-
-            public void save(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException
-            {
-                synchronized(lock)
-                {
-                    classifier.save(out, allowedCategories);
+                    classifier.loadGZ(in, strict, allowedCategories);
                 }
             }
 
-            public void saveGZ(OutputStream out, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+            public void save(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException
             {
                 synchronized(lock)
                 {
-                    classifier.saveGZ(out, allowedCategories);
+                    classifier.save(out, min, max, allowedCategories);
+                }
+            }
+
+            public void saveGZ(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
+            {
+                synchronized(lock)
+                {
+                    classifier.saveGZ(out, min, max, allowedCategories);
                 }
             }
 
@@ -358,5 +360,13 @@ public abstract class AbstractClassifier implements Classifier
         this.unmatched = unmatched;
     }
 
-    
+    public static int getSaveThresold()
+    {
+        return saveThresold;
+    }
+
+    public static void setSaveThresold(int saveThresold)
+    {
+        AbstractClassifier.saveThresold = saveThresold;
+    }
 }

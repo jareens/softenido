@@ -1,5 +1,5 @@
 /*
- * TextClassifierTest.java
+ * BaseTextClassifierTest.java
  *
  * Copyright (c) 2012  Francisco Gómez Carrasco
  *
@@ -45,7 +45,7 @@ import org.junit.Test;
  *
  * @author franci
  */
-public class TextClassifierTest
+public class BaseTextClassifierTest
 {
     static final String [][] LEARN= 
     {
@@ -141,12 +141,17 @@ public class TextClassifierTest
         {"zh", "zh_TW","google-play-tos-zh_TW.txt.gz"},//chino taiwan
         {"es", "es","google-play-tos-es.txt.gz"},//español España
         {"zh", "zh_HK","google-privacy-zh_HK.txt.gz"},//chino HongKong
-        {"ja", "ja","google-play-tos-ja.txt.gz"},//japón
+        {"ja", "ja","google-play-tos-ja.txt.gz"},//japonés
+        {"es", "es","La_obscenidad_y_el_símbolo_-_sobre_la_acción_política_del_SAT.txt.gz"},//español
+        {"en", "en","TheGreatBoerWar-ArthurConanDoyle.txt.gz"},//inglés
+        {"es", "es","Historia_de_la_vida_del_Buscón-Francisco_de_Quevedo.txt.gz"},//español
+        {"de", "de","Macchiavellis_Buch_vom_Fürsten-Niccolò_Machiavelli.txt.gz"},//alemán
+        {"fr", "fr","LesTroisMousquetaires-AlexandreDumas.fr.txt.gz"},//francés
     };    
     static final String LINE = "^[A-Za-z0-9]+.+$";
-    public static final String AMBIGUOUS = ".*(Copyright|Parkway|Google|escrito|EXEMPLARES|Estados *Unidos|vaststelt|Mountain View|Perlindungan Privasi|Laas gewysig|Ultima modifica|našich Službách).*";
+    public static final String AMBIGUOUS = ".*(Copyright|Parkway|Google|escrito|EXEMPLARES|Estados *Unidos|vaststelt|Mountain View|Perlindungan Privasi|Laas gewysig|Ultima modifica|našich Službách|PUNITIVE DAMAGES|sublime au ridicule|London, _sir,|_Thank you, be easy._).*";
     
-    public TextClassifierTest()
+    public BaseTextClassifierTest()
     {
     }
     
@@ -171,7 +176,7 @@ public class TextClassifierTest
     }
 
     /**
-     * Test of classify method, of class TextClassifier.
+     * Test of classify method, of class BaseTextClassifier.
      */
     @Test
     public void testClassify_InputStream() throws IOException, ClassifierFormatException, UnsupportedEncodingException, NoSuchAlgorithmException
@@ -184,26 +189,26 @@ public class TextClassifierTest
                 
         for(boolean parallel: PARALLEL)
         {
-            TextClassifier classifierAll = parallel?new TextClassifier("",LEARN.length):new TextClassifier("");
-            TextClassifier classifierInc = parallel?new TextClassifier("",LEARN.length):new TextClassifier("");
-            TextClassifier classifierISO3 = parallel?new TextClassifier("",LEARN.length):new TextClassifier("");
+            BaseTextClassifier classifierAll = parallel?new BaseTextClassifier("",LEARN.length):new BaseTextClassifier("");
+            BaseTextClassifier classifierInc = parallel?new BaseTextClassifier("",LEARN.length):new BaseTextClassifier("");
+            BaseTextClassifier classifierISO3 = parallel?new BaseTextClassifier("",LEARN.length):new BaseTextClassifier("");
 
             for(int i=0;i<LEARN.length;i++)
             {
                 String locale  = LEARN[i][1];
                 String file  = LEARN[i][2];
                 InputStream gz;
-                gz = new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(file));
+                gz = new GZIPInputStream(BaseTextClassifierTest.class.getResourceAsStream(file));
                 classifierAll.coach(locale, gz);
 
                 //la suma de los ficheros individuales es menor que agrupados en uno solo
                 String lang3 = Locales.getISO3Language(LEARN[i][0]);
                 lang3 = lang3!=null? lang3:LEARN[i][0];
-                TextClassifier classifier = parallel?new TextClassifier("",LEARN.length):new TextClassifier("");
-                gz = new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(file));
+                BaseTextClassifier classifier = parallel?new BaseTextClassifier("",LEARN.length):new BaseTextClassifier("");
+                gz = new GZIPInputStream(BaseTextClassifierTest.class.getResourceAsStream(file));
                 classifier.coach(lang3, gz);
                 
-                gz = new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(file));
+                gz = new GZIPInputStream(BaseTextClassifierTest.class.getResourceAsStream(file));
                 classifierISO3.coach(lang3, gz);
             }
             
@@ -213,14 +218,14 @@ public class TextClassifierTest
             //classifier.saveGZ(new FileOutputStream("dictionary.txt.gz"));
 
             ByteArrayOutputStream out =  new ByteArrayOutputStream();
-            classifierAll.save(out);
+            classifierAll.save(out, 0, Integer.MAX_VALUE);
             ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
             
             String[] categories = ((AbstractClassifier)classifierAll.classifier).getCategories();
             categories = Arrays6.copyOf(categories, LEARN.length);
             
-            TextClassifier classifier2 = parallel?new TextClassifier("", categories):new TextClassifier("");
-            classifier2.load(in);
+            BaseTextClassifier classifier2 = parallel?new BaseTextClassifier("", categories):new BaseTextClassifier("");
+            classifier2.load(in, true);
 
             assertEquals(classifierAll, classifier2);       
 
@@ -230,9 +235,9 @@ public class TextClassifierTest
             {
                 String lang = LEARN[i][1];
                 String file = LEARN[i][2];
-                classifierInc.coach(lang, new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(file)));
+                classifierInc.coach(lang, new GZIPInputStream(BaseTextClassifierTest.class.getResourceAsStream(file)));
 
-                InputStream gz = new GZIPInputStream(TextClassifierTest.class.getResourceAsStream(file));    
+                InputStream gz = new GZIPInputStream(BaseTextClassifierTest.class.getResourceAsStream(file));    
                 Scanner sc = new Scanner(gz);
                 int count=0;
                 while( sc.hasNextLine())
@@ -249,20 +254,25 @@ public class TextClassifierTest
                         int nAll=Math.min(3,langAll.length());
                         int nInc=Math.min(3,langInc.length());
                         // por ahora confunde los chinos entre sí cuando hay pocas ocurrencias.
-                        assertEquals("all"+msg,lang.substring(0,n), langAll.substring(0,n));
-                        assertEquals("inc"+msg,lang.substring(0,n), langInc.substring(0,n));
+                        assertEquals(file+" all"+msg,lang.substring(0,n), langAll.substring(0,n));
+                        assertEquals(file+" inc"+msg,lang.substring(0,n), langInc.substring(0,n));
                     }
                 }
             }
             
             if(parallel)
             {
-                final String[] export = {"deu","eng","fra","ita","jpn","kor","por","rus","spa","zho"};
-                for(String iso3:export)
+                final String[] export = {"deu", "eng",  "fra",  "ita",  "jpn",  "kor",  "por",  "rus",  "spa",  "zho"};
+                final int[] threshold = {4,     13,      11,      0,      0,      0,      0,      2,      4,      0};
+                                
+                for(int i=0;i<export.length;i++)
                 {
-                    String file2 = "lang_"+iso3+".data";
-                    File   fd = new File(dst,file2.toLowerCase());
-                    classifierISO3.save(new FileOutputStream(fd),iso3);
+                    String fileHiFreq = "lang_"+export[i]+".data.hi";
+                    String fileLoFreq = "lang_"+export[i]+".data.lo";
+                    File   fdhi = new File(dst,fileHiFreq.toLowerCase());
+                    File   fdlo = new File(dst,fileLoFreq.toLowerCase());
+                    classifierISO3.save(new FileOutputStream(fdhi),threshold[i], Integer.MAX_VALUE,export[i]);
+                    classifierISO3.save(new FileOutputStream(fdlo),0, threshold[i]-1,export[i]);
                 }
             }
 
@@ -272,7 +282,7 @@ public class TextClassifierTest
     }
     
     /**
-     * Test of filter method, of class TextClassifier.
+     * Test of filter method, of class BaseTextClassifier.
      */
     @Test
     public void testSplit()
@@ -304,11 +314,11 @@ public class TextClassifierTest
             {"查", "詢", "促", "進", "民", "間", "參", "與", "公", "共", "建", "設", "法", "210ＢＯＴ", "法"} //9
         };
                                  
-        TextClassifier classifier = new TextClassifier("");
+        BaseTextClassifier classifier = new BaseTextClassifier("");
        
         for(int i=0;i<texts.length;i++)
         {
-            String[] result = TextClassifier.split(texts[i]);
+            String[] result = BaseTextClassifier.split(texts[i]);
             assertArrayEquals(expected[i], result);
         }
     }

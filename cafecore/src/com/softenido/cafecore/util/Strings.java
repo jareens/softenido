@@ -89,5 +89,12 @@ public abstract class Strings
     public static <T> String commaSeparatedValues(T[] list)
     {
         return delimiterSeparatedValues(Arrays6.asList(list),",");
-    }    
+    }
+    static final String TRIM = "(^[\\s\u00a0]+)|([\\s\u00a0]+$)";
+    public static String trimWhitespaces(String str)
+    {
+        //pendiente de optimizar quizas verificando si el primer y último caracter son whitespaces
+        //verificar si es más rápido o no antes de realizar el cambio
+        return str.replaceAll(TRIM, "");
+    }
 }

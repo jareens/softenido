@@ -20,9 +20,6 @@
  */
 package com.softenido.cafecore.text;
 
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import org.junit.*;
 import java.util.Calendar;
 import java.util.Date;
@@ -163,19 +160,25 @@ public class HumanDateFormatTest
         assertEquals("2012-02-22 9:19:29", hdf.format(february));
 
         hdf= (HumanDateFormat) HumanDateFormat.getFullInstance(now, Locale.US);
-        assertEquals("2011-11-06 9:19:29 AM", hdf.format(yesterday));
-        assertEquals("2011-11-07 9:19:29 AM", hdf.format(today));
-        assertEquals("2011-11-07 7:29:39 PM", hdf.format(now));
-        assertEquals("2011-11-08 9:19:29 AM", hdf.format(tomorrow));
-        assertEquals("2011-01-11 9:19:29 AM", hdf.format(january));
-        assertEquals("2012-02-22 9:19:29 AM", hdf.format(february));
+        assertEquals("2011-11-06 09:19:29.000", hdf.format(yesterday));
+        assertEquals("2011-11-07 09:19:29.000", hdf.format(today));
+        assertEquals("2011-11-07 19:29:39.000", hdf.format(now));
+        assertEquals("2011-11-08 09:19:29.000", hdf.format(tomorrow));
+        assertEquals("2011-01-11 09:19:29.000", hdf.format(january));
+        assertEquals("2012-02-22 09:19:29.000", hdf.format(february));
 
         hdf = (HumanDateFormat) HumanDateFormat.getFullInstance(now, new Locale("es_ES"));
-        assertEquals("2011-11-06 9:19:29", hdf.format(yesterday));
-        assertEquals("2011-11-07 9:19:29", hdf.format(today));
-        assertEquals("2011-11-07 19:29:39", hdf.format(now));
-        assertEquals("2011-11-08 9:19:29", hdf.format(tomorrow));
-        assertEquals("2011-01-11 9:19:29", hdf.format(january));
-        assertEquals("2012-02-22 9:19:29", hdf.format(february));
+        assertEquals("2011-11-06 09:19:29.000", hdf.format(yesterday));
+        assertEquals("2011-11-07 09:19:29.000", hdf.format(today));
+        assertEquals("2011-11-07 19:29:39.000", hdf.format(now));
+        assertEquals("2011-11-08 09:19:29.000", hdf.format(tomorrow));
+        assertEquals("2011-01-11 09:19:29.000", hdf.format(january));
+        assertEquals("2012-02-22 09:19:29.000", hdf.format(february));
+        
+        hdf = (HumanDateFormat) HumanDateFormat.getRFC822TimeZoneInstance(new Locale("es_ES"));
+        assertEquals("2011-11-06 09:19:29.000+0100", hdf.format(yesterday));
+        hdf = (HumanDateFormat) HumanDateFormat.getGeneralTimeZoneInstance(new Locale("es_ES"));
+        assertEquals("2011-11-06 09:19:29.000 CET", hdf.format(yesterday));
+        
     }
 }
