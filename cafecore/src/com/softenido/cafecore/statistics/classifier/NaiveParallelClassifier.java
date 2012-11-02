@@ -33,7 +33,9 @@ import java.util.Map.Entry;
  */
 public class NaiveParallelClassifier extends AbstractClassifier
 {
-
+    //lock from integrity, not concurrence
+    private final Object lock = new Object();
+    
     int total = 0;
     int count = 0;//number of category actually used
     final int size;
@@ -65,12 +67,15 @@ public class NaiveParallelClassifier extends AbstractClassifier
 
     public void coach(String category, String word, int n)
     {
-        int index = getIndex(category);
-        int[] w = wordCount(word, true);
+        synchronized(lock)
+        {
+            int index = getIndex(category);
+            int[] w = wordCount(word, true);
 
-        w[index] += n;
-        this.categoryCount[index] += n;
-        this.total += n;
+            w[index] += n;
+            this.categoryCount[index] += n;
+            this.total += n;
+        }
     }
 
     int[] wordCount(String word, boolean create)
@@ -144,55 +149,58 @@ public class NaiveParallelClassifier extends AbstractClassifier
 
     public Score[] classify(Score[] scores, String[] words)
     {
-        if(this.count==0)
+        synchronized(lock)
         {
-            return new Score[0];
-        }
-        final int k = this.count;
-        final int m = this.total;
-
-        final boolean cached = cacheable && (words.length >= threshold);
-        ArrayList<Score> sc = new ArrayList<Score>(count);
-        //Logger.getLogger(NaiveParallelClassifier.class.getName()).log(Level.INFO,"indexes:{0} words:{1} ",new Object[]{indexes.size(),words.length});
-
-        //add a poison value to denote unmatched
-        if(unmatched!=null)
-        {
-            // the minimun posible score plus float min value (double is maybe too small)
-            sc.add(new Score(unmatched,probability(0, 0, k, m) * words.length + Float.MIN_VALUE));
-        }
-
-        final HashMap<String, double[]> cache = cached ? new HashMap<String, double[]>(words.length * 2) : null;
-        double[] p = new double[size];
-
-        for (String w : words)
-        {
-            double[] pw;
-            if (cached)
+            if(this.count==0)
             {
-                pw = cache.get(w);
-                if (pw == null)
+                return new Score[0];
+            }
+            final int k = this.count;
+            final int m = this.total;
+
+            final boolean cached = cacheable && (words.length >= threshold);
+            ArrayList<Score> sc = new ArrayList<Score>(count);
+            //Logger.getLogger(NaiveParallelClassifier.class.getName()).log(Level.INFO,"indexes:{0} words:{1} ",new Object[]{indexes.size(),words.length});
+
+            //add a poison value to denote unmatched
+            if(unmatched!=null)
+            {
+                // the minimun posible score plus float min value (double is maybe too small)
+                sc.add(new Score(unmatched,probability(0, 0, k, m) * words.length + Float.MIN_VALUE));
+            }
+
+            final HashMap<String, double[]> cache = cached ? new HashMap<String, double[]>(words.length * 2) : null;
+            double[] p = new double[size];
+
+            for (String w : words)
+            {
+                double[] pw;
+                if (cached)
+                {
+                    pw = cache.get(w);
+                    if (pw == null)
+                    {
+                        final int[] wc = wordCount(w, false);
+                        pw = probability(wc, categoryCount, k, m);
+                        cache.put(w, pw);
+                    }
+                }
+                else
                 {
                     final int[] wc = wordCount(w, false);
                     pw = probability(wc, categoryCount, k, m);
-                    cache.put(w, pw);
+                }
+                for (int i = 0; i < size; i++)
+                {
+                    p[i] += pw[i];
                 }
             }
-            else
+            for (int i = 0; i < count; i++)
             {
-                final int[] wc = wordCount(w, false);
-                pw = probability(wc, categoryCount, k, m);
+                sc.add(new Score(categoryName[i], p[i]));
             }
-            for (int i = 0; i < size; i++)
-            {
-                p[i] += pw[i];
-            }
+            return sc.toArray(scores);
         }
-        for (int i = 0; i < count; i++)
-        {
-            sc.add(new Score(categoryName[i], p[i]));
-        }
-        return sc.toArray(scores);
     }
 
     private int getIndex(String category)

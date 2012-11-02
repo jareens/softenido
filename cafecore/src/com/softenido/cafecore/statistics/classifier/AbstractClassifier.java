@@ -21,7 +21,6 @@
 package com.softenido.cafecore.statistics.classifier;
 
 import com.softenido.cafecore.util.Sorts;
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -214,105 +213,6 @@ public abstract class AbstractClassifier implements Classifier
     public final void saveGZ(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
     {
         this.save(new GZIPOutputStream(out), min, max, allowedCategories);
-    }
-
-    public final Classifier synchronizedClassifier()
-    {
-        return synchronizedClassifier(this);
-    }
-    static Classifier synchronizedClassifier(final Classifier classifier)
-    {
-        return new Classifier() 
-        {
-            private final Object lock = new Object();
-            public Score[] classify(Score[] scores, String[] words)
-            {
-                synchronized(lock)
-                {
-                    return classifier.classify(scores, words);    
-                }
-            }
-            public Score classify(String[] words)
-            {
-                synchronized(lock)
-                {
-                    return classifier.classify(words);
-                }
-            }
-            public boolean containsCategory(String category)
-            {
-                synchronized(lock)
-                {
-                    return classifier.containsCategory(category);
-                }
-            }
-            public void coach(String category, String word, int n)
-            {
-                synchronized(lock)
-                {
-                    classifier.coach(category, word, n);
-                }
-            }
-            public void coach(String category, String[] word, int[] n)
-            {
-                synchronized(lock)
-                {
-                    classifier.coach(category, word, n);
-                }
-            }
-            public void load(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException
-            {
-                synchronized(lock)
-                {
-                    classifier.load(in, strict, allowedCategories);
-                }
-            }
-            public void loadGZ(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
-            {
-                synchronized(lock)
-                {
-                    classifier.loadGZ(in, strict, allowedCategories);
-                }
-            }
-
-            public void save(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException
-            {
-                synchronized(lock)
-                {
-                    classifier.save(out, min, max, allowedCategories);
-                }
-            }
-
-            public void saveGZ(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
-            {
-                synchronized(lock)
-                {
-                    classifier.saveGZ(out, min, max, allowedCategories);
-                }
-            }
-
-            public void setUnmatched(String unmatched)
-            {
-                synchronized(lock)
-                {
-                    classifier.setUnmatched(unmatched);
-                }
-            }
-
-            public String getUnmatched()
-            {
-                synchronized(lock)
-                {
-                    return classifier.getUnmatched();
-                }
-            }
-            
-            @Override
-            public String toString()
-            {
-                return classifier.toString();
-            }
-       };
     }
 
     private static boolean[] getAllowed(String[] cats, String[] allowedCategories)

@@ -156,7 +156,7 @@ public class BaseTextClassifier implements TextClassifier
                 }
             }
         }
-        if(!ok)
+        if(!ok && sc.hasNext())
         {
             System.out.println(sc.nextLine());
         }
@@ -373,123 +373,6 @@ public class BaseTextClassifier implements TextClassifier
     public boolean containsCategory(String category)
     {
         return classifier.containsCategory(category);
-    }
-
-    public BaseTextClassifier synchronizedClassifier()
-    {
-        return synchronizedClassifier(this);
-    }
-    static BaseTextClassifier synchronizedClassifier(BaseTextClassifier classifier)
-    {
-        return new BaseTextClassifier(classifier.classifier)
-        {
-            final Object lock = new Object();
-            @Override
-            public void coach(String category, String text)
-            {
-                synchronized(lock)
-                {
-                    super.coach(category, text);
-                }
-            }
-
-            @Override
-            public void coach(String category, InputStream text)
-            {
-                synchronized(lock)
-                {
-                    super.coach(category, text);
-                }
-            }
-
-            @Override
-            Score classify(Scanner sc)
-            {
-                synchronized(lock)
-                {
-                    return super.classify(sc);
-                }
-            }
-
-            @Override
-            public Score classify(String text)
-            {
-                synchronized(lock)
-                {
-                    return super.classify(text);
-                }
-            }
-
-            @Override
-            public Score classify(InputStream text)
-            {
-                synchronized(lock)
-                {
-                    return super.classify(text);
-                }
-            }
-
-            @Override
-            public boolean containsCategory(String category)
-            {
-                synchronized(lock)
-                {
-                    return super.containsCategory(category);
-                }
-            }
-
-            @Override
-            public void load(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException
-            {
-                synchronized(lock)
-                {
-                    super.load(in, strict, allowedCategories);
-                }
-            }
-            
-            @Override
-            public void save(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException
-            {
-                synchronized(lock)
-                {
-                    super.save(out, min, max, allowedCategories);
-                }
-            }
-
-            @Override
-            public void loadGZ(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException
-            {
-                synchronized(lock)
-                {
-                    super.loadGZ(in, strict, allowedCategories);
-                }
-            }
-            @Override
-            public void saveGZ(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException
-            {
-                synchronized(lock)
-                {
-                    super.saveGZ(out, min, max, allowedCategories);
-                }
-            }
-
-            @Override
-            public String getUnmatched()
-            {
-                synchronized(lock)
-                {
-                    return super.getUnmatched();
-                }
-            }
-            @Override
-            public void setUnmatched(String unmatched)
-            {
-                synchronized(lock)
-                {
-                    super.setUnmatched(unmatched);
-                }
-            }
-        };
     }
 
     public static boolean isGroup()

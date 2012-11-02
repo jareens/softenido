@@ -20,7 +20,10 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
-import com.softenido.cafecore.misc.GaugeProgress;
+import com.softenido.cafecore.gauge.GaugeProgress;
+import com.softenido.cafecore.gauge.GaugeView;
+import com.softenido.cafecore.logging.StatusNotifier;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -38,7 +41,7 @@ public interface LanguageClassifier
     Score classify(InputStream text);
     void save(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException;
     void saveGZ(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException;
-    void setGaugeProgress(GaugeProgress gp);
     boolean firstPass();
     boolean secondPass();
+    void setStatusNotifier(StatusNotifier statusNotifier);
 }

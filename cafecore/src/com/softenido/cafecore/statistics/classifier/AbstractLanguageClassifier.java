@@ -20,10 +20,8 @@
  */
 package com.softenido.cafecore.statistics.classifier;
 
-import com.softenido.cafecore.misc.GaugeProgress;
-import com.softenido.cafecore.misc.NullGaugeProgress;
-import com.softenido.cafecore.misc.ProxyGaugeProgress;
-
+import com.softenido.cafecore.logging.NullStatusNotifier;
+import com.softenido.cafecore.logging.StatusNotifier;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -32,7 +30,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Queue;
 import java.util.Scanner;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.logging.Level;
 
 /**
  *
@@ -42,9 +41,8 @@ public abstract class AbstractLanguageClassifier extends BaseTextClassifier impl
 {
     private volatile boolean initialized = false;
     private final Object lock = new Object();    
-    private final Queue<String> langs = new LinkedBlockingQueue<String>();
-
-    private volatile ProxyGaugeProgress gaugeProgress = new ProxyGaugeProgress();
+    private final Queue<String> langs = new ConcurrentLinkedQueue<String>();
+    private volatile StatusNotifier statusNotifier = new NullStatusNotifier();
 
     public AbstractLanguageClassifier(String unmatched)
     {
@@ -66,48 +64,24 @@ public abstract class AbstractLanguageClassifier extends BaseTextClassifier impl
     }
     public boolean add(final String... languages)
     {
-        synchronized(lock)
+        if(langs.addAll(Arrays.asList(languages)))
         {
-            if(langs.addAll(Arrays.asList(languages)))
-            {
-                initialized=false;
-                return true;
-            }
+            initialized=false;
+            return true;
         }
         return false;
     }
 
     public boolean initialize()
     {
-        if(initialized)
-        {
-            return false;
-        }
-        boolean ret = false;
         synchronized (lock)
         {
-            if(langs.size()>0)
+            if(initialized)
             {
-                int i=0;
-                gaugeProgress.setPrefix("loading...");
-                gaugeProgress.start(langs.size());
-                for(String item=langs.poll();item!=null;item=langs.poll())
-                {
-                    ret=true;
-                    gaugeProgress.setPrefix("loading ["+item+"]");
-                    gaugeProgress.setMax(langs.size()+i+1);
-                    gaugeProgress.setVal(i);
-                    if(!this.containsCategory(item))
-                    {
-                        initialize(item);
-                    }
-                    gaugeProgress.setVal(++i);
-                }
-                gaugeProgress.close();
+                return false;
             }
-            initialized=true;
+            return initializeLoop();
         }
-        return ret;
     }
     protected abstract boolean initialize(String item);    
     
@@ -146,8 +120,31 @@ public abstract class AbstractLanguageClassifier extends BaseTextClassifier impl
         super.saveGZ(out, min, max, allowedCategories);
     }
 
-    public void setGaugeProgress(GaugeProgress gp)
+    protected boolean initializeLoop()
     {
-        this.gaugeProgress.setProxy(gp);
+        boolean ret = false;
+        while(langs.size()>0)
+        {
+            int i=0;
+            for(String item=langs.poll();item!=null;item=langs.poll())
+            {
+                ret=true;
+                if(!this.containsCategory(item))
+                {
+                    long started = System.nanoTime();
+                    initialize(item);
+                    long finalized = System.nanoTime();
+                    long dif = (finalized-started)/1000000;
+                    statusNotifier.log(Level.INFO, "[{0}]={1}ms",item,dif);
+                }
+            }
+        }
+        initialized=true;
+        return ret;
+    }
+
+    public void setStatusNotifier(StatusNotifier statusNotifier)
+    {
+        this.statusNotifier = statusNotifier!=null?statusNotifier:new NullStatusNotifier();
     }
 }

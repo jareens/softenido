@@ -43,5 +43,4 @@ public interface TextClassifier
     void save(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException;
     void saveGZ(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException;
     void setUnmatched(String unmatched);
-    TextClassifier synchronizedClassifier();
 }
