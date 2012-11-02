@@ -385,10 +385,9 @@ public class Files
         return false;
     }
 
-    public static byte[] bytesFromFile(File file) throws IOException
+    public static byte[] bytesFromFile(InputStream in) throws IOException
     {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        InputStream in = new FileInputStream(file);
         byte buf[] = new byte[64 * 1024];
         int r;
         while ((r = in.read(buf)) > 0)
@@ -396,6 +395,10 @@ public class Files
             baos.write(buf, 0, r);
         }
         return baos.toByteArray();
+    }
+    public static byte[] bytesFromFile(File file) throws IOException
+    {
+        return bytesFromFile(new FileInputStream(file));
     }
 
     public static File[] getAbsoluteFile(File[] files)
