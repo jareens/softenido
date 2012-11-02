@@ -1,5 +1,5 @@
 /*
- * DebugGaugeProgress.java
+ * DebugGauge.java
  *
  * Copyright (c) 2012  Francisco Gómez Carrasco
  *
@@ -23,7 +23,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.softenido.cafecore.misc;
+package com.softenido.cafecore.gauge;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,21 +32,58 @@ import java.util.logging.Logger;
  *
  * @author franci
  */
-public class DebugGaugeProgress implements GaugeProgress
+public class DebugGauge implements GaugeProgress, GaugeView 
 {
     private final GaugeProgress gp;
+    private final GaugeView gv;
     private final String name;
     private final Logger logger;
-
-    public DebugGaugeProgress(GaugeProgress gp)
+    
+    private DebugGauge(GaugeProgress gp)
     {
         this.gp = gp;
+        this.gv = null;
         this.name = gp.getClass().getName();
         this.logger =  Logger.getLogger(this.name);
         if(logger.isLoggable(Level.CONFIG))
         {
             logger.log(Level.CONFIG, "<init>({0})", name);
         }
+    }
+    private DebugGauge(GaugeView gv)
+    {
+        this.gp = null;
+        this.gv = gv;
+        this.name = gv.getClass().getName();
+        this.logger =  Logger.getLogger(this.name);
+        if(logger.isLoggable(Level.CONFIG))
+        {
+            logger.log(Level.CONFIG, "<init>({0})", name);
+        }
+    }
+    private DebugGauge(Gauge gauge)
+    {
+        this.gp = gauge;
+        this.gv = gauge;
+        this.name = gauge.getClass().getName();
+        this.logger =  Logger.getLogger(this.name);
+        if(logger.isLoggable(Level.CONFIG))
+        {
+            logger.log(Level.CONFIG, "<init>({0})", name);
+        }
+    }
+    
+    public static GaugeProgress wrap(GaugeProgress gp)
+    {
+        return new DebugGauge(gp);
+    }
+    public static GaugeView wrap(GaugeView gv)
+    {
+        return new DebugGauge(gv);
+    }
+    public static DebugGauge wrap(Gauge gauge)
+    {
+        return new DebugGauge(gauge);
     }
 
     public void start()
@@ -65,6 +102,14 @@ public class DebugGaugeProgress implements GaugeProgress
             logger.log(Level.CONFIG, "{0}.start({1})", new Object[]{name, max});
         }
         gp.start(max);
+    }
+    public void start(int max, String prefix)
+    {
+        if(logger.isLoggable(Level.CONFIG))
+        {
+            logger.log(Level.CONFIG, "{0}.start({1},{2})", new Object[]{name, max, prefix});
+        }
+        gp.start(max, prefix);
     }
 
     public void close()
@@ -147,7 +192,6 @@ public class DebugGaugeProgress implements GaugeProgress
         }
         gp.step();
     }
-
     public void step(int n)
     {
         if(logger.isLoggable(Level.CONFIG))
@@ -157,13 +201,13 @@ public class DebugGaugeProgress implements GaugeProgress
         gp.step(n);
     }
 
-    public void paint(double done, String msg)
+    public void setShow(boolean showPrev, boolean showNext, boolean showFull)
     {
         if(logger.isLoggable(Level.CONFIG))
         {
-            logger.log(Level.CONFIG, "{0}.paint({1}, {2})", new Object[]{name, done, msg});
+            logger.log(Level.CONFIG, "{0}.setShow({1}, {2}, {3})", new Object[]{name, showPrev, showNext, showFull});
         }
-        gp.paint(done, msg);
+        gp.setShow(showPrev, showNext, showFull);
     }
 
     public boolean isStarted()
@@ -173,5 +217,13 @@ public class DebugGaugeProgress implements GaugeProgress
             logger.log(Level.CONFIG, "{0}.isStarted()", name);
         }
         return gp.isStarted();
+    }
+    public void paint(boolean started, int max, int val, String prefix, double done, String msg)
+    {
+        if(logger.isLoggable(Level.CONFIG))
+        {
+            logger.log(Level.CONFIG, "{0}.paint({1}, {2}, {3}, {4}, {5}, {6})", new Object[]{name, started, max, val, prefix, done, msg});
+        }
+        gv.paint(started, max, val, prefix, done, msg);
     }
 }

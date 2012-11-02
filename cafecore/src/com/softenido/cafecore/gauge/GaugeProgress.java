@@ -18,13 +18,14 @@
  *
  * Report bugs or new features to: flikxxi@gmail.com
  */
-package com.softenido.cafecore.misc;
+package com.softenido.cafecore.gauge;
 
 public interface GaugeProgress
 {
     boolean isStarted();
     void start();
     void start(int max);
+    void start(int max, String prefix);
     void close();
     void setPrefix(String prefix);
     String getPrefix();
@@ -34,7 +35,7 @@ public interface GaugeProgress
      * @return 
      */
 
-    public double getDone();
+    double getDone();
     /**
      * Gets the current value
      * <p>
@@ -42,7 +43,7 @@ public interface GaugeProgress
      * @return 
      */
 
-    public int getVal();
+    int getVal();
     /**
      * Gets the minimun value
      * <p>
@@ -51,7 +52,7 @@ public interface GaugeProgress
      */
 
 
-    public int getMax();
+    int getMax();
     /**
      * Sets the current value
      * <p>
@@ -59,7 +60,7 @@ public interface GaugeProgress
      * @param n 
      */
 
-    public void setVal(int n);
+    void setVal(int n);
     /**
      * Sets the minimun value
      * <p>
@@ -67,9 +68,9 @@ public interface GaugeProgress
      * @param n 
      */
 
-    public void setMax(int n);
-    public void step();
-    public void step(int n);
-    public void paint(double done,String msg);
+    void setMax(int n);
+    void step();
+    void step(int n);
+    void setShow(boolean showPrev, boolean showNext, boolean showFull);
 }
     

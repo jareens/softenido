@@ -1,5 +1,5 @@
 /*
- * ProxyGaugeProgress.java
+ * NullGauge.java
  *
  * Copyright (c) 2012  Francisco Gómez Carrasco
  *
@@ -18,101 +18,77 @@
  *
  * Report bugs or new features to: flikxxi@gmail.com
  */
-package com.softenido.cafecore.misc;
+package com.softenido.cafecore.gauge;
 
 /**
  *
  * @author franci
  */
-public class ProxyGaugeProgress extends AbstractGaugeProgress
+public class NullGauge implements GaugeProgress, GaugeView
 {
-    private volatile GaugeProgress proxy=null;
-
-    public ProxyGaugeProgress()
+    public boolean isStarted()
     {
-        proxy = new NullGaugeProgress();
-    }
-    public ProxyGaugeProgress(GaugeProgress gp)
-    {
-        setProxy(gp);
-    }
-
-    @Override
-    public void paint(double done, String msg)
-    {
-        proxy.paint(done, msg);
+        return false;
     }
 
     public void start()
     {
-        proxy.start();
     }
-
     public void start(int max)
     {
-        proxy.start(max);
     }
-
+    public void start(int max, String prefix)
+    {
+    }
     public void close()
     {
-        proxy.close();
     }
 
     public void setPrefix(String prefix)
     {
-        proxy.setPrefix(prefix);
     }
 
     public String getPrefix()
     {
-        return proxy.getPrefix();
+        return "";
     }
 
     public double getDone()
     {
-        return proxy.getDone();
+        return 0;
     }
 
     public int getVal()
     {
-        return proxy.getVal();
+        return 0;
     }
 
     public int getMax()
     {
-        return proxy.getMax();
+        return 0;
     }
 
     public void setVal(int n)
     {
-        proxy.setVal(n);
     }
 
     public void setMax(int n)
     {
-        proxy.setMax(n);
     }
 
     public void step()
     {
-        proxy.step();
     }
 
     public void step(int n)
     {
-        proxy.step(n);
     }
-    public void setProxy(GaugeProgress proxy)
+
+    public void setShow(boolean showPrev, boolean showNext, boolean showFull)
     {
-        this.proxy = proxy!=null?proxy:new NullGaugeProgress();
-        if(proxy!=null)
-        {
-            if(isStarted())
-            {
-                proxy.start(getMax());
-                proxy.setVal(getVal());
-            }
-            invalidate();            
-        }
+    }
+
+    public void paint(boolean started, int max, int val, String prefix, double done, String msg)
+    {
     }
 }

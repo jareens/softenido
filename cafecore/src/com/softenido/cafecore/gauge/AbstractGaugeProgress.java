@@ -18,7 +18,7 @@
  *
  * Report bugs or new features to: flikxxi@gmail.com
  */
-package com.softenido.cafecore.misc;
+package com.softenido.cafecore.gauge;
 
 import com.softenido.cafecore.text.HumanMillisFormat;
 import java.text.NumberFormat;
@@ -28,11 +28,15 @@ import java.util.Locale;
  *
  * @author franci
  */
-public abstract class AbstractGaugeProgress implements GaugeProgress
+public abstract class AbstractGaugeProgress implements GaugeProgress, GaugeView
 {
-    private static final double MINSTART = 0.01;
-    private static final int MINSTEP = 1;
-    private static final double MINTIME = 2000;
+    //minimal difference to paint again
+    private static final int MIN_DIFF_STEP = 1;
+    private static final double MIN_DIFF_TIME = 2000;
+    //enough value to show times
+    private static final double MIN_SHOW_DONE = 0.01;
+    private static final int MIN_SHOW_TIME = 30000;
+
     //--- time variables
     private long iniTime = 0;   // momento en el que se inicio el proceso
     private long curTime = 0;   // momento del ultimo paint
@@ -81,16 +85,21 @@ public abstract class AbstractGaugeProgress implements GaugeProgress
     {
         start(100);
     }
-
     public void start(int max)
     {
-        iniTime = System.currentTimeMillis();
-        curTime = 0;
-        curVal = 0;
-        maxVal = max;
-        done = 0.0;
-        force = true;
-        paintLazy();
+        start(max,"");
+    }
+    public void start(int max, String prefix)
+    {
+        this.started=true;
+        this.prefix = prefix;
+        this.iniTime = System.currentTimeMillis();
+        this.curTime = 0;
+        this.curVal = 0;
+        this.maxVal = max;
+        this.done = 0.0;
+        this.force = true;
+        this.paintLazy();
     }
 
     public void close()
@@ -139,7 +148,7 @@ public abstract class AbstractGaugeProgress implements GaugeProgress
         paintLazy();
     }
 
-    public abstract void paint(double done, String msg);
+    public abstract void paint(boolean started, int max, int val, String prefix, double done, String msg);
 
     private void paintLazy()
     {
@@ -148,14 +157,14 @@ public abstract class AbstractGaugeProgress implements GaugeProgress
         long difTime = now - curTime;
         double dif = Math.abs(done - cur);
 
-        if (dif >= MINSTEP || difTime >= MINTIME || force)
+        if (dif >= MIN_DIFF_STEP || difTime >= MIN_DIFF_TIME || force)
         {
             done = cur;
             curTime = now;
 
             String txt = prefix + " " + fmt.format(done);
 
-            if (done >= MINSTART)
+            if (done >= MIN_SHOW_DONE || (curTime-iniTime) >= MIN_SHOW_TIME)
             {
                 long prevTime = curTime - iniTime;
                 long endTime = (long) (iniTime + (prevTime / cur));
@@ -175,7 +184,7 @@ public abstract class AbstractGaugeProgress implements GaugeProgress
                 }
             }
             force = false;
-            paint(done, txt);
+            paint(started, maxVal, curVal, prefix, done, txt);
         }
     }
 
@@ -215,10 +224,11 @@ public abstract class AbstractGaugeProgress implements GaugeProgress
         this.showFull = showFull;
     }
 
-    protected void invalidate()
+    final public void invalidate()
     {
         this.force = true;
         paintLazy();
     }
-}
+}    
+ 
  
