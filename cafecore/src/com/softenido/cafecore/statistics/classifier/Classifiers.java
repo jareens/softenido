@@ -38,7 +38,7 @@ public abstract class Classifiers
         return null;
     }
 
-    static Classifier synchronizedClassifier(final Classifier classifier)
+    public static Classifier synchronizedClassifier(final Classifier classifier)
     {
         return new Classifier() 
         {
@@ -132,7 +132,7 @@ public abstract class Classifiers
 
        };
     }
-    static BaseTextClassifier synchronizedClassifier(BaseTextClassifier classifier)
+    public static BaseTextClassifier synchronizedClassifier(BaseTextClassifier classifier)
     {
         return new BaseTextClassifier(classifier.classifier)
         {
