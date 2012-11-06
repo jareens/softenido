@@ -1,5 +1,5 @@
 /*
- *  ConsoleGaugeProgress.java
+ *  ConsoleGaugeView.java
  *
  *  Copyright (C) 2007-2012 Francisco Gómez Carrasco
  *
@@ -19,34 +19,49 @@
  *  Report bugs or new features to: flikxxi@gmail.com
  *
  */
-package com.softenido.cafedark.misc;
+package com.softenido.cafedark.gauge;
 
-import com.softenido.cafecore.misc.AbstractGaugeProgress;
+import com.softenido.cafecore.gauge.GaugeView;
 import java.io.Console;
+import java.io.PrintStream;
 
 /**
  *
  * @author franci
  */
-public class ConsoleGaugeProgress extends AbstractGaugeProgress
+public class ConsoleGaugeView implements GaugeView
 {
-
     private int lastLen = 0;
     private boolean debug = true;
-    Console con = System.console();
     private boolean prefixBreak = true;
-    private boolean newLine = false;
+    private String prefix = null;
 
-    public ConsoleGaugeProgress()
+    private final Console con;
+    private final PrintStream out;
+    
+    public ConsoleGaugeView()
     {
         super();
+        this.con = System.console();
+        this.out = System.out;
+    }
+    public ConsoleGaugeView(PrintStream out)
+    {
+        super();
+        this.con = null;
+        this.out = out;
+        this.debug=true;
     }
 
-    public void paint(double done, String txt)
+    @Override
+    public void paint(boolean started, int max, int val, String prefix, double done, String msg)
     {
+        boolean newLine = (prefixBreak && this.prefix.equals(prefix));
+        this.prefix=prefix;
+        
         StringBuilder buf = new StringBuilder("\r");
-        buf.append(txt);
-        for (int i = txt.length(); i < lastLen; i++)
+        buf.append(msg);
+        for (int i = msg.length(); i < lastLen; i++)
         {
             buf.append(" ");
         }
@@ -57,27 +72,24 @@ public class ConsoleGaugeProgress extends AbstractGaugeProgress
 
         if (con == null && debug)
         {
-            System.out.print(buf.toString());
-            System.out.flush();
+            this.out.print(buf.toString());
+            this.out.flush();
         }
         else
         {
             con.printf("%s", buf.toString());
             con.flush();
         }
-        lastLen = txt.length();
+        lastLen = msg.length();
     }
 
-    @Override
-    public void setPrefix(String prefix)
+    public boolean isDebug()
     {
-        if(prefixBreak)
-        {
-            newLine=true;
-            paint(getDone(),getPrefix());
-            newLine=false;
-        }
-        super.setPrefix(prefix);
-        paint(getDone(),prefix);
+        return debug;
+    }
+
+    public void setDebug(boolean debug)
+    {
+        this.debug = debug;
     }
 }
