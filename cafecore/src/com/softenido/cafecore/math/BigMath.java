@@ -98,5 +98,35 @@ public class BigMath
         int mid = (from+to)/2;
         return lcm(lcm(n,from,mid),lcm(n,mid,to));
     }
-    
+    public static int fibonacci(BigInteger[] seq)
+    {
+        return fibonacci(seq, BigInteger.ZERO, BigInteger.ONE, 0, seq.length);
+    }
+    public static int fibonacci(BigInteger[] seq, BigInteger f0, BigInteger f1)
+    {
+        return fibonacci(seq, f0, f1, 0, seq.length);
+    }
+    public static int fibonacci(BigInteger[] seq, BigInteger f0, BigInteger f1, int start, int end)
+    {
+        int count=0;
+        if(start<end)
+        {
+            seq[start] = f0;
+            count++;
+            if(start+1<end)
+            {
+                seq[start+1]=f1;
+                count++;
+            }
+            for(int i=start+2;i<end;i++)
+            {
+                BigInteger f2 = f0.add(f1);
+                seq[i] = f2;
+                f0=f1;
+                f1=f2;
+                count++;
+            }
+        }            
+        return count;
+    }
 }

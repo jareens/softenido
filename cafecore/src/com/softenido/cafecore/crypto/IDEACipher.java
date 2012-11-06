@@ -1,5 +1,5 @@
 /*
- *  Cardinality.java
+ *  IDEACipher.java
  *
  *  Copyright (C) 1998-2010 Francisco Gómez Carrasco
  *

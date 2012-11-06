@@ -20,6 +20,7 @@
  */
 package com.softenido.cafecore.math;
 
+import com.softenido.cafecore.util.Arrays6;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -175,12 +176,13 @@ public class FastMathTest
      * Test of lcm method, of class FastMath.
      */
     @Test
-    public void testLcmint_intArr()
+    public void testLcm_int_intArr()
     {
         assertEquals(60, FastMath.lcm(2,3,4,5));
         assertEquals(24, FastMath.lcm(4,6,8,12));
         assertEquals(36, FastMath.lcm(6,9,12));
         assertEquals(24, FastMath.lcm(4,8,12));
+        assertEquals(1155, FastMath.lcm(3, 5, 7, 11));
     }
 
     /**
@@ -193,6 +195,46 @@ public class FastMathTest
         {
             assertEquals(Math.log(i%300), FastMath.log(i%300), 0.0);
         }
+    }
+    static int[] FIBONACCI = {0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309, 3524578, 5702887, 9227465, 14930352, 24157817, 39088169};
+    static int[] FIBO13_21 = {13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309, 3524578, 5702887, 9227465, 14930352, 24157817, 39088169};
+
+    /**
+     * Test of fibonacci method, of class FastMath.
+     */
+    @Test
+    public void testFibonacci_intArr()
+    {
+        int[] fibonacci = new int[FIBONACCI.length];
+        assertEquals(FIBONACCI.length, FastMath.fibonacci(fibonacci));
+        assertArrayEquals(FIBONACCI, fibonacci);
+    }
+
+    /**
+     * Test of fibonacci method, of class FastMath.
+     */
+    @Test
+    public void testFibonacci_3args()
+    {
+        int[] fibonacci = new int[FIBONACCI.length];
+        assertEquals(FIBONACCI.length, FastMath.fibonacci(fibonacci, 0, 1));
+        assertArrayEquals(FIBONACCI, fibonacci);
+        
+        fibonacci = new int[FIBO13_21.length];
+        assertEquals(FIBO13_21.length, FastMath.fibonacci(fibonacci, 13, 21));
+        assertArrayEquals(FIBO13_21, fibonacci);
+    }
+
+    /**
+     * Test of fibonacci method, of class FastMath.
+     */
+    @Test
+    public void testFibonacci_5args()
+    {
+        int[] fibonacci = new int[FIBONACCI.length];
+        FastMath.fibonacci(fibonacci, 0, 1, 0, FIBONACCI.length/2);
+        FastMath.fibonacci(fibonacci, FIBONACCI[ FIBONACCI.length/2],  FIBONACCI[ FIBONACCI.length/2+1],  FIBONACCI.length/2,  FIBONACCI.length);
+        assertArrayEquals(FIBONACCI, fibonacci);
     }
 
 }

@@ -20,9 +20,11 @@
  */
 package com.softenido.cafecore.math;
 
+import com.softenido.cafecore.util.BigIntegers;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 import org.junit.*;
 
 /**
@@ -158,4 +160,46 @@ public class BigMathTest
         assertEquals(_36, BigMath.lcm(_6,_9,_12));
         assertEquals(_24, BigMath.lcm(_4,_8,_12));
     }
+
+    static BigInteger[] FIBONACCI = BigIntegers.valueOf(new int[]{0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309, 3524578, 5702887, 9227465, 14930352, 24157817, 39088169});
+    static BigInteger[] FIBO13_21 = BigIntegers.valueOf(new int[]{13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040, 1346269, 2178309, 3524578, 5702887, 9227465, 14930352, 24157817, 39088169});
+
+    /**
+     * Test of fibonacci method, of class BigMath.
+     */
+    @Test
+    public void testFibonacci_BigIntegerArr()
+    {
+        BigInteger[] fibonacci = new BigInteger[FIBONACCI.length];
+        assertEquals(FIBONACCI.length, BigMath.fibonacci(fibonacci));
+        assertArrayEquals(FIBONACCI, fibonacci);
+    }
+
+    /**
+     * Test of fibonacci method, of class BigMath.
+     */
+    @Test
+    public void testFibonacci_3args()
+    {
+        BigInteger[] fibonacci = new BigInteger[FIBONACCI.length];
+        assertEquals(FIBONACCI.length, BigMath.fibonacci(fibonacci, BigInteger.ZERO, BigInteger.ONE));
+        assertArrayEquals(FIBONACCI, fibonacci);
+        
+        fibonacci = new BigInteger[FIBO13_21.length];
+        assertEquals(FIBO13_21.length, BigMath.fibonacci(fibonacci, BigInteger.valueOf(13), BigInteger.valueOf(21)));
+        assertArrayEquals(FIBO13_21, fibonacci);
+    }
+
+    /**
+     * Test of fibonacci method, of class BigMath.
+     */
+    @Test
+    public void testFibonacci_5args()
+    {
+        BigInteger[] fibonacci = new BigInteger[FIBONACCI.length];
+        BigMath.fibonacci(fibonacci, BigInteger.ZERO, BigInteger.ONE, 0, FIBONACCI.length/2);
+        BigMath.fibonacci(fibonacci, FIBONACCI[ FIBONACCI.length/2],  FIBONACCI[ FIBONACCI.length/2+1],  FIBONACCI.length/2,  FIBONACCI.length);
+        assertArrayEquals(FIBONACCI, fibonacci);
+    }
+    
 }
