@@ -84,7 +84,7 @@ public class GutenbergLanguageClassifierTest
     }
     
     @Test
-    public void testSomeMethod()
+    public void testOnePass()
     {
         String[] langs = Gutenberg.getISO3Languages();
         final AtomicInteger counterInitialize= new AtomicInteger();
@@ -112,5 +112,16 @@ public class GutenbergLanguageClassifierTest
         }
         // there are only 15 files 10 hi and 5 lo
         assertEquals(15, counterLoad.get());
+    }
+    @Test
+    public void testTwoPass()
+    {
+        String[] langs = Gutenberg.getISO3Languages();
+        
+        GutenbergLanguageClassifier classifier = new GutenbergLanguageClassifier("(null)");
+        classifier.setTwoPasses(true);
+        classifier.add(langs);
+        classifier.firstPass();
+        classifier.secondPass();
     }
 }

@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,8 +41,7 @@ public class GutenbergLanguageClassifier extends AbstractLanguageClassifier
     private static final String LO = ".lo";
     private final HashSet<String> categoryLock = new HashSet<String>();
     private volatile boolean twoPasses = false;
-    private final ArrayList<String> langsLo = new ArrayList<String>();
-    private final Object lock = new Object();
+    private final Queue<String> langsSecondPass = new ConcurrentLinkedQueue<String>();
     
     public GutenbergLanguageClassifier(String unmatched)
     {
@@ -64,7 +65,7 @@ public class GutenbergLanguageClassifier extends AbstractLanguageClassifier
             for(int i=0;i<languages.length;i++)
             {
                 langs[i] = languages[i]+HI;
-                langsLo.add(languages[i]+LO);
+                langsSecondPass.add(languages[i]+LO);
             }
             return super.add(langs);
         }
@@ -84,20 +85,20 @@ public class GutenbergLanguageClassifier extends AbstractLanguageClassifier
             InputStream in;
             if(hi && !categoryLock.contains(lang+HI))
             {
+                categoryLock.add(lang+HI);//early lock form new attemps of initialization
                 in = Gutenberg.getLanguageDataStream(lang, false);
                 if(in!=null)
                 {
                     this.load(in, false);
-                    categoryLock.add(item+HI);
                 }
             }
             if(lo && !categoryLock.contains(lang+LO))
             {
+                categoryLock.add(lang+LO);//early lock form new attemps of initialization
                 in = Gutenberg.getLanguageDataStream(lang, true);
                 if(in!=null)
                 {
                     this.load(in, false);
-                    categoryLock.add(item+LO);
                 }
             }
             return true;
@@ -135,8 +136,13 @@ public class GutenbergLanguageClassifier extends AbstractLanguageClassifier
     }
     public boolean secondPass()
     {
-        super.add(langsLo.toArray(new String[0]));
-        langsLo.clear();
-        return initialize();
+        //second pass is not mandatory to be complete atomically
+        boolean ret = false;
+        for(String item:langsSecondPass)
+        {
+            super.add(item);
+            ret = initializeLoop() | ret;
+        }
+        return ret;
     }
 }

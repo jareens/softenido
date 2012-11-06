@@ -90,10 +90,8 @@ public class GutenbergTest
             data = Gutenberg.getLanguageDataStream(iso3[i],false);
             assertNotNull(data);
             data.close();
-
-            data = Gutenberg.getLanguageDataStream(iso3[i],true);
-            assertNotNull(data);
-            data.close();
+            
+            //some iso has no low freq. data, so no need for test
         }
         assertNull(Gutenberg.getLanguageDataStream(null, false));
         assertNull(Gutenberg.getLanguageDataStream(null, true));

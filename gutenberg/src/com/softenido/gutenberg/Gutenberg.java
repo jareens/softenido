@@ -22,7 +22,6 @@ package com.softenido.gutenberg;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.SequenceInputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
