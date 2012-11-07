@@ -26,9 +26,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
 import com.softenido.cafecore.os.OSName;
-import com.softenido.droidcore.os.AndroidVersion;
-import com.softenido.droidcore.os.Execute;
-import com.softenido.droiddesk.admob.AdMob;
+import com.softenido.cafedroid.os.AndroidVersion;
+import com.softenido.cafedroid.os.Execute;
+import com.softenido.cafedroid.admob.AdMob;
 
 public class OperativeSystemActivity extends Activity {
     private AdMob admob = null;

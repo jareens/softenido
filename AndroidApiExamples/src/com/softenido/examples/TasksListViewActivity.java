@@ -35,7 +35,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import com.softenido.cafecore.util.Strings;
-import com.softenido.droiddesk.admob.AdMob;
+import com.softenido.cafedroid.admob.AdMob;
 
 import java.util.ArrayList;
 import java.util.HashMap;

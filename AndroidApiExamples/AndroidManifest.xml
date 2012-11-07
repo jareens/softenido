@@ -18,7 +18,7 @@
         <activity android:name=".BatteryDisplayActivity"/>
         <activity android:name=".OperativeSystemActivity"/>
         <activity android:name=".SpeechActivity" android:screenOrientation="portrait"/>
-        <activity android:name="com.softenido.droiddesk.util.ui.AboutGPL3Activity" android:label="@string/about"/>
+        <activity android:name="com.softenido.cafedroid.util.ui.AboutGPL3Activity" android:label="@string/about"/>
         <meta-data android:name="com.softenido.about.copyright" android:value="© 2011-2012 Francisco Gómez Carrasco"/>
         <meta-data android:name="com.softenido.about.email" android:value="flikxxi@gmail.com"/>
         <meta-data android:name="com.softenido.about.url1" android:value="market://details?id=com.softenido.examples"/>

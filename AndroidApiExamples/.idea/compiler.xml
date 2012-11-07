@@ -6,6 +6,7 @@
       <directory url="file://$PROJECT_DIR$/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/../droidcore/gen" includeSubdirectories="true" />
       <directory url="file://$PROJECT_DIR$/../droiddesk/gen" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/../cafedroid/gen" includeSubdirectories="true" />
     </excludeFromCompile>
     <resourceExtensions />
     <wildcardResourcePatterns>

@@ -25,6 +25,7 @@
         <option name="PROGUARD_CFG_PATH" value="/proguard-project.txt" />
         <resOverlayFolders />
         <includeSystemProguardFile>false</includeSystemProguardFile>
+        <includeAssetsFromLibraries>true</includeAssetsFromLibraries>
         <additionalNativeLibs />
       </configuration>
     </facet>
@@ -38,10 +39,9 @@
     <orderEntry type="jdk" jdkName="Android 4.0 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="admob" level="project" />
-    <orderEntry type="module" module-name="droiddesk" exported="" />
-    <orderEntry type="module" module-name="droidcore" exported="" />
     <orderEntry type="module" module-name="cafecore" exported="" />
     <orderEntry type="library" name="admob" level="project" />
+    <orderEntry type="module" module-name="cafedroid" exported="" />
   </component>
 </module>
 

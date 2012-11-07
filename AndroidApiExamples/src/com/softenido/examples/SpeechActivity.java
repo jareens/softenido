@@ -31,10 +31,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import com.softenido.cafecore.net.Networks;
-import com.softenido.droiddesk.admob.AdMob;
-import com.softenido.droiddesk.speech.SpeechManager;
-import com.softenido.droiddesk.speech.SpeechHearer;
-import com.softenido.droiddesk.speech.SpeechSpeaker;
+import com.softenido.cafedroid.admob.AdMob;
+import com.softenido.cafedroid.speech.SpeechManager;
+import com.softenido.cafedroid.speech.SpeechHearer;
+import com.softenido.cafedroid.speech.SpeechSpeaker;
 
 import java.io.IOException;
 import java.io.InputStream;
