@@ -1,0 +1,14 @@
+<resources>
+    <string-array name="main_options_list">
+        <item>Códigos Secretos</item>
+        <item>Test de Rendimiento</item>
+        <item>Métricas de Pantalla</item>
+        <item>Acerca de</item>
+    </string-array>
+    <string-array name="secret_codes_options_list">
+        <item>IMEI</item>
+        <item>Configuración del Teléfono</item>
+        <item>FieldTest</item>
+        <item>Configuración de Testeo (Huawei)</item>
+    </string-array>
+</resources>

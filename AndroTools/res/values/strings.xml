@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AndroTools (lite)</string>
+    <string name="app_description">Set of Tools for developers</string>
+    <string name="about">About</string>
+    <string name="secret_codes">Secret Codes</string>
+    <string name="performance_tests">Performance Tests</string>
+    <string name="display_metrics">Display Metrics</string>
+</resources>

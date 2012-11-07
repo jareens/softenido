@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/performance_main"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+        <LinearLayout android:id="@+id/firstLine" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:id="@+id/memory_allocation"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="mem="/>
+            <TextView android:id="@+id/string_operations"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="String"/>
+            <TextView android:id="@+id/int_operations"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="int="  android:checked="true"/>
+            <TextView android:id="@+id/long_operations"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="long" android:checked="true" />
+            <TextView android:id="@+id/float_operations"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="float" android:checked="true" />
+            <TextView android:id="@+id/double_operations"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="double" android:checked="true" />
+            <TextView android:id="@+id/big_integer" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:text="big" android:checked="true" />
+            <TextView android:id="@+id/big_decimal"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="BigDecimal" android:checked="true" />
+            <TextView android:id="@+id/md5"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="md5" android:checked="true" />
+            <TextView android:id="@+id/sha1"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="sha1" android:checked="true" />
+            <TextView android:id="@+id/average"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="average" android:checked="true" />
+            <CheckBox android:id="@+id/exaustive"
+                      android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:checked="true" android:text="Exaustive"/>
+
+        </LinearLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <Button android:id="@+id/play_button"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_play"
+                android:text="play"/>
+        <Button android:id="@+id/stop_button"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_stop"
+                android:text="stop"/>
+    </LinearLayout>
+
+</LinearLayout>

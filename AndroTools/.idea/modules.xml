@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/AndroTools.iml" filepath="$PROJECT_DIR$/AndroTools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../cafecore/cafecore.iml" filepath="$PROJECT_DIR$/../cafecore/cafecore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../cafedroid/cafedroid.iml" filepath="$PROJECT_DIR$/../cafedroid/cafedroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../droidcore/droidcore.iml" filepath="$PROJECT_DIR$/../droidcore/droidcore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../droiddesk/droiddesk.iml" filepath="$PROJECT_DIR$/../droiddesk/droiddesk.iml" />
+    </modules>
+  </component>
+</project>
+

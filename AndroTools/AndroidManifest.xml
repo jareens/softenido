@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.softenido.androtools"
+          android:versionCode="2"
+          android:versionName="0.0.2"
+          android:installLocation="auto">
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="8" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <application
+            android:label="@string/app_name"
+            android:description="@string/app_description"
+            android:icon="@drawable/ic_launcher"
+            android:debuggable="false">
+        <activity android:name=".MainActivity"
+                  android:launchMode="singleInstance"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.softenido.cafedroid.util.ui.AboutGPL3Activity" android:label="@string/about" android:configChanges="keyboardHidden"/>
+        <meta-data android:name="com.softenido.about.copyright" android:value="© 2012 Francisco Gómez Carrasco"/>
+        <meta-data android:name="com.softenido.about.url1" android:value="market://details?id=com.softenido.androtools"/>
+        <meta-data android:name="com.softenido.about.url2" android:value="market://search?q=pub:softenido"/>
+        <meta-data android:name="com.softenido.about.url3" android:value="http://www.softenido.com/androtools"/>
+
+        <meta-data android:name="com.softenido.about.email" android:value="flikxxi@gmail.com"/>
+
+        <activity android:name="com.softenido.androtools.SecretCodesActivity" android:label="@string/secret_codes"/>
+        <activity android:name="com.softenido.androtools.PerformanceTestsActivity" android:label="@string/performance_tests"/>
+        <activity android:name="com.softenido.androtools.DisplayActivity" android:label="@string/display_metrics"/>
+
+
+        <!-- The application's publisher ID assigned by AdMob -->
+        <!--suppress AndroidDomInspection -->
+        <activity android:name="com.google.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+        <meta-data android:name="ADMOB_PUBLISHER_ID" android:value="a14fef3672a2400"/>
+        <meta-data android:name="TEST_DEVICES" android:value="9A0F95E4EB91E3EF9D5ED44F29AE20EE"/>
+    </application>
+    <!-- AdMob SDK requires Internet permission -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+</manifest>
