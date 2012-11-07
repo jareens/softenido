@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="about_feedback">Feedback</string>
-    <string name="about_feedback_title">Send Feedback by e-mail</string>
-    <string name="gplv3_brief">This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</string>
-</resources>
