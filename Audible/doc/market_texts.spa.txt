@@ -4,12 +4,24 @@ Audible (Beta)
 
 Description:
 
-Audible lee textos en voz alta, para aplicaciones como feedme o
+Audible lee textos en voz alta, para aplicaciones como Feedme o
 K9-Mail, del porta-papeles (mediante Copiar y Pegar) o incluso 
 Ficheros de Texto. Además leerá cada frase usando el idioma 
-y voz correctos en textos mixtos, sin necesidad de tener que seleccionarlo manualmente.
+y voz correctos en textos mixtos, sin necesidad de tener que 
+seleccionarlo manualmente.
 
-Los idiomas soportados son:
+Audible aún está en fase BETA, por lo que pueden producirse 
+errores de forma esporádica. Existen aún dispositivos en los 
+que no funciona correctamente por la configuración de idiomas y
+el sintetizador de voz usados. En tal caso un mensaje
+indicandolo será bien recibido. Si quieres colaborar para ver la
+aplicación traducida a tu idioma envía un mensaje y recibiras las
+instrucciones.
+
+Es preciso tener instalados un sintetizador de voz (tal como PICO
+o SVOX) y las voces correspondientes a los idiomas que se usen.
+
+Los idiomas acutalmente soportados son:
 - German/Deutsch
 - English
 - Spanish/Español
@@ -20,11 +32,11 @@ Los idiomas soportados son:
 - Chinese/中文 
 - Japanese/日本語
 
-
-
 Promo text:
 
-
+Audible lee textos en voz alta, desde otras apps, 
+el porta-papeles o ficheros
 
 Recent changes:
 
+- primera versión publicada

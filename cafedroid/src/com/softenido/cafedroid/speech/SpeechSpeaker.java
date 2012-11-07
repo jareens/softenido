@@ -516,4 +516,19 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
             Log.d(tag,"setVolumePercentage("+volume+"%) ["+value+"/"+max+")");
         }
     }
+
+    public boolean areDefaultsEnforced()
+    {
+        return tts.areDefaultsEnforced();
+    }
+
+    public String getDefaultEngine()
+    {
+        return tts.getDefaultEngine();
+    }
+
+    public List<TextToSpeech.EngineInfo> getEngines()
+    {
+        return tts.getEngines();
+    }
 }

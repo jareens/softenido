@@ -134,7 +134,9 @@ com.softenido.cafecore.benchmark.DoubleBenchMark
 com.softenido.cafecore.benchmark.FloatBenchMark
 com.softenido.cafecore.benchmark.IntegerBenchMark
 com.softenido.cafecore.benchmark.LongBenchMark
+com.softenido.cafecore.benchmark.MD5BenchMark
 com.softenido.cafecore.benchmark.NewBenchMark
+com.softenido.cafecore.benchmark.SHA1BenchMark
 com.softenido.cafecore.benchmark.SqrtBenchMark
 com.softenido.cafecore.benchmark.StringBenchMark
 com.softenido.cafecore.crypto.IDEACipher
@@ -218,6 +220,8 @@ com.softenido.cafecore.gauge.NullGauge:
     77:77:public void setMax(int)
     81:81:public void step()
     85:85:public void step(int)
+com.softenido.cafecore.gauge.PrintStreamGauge
+com.softenido.cafecore.gauge.PrintStreamGaugeView
 com.softenido.cafecore.gauge.ProxyGaugeProgress:
     36:38:public ProxyGaugeProgress(com.softenido.cafecore.gauge.GaugeView)
 com.softenido.cafecore.io.Files:
@@ -257,6 +261,8 @@ com.softenido.cafecore.logging.LoggerStatusNotifier
 com.softenido.cafecore.logging.StatusNotifier:
     public abstract boolean isLoggable(java.util.logging.Level)
 com.softenido.cafecore.logging.StreamStatusNotifier
+com.softenido.cafecore.logging.VerboseHandler
+com.softenido.cafecore.logging.VerboseHandler$1
 com.softenido.cafecore.math.BigMath
 com.softenido.cafecore.math.BigRational
 com.softenido.cafecore.math.FastMath
@@ -397,8 +403,6 @@ com.softenido.cafecore.text.Phrases:
     static final java.lang.String ALL
     159:159:public static java.lang.String[] split(java.lang.String)
     282:282:public static int getFailures()
-com.softenido.cafecore.text.Phrases2
-com.softenido.cafecore.text.Phrases2$Phrase
 com.softenido.cafecore.text.UnsupportedValueException
 com.softenido.cafecore.util.AbstractUnits
 com.softenido.cafecore.util.ArrayUtils
@@ -635,15 +639,15 @@ com.softenido.cafedroid.speech.SpeechPlayer:
     public static final int ADJUST_LOWER
     public static final int ADJUST_RAISE
     public static final int ADJUST_SAME
-    479:479:public boolean isLowerCase()
-    489:489:public boolean isDetection()
-    512:512:public int getMinPhraseSize()
-    517:518:public void setMinPhraseSize(int)
-    611:612:public void setVolume(int)
-    621:622:public void adjustVolume(int)
-    630:631:public void setVolumePercentage(int)
-    634:635:public void setVolumePercentage(int,int)
-    644:645:public void setGaugeView(com.softenido.cafecore.gauge.GaugeView)
+    492:492:public boolean isLowerCase()
+    502:502:public boolean isDetection()
+    525:525:public int getMinPhraseSize()
+    530:531:public void setMinPhraseSize(int)
+    624:625:public void setVolume(int)
+    634:635:public void adjustVolume(int)
+    643:644:public void setVolumePercentage(int)
+    647:648:public void setVolumePercentage(int,int)
+    657:658:public void setGaugeView(com.softenido.cafecore.gauge.GaugeView)
 com.softenido.cafedroid.speech.SpeechSpeaker:
     public static final int FLAG_ALLOW_RINGER_MODES
     public static final int FLAG_PLAY_SOUND
@@ -658,7 +662,6 @@ com.softenido.cafedroid.speech.SpeechSpeaker:
     public static final int LANG_COUNTRY_VAR_AVAILABLE
     154:154:public boolean isSpeaking()
     164:164:public java.util.Locale getLanguage()
-    173:173:public java.util.Locale[] getAvailableLocales()
     258:258:public boolean isInstallNeeded()
     263:263:public java.lang.String silence(long,boolean,boolean)
     286:291:public void resume()
@@ -667,6 +670,7 @@ com.softenido.cafedroid.speech.SpeechSpeaker:
     490:491:public void adjustVolume(int)
     506:507:public void setVolumePercentage(int)
     510:518:public void setVolumePercentage(int,int)
+    532:532:public java.util.List getEngines()
     44:44:static synthetic java.lang.Object access$000(com.softenido.cafedroid.speech.SpeechSpeaker)
     44:44:static synthetic java.lang.Object access$100(com.softenido.cafedroid.speech.SpeechSpeaker)
     44:44:static synthetic com.softenido.cafedroid.speech.SpeechSpeaker$Status access$200(com.softenido.cafedroid.speech.SpeechSpeaker)

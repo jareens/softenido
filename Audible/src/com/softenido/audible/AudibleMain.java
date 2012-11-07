@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.text.ClipboardManager;
@@ -40,6 +41,7 @@ import com.softenido.cafecore.profile.Profiler;
 import com.softenido.cafecore.text.Paragraphs;
 import com.softenido.cafecore.util.Locales;
 import com.softenido.cafecore.util.Sorts;
+import com.softenido.cafecore.util.Strings;
 import com.softenido.cafedroid.admob.AdMob;
 import com.softenido.cafedroid.gauge.DroidGaugeBuilder;
 import com.softenido.cafedroid.gauge.DroidGaugeView;
@@ -59,9 +61,11 @@ import java.io.*;
 import java.net.URI;
 import java.util.*;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusChangedListener
 {
+    private static final Logger logger = Logger.getLogger(AudibleMain.class.getName());
     private String head;
     private String body;
     private List<String> bodyParts;
@@ -589,14 +593,14 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         {
             Log.d("-audible-","action:"+action);
             Log.d("-audible-","intent:"+intent);
-            head = bundle.get(Intent.EXTRA_SUBJECT).toString();
-            body = toString(bundle.get(Intent.EXTRA_TEXT));
+            head = Strings.isnull(bundle.get(Intent.EXTRA_SUBJECT).toString(),"");
+            body = Strings.isnull(toString(bundle.get(Intent.EXTRA_TEXT)),"");
             autoPlayExit = true;
         }
         else
         {
-            head = settings.getTitle();
-            body= settings.getBody();
+            head = Strings.isnull(settings.getTitle(),"");
+            body= Strings.isnull(settings.getBody(),"");
             autoPlayExit = false;
         }
     }

@@ -23,6 +23,7 @@ package com.softenido.cafedroid.speech;
 
 import android.media.AudioManager;
 import android.os.PowerManager;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import com.softenido.cafecore.gauge.GaugeProgress;
 import com.softenido.cafecore.gauge.GaugeView;
@@ -33,6 +34,8 @@ import com.softenido.cafecore.text.Phrases;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -127,6 +130,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
     HashMap<String,Locale> localeMap = new HashMap<String,Locale>();
     public void setLocale(String language, String locale)
     {
+        Log.d("SpeechPlayer", "setLocale("+language+", "+locale);
         String[] tokens = locale.split("_");
         String lan = (tokens.length>0)?tokens[0]:"";
         String cou = (tokens.length>1)?tokens[1]:"";
@@ -162,6 +166,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         {
             ret = locale;
         }
+        Log.d("SpeechPlayer", "getLocaleFor("+lang+")="+ret+")");
         return ret;
     }
 
@@ -199,7 +204,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
             {
                 if(phrases[i]!=null)
                     continue;
-                  phrases[i] = Phrases.split(paragraphs[i], this.minPhraseSize);
+                phrases[i] = Phrases.split(paragraphs[i], this.minPhraseSize);
                 langs[i] = new String[phrases[i].length];
                 empty[i] = new boolean[phrases[i].length];
                 progress[i] = new int[phrases[i].length];
@@ -227,7 +232,6 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
     {
         if(!firstClassify.compareAndSet(false, true))
             return;
-        Log.d(SpeechPlayer.class.getSimpleName(),"SpeechPlayer.classify try");
         try
         {
             classifier.firstPass();
@@ -279,10 +283,14 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         PowerManager.WakeLock cpuLock = this.wakeLock;
         if(cpuLock!=null) this.wakeLock.acquire();
         this.speaker.registerOnSpeakingListener(this);
-        Log.d(SpeechPlayer.class.getSimpleName(),"SpeechPlayer.speak try");
         try
         {
             this.start();
+
+            Log.d("SpeechPlayer", "speaker.getAvailableLocales()="+Arrays.toString(this.speaker.getAvailableLocales()));
+            Log.d("SpeechPlayer", "speaker.areDefaultsEnforced()="+speaker.areDefaultsEnforced());
+            Log.d("SpeechPlayer", "speaker.getDefaultEngine()="+speaker.getDefaultEngine());
+
             boolean first = true;
             for(;row<phrases.length && status==Status.PLAY;)
             {
@@ -308,7 +316,10 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
                     }
 
                     loc = getLocaleFor(langs[row][col]);
-                    speaker.setLanguage(loc);
+
+                    int ret = speaker.setLanguage(loc);
+                    Log.d("SpeechPlayer", "speaker.setLanguage("+loc+")="+ret);
+
                     if(status!=Status.PLAY)
                         break;
 
@@ -321,6 +332,8 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
                         }
                     }
                     empty[row][col] = (utterance.length()==0);
+
+                    Log.d("SpeechPlayer", "speaker.speak("+utterance+", false, true)");
 
                     speaker.speak(utterance, false, true);
                     if(status!=Status.PLAY)
