@@ -97,4 +97,24 @@ public abstract class Strings
         //verificar si es más rápido o no antes de realizar el cambio
         return str.replaceAll(TRIM, "");
     }
+    public static String isnull(String first, String second, String... others)
+    {
+        if(first!=null)
+        {
+            return first;
+        }
+        if(second!=null)
+        {
+            return second;
+        }
+        for(String item : others)
+        {
+            if(item!=null)
+            {
+                return item;
+            }
+        }
+        return null;
+    }
+
 }

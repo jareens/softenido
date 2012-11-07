@@ -221,4 +221,25 @@ public class StringsTest
         assertEquals("1", Strings.commaSeparatedValues(one));
     }
 
+    /**
+     * Test of isnull method, of class Strings.
+     */
+    @Test
+    public void testIsnull()
+    {
+        assertEquals(null, Strings.isnull(null,null));
+        assertEquals("s1", Strings.isnull("s1",null));
+        assertEquals("s2", Strings.isnull(null, "s2"));
+        assertEquals("s1", Strings.isnull("s1", "s2"));
+        
+        assertEquals(null, Strings.isnull(null,null, (String)null));
+        assertEquals("s3", Strings.isnull(null,null, "s3"));
+        assertEquals("s2", Strings.isnull(null,"s2", (String)null));
+        assertEquals("s2", Strings.isnull(null,"s2", "s3"));
+        assertEquals("s1", Strings.isnull("s1",null, (String)null));
+        assertEquals("s1", Strings.isnull("s1",null, "s3"));
+        assertEquals("s1", Strings.isnull("s1","s2", (String)null));
+        assertEquals("s1", Strings.isnull("s1","s2", "s3"));
+    }
+
 }
