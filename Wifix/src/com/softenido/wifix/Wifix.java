@@ -33,11 +33,11 @@ import android.widget.*;
 import com.softenido.cafecore.text.HumanDateFormat;
 import com.softenido.cafecore.util.GenericObserver;
 import com.softenido.cafecore.util.Locales;
-import com.softenido.droidcore.os.Battery;
-import com.softenido.droidcore.services.LocalService;
-import com.softenido.droidcore.services.LocalServiceConnection;
-import com.softenido.droiddesk.admob.AdMob;
-import com.softenido.droiddesk.util.ui.AboutGPL3Activity;
+import com.softenido.cafedroid.os.Battery;
+import com.softenido.cafedroid.services.LocalService;
+import com.softenido.cafedroid.services.LocalServiceConnection;
+import com.softenido.cafedroid.admob.AdMob;
+import com.softenido.cafedroid.util.ui.AboutGPL3Activity;
 
 import java.util.Date;
 import java.util.Locale;

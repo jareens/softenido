@@ -1,4 +1,8 @@
-v0.3.3 vc9 (2012-08-07)
+v0.4.0 vc11 (2012-10-02)
+--------------------------
+- corregir bug del servicio, evitar que sea destruido
+
+v0.3.3 vc10 (2012-08-07)
 --------------------------
 - corregir bug que impedía enviar Observaciones
 

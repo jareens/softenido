@@ -28,10 +28,10 @@ import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.CountDownTimer;
 import android.widget.Toast;
-import com.softenido.droidcore.os.Battery;
-import com.softenido.droidcore.os.BatteryObservable;
-import com.softenido.droidcore.services.LocalService;
-import com.softenido.droiddesk.app.NotificationBuilder;
+import com.softenido.cafedroid.os.Battery;
+import com.softenido.cafedroid.os.BatteryObservable;
+import com.softenido.cafedroid.services.LocalService;
+import com.softenido.cafedroid.app.NotificationBuilder;
 import com.softenido.cafecore.util.GenericObservable;
 import com.softenido.cafecore.util.GenericObserver;
 
@@ -146,7 +146,6 @@ public class KeepWifiService extends LocalService implements GenericObserver<Kee
                 observable.setChanged();
                 observable.notifyObservers();
             }
-            //aki setSticky(keep);
         }
     }
 

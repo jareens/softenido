@@ -1,4 +1,8 @@
-v0.3.3 vc9 (2012-08-07)
+v0.4.0 vc11 (2012-10-02)
+--------------------------
+- fix service bug, prevent from being destroyed
+
+v0.3.3 vc10 (2012-08-07)
 --------------------------
 - fixed a bug that prevents from send feedback
 
