@@ -1,0 +1,28 @@
+<resources>
+    <string-array name="themes">
+        <item>Claro</item>
+        <item>Gris</item>
+        <item>Oscuro</item>
+    </string-array>
+    <string-array name="preferred_gender_names">
+        <item>Cualquiera</item>
+        <item>Masculino</item>
+        <item>Femenino</item>
+    </string-array>
+    <string-array name="detect_unit_name">
+        <item>Documento</item>
+        <item>Parrafo</item>
+        <item>Frase</item>
+    </string-array>
+    <string-array name="keep_quick_start">
+        <item>15 minutos</item>
+        <item>30 minutos</item>
+        <item>1 hora</item>
+        <item>2 horas</item>
+        <item>4 horas</item>
+        <item>8 horas</item>
+        <item>12 horas</item>
+        <item>1 día</item>
+        <item>1 semana</item>
+    </string-array>
+</resources>

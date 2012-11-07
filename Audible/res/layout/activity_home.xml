@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <include layout="@layout/layout_home_text"/>
+    <include layout="@layout/layout_home_extra"/>
+    <include layout="@layout/layout_home_volume"/>
+    <include layout="@layout/layout_home_toggle"/>
+    <include layout="@layout/layout_home_buttons"/>
+</LinearLayout>

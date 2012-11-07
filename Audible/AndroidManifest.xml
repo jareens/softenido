@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.softenido.audible"
+          android:versionCode="1"
+          android:versionName="0.0.1"
+          android:installLocation="auto">
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="8"/>
+
+    <application android:hasCode="true" android:label="@string/app_name" android:icon="@drawable/ic_launcher">
+        <activity android:name="AudibleMain" android:screenOrientation="portrait" android:launchMode="standard" android:label="@string/app_name_version">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SENDTO" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+            </intent-filter>
+        </activity>
+        <service android:name=".KeepAudibleLoadService"/>
+
+        <receiver android:name="com.softenido.cafedroid.os.PolicyAdmin$Receiver"
+                  android:label="@string/app_name"
+                  android:description="@string/locknow_description"
+                  android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data android:name="android.app.device_admin" android:resource="@xml/admin_polices" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name="com.softenido.cafedroid.util.ui.AboutGPL3Activity" android:label="@string/about" android:configChanges="keyboardHidden">
+        </activity>
+
+        <activity android:name=".AudiblePreferenceActivity" android:label="@string/activity_preference_label"/>
+
+        <meta-data android:name="com.softenido.about.copyright" android:value="© 2012 Francisco Gómez Carrasco"/>
+
+        <meta-data android:name="com.softenido.about.url1" android:value="market://details?id=com.softenido.audible"/>
+        <meta-data android:name="com.softenido.about.url2" android:value="market://search?q=pub:softenido"/>
+        <meta-data android:name="com.softenido.about.url3" android:value="http://www.softenido.com/audible"/>
+        <meta-data android:name="com.softenido.about.email" android:value="flikxxi@gmail.com"/>
+        <!-- The application's publisher ID assigned by AdMob -->
+        <!--suppress AndroidDomInspection -->
+        <activity android:name="com.google.ads.AdActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+        <meta-data android:name="ADMOB_PUBLISHER_ID" android:value="a14fe6f34990597"/>
+        <meta-data android:name="TEST_DEVICES" android:value="9A0F95E4EB91E3EF9D5ED44F29AE20EE"/>
+
+        <meta-data android:name="android.app.device_admin" android:resource="@xml/admin_polices" />
+    </application>
+    <!-- AdMob SDK requires Internet permission -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!--WakeLock requires permission-->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+</manifest>

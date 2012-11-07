@@ -1,0 +1,734 @@
+android.annotation.SuppressLint
+android.annotation.TargetApi
+com.google.ads.Ad:
+    public abstract boolean isReady()
+    public abstract void loadAd(com.google.ads.AdRequest)
+    public abstract void setAdListener(com.google.ads.AdListener)
+    public abstract void stopLoading()
+com.google.ads.AdActivity:
+    public static final java.lang.String BASE_URL_PARAM
+    public static final java.lang.String HTML_PARAM
+    public static final java.lang.String URL_PARAM
+    public static final java.lang.String INTENT_ACTION_PARAM
+    public static final java.lang.String TYPE_PARAM
+    public static final java.lang.String ORIENTATION_PARAM
+com.google.ads.AdRequest:
+    public static final java.lang.String VERSION
+    public static final java.lang.String LOGTAG
+    173:174:public void setGender(com.google.ads.AdRequest$Gender)
+    184:185:public void setBirthday(java.lang.String)
+    196:197:public void setPlusOneOptOut(boolean)
+    208:209:public void setKeywords(java.util.Set)
+    238:239:public void setExtras(java.util.Map)
+    267:268:public void setLocation(android.location.Location)
+    281:282:public void setTesting(boolean)
+    385:386:public void setTestDevices(java.util.Set)
+com.google.ads.AdSize:
+    38:39:public AdSize(int,int)
+com.google.ads.AdView:
+    478:482:public boolean isReady()
+    523:524:public void setAdListener(com.google.ads.AdListener)
+    535:536:public void stopLoading()
+com.google.ads.InterstitialAd:
+    private com.google.ads.d a
+    73:74:public InterstitialAd(android.app.Activity,java.lang.String)
+    88:91:public InterstitialAd(android.app.Activity,java.lang.String,boolean)
+    100:100:public boolean isReady()
+    112:113:public void loadAd(com.google.ads.AdRequest)
+    122:135:public void show()
+    146:147:public void setAdListener(com.google.ads.AdListener)
+    156:157:public void stopLoading()
+com.google.ads.R
+com.google.ads.R$attr
+com.google.ads.R$id
+com.google.ads.R$layout
+com.google.ads.a:
+    79:81:private a()
+com.google.ads.aa:
+    18:18:public aa()
+com.google.ads.d:
+    464:464:public final synchronized boolean o()
+    777:778:public final synchronized void y()
+com.google.ads.searchads.SearchAdRequest:
+    88:89:public void setQuery(java.lang.String)
+    98:104:public void setBackgroundColor(int)
+    116:122:public void setBackgroundGradient(int,int)
+    132:133:public void setHeaderTextColor(int)
+    143:144:public void setDescriptionTextColor(int)
+    154:155:public void setAnchorTextColor(int)
+    163:164:public void setFontFace(java.lang.String)
+    173:174:public void setHeaderTextSize(int)
+    184:185:public void setBorderColor(int)
+    192:193:public void setBorderType(com.google.ads.searchads.SearchAdRequest$BorderType)
+    202:203:public void setBorderThickness(int)
+com.google.ads.util.AdUtil:
+    152:154:private AdUtil()
+com.google.ads.util.a:
+    19:21:private a()
+com.google.ads.util.c:
+    26:28:private c()
+com.google.ads.y:
+    11:11:public y()
+com.google.ads.z:
+    156:158:private z()
+com.softenido.audible.AudibleMain:
+    public static final int CODE_PREFERENCES
+    public static final int CODE_PICK_TEXT_FILE
+    static final boolean parallel
+com.softenido.audible.AudiblePreferences:
+    private static final java.lang.String READING_LOWERCASE
+    private static final java.lang.String READING_IGNORE_TITLE
+    private static final java.lang.String READING_IGNORE_TITLE_REPEATED
+    private static final java.lang.String READING_IGNORE_PARENTHESES
+    private static final java.lang.String READING_IGNORE_SQUAREBRACKETS
+    private static final java.lang.String READING_IGNORE_CURLYBRACKETS
+    private static final java.lang.String READING_IGNORE_PIPE
+    private static final java.lang.String READING_IGNORE_UNDERSCORE
+    private static final java.lang.String READING_IGNORE_HYPHENS
+    private static final java.lang.String READING_IGNORE_ASTERISK
+    private static final java.lang.String AUTO
+    private static final java.lang.String AUTO_PLAY
+    private static final java.lang.String AUTO_EXIT
+    private static final java.lang.String LANG_DEFAULT
+    private static final java.lang.String LANG_DETECT
+    private static final java.lang.String LANG_UNIT
+    public static final java.lang.String AUTO_SCREEN_LOCK
+    private static final java.lang.String UI_FONT_TYPEFACE
+    private static final java.lang.String UI_FONT_SIZE
+    private static final java.lang.String UI_FONT_BOLD
+    private static final java.lang.String UI_TOASTS
+    private static final java.lang.String UI_PROGRESS
+    private static final java.lang.String UI_VOLUME
+    private static final java.lang.String EARLY_SAVE
+    private static final java.lang.String EARLY_DETECT
+    private static final java.lang.String KEEP_QUICK_START
+    private static final java.lang.String TITLE
+    private static final java.lang.String BODY
+    private static final java.lang.String EXTRA
+    private static final java.lang.String LEARN
+    private static final java.lang.String THEME
+    private static final java.lang.String THEME_DEFAULT
+    private static final java.lang.String PHRASE
+    static final java.lang.String iso3Compressed
+    static final java.lang.String countriesCompressed
+    116:116:public boolean isModified()
+    152:153:public void setPhrase(boolean)
+    341:342:public void setVolume(boolean)
+    366:373:private boolean getBoolean(java.lang.String,boolean)
+com.softenido.audible.BuildConfig
+com.softenido.audible.KeepAudibleLoadService:
+    static final int MAX_LANGS
+    129:134:private static void disconnect()
+com.softenido.audible.R
+com.softenido.audible.R$array
+com.softenido.audible.R$attr
+com.softenido.audible.R$drawable
+com.softenido.audible.R$id
+com.softenido.audible.R$layout
+com.softenido.audible.R$string
+com.softenido.audible.R$xml
+com.softenido.cafecore.benchmark.Benchmark
+com.softenido.cafecore.benchmark.BenchmarkManager
+com.softenido.cafecore.benchmark.BigIntegerBenchMark
+com.softenido.cafecore.benchmark.DoubleBenchMark
+com.softenido.cafecore.benchmark.FloatBenchMark
+com.softenido.cafecore.benchmark.IntegerBenchMark
+com.softenido.cafecore.benchmark.LongBenchMark
+com.softenido.cafecore.benchmark.NewBenchMark
+com.softenido.cafecore.benchmark.SqrtBenchMark
+com.softenido.cafecore.benchmark.StringBenchMark
+com.softenido.cafecore.crypto.IDEACipher
+com.softenido.cafecore.equals.Equals
+com.softenido.cafecore.equals.EqualsBuilder
+com.softenido.cafecore.equals.EqualsData
+com.softenido.cafecore.equals.EqualsDataBuilder
+com.softenido.cafecore.equals.EqualsFilterBuilder
+com.softenido.cafecore.equals.EqualsFilterBuilder$1
+com.softenido.cafecore.equals.EqualsHashMap
+com.softenido.cafecore.equals.EqualsProxyBuilder
+com.softenido.cafecore.equals.EqualsProxyBuilder$1
+com.softenido.cafecore.gauge.AbstractGaugeProgress:
+    private static final int MIN_DIFF_STEP
+    private static final double MIN_DIFF_TIME
+    private static final double MIN_SHOW_DONE
+    private static final int MIN_SHOW_TIME
+    67:67:public java.lang.String getPrefix()
+    72:74:public void setPrefix(java.lang.String)
+    82:82:public boolean isStarted()
+    86:87:public void start()
+    115:115:public double getDone()
+    120:120:public int getVal()
+    125:125:public int getMax()
+    142:143:public void step()
+    147:149:public void step(int)
+    193:193:public boolean isShowPrev()
+    198:199:public void setShowPrev(boolean)
+    203:203:public boolean isShowNext()
+    208:209:public void setShowNext(boolean)
+    213:213:public boolean isShowFull()
+    218:219:public void setShowFull(boolean)
+com.softenido.cafecore.gauge.DebugGauge:
+    43:52:private DebugGauge(com.softenido.cafecore.gauge.GaugeProgress)
+    65:74:private DebugGauge(com.softenido.cafecore.gauge.Gauge)
+    78:78:public static com.softenido.cafecore.gauge.GaugeProgress wrap(com.softenido.cafecore.gauge.GaugeProgress)
+    86:86:public static com.softenido.cafecore.gauge.DebugGauge wrap(com.softenido.cafecore.gauge.Gauge)
+    91:96:public void start()
+    100:105:public void start(int)
+    108:113:public void start(int,java.lang.String)
+    117:122:public void close()
+    126:131:public void setPrefix(java.lang.String)
+    135:139:public java.lang.String getPrefix()
+    144:148:public double getDone()
+    153:157:public int getVal()
+    162:166:public int getMax()
+    171:176:public void setVal(int)
+    180:185:public void setMax(int)
+    189:194:public void step()
+    197:202:public void step(int)
+    215:219:public boolean isStarted()
+com.softenido.cafecore.gauge.Gauge
+com.softenido.cafecore.gauge.GaugeProgress:
+    public abstract boolean isStarted()
+    public abstract void start()
+    public abstract void start(int)
+    public abstract void start(int,java.lang.String)
+    public abstract void close()
+    public abstract void setPrefix(java.lang.String)
+    public abstract java.lang.String getPrefix()
+    public abstract double getDone()
+    public abstract int getVal()
+    public abstract int getMax()
+    public abstract void setVal(int)
+    public abstract void setMax(int)
+    public abstract void step()
+    public abstract void step(int)
+com.softenido.cafecore.gauge.LongGaugeProgress
+com.softenido.cafecore.gauge.NullGauge:
+    31:31:public boolean isStarted()
+    36:36:public void start()
+    39:39:public void start(int)
+    42:42:public void start(int,java.lang.String)
+    45:45:public void close()
+    49:49:public void setPrefix(java.lang.String)
+    53:53:public java.lang.String getPrefix()
+    58:58:public double getDone()
+    63:63:public int getVal()
+    68:68:public int getMax()
+    73:73:public void setVal(int)
+    77:77:public void setMax(int)
+    81:81:public void step()
+    85:85:public void step(int)
+com.softenido.cafecore.gauge.ProxyGaugeProgress:
+    36:38:public ProxyGaugeProgress(com.softenido.cafecore.gauge.GaugeView)
+com.softenido.cafecore.io.Files:
+    41:43:public Files()
+    84:84:public static java.io.File getHomeFile()
+    88:88:public static java.lang.String getHomePath()
+    93:98:private static boolean equals(java.io.File,java.io.File,boolean)
+    105:126:public static void copy(java.io.File,java.io.File)
+    130:136:public static boolean move(java.io.File,java.io.File)
+    141:148:public static java.lang.String escape(java.lang.String)
+    153:153:public static java.lang.String wildcard(java.lang.String)
+    158:158:public static java.lang.String normalize(java.lang.String)
+    163:169:public static java.lang.String[] getParents(java.io.File,boolean)
+    174:174:public static java.lang.String[] getParents(java.io.File)
+    179:189:public static java.io.File[] getParentFiles(java.io.File,boolean)
+    194:194:public static java.io.File[] getParentFiles(java.io.File)
+    199:204:public static java.lang.String getCommonParent(java.io.File,java.io.File)
+    209:217:public static java.io.File getCommonParentFile(java.io.File,java.io.File)
+    222:222:public static boolean haveCommonParent(java.io.File,java.io.File)
+    227:243:public static boolean isParentOf(java.io.File,java.io.File,boolean)
+    249:273:public static java.io.File[] uniqueCopyOf(java.io.File[],boolean,boolean)
+    278:278:public static boolean isLink(java.lang.String)
+    283:285:public static boolean isBugName(java.io.File)
+    296:296:public static boolean isLink(java.io.File)
+    307:324:public static boolean isLink(java.io.File,boolean)
+    330:367:public static java.io.File getNoDotFile(java.io.File)
+    372:385:public static boolean isCyclicLink(java.io.File)
+    401:401:public static byte[] bytesFromFile(java.io.File)
+    406:411:public static java.io.File[] getAbsoluteFile(java.io.File[])
+    416:425:public static java.io.File[] toFileArray(java.lang.String[])
+    432:432:public static java.lang.String[] briefPath(java.lang.String[],int)
+    437:437:public static java.lang.String briefPath(java.lang.String,int)
+    442:453:public static boolean delete(java.io.File)
+com.softenido.cafecore.io.Files$Holder
+com.softenido.cafecore.io.SafeDataEraser
+com.softenido.cafecore.logging.LoggerStatusNotifier
+com.softenido.cafecore.logging.StatusNotifier:
+    public abstract boolean isLoggable(java.util.logging.Level)
+com.softenido.cafecore.logging.StreamStatusNotifier
+com.softenido.cafecore.math.BigMath
+com.softenido.cafecore.math.BigRational
+com.softenido.cafecore.math.FastMath
+com.softenido.cafecore.math.LongMath
+com.softenido.cafecore.misc.EuroCheckSum
+com.softenido.cafecore.net.MailToBuilder
+com.softenido.cafecore.net.Networks
+com.softenido.cafecore.os.OSName
+com.softenido.cafecore.os.OSName$1
+com.softenido.cafecore.profile.NanoProfiler:
+    private static final int NANOS_PER_MILLIS
+com.softenido.cafecore.profile.Profiler:
+    166:166:public static com.softenido.cafecore.profile.Profiler getProfiler(com.softenido.cafecore.profile.Profiler,java.lang.String)
+    176:176:public static boolean getActive(boolean)
+    186:186:public static boolean isLineFeed()
+com.softenido.cafecore.security.CloneableMessageDigest
+com.softenido.cafecore.security.Messy
+com.softenido.cafecore.security.Messy$1
+com.softenido.cafecore.security.Messy$2
+com.softenido.cafecore.security.Messy$3
+com.softenido.cafecore.security.Messy$4
+com.softenido.cafecore.security.Messy$5
+com.softenido.cafecore.security.ParallelMessageDigest
+com.softenido.cafecore.security.SecureBitSet
+com.softenido.cafecore.statistics.CumulativeExponentialMovingAverage
+com.softenido.cafecore.statistics.ExponentialMovingAverage
+com.softenido.cafecore.statistics.MovingAverage
+com.softenido.cafecore.statistics.SimpleMovingAverage
+com.softenido.cafecore.statistics.Statistics
+com.softenido.cafecore.statistics.classifier.AbstractClassifier:
+    51:52:final void coach(java.lang.String,java.lang.String,double,double)
+    55:57:final void coach(java.lang.String,java.lang.String,double)
+    62:66:public final void coach(java.lang.String,java.lang.String[],int[])
+    abstract int wordCount(java.lang.String,java.lang.String)
+    abstract int getTotal()
+    abstract java.lang.String[] getCategories()
+    abstract java.lang.String[] getWords()
+    139:208:public final varargs void save(java.io.OutputStream,int,int,java.lang.String[])
+    211:212:public final varargs void loadGZ(java.io.InputStream,boolean,java.lang.String[])
+    215:216:public final varargs void saveGZ(java.io.OutputStream,int,int,java.lang.String[])
+    255:255:public java.lang.String getUnmatched()
+    265:265:public static int getSaveThresold()
+    270:271:public static void setSaveThresold(int)
+com.softenido.cafecore.statistics.classifier.AbstractLanguageClassifier:
+    49:51:public AbstractLanguageClassifier(java.lang.String)
+    54:60:public AbstractLanguageClassifier(java.lang.String,java.lang.String[])
+    105:106:public com.softenido.cafecore.statistics.classifier.Score classify(java.io.InputStream)
+    112:114:public varargs void save(java.io.OutputStream,int,int,java.lang.String[])
+    119:121:public varargs void saveGZ(java.io.OutputStream,int,int,java.lang.String[])
+com.softenido.cafecore.statistics.classifier.BaseTextClassifier:
+    static final java.lang.String DELIMITER
+    static final int SUCCESS
+    static final int VERIFY_SIZE
+    static final int BLOCK_SIZE
+    50:51:public BaseTextClassifier(java.lang.String)
+    54:55:public BaseTextClassifier(java.lang.String,java.lang.String[])
+    63:64:public void coach(java.lang.String,java.lang.String)
+    68:69:public void coach(java.lang.String,java.io.InputStream)
+    74:80:private void coach(java.lang.String,java.util.Scanner)
+    84:96:private void coachSingle(java.lang.String,java.util.Scanner)
+    104:130:private void coachGroup(java.lang.String,java.util.Scanner)
+    134:139:private void coachSet(java.lang.String,com.softenido.cafecore.util.CounterSet)
+    173:173:public com.softenido.cafecore.statistics.classifier.Score classify(java.io.InputStream)
+    329:330:public varargs void save(java.io.OutputStream,int,int,java.lang.String[])
+    333:334:public varargs void loadGZ(java.io.InputStream,boolean,java.lang.String[])
+    337:338:public varargs void saveGZ(java.io.OutputStream,int,int,java.lang.String[])
+    365:365:public static int getSampleLimit()
+    370:371:public static void setSampleLimit(int)
+    380:380:public static boolean isGroup()
+    385:386:public static void setGroup(boolean)
+    394:394:public java.lang.String getUnmatched()
+com.softenido.cafecore.statistics.classifier.Classifier:
+    public abstract com.softenido.cafecore.statistics.classifier.Score[] classify(com.softenido.cafecore.statistics.classifier.Score[],java.lang.String[])
+    public abstract java.lang.String getUnmatched()
+    public abstract void coach(java.lang.String,java.lang.String,int)
+    public abstract void coach(java.lang.String,java.lang.String[],int[])
+    public varargs abstract void save(java.io.OutputStream,int,int,java.lang.String[])
+    public varargs abstract void loadGZ(java.io.InputStream,boolean,java.lang.String[])
+    public varargs abstract void saveGZ(java.io.OutputStream,int,int,java.lang.String[])
+com.softenido.cafecore.statistics.classifier.ClassifierFormatException:
+    37:38:public ClassifierFormatException(java.lang.String,java.lang.Throwable)
+com.softenido.cafecore.statistics.classifier.Classifiers
+com.softenido.cafecore.statistics.classifier.Classifiers$1
+com.softenido.cafecore.statistics.classifier.Classifiers$2
+com.softenido.cafecore.statistics.classifier.LanguageClassifier:
+    public varargs abstract boolean add(java.lang.String[])
+    public abstract com.softenido.cafecore.statistics.classifier.Score classify(java.io.InputStream)
+    public varargs abstract void save(java.io.OutputStream,int,int,java.lang.String[])
+    public varargs abstract void saveGZ(java.io.OutputStream,int,int,java.lang.String[])
+    public abstract void setStatusNotifier(com.softenido.cafecore.logging.StatusNotifier)
+com.softenido.cafecore.statistics.classifier.NaiveParallelClassifier:
+    49:58:public NaiveParallelClassifier(java.lang.String,java.lang.String[])
+    221:221:public static boolean isCacheable()
+    226:227:public static void setCacheable(boolean)
+    231:231:public static int getThreshold()
+    236:237:public static void setThreshold(int)
+    242:244:int wordCount(java.lang.String,java.lang.String)
+    250:250:int getTotal()
+    256:256:java.lang.String[] getCategories()
+    262:262:java.lang.String[] getWords()
+com.softenido.cafecore.statistics.classifier.NaiveSerialClassifier
+com.softenido.cafecore.statistics.classifier.TextClassifier
+com.softenido.cafecore.stego.Cardinality
+com.softenido.cafecore.stego.StegoCipher
+com.softenido.cafecore.stego.StegoPack
+com.softenido.cafecore.stego.StegoPack0
+com.softenido.cafecore.stego.StegoTextJustify
+com.softenido.cafecore.stego.StgTxt
+com.softenido.cafecore.text.CardinalFormat
+com.softenido.cafecore.text.CardinalFormat$1
+com.softenido.cafecore.text.CardinalFormat$Gender
+com.softenido.cafecore.text.ConsoleAppendable
+com.softenido.cafecore.text.ConsoleAppendable$Options
+com.softenido.cafecore.text.HumanDateFormat
+com.softenido.cafecore.text.HumanMillisFormat:
+    public static final int DAY
+    public static final int HOUR
+    public static final int MINUTE
+    public static final int SECOND
+    60:61:public HumanMillisFormat(int,int,boolean)
+    78:78:public int getMaxItems()
+    83:83:public int getMinItems()
+    133:152:public java.lang.String toString2(long)
+com.softenido.cafecore.text.NumberRule
+com.softenido.cafecore.text.Paragraphs:
+    static final java.lang.String SEP
+    static final java.lang.String UFFF
+    35:35:public Paragraphs()
+    44:44:public static java.lang.String[] split(java.lang.String)
+com.softenido.cafecore.text.Phrases:
+    static final java.lang.String OPEN
+    static final java.lang.String CLOSE
+    static final java.lang.String NEXT
+    static final java.lang.String QUOTES
+    static final java.lang.String QUOTE
+    static final java.lang.String TABSPACE
+    static final java.lang.String ANYSPACE
+    static final java.lang.String ALL
+    159:159:public static java.lang.String[] split(java.lang.String)
+    282:282:public static int getFailures()
+com.softenido.cafecore.text.Phrases2
+com.softenido.cafecore.text.Phrases2$Phrase
+com.softenido.cafecore.text.UnsupportedValueException
+com.softenido.cafecore.util.AbstractUnits
+com.softenido.cafecore.util.ArrayUtils
+com.softenido.cafecore.util.Arrays6
+com.softenido.cafecore.util.BigIntegers
+com.softenido.cafecore.util.BitSetReader
+com.softenido.cafecore.util.BitSetReader$1
+com.softenido.cafecore.util.BitSetReader$2
+com.softenido.cafecore.util.BitSetWriter
+com.softenido.cafecore.util.BitSetWriter$1
+com.softenido.cafecore.util.BitSetWriter$2
+com.softenido.cafecore.util.BitSets
+com.softenido.cafecore.util.ChangedObservable
+com.softenido.cafecore.util.CounterSet
+com.softenido.cafecore.util.Country
+com.softenido.cafecore.util.CountryHolder
+com.softenido.cafecore.util.Dates
+com.softenido.cafecore.util.Fonts
+com.softenido.cafecore.util.GenericObservable
+com.softenido.cafecore.util.GenericObserver
+com.softenido.cafecore.util.Language
+com.softenido.cafecore.util.LanguageHolder
+com.softenido.cafecore.util.LanguageHolder$1
+com.softenido.cafecore.util.Locales:
+    278:403:public Locales()
+    282:282:public static java.lang.String getISO2Country(java.lang.String)
+    286:286:public static java.lang.String getISO2Language(java.lang.String)
+    290:290:public static java.lang.String getISO3Country(java.lang.String)
+    294:294:public static java.lang.String getISO3Language(java.lang.String)
+    298:298:public static java.lang.String getDisplayCountry(java.lang.String)
+    302:302:public static java.lang.String getDisplayCountry(java.lang.String,java.util.Locale)
+    306:307:public static java.lang.String getDisplayCountry(java.lang.String,java.lang.String)
+    311:311:public static java.lang.String getDisplayLanguage(java.lang.String)
+    315:320:public static java.lang.String[] getDisplayLanguage(java.lang.String[])
+    324:324:public static java.lang.String getDisplayLanguage(java.lang.String,java.util.Locale)
+    328:333:public static java.lang.String[] getDisplayLanguage(java.lang.String[],java.util.Locale)
+    337:338:public static java.lang.String getDisplayLanguage(java.lang.String,java.lang.String)
+    342:347:public static java.lang.String[] getDisplayLanguage(java.lang.String[],java.lang.String)
+    351:351:public static java.lang.String getDisplayLanguageNative(java.lang.String)
+    355:360:public static java.lang.String[] getDisplayLanguageNative(java.lang.String[])
+    365:365:public static java.lang.String[] getDisplayLanguageCountry(java.util.Locale[])
+    378:378:public static java.lang.String getDisplayLanguageCountry(java.util.Locale)
+    415:416:public static void setDefault(java.util.Locale)
+com.softenido.cafecore.util.Locales$DefaultHolder
+com.softenido.cafecore.util.ObserverWrapper
+com.softenido.cafecore.util.Pair
+com.softenido.cafecore.util.RepeatedSet
+com.softenido.cafecore.util.SimpleInteger:
+    75:76:public void add(int)
+    79:80:public int addAndGet(int)
+com.softenido.cafecore.util.SizeUnits
+com.softenido.cafecore.util.Sorts:
+    30:30:public Sorts()
+    34:40:public static void reverse(int[])
+    43:49:public static void reverse(double[])
+    52:58:public static void reverse(java.lang.Object[])
+    96:109:public static void sort(int[],int[],int,int,boolean)
+    112:113:public static void sort(int[],int[])
+    116:117:public static void sort(int[],int[],boolean)
+    120:121:public static void sort(int[],int[],int,int)
+    159:172:public static void sort(double[],double[],int,int,boolean)
+    175:176:public static void sort(double[],double[])
+    179:180:public static void sort(double[],double[],boolean)
+    183:184:public static void sort(double[],double[],int,int)
+    222:235:public static void sort(int[],java.lang.Object[],int,int,boolean)
+    238:239:public static void sort(int[],java.lang.Object[])
+    242:243:public static void sort(int[],java.lang.Object[],boolean)
+    246:247:public static void sort(int[],java.lang.Object[],int,int)
+    285:298:public static void sort(java.lang.Object[],java.lang.Object[],int,int,boolean)
+    301:302:public static void sort(java.lang.Object[],java.lang.Object[])
+    305:306:public static void sort(java.lang.Object[],java.lang.Object[],boolean)
+    309:310:public static void sort(java.lang.Object[],java.lang.Object[],int,int)
+    314:314:public static java.util.Comparator asStringComparator()
+    338:338:public static java.util.Comparator asStringComparatorReverse()
+    350:350:public static java.util.Comparator asStringComparatorIgnoreCaseReverse()
+com.softenido.cafecore.util.Sorts$1
+com.softenido.cafecore.util.Sorts$1Entry
+com.softenido.cafecore.util.Sorts$1EntryComparator
+com.softenido.cafecore.util.Sorts$1ReverseEntryComparator
+com.softenido.cafecore.util.Sorts$2Entry
+com.softenido.cafecore.util.Sorts$2EntryComparator
+com.softenido.cafecore.util.Sorts$2ReverseEntryComparator
+com.softenido.cafecore.util.Sorts$3
+com.softenido.cafecore.util.Sorts$3Entry
+com.softenido.cafecore.util.Sorts$3EntryComparator
+com.softenido.cafecore.util.Sorts$3ReverseEntryComparator
+com.softenido.cafecore.util.Sorts$4
+com.softenido.cafecore.util.Sorts$4Entry
+com.softenido.cafecore.util.Sorts$4EntryComparator
+com.softenido.cafecore.util.Sorts$4ReverseEntryComparator
+com.softenido.cafecore.util.Strings:
+    static final java.lang.String TRIM
+    33:33:public Strings()
+    37:39:public static java.lang.String repeat(char,int)
+    43:48:public static java.lang.String repeat(java.lang.String,int)
+    53:55:public static java.lang.StringBuilder fill(java.lang.StringBuilder,char,int,boolean)
+    59:59:public static java.lang.String fill(java.lang.CharSequence,char,int,boolean)
+    63:63:public static java.lang.StringBuilder fill(java.lang.StringBuilder,char,int)
+    67:67:public static java.lang.String fill(java.lang.CharSequence,char,int)
+    72:79:public static java.lang.String delimiterSeparatedValues(java.lang.Iterable,java.lang.String)
+    83:83:public static java.lang.String delimiterSeparatedValues(java.lang.Object[],java.lang.String)
+    87:87:public static java.lang.String commaSeparatedValues(java.util.List)
+    91:91:public static java.lang.String commaSeparatedValues(java.lang.Object[])
+com.softenido.cafecore.util.regex.RegExs
+com.softenido.cafedroid.BuildConfig
+com.softenido.cafedroid.R:
+    10:256:public R()
+com.softenido.cafedroid.R$array
+com.softenido.cafedroid.R$attr
+com.softenido.cafedroid.R$drawable
+com.softenido.cafedroid.R$id:
+    64:64:public R$id()
+com.softenido.cafedroid.R$layout:
+    114:114:public R$layout()
+com.softenido.cafedroid.R$string:
+    132:132:public R$string()
+com.softenido.cafedroid.R$xml
+com.softenido.cafedroid.admob.AdMob:
+    public static final java.lang.String ADMOB_PUBLISHER_ID
+    public static final java.lang.String TEST_DEVICES
+    public static final java.lang.String NO_ADS_AT_ALL
+    private static final java.lang.String CONF_LOG_MSG
+    91:92:private static void setId(java.lang.String)
+    96:97:public static void addTestDevice(java.lang.String)
+    133:133:public static com.softenido.cafedroid.admob.AdMob addBanner(android.app.Activity,android.widget.LinearLayout)
+    146:147:public static com.softenido.cafedroid.admob.AdMob addBanner(android.app.ListActivity,boolean)
+com.softenido.cafedroid.app.NotificationBuilder:
+    private java.lang.CharSequence mContentInfo
+    private android.widget.RemoteViews mContentView
+    private int mProgressMax
+    private int mProgress
+    private boolean mProgressIndeterminate
+    95:96:public com.softenido.cafedroid.app.NotificationBuilder setWhen(long)
+    123:125:public com.softenido.cafedroid.app.NotificationBuilder setSmallIcon(int,int)
+    150:151:public com.softenido.cafedroid.app.NotificationBuilder setNumber(int)
+    158:159:public com.softenido.cafedroid.app.NotificationBuilder setContentInfo(java.lang.CharSequence)
+    167:170:public com.softenido.cafedroid.app.NotificationBuilder setProgress(int,int,boolean)
+    178:179:public com.softenido.cafedroid.app.NotificationBuilder setContent(android.widget.RemoteViews)
+    201:202:public com.softenido.cafedroid.app.NotificationBuilder setDeleteIntent(android.app.PendingIntent)
+    259:261:public com.softenido.cafedroid.app.NotificationBuilder setSound(android.net.Uri)
+    271:273:public com.softenido.cafedroid.app.NotificationBuilder setSound(android.net.Uri,int)
+    283:284:public com.softenido.cafedroid.app.NotificationBuilder setVibrate(long[])
+    293:296:public com.softenido.cafedroid.app.NotificationBuilder setLights(int,int,int)
+    312:313:public com.softenido.cafedroid.app.NotificationBuilder setOngoing(boolean)
+    322:323:public com.softenido.cafedroid.app.NotificationBuilder setOnlyAlertOnce(boolean)
+    348:349:public com.softenido.cafedroid.app.NotificationBuilder setDefaults(int)
+com.softenido.cafedroid.app.SendEmailBuilder:
+    58:59:public com.softenido.cafedroid.app.SendEmailBuilder addAttach(java.util.Collection)
+    63:64:public com.softenido.cafedroid.app.SendEmailBuilder addAttach(java.io.File)
+    68:69:public com.softenido.cafedroid.app.SendEmailBuilder addAttach(java.io.File[])
+    74:75:public com.softenido.cafedroid.app.SendEmailBuilder addBcc(java.util.Collection)
+    79:80:public com.softenido.cafedroid.app.SendEmailBuilder addBcc(java.lang.String)
+    84:85:public com.softenido.cafedroid.app.SendEmailBuilder addBcc(java.lang.String[])
+    90:91:public com.softenido.cafedroid.app.SendEmailBuilder setBody(java.lang.String)
+    96:97:public com.softenido.cafedroid.app.SendEmailBuilder addCc(java.util.Collection)
+    101:102:public com.softenido.cafedroid.app.SendEmailBuilder addCc(java.lang.String)
+    106:107:public com.softenido.cafedroid.app.SendEmailBuilder addCc(java.lang.String[])
+    118:123:public com.softenido.cafedroid.app.SendEmailBuilder addTo(java.util.Collection)
+    136:141:public com.softenido.cafedroid.app.SendEmailBuilder addTo(java.lang.String[])
+    150:151:public void setType(java.lang.String)
+com.softenido.cafedroid.gauge.DroidGaugeBuilder:
+    38:55:public DroidGaugeBuilder()
+    62:64:public static android.view.View inflateAfter(android.app.Activity,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin)
+    69:71:public static android.view.View inflateAt(android.app.Activity,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin)
+    83:85:public static android.view.View inflate(android.app.Activity,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin)
+    89:91:public static android.view.View inflate(android.app.Activity,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin)
+    96:97:public static com.softenido.cafedroid.gauge.DroidGaugeProgress createProgressAfter(android.os.Handler,android.app.Activity,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin)
+    101:102:public static com.softenido.cafedroid.gauge.DroidGaugeProgress createProgressAt(android.os.Handler,android.app.Activity,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin)
+    106:107:public static com.softenido.cafedroid.gauge.DroidGaugeProgress createProgressBefore(android.os.Handler,android.app.Activity,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin)
+    112:113:public static com.softenido.cafedroid.gauge.DroidGaugeView createViewAfter(android.os.Handler,android.app.Activity,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin)
+    117:118:public static com.softenido.cafedroid.gauge.DroidGaugeView createViewAt(android.os.Handler,android.app.Activity,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin)
+com.softenido.cafedroid.gauge.DroidGaugeProgress:
+    43:45:public DroidGaugeProgress(com.softenido.cafedroid.gauge.DroidGaugeView)
+    48:50:public DroidGaugeProgress(android.os.Handler,android.view.ViewGroup,android.widget.ProgressBar,android.widget.TextView,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode)
+    52:54:public DroidGaugeProgress(android.os.Handler,android.view.ViewGroup,android.widget.ProgressBar,android.widget.TextView)
+    56:58:public DroidGaugeProgress(android.os.Handler,android.view.ViewGroup,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode)
+    60:62:public DroidGaugeProgress(android.os.Handler,android.view.ViewGroup,int,int)
+    64:66:public DroidGaugeProgress(android.os.Handler,android.app.Activity,int,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode)
+    68:70:public DroidGaugeProgress(android.os.Handler,android.app.Activity,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode)
+    72:74:public DroidGaugeProgress(android.os.Handler,android.app.Activity,int,int)
+    77:78:public void setMode(com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode)
+com.softenido.cafedroid.gauge.DroidGaugeView:
+    private static final int FULL
+    59:60:public DroidGaugeView(android.os.Handler,android.view.ViewGroup,android.widget.ProgressBar,android.widget.TextView)
+    67:68:public DroidGaugeView(android.os.Handler,android.view.ViewGroup,int,int)
+    71:72:public DroidGaugeView(android.os.Handler,android.app.Activity,int,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode)
+    75:76:public DroidGaugeView(android.os.Handler,android.app.Activity,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode)
+    79:80:public DroidGaugeView(android.os.Handler,android.app.Activity,int,int)
+com.softenido.cafedroid.os.Battery
+com.softenido.cafedroid.os.BatteryObservable
+com.softenido.cafedroid.os.BatteryObservable$1
+com.softenido.cafedroid.os.Debug:
+    151:151:public static boolean isDebuggerConnected()
+com.softenido.cafedroid.os.Debug$ThreadMode:
+    70:71:public com.softenido.cafedroid.os.Debug$ThreadMode setDiskReads(boolean)
+    75:76:public com.softenido.cafedroid.os.Debug$ThreadMode setDiskWrites(boolean)
+    80:81:public com.softenido.cafedroid.os.Debug$ThreadMode setNetwork(boolean)
+    85:86:public com.softenido.cafedroid.os.Debug$ThreadMode setPenaltyLog(boolean)
+com.softenido.cafedroid.os.Debug$VmMode:
+    110:111:public com.softenido.cafedroid.os.Debug$VmMode setDetectLeakedSqlLiteObjects(boolean)
+    116:117:public com.softenido.cafedroid.os.Debug$VmMode setDetectLeakedClosableObjects(boolean)
+    122:123:public com.softenido.cafedroid.os.Debug$VmMode setPenaltyLog(boolean)
+    128:129:public com.softenido.cafedroid.os.Debug$VmMode setPenaltyDeath(boolean)
+com.softenido.cafedroid.os.Execute
+com.softenido.cafedroid.os.PolicyAdmin:
+    public static final int RESULT_ENABLE
+    56:58:public varargs void setActiveAdmin(int,java.lang.Object[])
+com.softenido.cafedroid.os.PolicyAdmin$Receiver:
+    87:87:static android.content.SharedPreferences getSamplePreferences(android.content.Context)
+com.softenido.cafedroid.services.LocalService:
+    123:124:public static void setToastDebug(boolean)
+    128:129:public static void setToastLength(int)
+    133:133:public boolean isSticky()
+    138:139:public void setSticky(boolean)
+com.softenido.cafedroid.services.LocalServiceConnection:
+    76:76:public com.softenido.cafedroid.services.LocalService getService()
+    104:105:public void startService()
+    108:109:public void stopService()
+com.softenido.cafedroid.speech.SpeechHearer:
+    55:60:public void hear(java.lang.String)
+    78:78:public java.util.ArrayList getText()
+    83:83:public boolean isHearing()
+com.softenido.cafedroid.speech.SpeechManager:
+    static final int DATA_CHECK_CODE
+    static final int RECOGNIZE_SPEECH
+    64:65:public SpeechManager(android.app.Activity)
+    73:73:public com.softenido.cafedroid.speech.SpeechHearer getHearer()
+com.softenido.cafedroid.speech.SpeechPlayer:
+    public static final int FLAG_ALLOW_RINGER_MODES
+    public static final int FLAG_PLAY_SOUND
+    public static final int FLAG_REMOVE_SOUND_AND_VIBRATE
+    public static final int FLAG_SHOW_UI
+    public static final int FLAG_VIBRATE
+    public static final int ADJUST_LOWER
+    public static final int ADJUST_RAISE
+    public static final int ADJUST_SAME
+    479:479:public boolean isLowerCase()
+    489:489:public boolean isDetection()
+    512:512:public int getMinPhraseSize()
+    517:518:public void setMinPhraseSize(int)
+    611:612:public void setVolume(int)
+    621:622:public void adjustVolume(int)
+    630:631:public void setVolumePercentage(int)
+    634:635:public void setVolumePercentage(int,int)
+    644:645:public void setGaugeView(com.softenido.cafecore.gauge.GaugeView)
+com.softenido.cafedroid.speech.SpeechSpeaker:
+    public static final int FLAG_ALLOW_RINGER_MODES
+    public static final int FLAG_PLAY_SOUND
+    public static final int FLAG_REMOVE_SOUND_AND_VIBRATE
+    public static final int FLAG_SHOW_UI
+    public static final int FLAG_VIBRATE
+    public static final int ADJUST_LOWER
+    public static final int ADJUST_RAISE
+    public static final int ADJUST_SAME
+    public static final int LANG_AVAILABLE
+    public static final int LANG_COUNTRY_AVAILABLE
+    public static final int LANG_COUNTRY_VAR_AVAILABLE
+    154:154:public boolean isSpeaking()
+    164:164:public java.util.Locale getLanguage()
+    173:173:public java.util.Locale[] getAvailableLocales()
+    258:258:public boolean isInstallNeeded()
+    263:263:public java.lang.String silence(long,boolean,boolean)
+    286:291:public void resume()
+    385:447:public java.lang.String[] speak(java.lang.String[],boolean,boolean)
+    480:481:public void setVolume(int)
+    490:491:public void adjustVolume(int)
+    506:507:public void setVolumePercentage(int)
+    510:518:public void setVolumePercentage(int,int)
+    44:44:static synthetic java.lang.Object access$000(com.softenido.cafedroid.speech.SpeechSpeaker)
+    44:44:static synthetic java.lang.Object access$100(com.softenido.cafedroid.speech.SpeechSpeaker)
+    44:44:static synthetic com.softenido.cafedroid.speech.SpeechSpeaker$Status access$200(com.softenido.cafedroid.speech.SpeechSpeaker)
+    44:44:static synthetic com.softenido.cafedroid.speech.SpeechSpeaker$Status access$202(com.softenido.cafedroid.speech.SpeechSpeaker,com.softenido.cafedroid.speech.SpeechSpeaker$Status)
+com.softenido.cafedroid.speech.SpeechSpeaker$1
+com.softenido.cafedroid.speech.SpeechSpeaker$2
+com.softenido.cafedroid.util.InvokeIntents:
+    43:45:public InvokeIntents()
+    67:68:public static void getContent(android.app.Activity,java.lang.String,java.lang.String,int)
+    71:72:public static void getContent(android.app.Activity,java.lang.String,int,int)
+com.softenido.cafedroid.util.InvokeIntents$SearchEngine
+com.softenido.cafedroid.util.logging.LogCatHandler:
+    105:117:public static void unsetHandler()
+    165:165:private static java.util.logging.Handler removeAndroidHandler(java.util.logging.Logger)
+com.softenido.cafedroid.util.ui.AboutActivity:
+    static final java.lang.String METADATA_COPYRIGHT
+    static final java.lang.String METADATA_URL1
+    static final java.lang.String METADATA_URL2
+    static final java.lang.String METADATA_URL3
+    static final java.lang.String METADATA_EMAIL
+com.softenido.cafedroid.util.ui.MarketLinkify:
+    38:38:public MarketLinkify()
+com.softenido.cafedroid.util.ui.Notifier:
+    85:85:public static com.softenido.cafedroid.util.ui.Notifier build(android.content.Context,boolean)
+    178:179:final void log(int,java.lang.String)
+    183:184:public final void v(java.lang.String)
+    187:188:public final void v(java.lang.String,java.lang.Throwable)
+    191:192:public final void d(java.lang.String)
+    195:196:public final void d(java.lang.String,java.lang.Throwable)
+    203:204:public final void i(java.lang.String,java.lang.Throwable)
+    207:208:public final void w(java.lang.String)
+    211:212:public final void w(java.lang.String,java.lang.Throwable)
+    215:216:public final void e(java.lang.String)
+    219:220:public final void e(java.lang.String,java.lang.Throwable)
+    224:224:public int getLevel()
+com.softenido.cafedroid.util.ui.Notifier$3
+com.softenido.cafedroid.util.ui.Screens
+com.softenido.cafedroid.util.ui.Screens$1
+com.softenido.cafedroid.util.ui.ShortCuts
+com.softenido.cafedroid.util.ui.Views:
+    41:41:public Views()
+    81:85:public static android.view.View inflateAfter(android.app.Activity,int,int,int)
+    89:89:public static android.view.View inflateAt(android.app.Activity,int,int,int)
+    100:100:public static android.view.View inflate(android.app.Activity,int,int)
+    104:104:public static android.view.View inflate(android.app.Activity,int)
+com.softenido.cafedroid.widget.ToggleImageButton:
+    43:44:public ToggleImageButton(android.content.Context)
+    57:62:public void setStateResources(int[])
+    81:81:public int getState()
+    86:87:public void setState(int)
+com.softenido.cafedroid.widget.ToggleTextButton:
+    44:45:public ToggleTextButton(android.content.Context)
+    58:64:public void setStateResources(int[])
+    67:73:public void setStateNames(java.lang.String[])
+    97:97:public int getState()
+    102:103:public void setState(int)
+com.softenido.gutenberg.Gutenberg:
+    java.util.HashMap map
+    66:66:public static java.lang.String[] getISO3Languages()
+com.softenido.gutenberg.GutenbergLanguageClassifier:
+    private static final java.lang.String HI
+    private static final java.lang.String LO
+    48:49:public GutenbergLanguageClassifier(java.lang.String)
+    53:54:public GutenbergLanguageClassifier(java.lang.String,java.lang.String[])
+    125:125:public boolean isTwoPasses()

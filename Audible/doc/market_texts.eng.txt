@@ -1,0 +1,30 @@
+Title: 
+
+Audible (Beta)
+
+Description:
+
+Audible reads text aloud, for applications such as feedme or
+K9-Mail, the clipboard (using Copy and Paste) or 
+even text files. Also read each sentence using the correct language 
+and voice, with no need for manual selection.
+
+Supported languages ​​are:
+- German/Deutsch
+- English
+- Spanish/Español
+- French/Français 
+- Italian/Italiano 
+- Russian/Русский 
+- Korean/한국어
+- Chinese/中文 
+- Japanese/日本語
+
+
+
+Promo text:
+
+
+
+Recent changes:
+

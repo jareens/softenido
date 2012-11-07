@@ -1,0 +1,245 @@
+<resources>
+    <string-array name="themes">
+        <item>Light</item>
+        <item>Gray</item>
+        <item>Dark</item>
+    </string-array>
+    <string-array name="eng_countries_iso2">
+        <item>en_AU</item>
+        <item>en_UK</item>
+        <item>en_US</item>
+    </string-array>
+    <string-array name="eng_countries_names">
+        <item>AU (Australia)</item>
+        <item>UK (United Kingdom)</item>
+        <item>US (United States)</item>
+    </string-array>
+
+    <string-array name="spa_countries_iso2">
+        <item>es_ES</item>
+        <item>es_MX</item>
+    </string-array>
+    <string-array name="spa_countries_names">
+        <item>ES (España)</item>
+        <item>MX (México)</item>
+        <item>US (Estados Unidos)</item>
+    </string-array>
+
+    <string-array name="fra_countries_iso2">
+        <item>fr_FR</item>
+        <item>fr_CA</item>
+    </string-array>
+    <string-array name="fra_countries_names">
+        <item>FR (France)</item>
+        <item>CA (Canada)</item>
+    </string-array>
+
+    <string-array name="por_countries_iso2">
+        <item>pt_BR</item>
+        <item>pt_PT</item>
+    </string-array>
+    <string-array name="por_countries_names">
+        <item>BR (Brasil)</item>
+        <item>PT (Portugal)</item>
+    </string-array>
+
+    <string-array name="zho_countries_iso2">
+        <item>zh_CN</item>
+        <item>zh_TW</item>
+        <item>zh_HK</item>
+        <item>cmn</item>
+        <item>yue</item>
+    </string-array>
+    <string-array name="zho_countries_names">
+        <item>(中国)</item>
+        <item>(台灣)</item>
+        <item>(香港)</item>
+        <item>(普通话/Mandarin)</item>
+        <item>(粵語/Cantonese)</item>
+    </string-array>
+
+    <string-array name="avaliable_languajes_name">
+        <item>System</item>
+        <!--..&lt;!&ndash;<item>Afrikaans</item>&ndash;&gt;-->
+        <!--..<item>Indonesian / Bahasa Indonesia</item>-->
+        <!--..&lt;!&ndash;<item>Bahasa Melayu</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>Català</item>&ndash;&gt;-->
+        <!--..<item>Czech/Český</item>-->
+        <!--..<item>Danish/Danske</item>-->
+        <item>German/Deutsch</item>
+        <!--..&lt;!&ndash;<item>Eesti</item>&ndash;&gt;-->
+        <item>English</item>
+        <item>Spanish/Español</item>
+        <!--..&lt;!&ndash;<item>Esperanto</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>Euskara</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>Filipino</item>&ndash;&gt;-->
+        <item>French/Français</item>
+        <!--..&lt;!&ndash;<item>Galego</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>Hrvatski</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>Isizulu</item>&ndash;&gt;-->
+        <!--..<item>Íslenska</item>-->
+        <item>Italian/Italiano</item>
+        <!--..&lt;!&ndash;<item>Kiswahili</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>Latviešu</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>Lietuvių</item>&ndash;&gt;-->
+        <!--..<item>Hungarian/Magyar</item>-->
+        <!--..<item>Dutch/Nederlands</item>-->
+        <!--..<item>Norwegian/Norsk</item>-->
+        <!--..<item>Polish/Polska</item>-->
+        <!--..<item>Portuguese/Português</item>-->
+        <!--..<item>Romanian/Română</item>-->
+        <!--..<item>Slovak/Slovenčina</item>-->
+        <!--..&lt;!&ndash;<item>Slovenščina</item>&ndash;&gt;-->
+        <!--..<item>Finnish/Suomi</item>-->
+        <!--..<item>Swedish/Svenska</item>-->
+        <!--..&lt;!&ndash;<item>Tiếng Việt</item>&ndash;&gt;-->
+        <!--..<item>Turkish/Türk</item>-->
+        <!--..<item>Greek/Ελληνικά</item>-->
+        <!--..&lt;!&ndash;<item>Български</item>&ndash;&gt;-->
+        <item>Russian/Русский</item>
+        <!--..&lt;!&ndash;<item>Српски</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>Українська</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>עברית</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>اردو</item>&ndash;&gt;-->
+        <!--..<item>Arabic/العربي</item>-->
+        <!--..&lt;!&ndash;<item>فارسی</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>አማርኛ</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>मराठी</item>&ndash;&gt;-->
+        <!--..<item>Hindi/हिन्दी</item>-->
+        <!--..&lt;!&ndash;<item>বাংলা</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>ગુજરાતી</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>தமிழ்</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>తెలుగు</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>ಕನ್ನಡ</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>മലയാളം</item>&ndash;&gt;-->
+        <!--..<item>Thai/ไทย</item>-->
+        <item>Korean/한국어</item>
+        <item>Chinese/中文</item>
+        <item>Japanese/日本語</item>
+    </string-array>
+    <string-array name="avaliable_languajes_iso3">
+        <item></item>
+        <!--..&lt;!&ndash;<item>afr</item>&ndash;&gt;-->
+        <!--..<item>ind</item>-->
+        <!--..&lt;!&ndash;<item>msa</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>cat</item>&ndash;&gt;-->
+        <!--..<item>ces</item>-->
+        <!--..<item>dan</item>-->
+        <item>deu</item>
+        <!--..&lt;!&ndash;<item>est</item>&ndash;&gt;-->
+        <item>eng</item>
+        <item>spa</item>
+        <!--..&lt;!&ndash;<item>epo</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>eus</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>fil</item>&ndash;&gt;-->
+        <item>fra</item>
+        <!--..&lt;!&ndash;<item>glg</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>hrv</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>zul</item>&ndash;&gt;-->
+        <!--..<item>isl</item>-->
+        <item>ita</item>
+        <!--..&lt;!&ndash;<item>swa</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>lav</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>lit</item>&ndash;&gt;-->
+        <!--..<item>hun</item>-->
+        <!--..<item>nld</item>-->
+        <!--..<item>nor</item>-->
+        <!--..<item>pol</item>-->
+        <!--..<item>por</item>-->
+        <!--..<item>ron</item>-->
+        <!--..<item>slk</item>-->
+        <!--..&lt;!&ndash;<item>slv</item>&ndash;&gt;-->
+        <!--..<item>fin</item>-->
+        <!--..<item>swe</item>-->
+        <!--..&lt;!&ndash;<item>vie</item>&ndash;&gt;-->
+        <!--..<item>tur</item>-->
+        <!--..<item>ell</item>-->
+        <!--..&lt;!&ndash;<item>bul</item>&ndash;&gt;-->
+        <item>rus</item>
+        <!--..&lt;!&ndash;<item>srp</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>ukr</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>heb</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>urd</item>&ndash;&gt;-->
+        <!--..<item>ara</item>-->
+        <!--..&lt;!&ndash;<item>fas</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>amh</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>mar</item>&ndash;&gt;-->
+        <!--..<item>hin</item>-->
+        <!--..&lt;!&ndash;<item>ben</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>guj</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>tam</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>tel</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>kan</item>&ndash;&gt;-->
+        <!--..&lt;!&ndash;<item>mal</item>&ndash;&gt;-->
+        <!--..<item>tha</item>-->
+        <item>kor</item>
+        <item>zho</item>
+        <item>jpn</item>
+    </string-array>
+
+    <string-array name="preferred_gender_codes">
+        <item></item>
+        <item>male</item>
+        <item>female</item>
+    </string-array>
+    <string-array name="preferred_gender_names">
+        <item>Any</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="font_family">
+        <item>Default</item>
+        <item>Sans Serif</item>
+        <item>Serif</item>
+        <item>Monospace</item>
+    </string-array>
+    <string-array name="fonts_sizes">
+        <item>8</item>
+        <item>10</item>
+        <item>12</item>
+        <item>14</item>
+        <item>16</item>
+        <item>18</item>
+        <item>20</item>
+        <item>22</item>
+        <item>24</item>
+        <item>26</item>
+        <item>28</item>
+        <item>30</item>
+        <item>32</item>
+    </string-array>
+    <string-array name="detect_unit_name">
+        <item>Document</item>
+        <item>Paragraph</item>
+        <item>Phrase</item>
+    </string-array>
+    <string-array name="detect_unit_value">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="keep_quick_start">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>4 hours</item>
+        <item>8 hours</item>
+        <item>12 hours</item>
+        <item>1 day</item>
+        <item>1 week</item>
+    </string-array>
+    <string-array name="keep_quick_start_values">
+        <item>900</item>
+        <item>1800</item>
+        <item>3600</item>
+        <item>7200</item>
+        <item>14400</item>
+        <item>28800</item>
+        <item>43200</item>
+        <item>86400</item>
+        <item>604800</item>
+    </string-array>
+</resources>

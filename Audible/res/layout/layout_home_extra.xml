@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:custom="http://schemas.android.com/apk/res/com.softenido.cafedroid.widget"
+        android:id="@+id/layout_home_extra"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <ImageButton android:id="@+id/extra_copy"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_copy"/>
+    <ImageButton android:id="@+id/extra_paste"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_paste"/>
+    <ImageButton android:id="@+id/extra_erase"
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:src="@drawable/ic_clean"/>
+    <ImageButton android:id="@+id/extra_keyboard"
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:src="@drawable/ic_keyboard"/>
+    <ImageButton android:id="@+id/extra_file"
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:src="@drawable/ic_folder"
+                 android:enabled="false"/>
+    <ImageButton android:id="@+id/extra_sendto"
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:src="@drawable/ic_sendto"/>
+</LinearLayout>
