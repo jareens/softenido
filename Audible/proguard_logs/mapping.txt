@@ -31,6 +31,11 @@ com.google.ads.AdActivity -> com.google.ads.AdActivity:
     void onWindowFocusChanged(boolean) -> onWindowFocusChanged
     void onActivityResult(int,int,android.content.Intent) -> onActivityResult
 com.google.ads.AdListener -> com.google.ads.b:
+    void onReceiveAd(com.google.ads.Ad) -> a
+    void onFailedToReceiveAd(com.google.ads.Ad,com.google.ads.AdRequest$ErrorCode) -> a
+    void onPresentScreen(com.google.ads.Ad) -> b
+    void onDismissScreen(com.google.ads.Ad) -> c
+    void onLeaveApplication(com.google.ads.Ad) -> d
 com.google.ads.AdRequest -> com.google.ads.c:
     com.google.ads.AdRequest$Gender a -> b
     java.lang.String b -> c
@@ -46,6 +51,7 @@ com.google.ads.AdRequest -> com.google.ads.c:
     void addExtra(java.lang.String,java.lang.Object) -> a
     java.util.Map getRequestMap(android.content.Context) -> a
     void addTestDevice(java.lang.String) -> b
+    boolean isTestDevice(android.content.Context) -> b
 com.google.ads.AdRequest$ErrorCode -> com.google.ads.d:
     com.google.ads.AdRequest$ErrorCode INVALID_REQUEST -> a
     com.google.ads.AdRequest$ErrorCode NO_FILL -> b
@@ -83,7 +89,9 @@ com.google.ads.AdView -> com.google.ads.AdView:
     void a(android.content.Context,java.lang.String,com.google.ads.AdSize,android.util.AttributeSet) -> a
     void a(android.content.Context,android.util.AttributeSet) -> a
     void a(android.app.Activity,com.google.ads.AdSize,java.lang.String) -> a
+    boolean isRefreshing() -> b
     void loadAd(com.google.ads.AdRequest) -> a
+    void setAdListener(com.google.ads.AdListener) -> setAdListener
 com.google.ads.InterstitialAd -> com.google.ads.g:
 com.google.ads.a -> com.google.ads.h:
     java.util.Map a -> a
@@ -217,7 +225,7 @@ com.google.ads.d -> com.google.ads.u:
     void a(int) -> a
     int m() -> m
     long n() -> n
-    boolean A() -> w
+    boolean A() -> y
     boolean p() -> o
     void a(com.google.ads.AdRequest) -> a
     void a(com.google.ads.AdRequest$ErrorCode) -> a
@@ -226,16 +234,16 @@ com.google.ads.d -> com.google.ads.u:
     void s() -> r
     void t() -> s
     void u() -> t
-    void v() -> x
-    boolean w() -> u
-    void B() -> y
+    void v() -> u
+    boolean w() -> v
+    void B() -> z
     void a(java.lang.Runnable) -> a
-    void x() -> v
-    void a$176853ce() -> z
+    void x() -> w
+    void a(com.google.ads.AdListener) -> a
     void a(long) -> a
     void a(float) -> a
     void b(long) -> b
-    void z() -> A
+    void z() -> x
 com.google.ads.e -> com.google.ads.v:
     java.lang.String a -> a
     java.util.HashMap b -> b
@@ -462,6 +470,8 @@ com.google.ads.y -> com.google.ads.ap:
     java.lang.String[] d -> d
 com.google.ads.z -> com.google.ads.aq:
     void a(android.webkit.WebView,boolean) -> a
+    void a(android.app.Activity,android.webkit.WebView,java.lang.String) -> a
+    void a(android.app.Activity) -> a
 com.google.ads.z$a -> com.google.ads.ar:
     java.lang.ref.WeakReference a -> a
     void run() -> run
@@ -475,12 +485,13 @@ com.google.ads.z$c -> com.google.ads.at:
     android.webkit.WebView b -> b
     void run() -> run
 com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
-    java.util.logging.Logger logger -> an
-    java.lang.String head -> ao
-    java.lang.String body -> ap
-    java.util.List bodyParts -> aq
-    java.util.List paragraphs -> ar
-    com.softenido.cafedroid.admob.AdMob admob -> as
+    int FILE_READ_LIMIT -> an
+    java.util.logging.Logger logger -> ao
+    java.lang.String head -> ap
+    java.lang.String body -> aq
+    java.util.List bodyParts -> ar
+    java.util.List paragraphs -> as
+    com.softenido.cafedroid.admob.AdMob admob -> at
     android.widget.TextView title -> a
     android.widget.ListView textList -> b
     android.widget.EditText textEdit -> c
@@ -503,7 +514,7 @@ com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
     android.widget.ToggleButton toggleLang -> t
     android.widget.ToggleButton togglePhrase -> u
     android.widget.ToggleButton toggleAuto -> v
-    android.widget.Button setup -> w
+    android.widget.ImageButton setup -> w
     android.widget.ImageButton prev -> x
     android.widget.ImageButton next -> y
     android.widget.ImageButton stop -> z
@@ -512,10 +523,10 @@ com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
     android.widget.ImageButton resume -> C
     android.widget.ImageButton install -> D
     android.os.Handler handler -> E
-    com.softenido.audible.AudibleMain$Status status -> at
-    com.softenido.cafedroid.speech.SpeechManager manager -> au
-    com.softenido.cafedroid.speech.SpeechSpeaker speaker -> av
-    com.softenido.cafedroid.speech.SpeechPlayer player -> aw
+    com.softenido.audible.AudibleMain$Status status -> au
+    com.softenido.cafedroid.speech.SpeechManager manager -> av
+    com.softenido.cafedroid.speech.SpeechSpeaker speaker -> aw
+    com.softenido.cafedroid.speech.SpeechPlayer player -> ax
     com.softenido.cafedroid.util.ui.Notifier notifier -> F
     boolean readingLowercase -> G
     boolean readingIgnoreTitle -> H
@@ -533,12 +544,12 @@ com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
     boolean showProgress -> T
     boolean earlySave -> U
     boolean earlyDetect -> V
-    boolean needInstallEngine -> ax
+    boolean needInstallEngine -> ay
     com.softenido.audible.AudiblePreferences settings -> W
     com.softenido.gutenberg.GutenbergLanguageClassifier classifier -> X
     com.softenido.cafedroid.os.PolicyAdmin policyAdmin -> Y
     java.lang.String volumePrefix -> Z
-    int lastSmoothScroll -> ay
+    int lastSmoothScroll -> az
     android.view.View$OnClickListener toggleVolumeListener -> aa
     android.widget.SeekBar$OnSeekBarChangeListener volumeBarListener -> ab
     android.view.View$OnClickListener volumeAddListener -> ac
@@ -553,36 +564,47 @@ com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
     android.view.View$OnClickListener extraSendtoListener -> al
     boolean stoppedByVolume -> am
     void onCreate(android.os.Bundle) -> onCreate
-    com.softenido.cafedroid.speech.SpeechPlayer buildSpeechPlayer() -> d
-    void loadPreferences() -> e
-    void setTitleAndText(java.lang.String,java.lang.String) -> a
+    com.softenido.cafedroid.speech.SpeechPlayer buildSpeechPlayer() -> e
+    void loadPreferences() -> f
+    void setTitleAndText(java.lang.String,java.lang.String) -> b
+    com.softenido.cafedroid.util.ui.Notifier buildNotifier(boolean,boolean) -> a
+    com.softenido.cafedroid.speech.SpeechManager getManager() -> g
+    boolean strictMode(boolean) -> a
     void setStatus(com.softenido.audible.AudibleMain$Status) -> a
-    void speakerPlay() -> f
-    void speakerPause() -> g
+    void speakerInstall() -> h
+    void speakerPlay() -> i
+    void speakerPause() -> j
+    void speakerStop() -> k
     void onActivityResult(int,int,android.content.Intent) -> onActivityResult
     void onStop() -> onStop
     void onDestroy() -> onDestroy
+    java.lang.String toString(java.lang.Object) -> a
+    void loadHeadAndBody() -> l
+    void setButtonsListeners() -> m
     void onStatusPlay() -> a
-    void onStatusPlaying$15c63d6c(int) -> a
+    void onStatusPlaying(int,int,java.util.Locale,java.lang.String) -> a
     void onStatusStop() -> b
     void onStatusPause() -> c
-    void setVolume(int) -> b
-    void adjustVolume(int) -> c
-    void paintVolume() -> h
+    boolean isTitleRepeated(java.lang.String,java.lang.String) -> a
+    void setVolume(int) -> a
+    void adjustVolume(int) -> b
+    void paintVolume() -> d
     boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
-    boolean access$002$7933d1fe(com.softenido.audible.AudibleMain) -> a
+    void toggleEdit() -> n
+    void loadTextFile(android.net.Uri) -> a
+    boolean access$002(com.softenido.audible.AudibleMain,boolean) -> a
     void access$100(com.softenido.audible.AudibleMain,com.softenido.audible.AudibleMain$Status) -> a
-    void access$200(com.softenido.audible.AudibleMain) -> b
-    com.softenido.cafedroid.speech.SpeechPlayer access$300(com.softenido.audible.AudibleMain) -> c
-    void access$400(com.softenido.audible.AudibleMain) -> d
-    void access$500(com.softenido.audible.AudibleMain) -> e
-    void access$600(com.softenido.audible.AudibleMain) -> f
-    int access$700(com.softenido.audible.AudibleMain) -> g
+    void access$200(com.softenido.audible.AudibleMain) -> a
+    com.softenido.cafedroid.speech.SpeechPlayer access$300(com.softenido.audible.AudibleMain) -> b
+    void access$400(com.softenido.audible.AudibleMain) -> c
+    void access$500(com.softenido.audible.AudibleMain) -> d
+    void access$600(com.softenido.audible.AudibleMain) -> e
+    int access$700(com.softenido.audible.AudibleMain) -> f
     int access$702(com.softenido.audible.AudibleMain,int) -> a
-    java.lang.String access$800(com.softenido.audible.AudibleMain) -> h
+    java.lang.String access$800(com.softenido.audible.AudibleMain) -> g
     void access$900(com.softenido.audible.AudibleMain,java.lang.String,java.lang.String) -> a
-    void access$1000(com.softenido.audible.AudibleMain) -> i
-    java.lang.String access$1100(com.softenido.audible.AudibleMain) -> j
+    void access$1000(com.softenido.audible.AudibleMain) -> h
+    java.lang.String access$1100(com.softenido.audible.AudibleMain) -> i
 com.softenido.audible.AudibleMain$1 -> com.softenido.audible.a:
     com.softenido.audible.AudibleMain this$0 -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
@@ -693,44 +715,44 @@ com.softenido.audible.AudiblePreferences -> com.softenido.audible.ac:
     java.util.HashMap countryKey -> g
     java.lang.String[] locales -> i
     com.softenido.audible.AudiblePreferences getInstance(android.content.Context) -> a
-    android.content.SharedPreferences$Editor edit() -> I
+    android.content.SharedPreferences$Editor edit() -> H
     void commit() -> a
-    void setModified$1385ff() -> b
-    java.lang.String getTitle() -> c
+    void setModified(boolean) -> a
+    java.lang.String getTitle() -> b
     void setTitle(java.lang.String) -> a
-    java.lang.String getBody() -> d
+    java.lang.String getBody() -> c
     void setBody(java.lang.String) -> b
-    boolean isPhrase() -> e
-    java.lang.String getTheme() -> f
-    java.lang.String getLangDefault() -> g
-    boolean getLangDetect() -> h
-    java.lang.String[] getLanguages() -> i
-    java.lang.String[] getLocales() -> j
-    boolean getReadingLowercase() -> k
-    boolean getReadingIgnoreTitle() -> l
-    boolean getReadingIgnoreTitleRepeated() -> m
-    boolean getReadingIgnoreParentheses() -> n
-    boolean getReadingIgnoreSquarebrackets() -> o
-    boolean getReadingIgnoreCurlybrackets() -> p
-    boolean getReadingIgnorePipe() -> q
-    boolean getReadingIgnoreUnderscore() -> r
-    boolean getReadingIgnoreHyphens() -> s
-    boolean getReadingIgnoreAsterisk() -> t
-    java.lang.String getFontTypeFace() -> u
-    int getFontSize() -> v
-    boolean getFontBold() -> w
-    boolean isAuto() -> x
-    void setAuto(boolean) -> a
-    boolean isAutoPlay() -> y
-    boolean isAutoExit() -> z
-    boolean isAutoScreenLock() -> A
-    boolean isToasts() -> B
-    boolean isProgress() -> C
-    boolean isEarlySave() -> D
-    boolean isEarlyDetect() -> E
-    int getQuickStart() -> F
-    boolean isVolume() -> G
-    int getLangUnit() -> H
+    boolean isPhrase() -> d
+    java.lang.String getTheme() -> e
+    java.lang.String getLangDefault() -> f
+    boolean getLangDetect() -> g
+    java.lang.String[] getLanguages() -> h
+    java.lang.String[] getLocales() -> i
+    boolean getReadingLowercase() -> j
+    boolean getReadingIgnoreTitle() -> k
+    boolean getReadingIgnoreTitleRepeated() -> l
+    boolean getReadingIgnoreParentheses() -> m
+    boolean getReadingIgnoreSquarebrackets() -> n
+    boolean getReadingIgnoreCurlybrackets() -> o
+    boolean getReadingIgnorePipe() -> p
+    boolean getReadingIgnoreUnderscore() -> q
+    boolean getReadingIgnoreHyphens() -> r
+    boolean getReadingIgnoreAsterisk() -> s
+    java.lang.String getFontTypeFace() -> t
+    int getFontSize() -> u
+    boolean getFontBold() -> v
+    boolean isAuto() -> w
+    void setAuto(boolean) -> b
+    boolean isAutoPlay() -> x
+    boolean isAutoExit() -> y
+    boolean isAutoScreenLock() -> z
+    boolean isToasts() -> A
+    boolean isProgress() -> B
+    boolean isEarlySave() -> C
+    boolean isEarlyDetect() -> D
+    int getQuickStart() -> E
+    boolean isVolume() -> F
+    int getLangUnit() -> G
     int getInt(java.lang.String,int) -> a
 com.softenido.audible.FontConfig -> com.softenido.audible.ad:
     int dp -> a
@@ -753,11 +775,12 @@ com.softenido.audible.KeepAudibleLoadService -> com.softenido.audible.KeepAudibl
     com.softenido.audible.AudiblePreferences getPreferences(android.content.Context) -> a
     android.app.Notification buidNotification() -> b
     void connect(android.app.Activity) -> a
+    void startCountDown() -> c
     void setActive(boolean,int) -> a
     android.app.NotificationManager access$002(android.app.NotificationManager) -> a
     com.softenido.audible.KeepAudibleLoadService access$102(com.softenido.audible.KeepAudibleLoadService) -> a
-    com.softenido.audible.KeepAudibleLoadService access$100() -> c
-    int access$200() -> d
+    com.softenido.audible.KeepAudibleLoadService access$100() -> d
+    int access$200() -> e
 com.softenido.audible.KeepAudibleLoadService$1 -> com.softenido.audible.ae:
     boolean initialize(java.lang.String) -> a
 com.softenido.audible.KeepAudibleLoadService$2 -> com.softenido.audible.af:
@@ -790,6 +813,7 @@ com.softenido.cafecore.gauge.AbstractGaugeProgress -> com.softenido.a.a.a:
     java.text.NumberFormat fmt -> a
     com.softenido.cafecore.text.HumanMillisFormat fmtTime -> b
     void start(int) -> a
+    void start(int,java.lang.String) -> a
     void close() -> a
     void setVal(int) -> b
     void setMax(int) -> c
@@ -818,7 +842,7 @@ com.softenido.cafecore.gauge.ProxyGaugeProgress -> com.softenido.a.a.f:
     void paint(boolean,int,int,java.lang.String,double,java.lang.String) -> a
 com.softenido.cafecore.io.Files -> com.softenido.a.b.a:
     java.lang.String[][] escapeCharacters -> a
-    byte[] bytesFromFile(java.io.InputStream) -> a
+    byte[] bytesFromFile(java.io.InputStream,int) -> a
 com.softenido.cafecore.logging.AbstractStatusNotifier -> com.softenido.a.c.a:
     int offValue -> b
     int levelValue -> a
@@ -827,7 +851,13 @@ com.softenido.cafecore.logging.NullStatusNotifier -> com.softenido.a.c.b:
     void log(java.util.logging.Level,java.lang.String,java.lang.Object[]) -> a
 com.softenido.cafecore.logging.StatusNotifier -> com.softenido.a.c.c:
     void log(java.util.logging.Level,java.lang.String,java.lang.Object[]) -> a
-com.softenido.cafecore.profile.NanoProfiler -> com.softenido.a.d.a:
+com.softenido.cafecore.math.FastMath -> com.softenido.a.d.a:
+    long[] POW2 -> b
+    long[] SMALL_PRIMES -> c
+    double[] log_cache -> a
+    int log2(long) -> a
+    int log2(long,boolean) -> a
+com.softenido.cafecore.profile.NanoProfiler -> com.softenido.a.e.a:
     java.lang.Object lock -> e
     long count -> f
     long nsSum -> g
@@ -838,11 +868,11 @@ com.softenido.cafecore.profile.NanoProfiler -> com.softenido.a.d.a:
     com.softenido.cafecore.profile.ProfileRecord open() -> a
     int close(com.softenido.cafecore.profile.ProfileRecord) -> a
     java.lang.String toString() -> toString
-com.softenido.cafecore.profile.NullProfiler -> com.softenido.a.d.b:
+com.softenido.cafecore.profile.NullProfiler -> com.softenido.a.e.b:
     com.softenido.cafecore.profile.ProfileRecord open() -> a
     int close(com.softenido.cafecore.profile.ProfileRecord) -> a
     java.lang.String toString() -> toString
-com.softenido.cafecore.profile.ProfileManager -> com.softenido.a.d.c:
+com.softenido.cafecore.profile.ProfileManager -> com.softenido.a.e.c:
     java.lang.Object lock -> c
     com.softenido.cafecore.profile.ProfileManager real -> d
     com.softenido.cafecore.profile.ProfileManager fake -> e
@@ -850,34 +880,34 @@ com.softenido.cafecore.profile.ProfileManager -> com.softenido.a.d.c:
     java.util.HashMap map -> b
     com.softenido.cafecore.profile.ProfileManager getProfileManager(boolean) -> a
     com.softenido.cafecore.profile.Profiler demandLogger(java.lang.String) -> a
-com.softenido.cafecore.profile.ProfileManager$1 -> com.softenido.a.d.d:
+com.softenido.cafecore.profile.ProfileManager$1 -> com.softenido.a.e.d:
     com.softenido.cafecore.profile.Profiler demandLogger(java.lang.String) -> a
-com.softenido.cafecore.profile.ProfileRecord -> com.softenido.a.d.e:
+com.softenido.cafecore.profile.ProfileRecord -> com.softenido.a.e.e:
     long startTime -> a
     long estimatedTime() -> a
-com.softenido.cafecore.profile.Profiler -> com.softenido.a.d.f:
+com.softenido.cafecore.profile.Profiler -> com.softenido.a.e.f:
     java.lang.String name -> a
     com.softenido.cafecore.profile.ProfileManager manager -> b
     boolean active -> c
     boolean lineFeed -> d
     com.softenido.cafecore.profile.Profiler getProfiler(java.lang.String) -> a
-    void setActive$1385ff() -> b
+    void setActive(boolean) -> a
     com.softenido.cafecore.profile.ProfileRecord open() -> a
     int close(com.softenido.cafecore.profile.ProfileRecord) -> a
-    void setLineFeed$1385ff() -> c
+    void setLineFeed(boolean) -> b
     void print(java.io.PrintStream) -> a
-com.softenido.cafecore.statistics.classifier.AbstractClassifier -> com.softenido.a.e.a.a:
+com.softenido.cafecore.statistics.classifier.AbstractClassifier -> com.softenido.a.f.a.a:
     java.lang.String unmatched -> a
     int saveThresold -> b
     boolean optimize -> c
     void coach(java.lang.String,java.lang.String,int) -> a
     com.softenido.cafecore.statistics.classifier.Score classify(java.lang.String[]) -> a
     com.softenido.cafecore.statistics.classifier.Score[] classify(com.softenido.cafecore.statistics.classifier.Score[],java.lang.String[]) -> a
-    void load$10ffa909(java.io.InputStream,java.lang.String[]) -> a
+    void load(java.io.InputStream,boolean,java.lang.String[]) -> a
     boolean[] getAllowed(java.lang.String[],java.lang.String[]) -> a
     double probability(int,int,int,int) -> a
     void setUnmatched(java.lang.String) -> a
-com.softenido.cafecore.statistics.classifier.AbstractLanguageClassifier -> com.softenido.a.e.a.b:
+com.softenido.cafecore.statistics.classifier.AbstractLanguageClassifier -> com.softenido.a.f.a.b:
     boolean initialized -> e
     java.lang.Object lock -> f
     java.util.Queue langs -> g
@@ -889,7 +919,7 @@ com.softenido.cafecore.statistics.classifier.AbstractLanguageClassifier -> com.s
     com.softenido.cafecore.statistics.classifier.Score classify(java.lang.String) -> b
     boolean initializeLoop() -> b
     void setStatusNotifier(com.softenido.cafecore.logging.StatusNotifier) -> a
-com.softenido.cafecore.statistics.classifier.BaseTextClassifier -> com.softenido.a.e.a.c:
+com.softenido.cafecore.statistics.classifier.BaseTextClassifier -> com.softenido.a.f.a.c:
     com.softenido.cafecore.statistics.classifier.Classifier classifier -> a
     boolean group -> b
     int sampleLimit -> e
@@ -898,27 +928,29 @@ com.softenido.cafecore.statistics.classifier.BaseTextClassifier -> com.softenido
     com.softenido.cafecore.statistics.classifier.Score classify(java.util.Scanner) -> a
     com.softenido.cafecore.statistics.classifier.Score classify(java.lang.String) -> b
     boolean isLetterOrDigit(int) -> a
-    java.lang.String[] split(java.lang.String) -> a
-    java.lang.String filter(java.lang.String) -> e
-    void load$10ffa909(java.io.InputStream,java.lang.String[]) -> a
+    boolean isAsian(int) -> b
+    java.lang.String[] split(java.lang.String) -> c
+    java.lang.String filter(java.lang.String) -> d
+    void load(java.io.InputStream,boolean,java.lang.String[]) -> a
     int hashCode() -> hashCode
     boolean equals(java.lang.Object) -> equals
     java.lang.String toString() -> toString
-    boolean containsCategory(java.lang.String) -> c
-    void setUnmatched(java.lang.String) -> d
-com.softenido.cafecore.statistics.classifier.BaseTextClassifier$1 -> com.softenido.a.e.a.d:
-com.softenido.cafecore.statistics.classifier.Classifier -> com.softenido.a.e.a.e:
+    boolean containsCategory(java.lang.String) -> e
+    void setUnmatched(java.lang.String) -> f
+com.softenido.cafecore.statistics.classifier.BaseTextClassifier$1 -> com.softenido.a.f.a.d:
+com.softenido.cafecore.statistics.classifier.Classifier -> com.softenido.a.f.a.e:
     com.softenido.cafecore.statistics.classifier.Score classify(java.lang.String[]) -> a
     boolean containsCategory(java.lang.String) -> b
     void setUnmatched(java.lang.String) -> a
-    void load$10ffa909(java.io.InputStream,java.lang.String[]) -> a
-com.softenido.cafecore.statistics.classifier.ClassifierFormatException -> com.softenido.a.e.a.f:
-com.softenido.cafecore.statistics.classifier.LanguageClassifier -> com.softenido.a.e.a.g:
+    void load(java.io.InputStream,boolean,java.lang.String[]) -> a
+com.softenido.cafecore.statistics.classifier.ClassifierFormatException -> com.softenido.a.f.a.f:
+com.softenido.cafecore.statistics.classifier.LanguageClassifier -> com.softenido.a.f.a.g:
     com.softenido.cafecore.statistics.classifier.Score classify(java.lang.String) -> b
     boolean firstPass() -> c
     boolean secondPass() -> d
-com.softenido.cafecore.statistics.classifier.NaiveParallelClassifier -> com.softenido.a.e.a.h:
-    java.lang.Object lock -> k
+com.softenido.cafecore.statistics.classifier.NaiveParallelClassifier -> com.softenido.a.f.a.h:
+    java.util.logging.Logger logger -> k
+    java.lang.Object lock -> l
     int total -> d
     int count -> e
     int size -> f
@@ -926,21 +958,23 @@ com.softenido.cafecore.statistics.classifier.NaiveParallelClassifier -> com.soft
     int[] categoryCount -> h
     java.util.HashMap categoryIndex -> i
     java.util.HashMap words -> j
-    boolean cacheable -> l
-    int threshold -> m
+    boolean cacheable -> m
+    int threshold -> n
     void coach(java.lang.String,java.lang.String,int) -> a
     int[] wordCount(java.lang.String,boolean) -> a
     boolean equals(java.lang.Object) -> equals
     java.lang.String toString() -> toString
     double[] probability(int[],int[],int,int) -> a
     com.softenido.cafecore.statistics.classifier.Score[] classify(com.softenido.cafecore.statistics.classifier.Score[],java.lang.String[]) -> a
+    int getIndex(java.lang.String) -> c
     boolean containsCategory(java.lang.String) -> b
-com.softenido.cafecore.statistics.classifier.Score -> com.softenido.a.e.a.i:
+com.softenido.cafecore.statistics.classifier.Score -> com.softenido.a.f.a.i:
     java.lang.String name -> a
     double value -> b
     java.lang.String getName() -> a
+    double getValue() -> b
     java.lang.String toString() -> toString
-com.softenido.cafecore.text.HumanMillisFormat -> com.softenido.a.f.a:
+com.softenido.cafecore.text.HumanMillisFormat -> com.softenido.a.g.a:
     int[] MILLIS -> a
     java.lang.String[] UNITS -> b
     java.text.NumberFormat FMT1 -> c
@@ -950,24 +984,29 @@ com.softenido.cafecore.text.HumanMillisFormat -> com.softenido.a.f.a:
     int maxItems -> g
     int round -> h
     java.lang.String toString(long) -> a
-com.softenido.cafecore.text.Paragraphs -> com.softenido.a.f.b:
-    java.lang.String[] split$7aa5cebc(java.lang.String) -> a
-com.softenido.cafecore.text.Phrases -> com.softenido.a.f.c:
+com.softenido.cafecore.text.Paragraphs -> com.softenido.a.g.b:
+    java.lang.String[] split(java.lang.String,boolean) -> a
+com.softenido.cafecore.text.Phrases -> com.softenido.a.g.c:
     java.util.logging.Logger logger -> f
     java.lang.String[] REGEX -> a
     java.util.regex.Pattern[] patterns -> b
     int[] statistics -> c
     int failures -> d
     boolean $assertionsDisabled -> e
+    java.lang.String _(java.lang.String) -> b
     java.util.regex.Pattern[] getPatterns() -> a
     java.util.List splitByPattern(java.lang.String) -> a
+    java.util.List splitByPattern(java.util.List) -> a
     java.lang.String[] split(java.lang.String,int) -> a
-    boolean dotContinued(java.lang.String) -> b
-com.softenido.cafecore.text.Phrases$Phrase -> com.softenido.a.f.d:
+    boolean dotContinued(java.lang.String) -> c
+com.softenido.cafecore.text.Phrases$Phrase -> com.softenido.a.g.d:
     java.lang.String full -> a
     java.lang.String trim -> b
     int size -> c
-com.softenido.cafecore.util.RepeatedMap -> com.softenido.a.g.a:
+com.softenido.cafecore.util.Locales -> com.softenido.a.h.a:
+    java.lang.String[] getDisplayLanguageCountry(java.util.Locale[],java.util.Locale) -> a
+    java.lang.String getDisplayLanguageCountry(java.util.Locale,java.util.Locale) -> a
+com.softenido.cafecore.util.RepeatedMap -> com.softenido.a.h.b:
     java.util.HashMap map -> a
     int size() -> size
     boolean isEmpty() -> isEmpty
@@ -983,214 +1022,216 @@ com.softenido.cafecore.util.RepeatedMap -> com.softenido.a.g.a:
     java.util.Collection values() -> values
     java.util.Set entrySet() -> entrySet
     java.lang.String toString() -> toString
-com.softenido.cafecore.util.SimpleInteger -> com.softenido.a.g.b:
+com.softenido.cafecore.util.SimpleInteger -> com.softenido.a.h.c:
     int value -> a
     int hashCode() -> hashCode
     boolean equals(java.lang.Object) -> equals
     int get() -> a
-com.softenido.cafecore.util.Sorts -> com.softenido.a.g.c:
+com.softenido.cafecore.util.Sorts -> com.softenido.a.h.d:
     java.util.Comparator asStringComparatorIgnoreCase() -> a
-com.softenido.cafecore.util.Sorts$2 -> com.softenido.a.g.d:
+com.softenido.cafecore.util.Sorts$2 -> com.softenido.a.h.e:
     int compare(java.lang.Object,java.lang.Object) -> compare
-com.softenido.cafecore.util.Strings -> com.softenido.a.g.e:
+com.softenido.cafecore.util.Strings -> com.softenido.a.h.f:
     java.lang.String trimWhitespaces(java.lang.String) -> a
     java.lang.String isnull(java.lang.String,java.lang.String,java.lang.String[]) -> a
 com.softenido.cafedroid.R -> com.softenido.cafedroid.a:
 com.softenido.cafedroid.R$id -> com.softenido.cafedroid.b:
-    int AboutAppDescription -> a
-    int AboutAppLabel -> b
-    int AboutAppVersionName -> c
-    int AboutCopyRight -> d
-    int AboutWebUrl1 -> e
-    int AboutWebUrl2 -> f
-    int AboutWebUrl3 -> g
-    int aboutLayout -> h
-    int about_locale -> i
-    int admob_listactivity_linearlayout -> j
-    int bAboutAccept -> k
-    int bAboutFeedback -> l
-    int body_edit -> m
-    int engine_install -> n
-    int extra_copy -> o
-    int extra_erase -> p
-    int extra_file -> q
-    int extra_keyboard -> r
-    int extra_paste -> s
-    int extra_sendto -> t
-    int gauge_progress -> u
-    int gauge_progress_bar -> v
-    int gauge_progress_text -> w
-    int layout_home_extra -> x
-    int layout_home_text -> y
-    int mainLayout -> z
-    int main_toggle_pannel -> A
-    int paragraph_id -> B
-    int player_next -> C
-    int player_pause -> D
-    int player_play -> E
-    int player_prev -> F
-    int player_resume -> G
-    int player_stop -> H
-    int queue -> I
-    int seekbar_view -> J
-    int seekbar_view_add -> K
-    int seekbar_view_bar -> L
-    int seekbar_view_sub -> M
-    int seekbar_view_text -> N
-    int setup -> O
-    int title -> P
-    int toggle_advance -> Q
-    int toggle_auto -> R
-    int toggle_detect_lang -> S
-    int toggle_extra -> T
-    int toggle_phrase -> U
-    int toggle_volume -> V
+    int AboutAppDescription -> AboutAppDescription
+    int AboutAppLabel -> AboutAppLabel
+    int AboutAppVersionName -> AboutAppVersionName
+    int AboutCopyRight -> AboutCopyRight
+    int AboutWebUrl1 -> AboutWebUrl1
+    int AboutWebUrl2 -> AboutWebUrl2
+    int AboutWebUrl3 -> AboutWebUrl3
+    int aboutLayout -> aboutLayout
+    int about_locale -> about_locale
+    int admob_listactivity_linearlayout -> admob_listactivity_linearlayout
+    int bAboutAccept -> bAboutAccept
+    int bAboutFeedback -> bAboutFeedback
+    int body_edit -> body_edit
+    int engine_install -> engine_install
+    int extra_copy -> extra_copy
+    int extra_erase -> extra_erase
+    int extra_file -> extra_file
+    int extra_keyboard -> extra_keyboard
+    int extra_paste -> extra_paste
+    int extra_sendto -> extra_sendto
+    int gauge_progress -> gauge_progress
+    int gauge_progress_bar -> gauge_progress_bar
+    int gauge_progress_text -> gauge_progress_text
+    int layout_home_extra -> layout_home_extra
+    int layout_home_text -> layout_home_text
+    int mainLayout -> mainLayout
+    int main_toggle_pannel -> main_toggle_pannel
+    int paragraph_id -> paragraph_id
+    int player_next -> player_next
+    int player_pause -> player_pause
+    int player_play -> player_play
+    int player_prev -> player_prev
+    int player_resume -> player_resume
+    int player_stop -> player_stop
+    int queue -> queue
+    int seekbar_view -> seekbar_view
+    int seekbar_view_add -> seekbar_view_add
+    int seekbar_view_bar -> seekbar_view_bar
+    int seekbar_view_sub -> seekbar_view_sub
+    int seekbar_view_text -> seekbar_view_text
+    int setup -> setup
+    int title -> title
+    int toggle_advance -> toggle_advance
+    int toggle_auto -> toggle_auto
+    int toggle_detect_lang -> toggle_detect_lang
+    int toggle_extra -> toggle_extra
+    int toggle_phrase -> toggle_phrase
+    int toggle_volume -> toggle_volume
 com.softenido.cafedroid.R$layout -> com.softenido.cafedroid.c:
-    int about_generic -> a
-    int about_gpl3 -> b
-    int activity_home -> c
-    int admob_listactivity_listview -> d
-    int gauge_progress_view -> e
-    int gauge_progress_view_med -> f
-    int gauge_progress_view_thin -> g
-    int layout_home_buttons -> h
-    int layout_home_extra -> i
-    int layout_home_text -> j
-    int layout_home_toggle -> k
-    int layout_home_volume -> l
-    int paragraph_view -> m
-    int preferences -> n
-    int seekbar_view -> o
-    int seekbar_view_add_sub -> p
+    int about_generic -> about_generic
+    int about_gpl3 -> about_gpl3
+    int activity_home -> activity_home
+    int admob_listactivity_listview -> admob_listactivity_listview
+    int gauge_progress_view -> gauge_progress_view
+    int gauge_progress_view_med -> gauge_progress_view_med
+    int gauge_progress_view_thin -> gauge_progress_view_thin
+    int layout_home_buttons -> layout_home_buttons
+    int layout_home_extra -> layout_home_extra
+    int layout_home_text -> layout_home_text
+    int layout_home_toggle -> layout_home_toggle
+    int layout_home_volume -> layout_home_volume
+    int paragraph_view -> paragraph_view
+    int preferences -> preferences
+    int seekbar_view -> seekbar_view
+    int seekbar_view_add_sub -> seekbar_view_add_sub
 com.softenido.cafedroid.R$string -> com.softenido.cafedroid.d:
-    int about -> a
-    int about_feedback -> b
-    int about_feedback_title -> c
-    int activity_preference_label -> d
-    int advanced_early_save -> e
-    int advanced_early_save_off -> f
-    int advanced_early_save_on -> g
-    int advanced_quick_start -> h
-    int app_name -> i
-    int app_name_version -> j
-    int battery_health_cold -> k
-    int battery_health_dead -> l
-    int battery_health_good -> m
-    int battery_health_over_voltage -> n
-    int battery_health_overheat -> o
-    int battery_health_unknown -> p
-    int battery_health_unspecified_failure -> q
-    int battery_plugged_ac -> r
-    int battery_plugged_battery -> s
-    int battery_plugged_plugged -> t
-    int battery_plugged_usb -> u
-    int battery_status_charging -> v
-    int battery_status_discharging -> w
-    int battery_status_full -> x
-    int battery_status_not_charging -> y
-    int battery_status_unknown -> z
-    int choose_send_with -> A
-    int choose_text_file_with -> B
-    int end_of_the_reading -> C
-    int gplv3_brief -> D
-    int lang_prompt_doc -> E
-    int lang_prompt_par -> F
-    int locknow_description -> G
-    int locknow_explanation -> H
-    int notify_keep_text -> I
-    int notify_keep_ticker -> J
-    int preferences_about_title -> K
-    int preferences_advanced -> L
-    int preferences_auto_auto_summary_off -> M
-    int preferences_auto_auto_summary_on -> N
-    int preferences_auto_auto_title -> O
-    int preferences_auto_exit_summary_off -> P
-    int preferences_auto_exit_summary_on -> Q
-    int preferences_auto_exit_title -> R
-    int preferences_auto_play_summary_off -> S
-    int preferences_auto_play_summary_on -> T
-    int preferences_auto_play_title -> U
-    int preferences_auto_screenlock_summary_off -> V
-    int preferences_auto_screenlock_summary_on -> W
-    int preferences_auto_screenlock_title -> X
-    int preferences_auto_title -> Y
-    int preferences_ignore_asterisk_summary -> Z
-    int preferences_ignore_asterisk_title -> aa
-    int preferences_ignore_curlybrackets_summry_off -> ab
-    int preferences_ignore_curlybrackets_summry_on -> ac
-    int preferences_ignore_curlybrackets_title -> ad
-    int preferences_ignore_hyphens_summary -> ae
-    int preferences_ignore_hyphens_title -> af
-    int preferences_ignore_parentheses_summary_off -> ag
-    int preferences_ignore_parentheses_summary_on -> ah
-    int preferences_ignore_parentheses_title -> ai
-    int preferences_ignore_pipe_summary_off -> aj
-    int preferences_ignore_pipe_summary_on -> ak
-    int preferences_ignore_pipe_title -> al
-    int preferences_ignore_repeated_title_summary_off -> am
-    int preferences_ignore_repeated_title_summary_on -> an
-    int preferences_ignore_repeated_title_title -> ao
-    int preferences_ignore_squarebrackets_summary_off -> ap
-    int preferences_ignore_squarebrackets_summary_on -> aq
-    int preferences_ignore_squarebrackets_title -> ar
-    int preferences_ignore_summary -> as
-    int preferences_ignore_title -> at
-    int preferences_ignore_title_title -> au
-    int preferences_ignore_underscore_summary_off -> av
-    int preferences_ignore_underscore_summary_on -> aw
-    int preferences_ignore_underscore_title -> ax
-    int preferences_language_avaliable_summary -> ay
-    int preferences_language_avaliable_title -> az
-    int preferences_language_category -> aA
-    int preferences_language_default_summary -> aB
-    int preferences_language_default_title -> aC
-    int preferences_language_detect_summary_off -> aD
-    int preferences_language_detect_summary_on -> aE
-    int preferences_language_detect_title -> aF
-    int preferences_language_early_detect_summary_off -> aG
-    int preferences_language_early_detect_summary_on -> aH
-    int preferences_language_early_detect_title -> aI
-    int preferences_language_gender_summary -> aJ
-    int preferences_language_gender_title -> aK
-    int preferences_optimize_keeps_summary -> aL
-    int preferences_optimize_keeps_title -> aM
-    int preferences_reading_category -> aN
-    int preferences_reading_lowercase_summary_off -> aO
-    int preferences_reading_lowercase_summary_on -> aP
-    int preferences_reading_lowercase_title -> aQ
-    int preferences_title_optimization -> aR
-    int preferences_ui_category -> aS
-    int preferences_ui_fontbold_summary_off -> aT
-    int preferences_ui_fontbold_summary_on -> aU
-    int preferences_ui_fontbold_title -> aV
-    int preferences_ui_fontfamily_summary -> aW
-    int preferences_ui_fontfamily_title -> aX
-    int preferences_ui_fontsize_summary -> aY
-    int preferences_ui_fontsize_title -> aZ
-    int preferences_ui_progress_summary -> ba
-    int preferences_ui_progress_summary_off -> bb
-    int preferences_ui_progress_title -> bc
-    int preferences_ui_progress_volume_off -> bd
-    int preferences_ui_progress_volume_summary_on -> be
-    int preferences_ui_progress_volume_title -> bf
-    int preferences_ui_theme_summary -> bg
-    int preferences_ui_theme_title -> bh
-    int preferences_ui_toasts_summary_off -> bi
-    int preferences_ui_toasts_summary_on -> bj
-    int preferences_ui_toasts_title -> bk
-    int setup -> bl
-    int toggle_advance -> bm
-    int toggle_auto -> bn
-    int toggle_detect_lang -> bo
-    int toggle_extra -> bp
-    int toggle_seek_by_phrase -> bq
-    int toggle_volume -> br
+    int about -> about
+    int about_feedback -> about_feedback
+    int about_feedback_title -> about_feedback_title
+    int activity_preference_label -> activity_preference_label
+    int advanced_early_save -> advanced_early_save
+    int advanced_early_save_off -> advanced_early_save_off
+    int advanced_early_save_on -> advanced_early_save_on
+    int advanced_quick_start -> advanced_quick_start
+    int app_name -> app_name
+    int app_name_version -> app_name_version
+    int battery_health_cold -> battery_health_cold
+    int battery_health_dead -> battery_health_dead
+    int battery_health_good -> battery_health_good
+    int battery_health_over_voltage -> battery_health_over_voltage
+    int battery_health_overheat -> battery_health_overheat
+    int battery_health_unknown -> battery_health_unknown
+    int battery_health_unspecified_failure -> battery_health_unspecified_failure
+    int battery_plugged_ac -> battery_plugged_ac
+    int battery_plugged_battery -> battery_plugged_battery
+    int battery_plugged_plugged -> battery_plugged_plugged
+    int battery_plugged_usb -> battery_plugged_usb
+    int battery_status_charging -> battery_status_charging
+    int battery_status_discharging -> battery_status_discharging
+    int battery_status_full -> battery_status_full
+    int battery_status_not_charging -> battery_status_not_charging
+    int battery_status_unknown -> battery_status_unknown
+    int choose_send_with -> choose_send_with
+    int choose_text_file_with -> choose_text_file_with
+    int end_of_the_reading -> end_of_the_reading
+    int gplv3_brief -> gplv3_brief
+    int lang_prompt_doc -> lang_prompt_doc
+    int lang_prompt_par -> lang_prompt_par
+    int locknow_description -> locknow_description
+    int locknow_explanation -> locknow_explanation
+    int notify_keep_text -> notify_keep_text
+    int notify_keep_ticker -> notify_keep_ticker
+    int preferences_about_title -> preferences_about_title
+    int preferences_advanced -> preferences_advanced
+    int preferences_auto_auto_summary_off -> preferences_auto_auto_summary_off
+    int preferences_auto_auto_summary_on -> preferences_auto_auto_summary_on
+    int preferences_auto_auto_title -> preferences_auto_auto_title
+    int preferences_auto_exit_summary_off -> preferences_auto_exit_summary_off
+    int preferences_auto_exit_summary_on -> preferences_auto_exit_summary_on
+    int preferences_auto_exit_title -> preferences_auto_exit_title
+    int preferences_auto_play_summary_off -> preferences_auto_play_summary_off
+    int preferences_auto_play_summary_on -> preferences_auto_play_summary_on
+    int preferences_auto_play_title -> preferences_auto_play_title
+    int preferences_auto_screenlock_summary_off -> preferences_auto_screenlock_summary_off
+    int preferences_auto_screenlock_summary_on -> preferences_auto_screenlock_summary_on
+    int preferences_auto_screenlock_title -> preferences_auto_screenlock_title
+    int preferences_auto_title -> preferences_auto_title
+    int preferences_ignore_asterisk_summary -> preferences_ignore_asterisk_summary
+    int preferences_ignore_asterisk_title -> preferences_ignore_asterisk_title
+    int preferences_ignore_curlybrackets_summry_off -> preferences_ignore_curlybrackets_summry_off
+    int preferences_ignore_curlybrackets_summry_on -> preferences_ignore_curlybrackets_summry_on
+    int preferences_ignore_curlybrackets_title -> preferences_ignore_curlybrackets_title
+    int preferences_ignore_hyphens_summary -> preferences_ignore_hyphens_summary
+    int preferences_ignore_hyphens_title -> preferences_ignore_hyphens_title
+    int preferences_ignore_parentheses_summary_off -> preferences_ignore_parentheses_summary_off
+    int preferences_ignore_parentheses_summary_on -> preferences_ignore_parentheses_summary_on
+    int preferences_ignore_parentheses_title -> preferences_ignore_parentheses_title
+    int preferences_ignore_pipe_summary_off -> preferences_ignore_pipe_summary_off
+    int preferences_ignore_pipe_summary_on -> preferences_ignore_pipe_summary_on
+    int preferences_ignore_pipe_title -> preferences_ignore_pipe_title
+    int preferences_ignore_repeated_title_summary_off -> preferences_ignore_repeated_title_summary_off
+    int preferences_ignore_repeated_title_summary_on -> preferences_ignore_repeated_title_summary_on
+    int preferences_ignore_repeated_title_title -> preferences_ignore_repeated_title_title
+    int preferences_ignore_squarebrackets_summary_off -> preferences_ignore_squarebrackets_summary_off
+    int preferences_ignore_squarebrackets_summary_on -> preferences_ignore_squarebrackets_summary_on
+    int preferences_ignore_squarebrackets_title -> preferences_ignore_squarebrackets_title
+    int preferences_ignore_summary -> preferences_ignore_summary
+    int preferences_ignore_title -> preferences_ignore_title
+    int preferences_ignore_title_title -> preferences_ignore_title_title
+    int preferences_ignore_underscore_summary_off -> preferences_ignore_underscore_summary_off
+    int preferences_ignore_underscore_summary_on -> preferences_ignore_underscore_summary_on
+    int preferences_ignore_underscore_title -> preferences_ignore_underscore_title
+    int preferences_language_avaliable_summary -> preferences_language_avaliable_summary
+    int preferences_language_avaliable_title -> preferences_language_avaliable_title
+    int preferences_language_category -> preferences_language_category
+    int preferences_language_default_summary -> preferences_language_default_summary
+    int preferences_language_default_title -> preferences_language_default_title
+    int preferences_language_detect_summary_off -> preferences_language_detect_summary_off
+    int preferences_language_detect_summary_on -> preferences_language_detect_summary_on
+    int preferences_language_detect_title -> preferences_language_detect_title
+    int preferences_language_early_detect_summary_off -> preferences_language_early_detect_summary_off
+    int preferences_language_early_detect_summary_on -> preferences_language_early_detect_summary_on
+    int preferences_language_early_detect_title -> preferences_language_early_detect_title
+    int preferences_language_gender_summary -> preferences_language_gender_summary
+    int preferences_language_gender_title -> preferences_language_gender_title
+    int preferences_optimize_keeps_summary -> preferences_optimize_keeps_summary
+    int preferences_optimize_keeps_title -> preferences_optimize_keeps_title
+    int preferences_reading_category -> preferences_reading_category
+    int preferences_reading_lowercase_summary_off -> preferences_reading_lowercase_summary_off
+    int preferences_reading_lowercase_summary_on -> preferences_reading_lowercase_summary_on
+    int preferences_reading_lowercase_title -> preferences_reading_lowercase_title
+    int preferences_title_optimization -> preferences_title_optimization
+    int preferences_ui_category -> preferences_ui_category
+    int preferences_ui_fontbold_summary_off -> preferences_ui_fontbold_summary_off
+    int preferences_ui_fontbold_summary_on -> preferences_ui_fontbold_summary_on
+    int preferences_ui_fontbold_title -> preferences_ui_fontbold_title
+    int preferences_ui_fontfamily_summary -> preferences_ui_fontfamily_summary
+    int preferences_ui_fontfamily_title -> preferences_ui_fontfamily_title
+    int preferences_ui_fontsize_summary -> preferences_ui_fontsize_summary
+    int preferences_ui_fontsize_title -> preferences_ui_fontsize_title
+    int preferences_ui_progress_summary -> preferences_ui_progress_summary
+    int preferences_ui_progress_summary_off -> preferences_ui_progress_summary_off
+    int preferences_ui_progress_title -> preferences_ui_progress_title
+    int preferences_ui_progress_volume_off -> preferences_ui_progress_volume_off
+    int preferences_ui_progress_volume_summary_on -> preferences_ui_progress_volume_summary_on
+    int preferences_ui_progress_volume_title -> preferences_ui_progress_volume_title
+    int preferences_ui_theme_summary -> preferences_ui_theme_summary
+    int preferences_ui_theme_title -> preferences_ui_theme_title
+    int preferences_ui_toasts_summary_off -> preferences_ui_toasts_summary_off
+    int preferences_ui_toasts_summary_on -> preferences_ui_toasts_summary_on
+    int preferences_ui_toasts_title -> preferences_ui_toasts_title
+    int setup -> setup
+    int toggle_advance -> toggle_advance
+    int toggle_auto -> toggle_auto
+    int toggle_detect_lang -> toggle_detect_lang
+    int toggle_extra -> toggle_extra
+    int toggle_seek_by_phrase -> toggle_seek_by_phrase
+    int toggle_volume -> toggle_volume
 com.softenido.cafedroid.admob.AdMob -> com.softenido.cafedroid.a.a:
     boolean initialized -> a
     java.lang.String id -> b
     java.util.HashSet testDevices -> c
     com.google.ads.AdRequest request -> d
+    void init(android.content.Context) -> a
     com.softenido.cafedroid.admob.AdMob addAdView(android.app.Activity,com.google.ads.AdSize,android.widget.LinearLayout,boolean) -> a
+    com.softenido.cafedroid.admob.AdMob addBanner(android.app.Activity,android.widget.LinearLayout,boolean) -> a
     com.softenido.cafedroid.admob.AdMob addBanner(android.app.Activity,int,boolean) -> a
     com.softenido.cafedroid.admob.AdMob addBanner(android.app.Activity,int) -> a
 com.softenido.cafedroid.admob.AdMobBanner -> com.softenido.cafedroid.a.b:
@@ -1215,13 +1256,14 @@ com.softenido.cafedroid.app.NotificationBuilder -> com.softenido.cafedroid.b.a:
     int mLedOffMs -> p
     int mDefaults -> q
     int mFlags -> r
-    com.softenido.cafedroid.app.NotificationBuilder setSmallIcon$5d1e2457() -> a
+    com.softenido.cafedroid.app.NotificationBuilder setSmallIcon(int) -> a
     com.softenido.cafedroid.app.NotificationBuilder setContentTitle(java.lang.CharSequence) -> a
     com.softenido.cafedroid.app.NotificationBuilder setContentText(java.lang.CharSequence) -> b
     com.softenido.cafedroid.app.NotificationBuilder setContentIntent(android.app.PendingIntent) -> a
     com.softenido.cafedroid.app.NotificationBuilder setTicker(java.lang.CharSequence) -> c
-    com.softenido.cafedroid.app.NotificationBuilder setAutoCancel$1f1ed57a() -> b
-    android.app.Notification getNotification() -> c
+    com.softenido.cafedroid.app.NotificationBuilder setAutoCancel(boolean) -> a
+    void setFlag(int,boolean) -> a
+    android.app.Notification getNotification() -> a
 com.softenido.cafedroid.app.SendEmail -> com.softenido.cafedroid.b.b:
     java.lang.String[] emptyString -> a
     java.io.File[] emptyFile -> b
@@ -1250,7 +1292,8 @@ com.softenido.cafedroid.app.SendEmailBuilder -> com.softenido.cafedroid.b.c:
     com.softenido.cafedroid.app.SendEmail build() -> a
 com.softenido.cafedroid.gauge.DroidGaugeBuilder -> com.softenido.cafedroid.c.a:
     int[] INFLATABLE -> a
-    com.softenido.cafedroid.gauge.DroidGaugeView createViewBefore$1b857ac8(android.os.Handler,android.app.Activity,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin) -> a
+    android.view.View inflateBefore(android.app.Activity,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin) -> a
+    com.softenido.cafedroid.gauge.DroidGaugeView createViewBefore(android.os.Handler,android.app.Activity,int,int,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Thin) -> a
 com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode -> com.softenido.cafedroid.c.b:
     com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode NONE -> a
     com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode BAR -> b
@@ -1285,6 +1328,7 @@ com.softenido.cafedroid.gauge.DroidGaugeView -> com.softenido.cafedroid.c.e:
     void init(android.view.ViewGroup,android.widget.ProgressBar,android.widget.TextView,com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode) -> a
     void gone(android.view.ViewGroup,android.widget.ProgressBar,android.widget.TextView) -> a
     void setVisibility(android.view.View,int) -> a
+    void setMax(android.widget.ProgressBar,int) -> a
     void setProgress(android.widget.ProgressBar,double) -> b
     void setText(android.widget.TextView,java.lang.String) -> b
     boolean access$000(com.softenido.cafedroid.gauge.DroidGaugeView) -> a
@@ -1293,8 +1337,8 @@ com.softenido.cafedroid.gauge.DroidGaugeView -> com.softenido.cafedroid.c.e:
     android.widget.TextView access$300(com.softenido.cafedroid.gauge.DroidGaugeView) -> d
     com.softenido.cafedroid.gauge.DroidGaugeBuilder$Mode access$400(com.softenido.cafedroid.gauge.DroidGaugeView) -> e
     boolean access$002(com.softenido.cafedroid.gauge.DroidGaugeView,boolean) -> a
-    boolean access$502$587faa78(com.softenido.cafedroid.gauge.DroidGaugeView) -> f
-    double access$602$587f57cc(com.softenido.cafedroid.gauge.DroidGaugeView) -> g
+    boolean access$502(com.softenido.cafedroid.gauge.DroidGaugeView,boolean) -> b
+    double access$602(com.softenido.cafedroid.gauge.DroidGaugeView,double) -> a
     java.lang.String access$702(com.softenido.cafedroid.gauge.DroidGaugeView,java.lang.String) -> a
     void access$800(android.widget.ProgressBar,double) -> a
     void access$900(android.widget.TextView,java.lang.String) -> a
@@ -1321,6 +1365,7 @@ com.softenido.cafedroid.os.AndroidVersion -> com.softenido.cafedroid.os.a:
     int SDK -> b
     java.lang.String RELEASE -> c
     java.lang.String NAME -> d
+    java.lang.String versionName(int) -> a
 com.softenido.cafedroid.os.Debug -> com.softenido.cafedroid.os.b:
     boolean isDebuggable(android.content.Context) -> a
     boolean setStrictMode(com.softenido.cafedroid.os.Debug$ThreadMode) -> a
@@ -1331,7 +1376,7 @@ com.softenido.cafedroid.os.Debug$ThreadMode -> com.softenido.cafedroid.os.c:
     boolean diskWrites -> c
     boolean network -> d
     boolean penaltyLog -> e
-    com.softenido.cafedroid.os.Debug$ThreadMode setDetectAll$4c6c8b33() -> a
+    com.softenido.cafedroid.os.Debug$ThreadMode setDetectAll(boolean) -> a
 com.softenido.cafedroid.os.Debug$VmMode -> com.softenido.cafedroid.os.d:
     boolean detectLeakedSqlLiteObjects -> a
     boolean detectLeakedClosableObjects -> b
@@ -1394,7 +1439,9 @@ com.softenido.cafedroid.services.LocalServiceConnection -> com.softenido.cafedro
     void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
     void onConnected(com.softenido.cafedroid.services.LocalService) -> a
     void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
-    void bindService() -> a
+    void onDisconnected() -> a
+    void bindService() -> b
+    void unbindService() -> c
     void finalize() -> finalize
 com.softenido.cafedroid.speech.SpeechHearer -> com.softenido.cafedroid.e.a:
     android.app.Activity activity -> a
@@ -1402,6 +1449,7 @@ com.softenido.cafedroid.speech.SpeechHearer -> com.softenido.cafedroid.e.a:
     com.softenido.cafedroid.speech.SpeechManager manager -> c
     java.util.ArrayList text -> d
     boolean hearing -> e
+    void onActivityResult(int,int,android.content.Intent) -> a
 com.softenido.cafedroid.speech.SpeechManager -> com.softenido.cafedroid.e.b:
     android.app.Activity activity -> b
     java.util.Locale locale -> c
@@ -1412,6 +1460,8 @@ com.softenido.cafedroid.speech.SpeechManager -> com.softenido.cafedroid.e.b:
     void finalize() -> finalize
     void onSpeekerInstallNeeded() -> a
     void onSpeekerInitied(boolean) -> a
+    void onUtteranceCompleted(java.lang.String) -> a
+    void onHearerRecognized(java.util.ArrayList) -> a
     void shutdown() -> c
 com.softenido.cafedroid.speech.SpeechPlayer -> com.softenido.cafedroid.e.c:
     java.lang.Object lock -> b
@@ -1445,8 +1495,12 @@ com.softenido.cafedroid.speech.SpeechPlayer -> com.softenido.cafedroid.e.c:
     java.util.concurrent.atomic.AtomicBoolean firstSpeak -> C
     void finalize() -> finalize
     void setLocale(java.lang.String,java.lang.String) -> a
+    java.util.Locale getLocaleFor(java.lang.String) -> a
     void waitFor(java.lang.String[][],int) -> a
     void waitFor(java.lang.String[][],int,int) -> a
+    void split() -> j
+    void classify() -> k
+    void speak() -> l
     void seek(boolean,boolean) -> a
     boolean play() -> a
     void stop() -> b
@@ -1456,10 +1510,10 @@ com.softenido.cafedroid.speech.SpeechPlayer -> com.softenido.cafedroid.e.c:
     void setLowerCase(boolean) -> c
     void setDetection(boolean) -> d
     void setIgnorable(java.lang.String,java.lang.String) -> b
-    void onStatusPlay() -> j
+    void onStatusPlay() -> m
     void onSpeaking() -> d
-    void onStatusPause() -> k
-    void onStatusStop() -> l
+    void onStatusPause() -> n
+    void onStatusStop() -> o
     void registerOnStatusChangedListener(com.softenido.cafedroid.speech.SpeechPlayer$OnStatusChangedListener) -> a
     void unregisterOnStatusChangedListener(com.softenido.cafedroid.speech.SpeechPlayer$OnStatusChangedListener) -> b
     void setView(com.softenido.cafecore.gauge.GaugeView) -> a
@@ -1488,7 +1542,7 @@ com.softenido.cafedroid.speech.SpeechPlayer$4 -> com.softenido.cafedroid.e.g:
     int[] $SwitchMap$com$softenido$cafedroid$speech$SpeechPlayer$Status -> a
 com.softenido.cafedroid.speech.SpeechPlayer$OnStatusChangedListener -> com.softenido.cafedroid.e.h:
     void onStatusPlay() -> a
-    void onStatusPlaying$15c63d6c(int) -> a
+    void onStatusPlaying(int,int,java.util.Locale,java.lang.String) -> a
     void onStatusStop() -> b
     void onStatusPause() -> c
 com.softenido.cafedroid.speech.SpeechPlayer$Status -> com.softenido.cafedroid.e.i:
@@ -1522,7 +1576,7 @@ com.softenido.cafedroid.speech.SpeechSpeaker -> com.softenido.cafedroid.e.j:
     android.media.AudioManager audioManager -> o
     boolean start() -> a
     void install() -> b
-    void onActivityResult$6eb84b52(int) -> a
+    void onActivityResult(int,int,android.content.Intent) -> a
     void onInit(int) -> onInit
     int setLanguage(java.util.Locale) -> a
     int isLanguageAvailable(java.util.Locale) -> b
@@ -1531,8 +1585,8 @@ com.softenido.cafedroid.speech.SpeechSpeaker -> com.softenido.cafedroid.e.j:
     void stop() -> d
     void pause() -> e
     void shutdown() -> f
-    java.lang.String speak$4ff2de3f(java.lang.String) -> a
-    java.lang.String speak$6fa0def7(java.lang.String,java.lang.String) -> a
+    java.lang.String speak(java.lang.String,boolean,boolean) -> a
+    java.lang.String speak(java.lang.String,boolean,boolean,java.lang.String) -> a
     void onUtteranceCompleted(java.lang.String) -> onUtteranceCompleted
     void registerOnSpeakingListener(com.softenido.cafedroid.speech.SpeechSpeaker$OnSpeakingListener) -> a
     void unregisterOnSpeakingListener(com.softenido.cafedroid.speech.SpeechSpeaker$OnSpeakingListener) -> b
@@ -1554,6 +1608,11 @@ com.softenido.cafedroid.speech.SpeechSpeaker$Status -> com.softenido.cafedroid.e
     com.softenido.cafedroid.speech.SpeechSpeaker$Status[] $VALUES -> e
     com.softenido.cafedroid.speech.SpeechSpeaker$Status[] values() -> values
     com.softenido.cafedroid.speech.SpeechSpeaker$Status valueOf(java.lang.String) -> valueOf
+com.softenido.cafedroid.util.InvokeIntents -> com.softenido.cafedroid.util.a:
+    void getContent(android.app.Activity,java.lang.String,java.lang.String,int,boolean) -> a
+    void getContent(android.app.Activity,java.lang.String,int,int,boolean) -> a
+    void send(android.app.Activity,java.lang.String,java.lang.String,java.lang.String,java.lang.String) -> a
+    void send(android.app.Activity,java.lang.String,int,java.lang.String,java.lang.String) -> a
 com.softenido.cafedroid.util.logging.LogCatHandler -> com.softenido.cafedroid.util.a.a:
     java.lang.Object lock -> a
     com.softenido.cafedroid.util.logging.LogCatHandler instance -> b
@@ -1562,6 +1621,9 @@ com.softenido.cafedroid.util.logging.LogCatHandler -> com.softenido.cafedroid.ut
     void flush() -> flush
     void publish(java.util.logging.LogRecord) -> publish
     void setHandler() -> a
+    void setHandler(java.util.logging.Level) -> a
+    int toAndroidLevel(int) -> a
+    java.util.logging.Level getDeviceLevel() -> b
 com.softenido.cafedroid.util.ui.AboutActivity -> com.softenido.cafedroid.util.ui.AboutActivity:
     int layout -> a
     int bannerLayoutId -> b
@@ -1588,12 +1650,15 @@ com.softenido.cafedroid.util.ui.MarketLinkify -> com.softenido.cafedroid.util.ui
     void addLinks(android.widget.TextView) -> a
 com.softenido.cafedroid.util.ui.Notifier -> com.softenido.cafedroid.util.ui.d:
     int level -> a
+    void toast(android.content.Context,java.lang.String,boolean) -> a
+    void toast(android.content.Context,java.lang.String,boolean,android.os.Handler) -> a
     com.softenido.cafedroid.util.ui.Notifier build(com.softenido.cafedroid.util.ui.Notifier[]) -> a
-    com.softenido.cafedroid.util.ui.Notifier build$615c5ec(android.content.Context,android.os.Handler) -> a
-    com.softenido.cafedroid.util.ui.Notifier build$de77421(java.lang.String) -> a
+    com.softenido.cafedroid.util.ui.Notifier build(android.content.Context,android.os.Handler,boolean) -> a
+    com.softenido.cafedroid.util.ui.Notifier build(java.lang.String,int) -> a
     com.softenido.cafedroid.util.ui.Notifier build() -> a
     void log(int,java.lang.String,java.lang.Throwable) -> a
-    void i(java.lang.String) -> b
+    void i(java.lang.String) -> a
+    void e(java.lang.String,java.lang.Throwable) -> a
     void setLevel(int) -> a
 com.softenido.cafedroid.util.ui.Notifier$1 -> com.softenido.cafedroid.util.ui.e:
     android.content.Context val$context -> a
@@ -1615,18 +1680,25 @@ com.softenido.cafedroid.util.ui.Notifier$6 -> com.softenido.cafedroid.util.ui.i:
     void log(int,java.lang.String,java.lang.Throwable) -> a
 com.softenido.cafedroid.util.ui.Views -> com.softenido.cafedroid.util.ui.j:
     android.view.View inflate(android.app.Activity,android.widget.LinearLayout,int,int) -> a
-    android.view.View inflateBefore$44cbd17e(android.app.Activity,int) -> a
+    android.view.View inflateBefore(android.app.Activity,int,int,int) -> a
 com.softenido.cafedroid.widget.ToggleImageButton -> com.softenido.cafedroid.widget.ToggleImageButton:
     java.lang.Object lock -> c
     int state -> a
     int[] stateResources -> b
+    void setStateResources(int[]) -> setStateResources
     boolean performClick() -> performClick
+    int getState() -> getState
+    void setState(int) -> setState
 com.softenido.cafedroid.widget.ToggleTextButton -> com.softenido.cafedroid.widget.ToggleTextButton:
     java.lang.Object lock -> d
     int state -> a
     int[] stateResources -> b
     java.lang.String[] stateNames -> c
+    void setStateResources(int[]) -> setStateResources
+    void setStateNames(java.lang.String[]) -> setStateNames
     boolean performClick() -> performClick
+    int getState() -> getState
+    void setState(int) -> setState
 com.softenido.gutenberg.Gutenberg -> com.softenido.b.a:
     boolean gz -> a
     java.io.InputStream getLanguageDataStream(java.lang.String,boolean) -> a
@@ -1644,7 +1716,7 @@ com.softenido.gutenberg.GutenbergLanguageClassifier -> com.softenido.b.c:
     java.util.Queue langsSecondPass -> g
     boolean add(java.lang.String[]) -> a
     boolean initialize(java.lang.String) -> a
-    boolean containsCategory(java.lang.String) -> c
+    boolean containsCategory(java.lang.String) -> e
     void setTwoPasses(boolean) -> a
     boolean firstPass() -> c
     boolean secondPass() -> d

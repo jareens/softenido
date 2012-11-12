@@ -1,0 +1,10 @@
+v0.0.2 vc2 (2012-11-13)
+--------------------------
+- optimizar uso de memoria
+- mejorar el tratamiento de errores memoria agotada
+
+v0.0.1 vc1 (2012-11-07)
+--------------------------
+- lanzamiento inicial
+
+

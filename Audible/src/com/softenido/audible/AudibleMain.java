@@ -21,6 +21,7 @@
 
 package com.softenido.audible;
 
+import android.app.ActivityManager;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -65,6 +66,7 @@ import java.util.logging.Logger;
 
 public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusChangedListener
 {
+    private static int FILE_READ_LIMIT = 512*1024;
     private static final Logger logger = Logger.getLogger(AudibleMain.class.getName());
     private String head;
     private String body;
@@ -114,7 +116,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     ToggleButton togglePhrase =null;
     ToggleButton toggleAuto =null;
 
-    Button setup=null;
+    ImageButton setup=null;
     ImageButton prev = null;
     ImageButton next = null;
     ImageButton stop = null;
@@ -166,7 +168,14 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        admob = AdMob.addBanner(this, R.id.mainLayout, true);
+        try
+        {
+            admob = AdMob.addBanner(this, R.id.mainLayout, true);
+        }
+        catch (OutOfMemoryError ex)
+        {
+            System.err.println("out of memory:"+ex);
+        }
 
         handler = new Handler();
         this.settings = KeepAudibleLoadService.getPreferences(this.getApplicationContext());
@@ -208,7 +217,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         togglePhrase = (ToggleButton)findViewById(R.id.toggle_phrase);
         toggleAuto = (ToggleButton)findViewById(R.id.toggle_auto);
         //get components for buttons pannel
-        setup= (Button) findViewById(R.id.setup);
+        setup= (ImageButton) findViewById(R.id.setup);
         prev = (ImageButton) findViewById(R.id.player_prev);
         next = (ImageButton) findViewById(R.id.player_next);
         stop = (ImageButton) findViewById(R.id.player_stop);
@@ -285,7 +294,6 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         boolean under = settings.getReadingIgnoreUnderscore();
         boolean hyphen = settings.getReadingIgnoreHyphens();
         boolean asterisk = settings.getReadingIgnoreAsterisk();
-
 
         if(parentheses||square||curly||pipe||hyphen)
         {
@@ -366,6 +374,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             bodyParts.add(item);
             paragraphs.add(item);
         }
+
         setListAdapter(new ArrayAdapter(this, R.layout.paragraph_view, R.id.paragraph_id, bodyParts)
         {
             @Override
@@ -914,11 +923,18 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         {
             if(uri!=null)
             {
+                //free memory
+                this.setTitleAndText("","");
+                player.unregisterOnStatusChangedListener(this);
+                player = buildSpeechPlayer();
+
                 InputStream in = getContentResolver().openInputStream(uri);
-                String text = new String(Files.bytesFromFile(in));
+                String text = new String(Files.bytesFromFile(in, FILE_READ_LIMIT));
+
                 this.setTitleAndText(uri.getLastPathSegment(), text);
                 player.unregisterOnStatusChangedListener(this);
                 player = buildSpeechPlayer();
+
                 setStatus(needInstallEngine?Status.INSTALL:Status.READY);
             }
         }
@@ -926,6 +942,16 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         {
             Log.e(AudibleMain.class.getSimpleName(),"loadTextFile",ex);
         }
+        catch (OutOfMemoryError ex)
+        {
+            Log.e(AudibleMain.class.getSimpleName(),"loadTextFile",ex);
+            notifier.e("Out of Memory",ex);
+        }
+
     }
+
+//    ver cual es el límite para cargar ficheros y de paso optimizar el uso de la memoria
+//    ej: estructurasde menor tamaño, y quzias evitar duplicar cadenas usando el trim de cadenas
+//        despues de partirlas evitando duplicar la cadena más larga.
 
 }

@@ -27,7 +27,6 @@ com.google.ads.AdSize:
     38:39:public AdSize(int,int)
 com.google.ads.AdView:
     478:482:public boolean isReady()
-    523:524:public void setAdListener(com.google.ads.AdListener)
     535:536:public void stopLoading()
 com.google.ads.InterstitialAd:
     private com.google.ads.d a
@@ -249,12 +248,14 @@ com.softenido.cafecore.io.Files:
     307:324:public static boolean isLink(java.io.File,boolean)
     330:367:public static java.io.File getNoDotFile(java.io.File)
     372:385:public static boolean isCyclicLink(java.io.File)
-    401:401:public static byte[] bytesFromFile(java.io.File)
-    406:411:public static java.io.File[] getAbsoluteFile(java.io.File[])
-    416:425:public static java.io.File[] toFileArray(java.lang.String[])
-    432:432:public static java.lang.String[] briefPath(java.lang.String[],int)
-    437:437:public static java.lang.String briefPath(java.lang.String,int)
-    442:453:public static boolean delete(java.io.File)
+    390:390:public static byte[] bytesFromFile(java.io.InputStream)
+    407:407:public static byte[] bytesFromFile(java.io.File)
+    411:411:public static byte[] bytesFromFile(java.io.File,int)
+    416:421:public static java.io.File[] getAbsoluteFile(java.io.File[])
+    426:435:public static java.io.File[] toFileArray(java.lang.String[])
+    442:442:public static java.lang.String[] briefPath(java.lang.String[],int)
+    447:447:public static java.lang.String briefPath(java.lang.String,int)
+    452:463:public static boolean delete(java.io.File)
 com.softenido.cafecore.io.Files$Holder
 com.softenido.cafecore.io.SafeDataEraser
 com.softenido.cafecore.logging.LoggerStatusNotifier
@@ -265,7 +266,19 @@ com.softenido.cafecore.logging.VerboseHandler
 com.softenido.cafecore.logging.VerboseHandler$1
 com.softenido.cafecore.math.BigMath
 com.softenido.cafecore.math.BigRational
-com.softenido.cafecore.math.FastMath
+com.softenido.cafecore.math.FastMath:
+    24:24:public FastMath()
+    650:650:public static long pow2(int)
+    655:655:public static int gcd(int,int)
+    659:659:public static varargs int gcd(int,int[])
+    663:676:private static int gcd(int[],int,int)
+    681:681:public static int lcm(int,int)
+    685:685:public static varargs int lcm(int,int[])
+    690:703:private static int lcm(int[],int,int)
+    708:721:public static double log(int)
+    725:725:public static int fibonacci(int[])
+    729:729:public static int fibonacci(int[],int,int)
+    733:752:public static int fibonacci(int[],int,int,int,int)
 com.softenido.cafecore.math.LongMath
 com.softenido.cafecore.misc.EuroCheckSum
 com.softenido.cafecore.net.MailToBuilder
@@ -354,15 +367,15 @@ com.softenido.cafecore.statistics.classifier.LanguageClassifier:
     public varargs abstract void saveGZ(java.io.OutputStream,int,int,java.lang.String[])
     public abstract void setStatusNotifier(com.softenido.cafecore.logging.StatusNotifier)
 com.softenido.cafecore.statistics.classifier.NaiveParallelClassifier:
-    49:58:public NaiveParallelClassifier(java.lang.String,java.lang.String[])
-    221:221:public static boolean isCacheable()
-    226:227:public static void setCacheable(boolean)
-    231:231:public static int getThreshold()
-    236:237:public static void setThreshold(int)
-    242:244:int wordCount(java.lang.String,java.lang.String)
-    250:250:int getTotal()
-    256:256:java.lang.String[] getCategories()
-    262:262:java.lang.String[] getWords()
+    53:62:public NaiveParallelClassifier(java.lang.String,java.lang.String[])
+    229:229:public static boolean isCacheable()
+    234:235:public static void setCacheable(boolean)
+    239:239:public static int getThreshold()
+    244:245:public static void setThreshold(int)
+    250:252:int wordCount(java.lang.String,java.lang.String)
+    258:258:int getTotal()
+    264:264:java.lang.String[] getCategories()
+    270:270:java.lang.String[] getWords()
 com.softenido.cafecore.statistics.classifier.NaiveSerialClassifier
 com.softenido.cafecore.statistics.classifier.TextClassifier
 com.softenido.cafecore.stego.Cardinality
@@ -390,8 +403,8 @@ com.softenido.cafecore.text.NumberRule
 com.softenido.cafecore.text.Paragraphs:
     static final java.lang.String SEP
     static final java.lang.String UFFF
-    35:35:public Paragraphs()
-    44:44:public static java.lang.String[] split(java.lang.String)
+    31:31:public Paragraphs()
+    40:40:public static java.lang.String[] split(java.lang.String)
 com.softenido.cafecore.text.Phrases:
     static final java.lang.String OPEN
     static final java.lang.String CLOSE
@@ -639,15 +652,15 @@ com.softenido.cafedroid.speech.SpeechPlayer:
     public static final int ADJUST_LOWER
     public static final int ADJUST_RAISE
     public static final int ADJUST_SAME
-    492:492:public boolean isLowerCase()
-    502:502:public boolean isDetection()
-    525:525:public int getMinPhraseSize()
-    530:531:public void setMinPhraseSize(int)
-    624:625:public void setVolume(int)
-    634:635:public void adjustVolume(int)
-    643:644:public void setVolumePercentage(int)
-    647:648:public void setVolumePercentage(int,int)
-    657:658:public void setGaugeView(com.softenido.cafecore.gauge.GaugeView)
+    494:494:public boolean isLowerCase()
+    504:504:public boolean isDetection()
+    527:527:public int getMinPhraseSize()
+    532:533:public void setMinPhraseSize(int)
+    626:627:public void setVolume(int)
+    636:637:public void adjustVolume(int)
+    645:646:public void setVolumePercentage(int)
+    649:650:public void setVolumePercentage(int,int)
+    659:660:public void setGaugeView(com.softenido.cafecore.gauge.GaugeView)
 com.softenido.cafedroid.speech.SpeechSpeaker:
     public static final int FLAG_ALLOW_RINGER_MODES
     public static final int FLAG_PLAY_SOUND
@@ -704,7 +717,6 @@ com.softenido.cafedroid.util.ui.Notifier:
     207:208:public final void w(java.lang.String)
     211:212:public final void w(java.lang.String,java.lang.Throwable)
     215:216:public final void e(java.lang.String)
-    219:220:public final void e(java.lang.String,java.lang.Throwable)
     224:224:public int getLevel()
 com.softenido.cafedroid.util.ui.Notifier$3
 com.softenido.cafedroid.util.ui.Screens
@@ -718,15 +730,8 @@ com.softenido.cafedroid.util.ui.Views:
     104:104:public static android.view.View inflate(android.app.Activity,int)
 com.softenido.cafedroid.widget.ToggleImageButton:
     43:44:public ToggleImageButton(android.content.Context)
-    57:62:public void setStateResources(int[])
-    81:81:public int getState()
-    86:87:public void setState(int)
 com.softenido.cafedroid.widget.ToggleTextButton:
     44:45:public ToggleTextButton(android.content.Context)
-    58:64:public void setStateResources(int[])
-    67:73:public void setStateNames(java.lang.String[])
-    97:97:public int getState()
-    102:103:public void setState(int)
 com.softenido.gutenberg.Gutenberg:
     java.util.HashMap map
     66:66:public static java.lang.String[] getISO3Languages()

@@ -4,11 +4,9 @@ Audible (Beta)
 
 Description:
 
-Audible reads text aloud, for applications such as Feedme or
+It can get text from applications such as Feedme or
 K9-Mail, the clipboard (using Copy and Paste) or even
-Text files. It also reads each sentence using the proper
-language and voice in mixed texts, without having to
-select it manually.
+text files from the MicroSD. It also reads each sentence using the proper language and voice in mixed texts, without having to select it manually.
 
 Audible is still in BETA fase, so it could be eventually errors.
 There are some devices where the app does not work properly, due 

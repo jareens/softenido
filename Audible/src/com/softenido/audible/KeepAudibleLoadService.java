@@ -163,7 +163,7 @@ public class KeepAudibleLoadService extends LocalService
 
     static public void setActive(boolean active, int seconds)
     {
-        KeepAudibleLoadService.active = active;
+         KeepAudibleLoadService.active = active;
         KeepAudibleLoadService.countdown = seconds/60;
     }
 }
