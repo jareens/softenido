@@ -387,18 +387,28 @@ public class Files
 
     public static byte[] bytesFromFile(InputStream in) throws IOException
     {
+        return bytesFromFile(in, Integer.MAX_VALUE);
+    }
+    public static byte[] bytesFromFile(InputStream in, int readlimit) throws IOException
+    {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte buf[] = new byte[64 * 1024];
         int r;
-        while ((r = in.read(buf)) > 0)
+        int count=0;
+        while ((r = in.read(buf)) > 0 && count<readlimit)
         {
             baos.write(buf, 0, r);
+            count+=r;
         }
         return baos.toByteArray();
     }
     public static byte[] bytesFromFile(File file) throws IOException
     {
-        return bytesFromFile(new FileInputStream(file));
+        return bytesFromFile(file, Integer.MAX_VALUE);
+    }
+    public static byte[] bytesFromFile(File file, int readlimit) throws IOException
+    {
+        return bytesFromFile(new FileInputStream(file), readlimit);
     }
 
     public static File[] getAbsoluteFile(File[] files)

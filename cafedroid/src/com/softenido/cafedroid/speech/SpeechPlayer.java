@@ -28,6 +28,7 @@ import android.util.Log;
 import com.softenido.cafecore.gauge.GaugeProgress;
 import com.softenido.cafecore.gauge.GaugeView;
 import com.softenido.cafecore.gauge.ProxyGaugeProgress;
+import com.softenido.cafecore.math.FastMath;
 import com.softenido.cafecore.statistics.classifier.LanguageClassifier;
 import com.softenido.cafecore.statistics.classifier.Score;
 import com.softenido.cafecore.text.Phrases;
@@ -211,7 +212,8 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
                 for(int j=0;j<progress[i].length;j++)
                 {
                     progress[i][j] = counter;
-                    counter += phrases[i][j].length()+10;
+                    //counter += phrases[i][j].length()+10;
+                    counter += phrases[i][j].length() + FastMath.log2(phrases[i][j].length()) + 1;
                 }
                 this.progressMax = Math.max(this.progressMax,counter);
                 synchronized(lock)

@@ -85,6 +85,19 @@ public class ParagraphsTest
             result = Paragraphs.split(docs[i],true);
             assertArrayEquals(""+i, expClean[i], result);
         }
-        
+    }
+
+    /**
+     * Test of split method, of class Paragraphs.
+     */
+    @Test
+    public void testSplit_String()
+    {
+        String[] result;
+        for(int i=0;i<docs.length;i++)
+        {
+            result = Paragraphs.split(docs[i]);
+            assertArrayEquals(""+i, expDirty[i], result);
+        }
     }
 }

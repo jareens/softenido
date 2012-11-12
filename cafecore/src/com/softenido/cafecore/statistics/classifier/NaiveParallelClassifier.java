@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,6 +35,8 @@ import java.util.Map.Entry;
  */
 public class NaiveParallelClassifier extends AbstractClassifier
 {
+    
+    private static final Logger logger = Logger.getLogger(NaiveParallelClassifier.class.getName());
     //lock from integrity, not concurrence
     private final Object lock = new Object();
     
@@ -88,6 +92,10 @@ public class NaiveParallelClassifier extends AbstractClassifier
             {
                 this.words.put(word, w);
             }
+        }
+        else if(logger.isLoggable(Level.CONFIG))
+        {
+            logger.log(Level.CONFIG,"unknown word '{0}'",word);
         }
         return w;
     }

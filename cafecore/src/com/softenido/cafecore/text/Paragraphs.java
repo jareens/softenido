@@ -19,10 +19,6 @@
  * Report bugs or new features to: flikxxi@gmail.com
  */
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.softenido.cafecore.text;
 
 import com.softenido.cafecore.util.Strings;
@@ -37,24 +33,23 @@ public class Paragraphs
     static final String SEP = "\n[\\s]*\n";
     static final String UFFF = "[\ufff0-\uffff]+";
     //static final String TRIM = "(^\\s+)|(\\s+$)";
-    
 
     public static String[] split(String doc)
     {
-        return doc.split(SEP);
+        //return doc.split(SEP);
+        return split(doc, false);
     }
     public static String[] split(String doc, boolean cleanUnicode)
     {
-        //clean dirty characters
-        doc = cleanUnicode?doc.replaceAll(UFFF, " "):doc;
-        //trim
-        doc = Strings.trimWhitespaces(doc);
         //split into paragraphs
         String[] array = doc.split(SEP);
         
         ArrayList<String> list = new ArrayList<String>(array.length);
         for(String item : array)
         {
+            //clean dirty characters
+            item = cleanUnicode?item.replaceAll(UFFF, " "):item;
+            //trim
             item = Strings.trimWhitespaces(item);
             if(item.length()>0)
             {
