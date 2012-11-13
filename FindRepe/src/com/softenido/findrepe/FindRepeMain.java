@@ -21,6 +21,7 @@
  */
 package com.softenido.findrepe;
 
+import com.softenido.cafecore.logging.VerboseHandler;
 import com.softenido.cafecore.util.ArrayUtils;
 import com.softenido.cafecore.util.SizeUnits;
 import com.softenido.cafedark.imageio.ImageFormat;
@@ -28,7 +29,6 @@ import com.softenido.cafedark.io.Files;
 import com.softenido.cafedark.io.ForEachFileOptions;
 import com.softenido.cafedark.io.NameFileFilter;
 import com.softenido.cafedark.io.virtual.VirtualFile;
-import com.softenido.cafedark.util.VerboseHandler;
 import com.softenido.cafedark.util.concurrent.actor.Actor;
 import com.softenido.cafedark.util.concurrent.actor.ActorPool;
 import com.softenido.cafedark.util.launcher.LauncherParser;
@@ -40,8 +40,8 @@ import com.softenido.cafedark.util.options.MissingOptionParameterException;
 import com.softenido.cafedark.util.options.NumberOption;
 import com.softenido.cafedark.util.options.OptionParser;
 import com.softenido.cafedark.util.options.SizeOption;
-import com.softenido.findrepe.showgroup.ImageShowGroup;
 import com.softenido.findrepe.showgroup.ConsoleShowGroup;
+import com.softenido.findrepe.showgroup.ImageShowGroup;
 import com.softenido.findrepe.showgroup.ShowGroup;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
@@ -60,9 +60,9 @@ import java.util.logging.SimpleFormatter;
 public class FindRepeMain
 {
     private static final String FINDREPE = "findrepe";
-    private static final String VER = "0.12.0.rc2";
+    private static final String VER = "0.12.0.rc3";
     private static final String VERSION =
-            "findrepe  version " + VER + " alpha (2012-01-27)\n"
+            "findrepe  version " + VER + " alpha (2012-11-13)\n"
             + "Copyright (C) 2009-2010 by Francisco Gómez Carrasco\n"
             + "<http://www.softenido.com>\n";
     private static final String REPORT_BUGS =
