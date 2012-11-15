@@ -598,7 +598,14 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         String action = intent.getAction();
         String type = intent.getType();
         Bundle bundle;
-        if(action!=null && intent!=null && (bundle=intent.getExtras())!=null)
+        if(Intent.ACTION_VIEW.equals(action) && intent!=null && intent.getData()!=null)
+        {
+            Log.d("-audible-", "action:" + action);
+            Log.d("-audible-","intent:"+intent);
+            loadHeadAndBody(intent.getData());
+            autoPlayExit = true;
+        }
+        else if(action!=null && intent!=null && (bundle=intent.getExtras())!=null)
         {
             Log.d("-audible-","action:"+action);
             Log.d("-audible-","intent:"+intent);
@@ -917,41 +924,49 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             setStatus(Status.EDIT);
         }
     }
-    private void loadTextFile(Uri uri)
-    {
-        try
-        {
-            if(uri!=null)
-            {
-                //free memory
-                this.setTitleAndText("","");
-                player.unregisterOnStatusChangedListener(this);
-                player = buildSpeechPlayer();
 
+    private void loadHeadAndBody(Uri uri)
+    {
+        if(uri!=null)
+        {
+            try
+            {
                 InputStream in = getContentResolver().openInputStream(uri);
                 String text = new String(Files.bytesFromFile(in, FILE_READ_LIMIT));
-
-                this.setTitleAndText(uri.getLastPathSegment(), text);
-                player.unregisterOnStatusChangedListener(this);
-                player = buildSpeechPlayer();
-
-                setStatus(needInstallEngine?Status.INSTALL:Status.READY);
+                head = uri.getLastPathSegment();
+                body = text;
+            }
+            catch (OutOfMemoryError ex)
+            {
+                Log.e(AudibleMain.class.getSimpleName(),"loadHeadAndBody",ex);
+                notifier.e("Out of Memory",ex);
+            }
+            catch (FileNotFoundException ex)
+            {
+                Log.e(AudibleMain.class.getSimpleName(),"loadHeadAndBody",ex);
+            }
+            catch (IOException ex)
+            {
+                Log.e(AudibleMain.class.getSimpleName(),"loadHeadAndBody",ex);
             }
         }
-        catch (IOException ex)
-        {
-            Log.e(AudibleMain.class.getSimpleName(),"loadTextFile",ex);
-        }
-        catch (OutOfMemoryError ex)
-        {
-            Log.e(AudibleMain.class.getSimpleName(),"loadTextFile",ex);
-            notifier.e("Out of Memory",ex);
-        }
-
     }
 
-//    ver cual es el límite para cargar ficheros y de paso optimizar el uso de la memoria
-//    ej: estructurasde menor tamaño, y quzias evitar duplicar cadenas usando el trim de cadenas
-//        despues de partirlas evitando duplicar la cadena más larga.
+    private void loadTextFile(Uri uri)
+    {
+        if(uri!=null)
+        {
+            //free memory
+            this.setTitleAndText("","");
+            player.unregisterOnStatusChangedListener(this);
+            player = buildSpeechPlayer();
 
+            loadHeadAndBody(uri);
+            this.setTitleAndText(head, body);
+            player.unregisterOnStatusChangedListener(this);
+            player = buildSpeechPlayer();
+
+            setStatus(needInstallEngine?Status.INSTALL:Status.READY);
+        }
+    }
 }

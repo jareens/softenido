@@ -522,7 +522,7 @@ com.softenido.cafecore.util.Strings:
 com.softenido.cafecore.util.regex.RegExs
 com.softenido.cafedroid.BuildConfig
 com.softenido.cafedroid.R:
-    10:256:public R()
+    10:257:public R()
 com.softenido.cafedroid.R$array
 com.softenido.cafedroid.R$attr
 com.softenido.cafedroid.R$drawable

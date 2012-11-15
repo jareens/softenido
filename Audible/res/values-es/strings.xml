@@ -100,4 +100,5 @@
     <string name="preferences_language_early_detect_summary_off">la detección de idioma espera hasta una inicialización completa</string>
     <string name="choose_text_file_with">Seleccionar fichero de texto con...</string>
     <string name="choose_send_with">Enviar contenido con...</string>
+    <string name="resolve_view">Ver contenido con...</string>
 </resources>

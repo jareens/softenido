@@ -256,6 +256,7 @@ com.softenido.audible.R$string: int preferences_ui_theme_title
 com.softenido.audible.R$string: int preferences_ui_toasts_summary_off
 com.softenido.audible.R$string: int preferences_ui_toasts_summary_on
 com.softenido.audible.R$string: int preferences_ui_toasts_title
+com.softenido.audible.R$string: int resolve_view
 com.softenido.audible.R$string: int setup
 com.softenido.audible.R$string: int toggle_advance
 com.softenido.audible.R$string: int toggle_auto
@@ -503,6 +504,7 @@ com.softenido.cafedroid.R$string: int preferences_ui_theme_title
 com.softenido.cafedroid.R$string: int preferences_ui_toasts_summary_off
 com.softenido.cafedroid.R$string: int preferences_ui_toasts_summary_on
 com.softenido.cafedroid.R$string: int preferences_ui_toasts_title
+com.softenido.cafedroid.R$string: int resolve_view
 com.softenido.cafedroid.R$string: int setup
 com.softenido.cafedroid.R$string: int toggle_advance
 com.softenido.cafedroid.R$string: int toggle_auto

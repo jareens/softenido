@@ -103,4 +103,5 @@
     <string name="preferences_language_early_detect_summary_off">language detection waits for full initialization</string>
     <string name="choose_text_file_with">Choose text file with...</string>
     <string name="choose_send_with">Send content with...</string>
+    <string name="resolve_view">View content with...</string>
 </resources>

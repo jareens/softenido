@@ -1,24 +1,15 @@
+How to read a text file using Audible Text To Speech and a file browser.
+
+Como leer un fichero de texto usando Audible y un explorador de archivos.
+
+This text is a test for Audible, is the articles 1, 2 and 3 of The Universal Declaration of Human Rights, in Spanish, Inglish, German, French, Italian, Japanese, Korean, Russian y Chinese.
+
 Este es un texto de prueba para Audible, son los artículos 1, 2 y 3 de la Declaración Universal de Derechos Humanos, en Español, Inglés, Alemán, Francés, Italiano, Japonés, Koreano, Ruso y Chino.
 
-Español
-Artículo 1 Todos los seres humanos nacen libres e iguales en dignidad y derechos y, dotados como están de razón y conciencia, deben comportarse fraternalmente los unos con los otros.
 
-Artículo 2 Toda persona tiene los derechos y libertades proclamados en esta Declaración, sin distinción alguna de raza, color, sexo, idioma, religión, opinión política o de cualquier otra índole, origen nacional o social, posición económica, nacimiento o cualquier otra condición.
+German. Deutsch.
+--------------------
 
-Además, no se hará distinción alguna fundada en la condición política, jurídica o internacional del país o territorio de cuya jurisdicción dependa una persona, tanto si se trata de un país independiente, como de un territorio bajo administración fiduciaria, no autónomo o sometido a cualquier otra limitación de soberanía.
-
-Artículo 3 Todo individuo tiene derecho a la vida, a la libertad y a la seguridad de su persona.
-
-Inglés
-Article 1 All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood.
-
-Article 2 Everyone is entitled to all the rights and freedoms set forth in this Declaration, without distinction of any kind, such as race, colour, sex, language, religion, political or other opinion, national or social origin, property, birth or other status.
-
-Furthermore, no distinction shall be made on the basis of the political, jurisdictional or international status of the country or territory to which a person belongs, whether it be independent, trust, non-self-governing or under any other limitation of sovereignty.
-
-Article 3 Everyone has the right to life, liberty and security of person.
-
-Alemán
 Artikel 1 Alle Menschen sind frei und gleich an Würde und Rechten geboren. Sie sind mit Vernunft und Gewissen begabt und sollen einander im Geiste der Brüderlichkeit begegnen.
 
 Artikel 2 Jeder hat Anspruch auf alle in dieser Erklärung verkündeten Rechte und Freiheiten, ohne irgendeinen Unterschied, etwa nach Rasse, Hautfarbe, Geschlecht, Sprache, Religion, politischer oder sonstiger Anschauung, nationaler oder sozialer Herkunft, Vermögen, Geburt oder sonstigem Stand.
@@ -27,7 +18,34 @@ Des weiteren darf kein Unterschied gemacht werden auf Grund der politischen, rec
 
 Artikel 3 Jeder hat das Recht auf Leben, Freiheit und Sicherheit der Person.
 
-Francés
+
+English.
+--------------------
+
+Article 1 All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood.
+
+Article 2 Everyone is entitled to all the rights and freedoms set forth in this Declaration, without distinction of any kind, such as race, colour, sex, language, religion, political or other opinion, national or social origin, property, birth or other status.
+
+Furthermore, no distinction shall be made on the basis of the political, jurisdictional or international status of the country or territory to which a person belongs, whether it be independent, trust, non-self-governing or under any other limitation of sovereignty.
+
+Article 3 Everyone has the right to life, liberty and security of person.
+
+
+Spanish. Español
+--------------------
+
+Artículo 1 Todos los seres humanos nacen libres e iguales en dignidad y derechos y, dotados como están de razón y conciencia, deben comportarse fraternalmente los unos con los otros.
+
+Artículo 2 Toda persona tiene los derechos y libertades proclamados en esta Declaración, sin distinción alguna de raza, color, sexo, idioma, religión, opinión política o de cualquier otra índole, origen nacional o social, posición económica, nacimiento o cualquier otra condición.
+
+Además, no se hará distinción alguna fundada en la condición política, jurídica o internacional del país o territorio de cuya jurisdicción dependa una persona, tanto si se trata de un país independiente, como de un territorio bajo administración fiduciaria, no autónomo o sometido a cualquier otra limitación de soberanía.
+
+Artículo 3 Todo individuo tiene derecho a la vida, a la libertad y a la seguridad de su persona.
+
+
+French. Français.
+--------------------
+
 Article premier Tous les êtres humains naissent libres et égaux en dignité et en droits. Ils sont doués de raison et de conscience et doivent agir les uns envers les autres dans un esprit de fraternité.
 
 Article 2 Chacun peut se prévaloir de tous les droits et de toutes les libertés proclamés dans la présente Déclaration, sans distinction aucune, notamment de race, de couleur, de sexe, de langue, de religion, d'opinion politique ou de toute autre opinion, d'origine nationale ou sociale, de fortune, de naissance ou de toute autre situation.
@@ -36,30 +54,20 @@ De plus, il ne sera fait aucune distinction fondée sur le statut politique, jur
 
 Article 3 Tout individu a droit à la vie, à la liberté et à la sûreté de sa personne.
 
-Italiano
+
+Italian. Italiano.
+-------------------- 
+
 Articolo 1 Tutti gli esseri umani nascono liberi ed eguali in dignità e diritti. Essi sono dotati di ragione e di coscienza e devono agire gli uni verso gli altri in spirito di fratellanza.
 
 Articolo 2 Ad ogni individuo spettano tutti i diritti e tutte le libertà enunciate nella presente Dichiarazione, senza distinzione alcuna, per ragioni di razza, di colore, di sesso, di lingua, di religione, di opinione politica o di altro genere, di origine nazionale o sociale, di ricchezza, di nascita o di altra condizione. Nessuna distinzione sarà inoltre stabilita sulla base dello statuto politico, giuridico o internazionale del paese o del territorio cui una persona appartiene, sia indipendente, o sottoposto ad amministrazione fiduciaria o non autonomo, o soggetto a qualsiasi limitazione di sovranità.
 
 Articolo 3 Ogni individuo ha diritto alla vita, alla libertà ed alla sicurezza della propria persona.
 
-Japonés
-第１条 すべての人間は、生まれながらにして自由であり、かつ、尊厳と権利と について平等である。人間は、理性と良心とを授けられており、互いに同 胞の精神をもって行動しなければならない。
 
-第２条 すべて人は、人種、皮膚の色、性、言語、宗教、政治上その他の意見、　　　
+Russian. Русский.
+--------------------
 
-国民的もしくは社会的出身、財産、門地その他の地位又はこれに類するい　　　 かなる自由による差別をも受けることなく、この宣言に掲げるすべての権　　　 利と自由とを享有することができる。 さらに、個人の属する国又は地域が独立国であると、信託統治地域で　　　 あると、非自治地域であると、又は他のなんらかの主権制限の下にあると　　　 を問わず、その国又は地域の政治上、管轄上又は国際上の地位に基ずくい　　　 かなる差別もしてはならない。
-
-第３条 すべての人は、生命、自由及び身体の安全に対する権利を有する。
-
-Koreano
-제 1 조 모든 인간은 태어날 때부터 자유로우며 그 존엄과 권리에 있어 동등하다. 인간은 천부적으로 이성과 양심을 부여받았으며 서로 형제애의 정신으로 행동하여야 한다.
-
-제 2 조 모든 사람은 인종, 피부색, 성, 언어, 종교, 정치적 또는 기타의 견해, 민족적 또는 사회적 출신, 재산, 출생 또는 기타의 신분과 같은 어떠한 종류의 차별이 없이, 이 선언에 규정된 모든 권리와 자유를 향유할 자격이 있다 . 더 나아가 개인이 속한 국가 또는 영토가 독립국 , 신탁통치지역 , 비자치지역이거나 또는 주권에 대한 여타의 제약을 받느냐에 관계없이 , 그 국가 또는 영토의 정치적, 법적 또는 국제적 지위에 근거하여 차별이 있어서는 아니된다 .
-
-제 3 조 모든 사람은 생명과 신체의 자유와 안전에 대한 권리를 가진다 .
-
-Ruso
 Статья 1 Все люди рождаются свободными и равными в своем достоинстве и правах. Они наделены разумом и совестью и должны поступать в отношении друг друга в духе братства.
 
 Статья 2 Каждый человек должен обладать всеми правами и всеми свободами, провозглашенными настоящей Декларацией, без какого бы то ни было различия, как-то в отношении расы, цвета кожи, пола, языка, религии, политических или иных убеждений, национального или социального происхождения, имущественного, сословного или иного положения.
@@ -68,7 +76,32 @@ Ruso
 
 Статья 3 Каждый человек имеет право на жизнь, на свободу и на личную неприкосновенность.
 
-Chino
+
+Japanese. 日本語。
+--------------------
+
+第１条 すべての人間は、生まれながらにして自由であり、かつ、尊厳と権利と について平等である。人間は、理性と良心とを授けられており、互いに同 胞の精神をもって行動しなければならない。
+
+第２条 すべて人は、人種、皮膚の色、性、言語、宗教、政治上その他の意見、　　　
+
+国民的もしくは社会的出身、財産、門地その他の地位又はこれに類するい　　　 かなる自由による差別をも受けることなく、この宣言に掲げるすべての権　　　 利と自由とを享有することができる。 さらに、個人の属する国又は地域が独立国であると、信託統治地域で　　　 あると、非自治地域であると、又は他のなんらかの主権制限の下にあると　　　 を問わず、その国又は地域の政治上、管轄上又は国際上の地位に基ずくい　　　 かなる差別もしてはならない。
+
+第３条 すべての人は、生命、自由及び身体の安全に対する権利を有する。
+
+
+Korean. 한국어.
+--------------------
+
+제 1 조 모든 인간은 태어날 때부터 자유로우며 그 존엄과 권리에 있어 동등하다. 인간은 천부적으로 이성과 양심을 부여받았으며 서로 형제애의 정신으로 행동하여야 한다.
+
+제 2 조 모든 사람은 인종, 피부색, 성, 언어, 종교, 정치적 또는 기타의 견해, 민족적 또는 사회적 출신, 재산, 출생 또는 기타의 신분과 같은 어떠한 종류의 차별이 없이, 이 선언에 규정된 모든 권리와 자유를 향유할 자격이 있다 . 더 나아가 개인이 속한 국가 또는 영토가 독립국 , 신탁통치지역 , 비자치지역이거나 또는 주권에 대한 여타의 제약을 받느냐에 관계없이 , 그 국가 또는 영토의 정치적, 법적 또는 국제적 지위에 근거하여 차별이 있어서는 아니된다 .
+
+제 3 조 모든 사람은 생명과 신체의 자유와 안전에 대한 권리를 가진다 .
+
+
+Chinese. 中文。
+--------------------
+
 第 一 条 人 人 生 而 自 由, 在 尊 严 和 权 利 上 一 律 平 等。 他 们 赋 有 理 性 和 良 心, 并 应 以 兄 弟 关 系 的 精 神 相 对 待。
 
 第 二 条 人 人 有 资 格 享 有 本 宣 言 所 载 的 一 切 权 利 和 自 由, 不 分 种 族、 肤 色、 性 别、 语 言、 宗 教、 政 治 或 其 他 见 解、 国 籍 或 社 会 出 身、 财 产、 出 生 或 其 他 身 分 等 任 何 区 别。
@@ -76,5 +109,4 @@ Chino
 并 且 不 得 因 一 人 所 属 的 国 家 或 领 土 的 政 治 的、 行 政 的 或 者 国 际 的 地 位 之 不 同 而 有 所 区 别, 无 论 该 领 土 是 独 立 领 土、 托 管 领 土、 非 自 治 领 土 或 者 处 于 其 他 任 何 主 权 受 限 制 的 情 况 之 下。
 
 第 三 条 人 人 有 权 享 有 生 命、 自 由 和 人 身 安 全。
-
 

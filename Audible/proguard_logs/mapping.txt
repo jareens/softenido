@@ -591,7 +591,8 @@ com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
     void paintVolume() -> d
     boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
     void toggleEdit() -> n
-    void loadTextFile(android.net.Uri) -> a
+    void loadHeadAndBody(android.net.Uri) -> a
+    void loadTextFile(android.net.Uri) -> b
     boolean access$002(com.softenido.audible.AudibleMain,boolean) -> a
     void access$100(com.softenido.audible.AudibleMain,com.softenido.audible.AudibleMain$Status) -> a
     void access$200(com.softenido.audible.AudibleMain) -> a
@@ -1217,6 +1218,7 @@ com.softenido.cafedroid.R$string -> com.softenido.cafedroid.d:
     int preferences_ui_toasts_summary_off -> preferences_ui_toasts_summary_off
     int preferences_ui_toasts_summary_on -> preferences_ui_toasts_summary_on
     int preferences_ui_toasts_title -> preferences_ui_toasts_title
+    int resolve_view -> resolve_view
     int setup -> setup
     int toggle_advance -> toggle_advance
     int toggle_auto -> toggle_auto

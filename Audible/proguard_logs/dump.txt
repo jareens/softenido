@@ -23354,7 +23354,7 @@ _____________________________________________________________________
 Interfaces (count = 1):
   + Class [com/softenido/cafedroid/e/h]
 
-Constant Pool (count = 1100):
+Constant Pool (count = 1107):
   + Integer [524288]
   + Integer [16908298]
   + Integer [2130903042]
@@ -23413,10 +23413,11 @@ Constant Pool (count = 1100):
   + String []+)]
   + String [_]
   + String [action:]
+  + String [android.intent.action.VIEW]
   + String [android.intent.extra.SUBJECT]
   + String [android.intent.extra.TEXT]
   + String [intent:]
-  + String [loadTextFile]
+  + String [loadHeadAndBody]
   + String [out of memory:]
   + String [power]
   + String [unknown status ]
@@ -23496,8 +23497,8 @@ Constant Pool (count = 1100):
   + Class [com/softenido/cafedroid/os/d]
   + Class [com/softenido/cafedroid/util/a/a]
   + Class [com/softenido/cafedroid/util/ui/d]
+  + Class [java/io/FileNotFoundException]
   + Class [java/io/IOException]
-  + Class [java/io/InputStream]
   + Class [java/io/PrintStream]
   + Class [java/lang/Class]
   + Class [java/lang/Math]
@@ -23655,6 +23656,7 @@ Constant Pool (count = 1100):
   + Methodref [com/softenido/audible/AudibleMain.a (Z)Z]
   + Methodref [com/softenido/audible/AudibleMain.a (ZZ)Lcom/softenido/cafedroid/util/ui/d;]
   + Methodref [com/softenido/audible/AudibleMain.b (I)V]
+  + Methodref [com/softenido/audible/AudibleMain.b (Landroid/net/Uri;)V]
   + Methodref [com/softenido/audible/AudibleMain.b (Ljava/lang/String;Ljava/lang/String;)V]
   + Methodref [com/softenido/audible/AudibleMain.d ()V]
   + Methodref [com/softenido/audible/AudibleMain.e ()Lcom/softenido/cafedroid/e/c;]
@@ -23799,6 +23801,7 @@ Constant Pool (count = 1100):
   + Methodref [java/lang/Math.max (II)I]
   + Methodref [java/lang/Object.toString ()Ljava/lang/String;]
   + Methodref [java/lang/String.<init> ([B)V]
+  + Methodref [java/lang/String.equals (Ljava/lang/Object;)Z]
   + Methodref [java/lang/String.startsWith (Ljava/lang/String;)Z]
   + Methodref [java/lang/String.toLowerCase ()Ljava/lang/String;]
   + Methodref [java/lang/String.trim ()Ljava/lang/String;]
@@ -23941,6 +23944,7 @@ Constant Pool (count = 1100):
   + NameAndType [b ()V]
   + NameAndType [b (I)V]
   + NameAndType [b (II)V]
+  + NameAndType [b (Landroid/net/Uri;)V]
   + NameAndType [b (Lcom/softenido/cafedroid/e/h;)V]
   + NameAndType [b (Ljava/lang/String;)V]
   + NameAndType [b (Ljava/lang/String;Ljava/lang/String;)V]
@@ -23969,6 +23973,7 @@ Constant Pool (count = 1100):
   + NameAndType [e (Z)V]
   + NameAndType [e Lcom/softenido/audible/ab;]
   + NameAndType [e Lcom/softenido/cafedroid/c/e;]
+  + NameAndType [equals (Ljava/lang/Object;)Z]
   + NameAndType [err Ljava/io/PrintStream;]
   + NameAndType [f ()I]
   + NameAndType [f ()Ljava/lang/String;]
@@ -24273,6 +24278,7 @@ Constant Pool (count = 1100):
   + Utf8 [al]
   + Utf8 [am]
   + Utf8 [an]
+  + Utf8 [android.intent.action.VIEW]
   + Utf8 [android.intent.extra.SUBJECT]
   + Utf8 [android.intent.extra.TEXT]
   + Utf8 [android/app/ListActivity]
@@ -24366,6 +24372,7 @@ Constant Pool (count = 1100):
   + Utf8 [com/softenido/cafedroid/util/ui/d]
   + Utf8 [d]
   + Utf8 [e]
+  + Utf8 [equals]
   + Utf8 [err]
   + Utf8 [f]
   + Utf8 [findViewById]
@@ -24392,8 +24399,8 @@ Constant Pool (count = 1100):
   + Utf8 [intent:]
   + Utf8 [isChecked]
   + Utf8 [j]
+  + Utf8 [java/io/FileNotFoundException]
   + Utf8 [java/io/IOException]
-  + Utf8 [java/io/InputStream]
   + Utf8 [java/io/PrintStream]
   + Utf8 [java/lang/Class]
   + Utf8 [java/lang/Math]
@@ -24410,7 +24417,7 @@ Constant Pool (count = 1100):
   + Utf8 [java/util/logging/Logger]
   + Utf8 [k]
   + Utf8 [l]
-  + Utf8 [loadTextFile]
+  + Utf8 [loadHeadAndBody]
   + Utf8 [m]
   + Utf8 [max]
   + Utf8 [n]
@@ -24693,358 +24700,358 @@ Fields (count = 78):
     Access flags: 0x40
       = volatile boolean am
 
-Methods (count = 44):
+Methods (count = 45):
   - Method:       <init>()V
     Access flags: 0x1
       = public AudibleMain()
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 446, locals = 1, stack = 4):
       [0] aload_0 v0
-      [1] invokespecial #248
+      [1] invokespecial #249
         + Methodref [android/app/ListActivity.<init> ()V]
       [4] aload_0 v0
       [5] aconst_null
-      [6] putfield #203
+      [6] putfield #204
         + Fieldref [com/softenido/audible/AudibleMain.at Lcom/softenido/cafedroid/a/a;]
       [9] aload_0 v0
       [10] aconst_null
-      [11] putfield #183
+      [11] putfield #184
         + Fieldref [com/softenido/audible/AudibleMain.a Landroid/widget/TextView;]
       [14] aload_0 v0
       [15] aconst_null
-      [16] putfield #210
+      [16] putfield #211
         + Fieldref [com/softenido/audible/AudibleMain.b Landroid/widget/ListView;]
       [19] aload_0 v0
       [20] aconst_null
-      [21] putfield #211
+      [21] putfield #212
         + Fieldref [com/softenido/audible/AudibleMain.c Landroid/widget/EditText;]
       [24] aload_0 v0
       [25] aconst_null
-      [26] putfield #212
+      [26] putfield #213
         + Fieldref [com/softenido/audible/AudibleMain.d Lcom/softenido/cafedroid/c/e;]
       [29] aload_0 v0
       [30] aconst_null
-      [31] putfield #213
+      [31] putfield #214
         + Fieldref [com/softenido/audible/AudibleMain.e Lcom/softenido/cafedroid/c/e;]
       [34] aload_0 v0
       [35] aconst_null
-      [36] putfield #214
+      [36] putfield #215
         + Fieldref [com/softenido/audible/AudibleMain.f Landroid/widget/LinearLayout;]
       [39] aload_0 v0
       [40] aconst_null
-      [41] putfield #215
+      [41] putfield #216
         + Fieldref [com/softenido/audible/AudibleMain.g Landroid/widget/SeekBar;]
       [44] aload_0 v0
       [45] aconst_null
-      [46] putfield #216
+      [46] putfield #217
         + Fieldref [com/softenido/audible/AudibleMain.h Landroid/widget/TextView;]
       [49] aload_0 v0
       [50] aconst_null
-      [51] putfield #217
+      [51] putfield #218
         + Fieldref [com/softenido/audible/AudibleMain.i Landroid/widget/Button;]
       [54] aload_0 v0
       [55] aconst_null
-      [56] putfield #218
+      [56] putfield #219
         + Fieldref [com/softenido/audible/AudibleMain.j Landroid/widget/Button;]
       [59] aload_0 v0
       [60] aconst_null
-      [61] putfield #219
+      [61] putfield #220
         + Fieldref [com/softenido/audible/AudibleMain.k Landroid/view/View;]
       [64] aload_0 v0
       [65] aconst_null
-      [66] putfield #220
+      [66] putfield #221
         + Fieldref [com/softenido/audible/AudibleMain.l Landroid/widget/ImageButton;]
       [69] aload_0 v0
       [70] aconst_null
-      [71] putfield #221
+      [71] putfield #222
         + Fieldref [com/softenido/audible/AudibleMain.m Landroid/widget/ImageButton;]
       [74] aload_0 v0
       [75] aconst_null
-      [76] putfield #222
+      [76] putfield #223
         + Fieldref [com/softenido/audible/AudibleMain.n Landroid/widget/ImageButton;]
       [79] aload_0 v0
       [80] aconst_null
-      [81] putfield #223
+      [81] putfield #224
         + Fieldref [com/softenido/audible/AudibleMain.o Landroid/widget/ImageButton;]
       [84] aload_0 v0
       [85] aconst_null
-      [86] putfield #224
+      [86] putfield #225
         + Fieldref [com/softenido/audible/AudibleMain.p Landroid/widget/ImageButton;]
       [89] aload_0 v0
       [90] aconst_null
-      [91] putfield #225
+      [91] putfield #226
         + Fieldref [com/softenido/audible/AudibleMain.q Landroid/widget/ImageButton;]
       [94] aload_0 v0
       [95] aconst_null
-      [96] putfield #226
+      [96] putfield #227
         + Fieldref [com/softenido/audible/AudibleMain.r Landroid/widget/ToggleButton;]
       [99] aload_0 v0
       [100] aconst_null
-      [101] putfield #227
+      [101] putfield #228
         + Fieldref [com/softenido/audible/AudibleMain.s Landroid/widget/ToggleButton;]
       [104] aload_0 v0
       [105] aconst_null
-      [106] putfield #228
+      [106] putfield #229
         + Fieldref [com/softenido/audible/AudibleMain.t Landroid/widget/ToggleButton;]
       [109] aload_0 v0
       [110] aconst_null
-      [111] putfield #229
+      [111] putfield #230
         + Fieldref [com/softenido/audible/AudibleMain.u Landroid/widget/ToggleButton;]
       [114] aload_0 v0
       [115] aconst_null
-      [116] putfield #230
+      [116] putfield #231
         + Fieldref [com/softenido/audible/AudibleMain.v Landroid/widget/ToggleButton;]
       [119] aload_0 v0
       [120] aconst_null
-      [121] putfield #231
+      [121] putfield #232
         + Fieldref [com/softenido/audible/AudibleMain.w Landroid/widget/ImageButton;]
       [124] aload_0 v0
       [125] aconst_null
-      [126] putfield #232
+      [126] putfield #233
         + Fieldref [com/softenido/audible/AudibleMain.x Landroid/widget/ImageButton;]
       [129] aload_0 v0
       [130] aconst_null
-      [131] putfield #233
+      [131] putfield #234
         + Fieldref [com/softenido/audible/AudibleMain.y Landroid/widget/ImageButton;]
       [134] aload_0 v0
       [135] aconst_null
-      [136] putfield #234
+      [136] putfield #235
         + Fieldref [com/softenido/audible/AudibleMain.z Landroid/widget/ImageButton;]
       [139] aload_0 v0
       [140] aconst_null
-      [141] putfield #157
+      [141] putfield #158
         + Fieldref [com/softenido/audible/AudibleMain.A Landroid/widget/ImageButton;]
       [144] aload_0 v0
       [145] aconst_null
-      [146] putfield #158
+      [146] putfield #159
         + Fieldref [com/softenido/audible/AudibleMain.B Landroid/widget/ImageButton;]
       [149] aload_0 v0
       [150] aconst_null
-      [151] putfield #159
+      [151] putfield #160
         + Fieldref [com/softenido/audible/AudibleMain.C Landroid/widget/ImageButton;]
       [154] aload_0 v0
       [155] aconst_null
-      [156] putfield #160
+      [156] putfield #161
         + Fieldref [com/softenido/audible/AudibleMain.D Landroid/widget/ImageButton;]
       [159] aload_0 v0
-      [160] getstatic #236
+      [160] getstatic #237
         + Fieldref [com/softenido/audible/ab.b Lcom/softenido/audible/ab;]
-      [163] putfield #204
+      [163] putfield #205
         + Fieldref [com/softenido/audible/AudibleMain.au Lcom/softenido/audible/ab;]
       [166] aload_0 v0
       [167] aconst_null
-      [168] putfield #205
+      [168] putfield #206
         + Fieldref [com/softenido/audible/AudibleMain.av Lcom/softenido/cafedroid/e/b;]
       [171] aload_0 v0
       [172] aconst_null
-      [173] putfield #206
+      [173] putfield #207
         + Fieldref [com/softenido/audible/AudibleMain.aw Lcom/softenido/cafedroid/e/j;]
       [176] aload_0 v0
       [177] aconst_null
-      [178] putfield #207
+      [178] putfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [181] aload_0 v0
       [182] aconst_null
-      [183] putfield #162
+      [183] putfield #163
         + Fieldref [com/softenido/audible/AudibleMain.F Lcom/softenido/cafedroid/util/ui/d;]
       [186] aload_0 v0
       [187] iconst_0
-      [188] putfield #163
+      [188] putfield #164
         + Fieldref [com/softenido/audible/AudibleMain.G Z]
       [191] aload_0 v0
       [192] iconst_0
-      [193] putfield #164
+      [193] putfield #165
         + Fieldref [com/softenido/audible/AudibleMain.H Z]
       [196] aload_0 v0
       [197] iconst_1
-      [198] putfield #165
+      [198] putfield #166
         + Fieldref [com/softenido/audible/AudibleMain.I Z]
       [201] aload_0 v0
       [202] aconst_null
-      [203] putfield #166
+      [203] putfield #167
         + Fieldref [com/softenido/audible/AudibleMain.J Ljava/lang/String;]
       [206] aload_0 v0
       [207] aconst_null
-      [208] putfield #167
+      [208] putfield #168
         + Fieldref [com/softenido/audible/AudibleMain.K Ljava/lang/String;]
       [211] aload_0 v0
       [212] iconst_0
-      [213] putfield #168
+      [213] putfield #169
         + Fieldref [com/softenido/audible/AudibleMain.L Z]
       [216] aload_0 v0
       [217] iconst_1
-      [218] putfield #169
+      [218] putfield #170
         + Fieldref [com/softenido/audible/AudibleMain.M Z]
       [221] aload_0 v0
       [222] iconst_1
-      [223] putfield #170
+      [223] putfield #171
         + Fieldref [com/softenido/audible/AudibleMain.N Z]
       [226] aload_0 v0
       [227] iconst_0
-      [228] putfield #171
+      [228] putfield #172
         + Fieldref [com/softenido/audible/AudibleMain.O Z]
       [231] aload_0 v0
       [232] iconst_2
-      [233] putfield #172
+      [233] putfield #173
         + Fieldref [com/softenido/audible/AudibleMain.P I]
       [236] aload_0 v0
-      [237] getstatic #241
+      [237] getstatic #242
         + Fieldref [com/softenido/audible/ah.b Lcom/softenido/audible/ah;]
-      [240] putfield #173
+      [240] putfield #174
         + Fieldref [com/softenido/audible/AudibleMain.Q Lcom/softenido/audible/ah;]
       [243] aload_0 v0
-      [244] getstatic #240
+      [244] getstatic #241
         + Fieldref [com/softenido/audible/ad.d Lcom/softenido/audible/ad;]
-      [247] putfield #174
+      [247] putfield #175
         + Fieldref [com/softenido/audible/AudibleMain.R Lcom/softenido/audible/ad;]
       [250] aload_0 v0
       [251] iconst_1
-      [252] putfield #175
+      [252] putfield #176
         + Fieldref [com/softenido/audible/AudibleMain.S Z]
       [255] aload_0 v0
       [256] iconst_1
-      [257] putfield #176
+      [257] putfield #177
         + Fieldref [com/softenido/audible/AudibleMain.T Z]
       [260] aload_0 v0
       [261] iconst_0
-      [262] putfield #177
+      [262] putfield #178
         + Fieldref [com/softenido/audible/AudibleMain.U Z]
       [265] aload_0 v0
       [266] iconst_0
-      [267] putfield #178
+      [267] putfield #179
         + Fieldref [com/softenido/audible/AudibleMain.V Z]
       [270] aload_0 v0
       [271] iconst_0
-      [272] putfield #208
+      [272] putfield #209
         + Fieldref [com/softenido/audible/AudibleMain.ay Z]
       [275] aload_0 v0
       [276] aconst_null
-      [277] putfield #179
+      [277] putfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
       [280] aload_0 v0
       [281] aconst_null
-      [282] putfield #180
+      [282] putfield #181
         + Fieldref [com/softenido/audible/AudibleMain.X Lcom/softenido/b/c;]
       [285] aload_0 v0
       [286] ldc #34
         + String []
-      [288] putfield #182
+      [288] putfield #183
         + Fieldref [com/softenido/audible/AudibleMain.Z Ljava/lang/String;]
       [291] aload_0 v0
       [292] iconst_0
-      [293] putfield #209
+      [293] putfield #210
         + Fieldref [com/softenido/audible/AudibleMain.az I]
       [296] aload_0 v0
-      [297] new #104
+      [297] new #105
         + Class [com/softenido/audible/g]
       [300] dup
       [301] aload_0 v0
-      [302] invokespecial #369
+      [302] invokespecial #371
         + Methodref [com/softenido/audible/g.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [305] putfield #184
+      [305] putfield #185
         + Fieldref [com/softenido/audible/AudibleMain.aa Landroid/view/View$OnClickListener;]
       [308] aload_0 v0
-      [309] new #105
+      [309] new #106
         + Class [com/softenido/audible/h]
       [312] dup
       [313] aload_0 v0
-      [314] invokespecial #370
+      [314] invokespecial #372
         + Methodref [com/softenido/audible/h.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [317] putfield #185
+      [317] putfield #186
         + Fieldref [com/softenido/audible/AudibleMain.ab Landroid/widget/SeekBar$OnSeekBarChangeListener;]
       [320] aload_0 v0
-      [321] new #106
+      [321] new #107
         + Class [com/softenido/audible/i]
       [324] dup
       [325] aload_0 v0
-      [326] invokespecial #371
+      [326] invokespecial #373
         + Methodref [com/softenido/audible/i.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [329] putfield #186
+      [329] putfield #187
         + Fieldref [com/softenido/audible/AudibleMain.ac Landroid/view/View$OnClickListener;]
       [332] aload_0 v0
-      [333] new #107
+      [333] new #108
         + Class [com/softenido/audible/j]
       [336] dup
       [337] aload_0 v0
-      [338] invokespecial #372
+      [338] invokespecial #374
         + Methodref [com/softenido/audible/j.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [341] putfield #187
+      [341] putfield #188
         + Fieldref [com/softenido/audible/AudibleMain.ad Landroid/view/View$OnClickListener;]
       [344] aload_0 v0
-      [345] new #108
+      [345] new #109
         + Class [com/softenido/audible/k]
       [348] dup
       [349] aload_0 v0
-      [350] invokespecial #373
+      [350] invokespecial #375
         + Methodref [com/softenido/audible/k.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [353] putfield #188
+      [353] putfield #189
         + Fieldref [com/softenido/audible/AudibleMain.ae Landroid/view/View$OnClickListener;]
       [356] aload_0 v0
-      [357] new #110
+      [357] new #111
         + Class [com/softenido/audible/m]
       [360] dup
       [361] aload_0 v0
-      [362] invokespecial #375
+      [362] invokespecial #377
         + Methodref [com/softenido/audible/m.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [365] putfield #189
+      [365] putfield #190
         + Fieldref [com/softenido/audible/AudibleMain.af Landroid/view/View$OnClickListener;]
       [368] aload_0 v0
-      [369] new #111
+      [369] new #112
         + Class [com/softenido/audible/n]
       [372] dup
       [373] aload_0 v0
-      [374] invokespecial #376
+      [374] invokespecial #378
         + Methodref [com/softenido/audible/n.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [377] putfield #190
+      [377] putfield #191
         + Fieldref [com/softenido/audible/AudibleMain.ag Landroid/view/View$OnClickListener;]
       [380] aload_0 v0
-      [381] new #112
+      [381] new #113
         + Class [com/softenido/audible/o]
       [384] dup
       [385] aload_0 v0
-      [386] invokespecial #377
+      [386] invokespecial #379
         + Methodref [com/softenido/audible/o.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [389] putfield #191
+      [389] putfield #192
         + Fieldref [com/softenido/audible/AudibleMain.ah Landroid/view/View$OnClickListener;]
       [392] aload_0 v0
-      [393] new #113
+      [393] new #114
         + Class [com/softenido/audible/p]
       [396] dup
       [397] aload_0 v0
-      [398] invokespecial #378
+      [398] invokespecial #380
         + Methodref [com/softenido/audible/p.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [401] putfield #192
+      [401] putfield #193
         + Fieldref [com/softenido/audible/AudibleMain.ai Landroid/view/View$OnClickListener;]
       [404] aload_0 v0
-      [405] new #114
+      [405] new #115
         + Class [com/softenido/audible/q]
       [408] dup
       [409] aload_0 v0
-      [410] invokespecial #379
+      [410] invokespecial #381
         + Methodref [com/softenido/audible/q.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [413] putfield #193
+      [413] putfield #194
         + Fieldref [com/softenido/audible/AudibleMain.aj Landroid/view/View$OnClickListener;]
       [416] aload_0 v0
-      [417] new #115
+      [417] new #116
         + Class [com/softenido/audible/r]
       [420] dup
       [421] aload_0 v0
-      [422] invokespecial #380
+      [422] invokespecial #382
         + Methodref [com/softenido/audible/r.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [425] putfield #194
+      [425] putfield #195
         + Fieldref [com/softenido/audible/AudibleMain.ak Landroid/view/View$OnClickListener;]
       [428] aload_0 v0
-      [429] new #116
+      [429] new #117
         + Class [com/softenido/audible/s]
       [432] dup
       [433] aload_0 v0
-      [434] invokespecial #381
+      [434] invokespecial #383
         + Methodref [com/softenido/audible/s.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [437] putfield #195
+      [437] putfield #196
         + Fieldref [com/softenido/audible/AudibleMain.al Landroid/view/View$OnClickListener;]
       [440] aload_0 v0
       [441] iconst_0
-      [442] putfield #196
+      [442] putfield #197
         + Fieldref [com/softenido/audible/AudibleMain.am Z]
       [445] return
       Code attribute exceptions (count = 0):
@@ -25056,586 +25063,586 @@ Methods (count = 44):
     + Code attribute instructions (code length = 779, locals = 3, stack = 7):
       [0] aload_0 v0
       [1] aload_1 v1
-      [2] invokespecial #249
+      [2] invokespecial #250
         + Methodref [android/app/ListActivity.onCreate (Landroid/os/Bundle;)V]
       [5] aload_0 v0
       [6] ldc #3
         + Integer [2130903042]
-      [8] invokevirtual #317
+      [8] invokevirtual #319
         + Methodref [com/softenido/audible/AudibleMain.setContentView (I)V]
       [11] aload_0 v0
       [12] aload_0 v0
       [13] ldc #5
         + Integer [2131165195]
       [15] iconst_1
-      [16] invokestatic #392
+      [16] invokestatic #394
         + Methodref [com/softenido/cafedroid/a/a.a (Landroid/app/Activity;IZ)Lcom/softenido/cafedroid/a/a;]
-      [19] putfield #203
+      [19] putfield #204
         + Fieldref [com/softenido/audible/AudibleMain.at Lcom/softenido/cafedroid/a/a;]
       [22] goto +29 (target=51)
       [25] astore_2 v2
-      [26] getstatic #246
+      [26] getstatic #247
         + Fieldref [java/lang/System.err Ljava/io/PrintStream;]
-      [29] new #149
+      [29] new #150
         + Class [java/lang/StringBuilder]
       [32] dup
-      [33] invokespecial #447
+      [33] invokespecial #450
         + Methodref [java/lang/StringBuilder.<init> ()V]
-      [36] ldc #62
+      [36] ldc #63
         + String [out of memory:]
-      [38] invokevirtual #450
+      [38] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [41] aload_2 v2
-      [42] invokevirtual #449
+      [42] invokevirtual #452
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/Object;)Ljava/lang/StringBuilder;]
-      [45] invokevirtual #451
+      [45] invokevirtual #454
         + Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [48] invokevirtual #438
+      [48] invokevirtual #440
         + Methodref [java/io/PrintStream.println (Ljava/lang/String;)V]
       [51] aload_0 v0
-      [52] new #72
+      [52] new #73
         + Class [android/os/Handler]
       [55] dup
-      [56] invokespecial #261
+      [56] invokespecial #262
         + Methodref [android/os/Handler.<init> ()V]
-      [59] putfield #161
+      [59] putfield #162
         + Fieldref [com/softenido/audible/AudibleMain.E Landroid/os/Handler;]
       [62] aload_0 v0
       [63] aload_0 v0
-      [64] invokevirtual #306
+      [64] invokevirtual #308
         + Methodref [com/softenido/audible/AudibleMain.getApplicationContext ()Landroid/content/Context;]
-      [67] invokestatic #321
+      [67] invokestatic #323
         + Methodref [com/softenido/audible/KeepAudibleLoadService.a (Landroid/content/Context;)Lcom/softenido/audible/ac;]
-      [70] putfield #179
+      [70] putfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
       [73] aload_0 v0
-      [74] invokestatic #319
+      [74] invokestatic #321
         + Methodref [com/softenido/audible/KeepAudibleLoadService.a ()Lcom/softenido/b/c;]
-      [77] putfield #180
+      [77] putfield #181
         + Fieldref [com/softenido/audible/AudibleMain.X Lcom/softenido/b/c;]
       [80] aload_0 v0
       [81] pop
-      [82] new #135
+      [82] new #136
         + Class [com/softenido/cafedroid/os/PolicyAdmin]
       [85] dup
       [86] aload_0 v0
-      [87] invokespecial #421
+      [87] invokespecial #423
         + Methodref [com/softenido/cafedroid/os/PolicyAdmin.<init> (Landroid/app/Activity;)V]
-      [90] putstatic #181
+      [90] putstatic #182
         + Fieldref [com/softenido/audible/AudibleMain.Y Lcom/softenido/cafedroid/os/PolicyAdmin;]
       [93] aload_0 v0
-      [94] invokestatic #424
+      [94] invokestatic #426
         + Methodref [com/softenido/cafedroid/os/b.a (Landroid/content/Context;)Z]
       [97] istore_2 v2
       [98] aload_0 v0
       [99] aload_0 v0
       [100] iload_2 v2
       [101] iconst_0
-      [102] invokespecial #298
+      [102] invokespecial #299
         + Methodref [com/softenido/audible/AudibleMain.a (ZZ)Lcom/softenido/cafedroid/util/ui/d;]
-      [105] putfield #162
+      [105] putfield #163
         + Fieldref [com/softenido/audible/AudibleMain.F Lcom/softenido/cafedroid/util/ui/d;]
       [108] aload_0 v0
       [109] iload_2 v2
-      [110] invokespecial #297
+      [110] invokespecial #298
         + Methodref [com/softenido/audible/AudibleMain.a (Z)Z]
       [113] pop
       [114] aload_0 v0
       [115] aload_0 v0
       [116] ldc #21
         + Integer [2131165217]
-      [118] invokevirtual #304
+      [118] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [121] checkcast #82
+      [121] checkcast #83
         + Class [android/widget/TextView]
-      [124] putfield #183
+      [124] putfield #184
         + Fieldref [com/softenido/audible/AudibleMain.a Landroid/widget/TextView;]
       [127] aload_0 v0
       [128] aload_0 v0
       [129] ldc #2
         + Integer [16908298]
-      [131] invokevirtual #304
+      [131] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [134] checkcast #80
+      [134] checkcast #81
         + Class [android/widget/ListView]
-      [137] putfield #210
+      [137] putfield #211
         + Fieldref [com/softenido/audible/AudibleMain.b Landroid/widget/ListView;]
       [140] aload_0 v0
       [141] aload_0 v0
       [142] ldc #22
         + Integer [2131165218]
-      [144] invokevirtual #304
+      [144] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [147] checkcast #77
+      [147] checkcast #78
         + Class [android/widget/EditText]
-      [150] putfield #211
+      [150] putfield #212
         + Fieldref [com/softenido/audible/AudibleMain.c Landroid/widget/EditText;]
       [153] aload_0 v0
       [154] aload_0 v0
       [155] ldc #14
         + Integer [2131165209]
-      [157] invokevirtual #304
+      [157] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [160] putfield #219
+      [160] putfield #220
         + Fieldref [com/softenido/audible/AudibleMain.k Landroid/view/View;]
       [163] aload_0 v0
       [164] aload_0 v0
       [165] ldc #15
         + Integer [2131165210]
-      [167] invokevirtual #304
+      [167] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [170] checkcast #78
+      [170] checkcast #79
         + Class [android/widget/ImageButton]
-      [173] putfield #220
+      [173] putfield #221
         + Fieldref [com/softenido/audible/AudibleMain.l Landroid/widget/ImageButton;]
       [176] aload_0 v0
       [177] aload_0 v0
       [178] ldc #16
         + Integer [2131165211]
-      [180] invokevirtual #304
+      [180] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [183] checkcast #78
+      [183] checkcast #79
         + Class [android/widget/ImageButton]
-      [186] putfield #221
+      [186] putfield #222
         + Fieldref [com/softenido/audible/AudibleMain.m Landroid/widget/ImageButton;]
       [189] aload_0 v0
       [190] aload_0 v0
       [191] ldc #17
         + Integer [2131165212]
-      [193] invokevirtual #304
+      [193] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [196] checkcast #78
+      [196] checkcast #79
         + Class [android/widget/ImageButton]
-      [199] putfield #222
+      [199] putfield #223
         + Fieldref [com/softenido/audible/AudibleMain.n Landroid/widget/ImageButton;]
       [202] aload_0 v0
       [203] aload_0 v0
       [204] ldc #18
         + Integer [2131165213]
-      [206] invokevirtual #304
+      [206] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [209] checkcast #78
+      [209] checkcast #79
         + Class [android/widget/ImageButton]
-      [212] putfield #223
+      [212] putfield #224
         + Fieldref [com/softenido/audible/AudibleMain.o Landroid/widget/ImageButton;]
       [215] aload_0 v0
       [216] aload_0 v0
       [217] ldc #19
         + Integer [2131165214]
-      [219] invokevirtual #304
+      [219] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [222] checkcast #78
+      [222] checkcast #79
         + Class [android/widget/ImageButton]
-      [225] putfield #224
+      [225] putfield #225
         + Fieldref [com/softenido/audible/AudibleMain.p Landroid/widget/ImageButton;]
       [228] aload_0 v0
       [229] aload_0 v0
       [230] ldc #20
         + Integer [2131165215]
-      [232] invokevirtual #304
+      [232] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [235] checkcast #78
+      [235] checkcast #79
         + Class [android/widget/ImageButton]
-      [238] putfield #225
+      [238] putfield #226
         + Fieldref [com/softenido/audible/AudibleMain.q Landroid/widget/ImageButton;]
       [241] aload_0 v0
       [242] aload_0 v0
-      [243] getfield #161
+      [243] getfield #162
         + Fieldref [com/softenido/audible/AudibleMain.E Landroid/os/Handler;]
       [246] aload_0 v0
       [247] ldc #5
         + Integer [2131165195]
       [249] ldc #14
         + Integer [2131165209]
-      [251] getstatic #244
+      [251] getstatic #245
         + Fieldref [com/softenido/cafedroid/c/b.d Lcom/softenido/cafedroid/c/b;]
-      [254] getstatic #245
+      [254] getstatic #246
         + Fieldref [com/softenido/cafedroid/c/c.b Lcom/softenido/cafedroid/c/c;]
-      [257] invokestatic #393
+      [257] invokestatic #395
         + Methodref [com/softenido/cafedroid/c/a.a (Landroid/os/Handler;Landroid/app/Activity;IILcom/softenido/cafedroid/c/b;Lcom/softenido/cafedroid/c/c;)Lcom/softenido/cafedroid/c/e;]
-      [260] putfield #212
+      [260] putfield #213
         + Fieldref [com/softenido/audible/AudibleMain.d Lcom/softenido/cafedroid/c/e;]
       [263] aload_0 v0
-      [264] getfield #180
+      [264] getfield #181
         + Fieldref [com/softenido/audible/AudibleMain.X Lcom/softenido/b/c;]
-      [267] new #130
+      [267] new #131
         + Class [com/softenido/cafedroid/d/a]
       [270] dup
       [271] aload_0 v0
       [272] aload_0 v0
-      [273] getfield #161
+      [273] getfield #162
         + Fieldref [com/softenido/audible/AudibleMain.E Landroid/os/Handler;]
-      [276] getstatic #247
+      [276] getstatic #248
         + Fieldref [java/util/logging/Level.INFO Ljava/util/logging/Level;]
-      [279] invokespecial #395
+      [279] invokespecial #397
         + Methodref [com/softenido/cafedroid/d/a.<init> (Landroid/content/Context;Landroid/os/Handler;Ljava/util/logging/Level;)V]
-      [282] invokevirtual #388
+      [282] invokevirtual #390
         + Methodref [com/softenido/b/c.a (Lcom/softenido/a/c/c;)V]
       [285] aload_0 v0
       [286] aload_0 v0
       [287] ldc #28
         + Integer [2131165226]
-      [289] invokevirtual #304
+      [289] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [292] checkcast #79
+      [292] checkcast #80
         + Class [android/widget/LinearLayout]
-      [295] putfield #214
+      [295] putfield #215
         + Fieldref [com/softenido/audible/AudibleMain.f Landroid/widget/LinearLayout;]
       [298] aload_0 v0
       [299] aload_0 v0
       [300] ldc #29
         + Integer [2131165227]
-      [302] invokevirtual #304
+      [302] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [305] checkcast #81
+      [305] checkcast #82
         + Class [android/widget/SeekBar]
-      [308] putfield #215
+      [308] putfield #216
         + Fieldref [com/softenido/audible/AudibleMain.g Landroid/widget/SeekBar;]
       [311] aload_0 v0
-      [312] getfield #215
+      [312] getfield #216
         + Fieldref [com/softenido/audible/AudibleMain.g Landroid/widget/SeekBar;]
       [315] aload_0 v0
-      [316] getfield #185
+      [316] getfield #186
         + Fieldref [com/softenido/audible/AudibleMain.ab Landroid/widget/SeekBar$OnSeekBarChangeListener;]
-      [319] invokevirtual #280
+      [319] invokevirtual #281
         + Methodref [android/widget/SeekBar.setOnSeekBarChangeListener (Landroid/widget/SeekBar$OnSeekBarChangeListener;)V]
       [322] aload_0 v0
       [323] aload_0 v0
       [324] ldc #30
         + Integer [2131165228]
-      [326] invokevirtual #304
+      [326] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [329] checkcast #82
+      [329] checkcast #83
         + Class [android/widget/TextView]
-      [332] putfield #216
+      [332] putfield #217
         + Fieldref [com/softenido/audible/AudibleMain.h Landroid/widget/TextView;]
       [335] aload_0 v0
       [336] aload_0 v0
       [337] ldc #32
         + Integer [2131165230]
-      [339] invokevirtual #304
+      [339] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [342] checkcast #76
+      [342] checkcast #77
         + Class [android/widget/Button]
-      [345] putfield #217
+      [345] putfield #218
         + Fieldref [com/softenido/audible/AudibleMain.i Landroid/widget/Button;]
       [348] aload_0 v0
       [349] aload_0 v0
       [350] ldc #31
         + Integer [2131165229]
-      [352] invokevirtual #304
+      [352] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [355] checkcast #76
+      [355] checkcast #77
         + Class [android/widget/Button]
-      [358] putfield #218
+      [358] putfield #219
         + Fieldref [com/softenido/audible/AudibleMain.j Landroid/widget/Button;]
       [361] aload_0 v0
       [362] aload_0 v0
       [363] ldc #23
         + Integer [2131165220]
-      [365] invokevirtual #304
+      [365] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [368] checkcast #83
+      [368] checkcast #84
         + Class [android/widget/ToggleButton]
-      [371] putfield #226
+      [371] putfield #227
         + Fieldref [com/softenido/audible/AudibleMain.r Landroid/widget/ToggleButton;]
       [374] aload_0 v0
       [375] aload_0 v0
       [376] ldc #24
         + Integer [2131165222]
-      [378] invokevirtual #304
+      [378] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [381] checkcast #83
+      [381] checkcast #84
         + Class [android/widget/ToggleButton]
-      [384] putfield #227
+      [384] putfield #228
         + Fieldref [com/softenido/audible/AudibleMain.s Landroid/widget/ToggleButton;]
       [387] aload_0 v0
       [388] aload_0 v0
       [389] ldc #25
         + Integer [2131165223]
-      [391] invokevirtual #304
+      [391] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [394] checkcast #83
+      [394] checkcast #84
         + Class [android/widget/ToggleButton]
-      [397] putfield #228
+      [397] putfield #229
         + Fieldref [com/softenido/audible/AudibleMain.t Landroid/widget/ToggleButton;]
       [400] aload_0 v0
       [401] aload_0 v0
       [402] ldc #26
         + Integer [2131165224]
-      [404] invokevirtual #304
+      [404] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [407] checkcast #83
+      [407] checkcast #84
         + Class [android/widget/ToggleButton]
-      [410] putfield #229
+      [410] putfield #230
         + Fieldref [com/softenido/audible/AudibleMain.u Landroid/widget/ToggleButton;]
       [413] aload_0 v0
       [414] aload_0 v0
       [415] ldc #27
         + Integer [2131165225]
-      [417] invokevirtual #304
+      [417] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [420] checkcast #83
+      [420] checkcast #84
         + Class [android/widget/ToggleButton]
-      [423] putfield #230
+      [423] putfield #231
         + Fieldref [com/softenido/audible/AudibleMain.v Landroid/widget/ToggleButton;]
       [426] aload_0 v0
       [427] aload_0 v0
       [428] ldc #6
         + Integer [2131165200]
-      [430] invokevirtual #304
+      [430] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [433] checkcast #78
+      [433] checkcast #79
         + Class [android/widget/ImageButton]
-      [436] putfield #231
+      [436] putfield #232
         + Fieldref [com/softenido/audible/AudibleMain.w Landroid/widget/ImageButton;]
       [439] aload_0 v0
       [440] aload_0 v0
       [441] ldc #7
         + Integer [2131165202]
-      [443] invokevirtual #304
+      [443] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [446] checkcast #78
+      [446] checkcast #79
         + Class [android/widget/ImageButton]
-      [449] putfield #232
+      [449] putfield #233
         + Fieldref [com/softenido/audible/AudibleMain.x Landroid/widget/ImageButton;]
       [452] aload_0 v0
       [453] aload_0 v0
       [454] ldc #8
         + Integer [2131165203]
-      [456] invokevirtual #304
+      [456] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [459] checkcast #78
+      [459] checkcast #79
         + Class [android/widget/ImageButton]
-      [462] putfield #233
+      [462] putfield #234
         + Fieldref [com/softenido/audible/AudibleMain.y Landroid/widget/ImageButton;]
       [465] aload_0 v0
       [466] aload_0 v0
       [467] ldc #9
         + Integer [2131165204]
-      [469] invokevirtual #304
+      [469] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [472] checkcast #78
+      [472] checkcast #79
         + Class [android/widget/ImageButton]
-      [475] putfield #234
+      [475] putfield #235
         + Fieldref [com/softenido/audible/AudibleMain.z Landroid/widget/ImageButton;]
       [478] aload_0 v0
       [479] aload_0 v0
       [480] ldc #10
         + Integer [2131165205]
-      [482] invokevirtual #304
+      [482] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [485] checkcast #78
+      [485] checkcast #79
         + Class [android/widget/ImageButton]
-      [488] putfield #157
+      [488] putfield #158
         + Fieldref [com/softenido/audible/AudibleMain.A Landroid/widget/ImageButton;]
       [491] aload_0 v0
       [492] aload_0 v0
       [493] ldc #11
         + Integer [2131165206]
-      [495] invokevirtual #304
+      [495] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [498] checkcast #78
+      [498] checkcast #79
         + Class [android/widget/ImageButton]
-      [501] putfield #158
+      [501] putfield #159
         + Fieldref [com/softenido/audible/AudibleMain.B Landroid/widget/ImageButton;]
       [504] aload_0 v0
       [505] aload_0 v0
       [506] ldc #12
         + Integer [2131165207]
-      [508] invokevirtual #304
+      [508] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [511] checkcast #78
+      [511] checkcast #79
         + Class [android/widget/ImageButton]
-      [514] putfield #159
+      [514] putfield #160
         + Fieldref [com/softenido/audible/AudibleMain.C Landroid/widget/ImageButton;]
       [517] aload_0 v0
       [518] aload_0 v0
       [519] ldc #13
         + Integer [2131165208]
-      [521] invokevirtual #304
+      [521] invokevirtual #306
         + Methodref [com/softenido/audible/AudibleMain.findViewById (I)Landroid/view/View;]
-      [524] checkcast #78
+      [524] checkcast #79
         + Class [android/widget/ImageButton]
-      [527] putfield #160
+      [527] putfield #161
         + Fieldref [com/softenido/audible/AudibleMain.D Landroid/widget/ImageButton;]
       [530] aload_0 v0
-      [531] getfield #217
+      [531] getfield #218
         + Fieldref [com/softenido/audible/AudibleMain.i Landroid/widget/Button;]
       [534] aload_0 v0
-      [535] getfield #186
+      [535] getfield #187
         + Fieldref [com/softenido/audible/AudibleMain.ac Landroid/view/View$OnClickListener;]
-      [538] invokevirtual #269
+      [538] invokevirtual #270
         + Methodref [android/widget/Button.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [541] aload_0 v0
-      [542] getfield #218
+      [542] getfield #219
         + Fieldref [com/softenido/audible/AudibleMain.j Landroid/widget/Button;]
       [545] aload_0 v0
-      [546] getfield #187
+      [546] getfield #188
         + Fieldref [com/softenido/audible/AudibleMain.ad Landroid/view/View$OnClickListener;]
-      [549] invokevirtual #269
+      [549] invokevirtual #270
         + Methodref [android/widget/Button.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [552] aload_0 v0
-      [553] getfield #220
+      [553] getfield #221
         + Fieldref [com/softenido/audible/AudibleMain.l Landroid/widget/ImageButton;]
       [556] aload_0 v0
-      [557] getfield #190
+      [557] getfield #191
         + Fieldref [com/softenido/audible/AudibleMain.ag Landroid/view/View$OnClickListener;]
-      [560] invokevirtual #275
+      [560] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [563] aload_0 v0
-      [564] getfield #221
+      [564] getfield #222
         + Fieldref [com/softenido/audible/AudibleMain.m Landroid/widget/ImageButton;]
       [567] aload_0 v0
-      [568] getfield #191
+      [568] getfield #192
         + Fieldref [com/softenido/audible/AudibleMain.ah Landroid/view/View$OnClickListener;]
-      [571] invokevirtual #275
+      [571] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [574] aload_0 v0
-      [575] getfield #222
+      [575] getfield #223
         + Fieldref [com/softenido/audible/AudibleMain.n Landroid/widget/ImageButton;]
       [578] aload_0 v0
-      [579] getfield #192
+      [579] getfield #193
         + Fieldref [com/softenido/audible/AudibleMain.ai Landroid/view/View$OnClickListener;]
-      [582] invokevirtual #275
+      [582] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [585] aload_0 v0
-      [586] getfield #223
+      [586] getfield #224
         + Fieldref [com/softenido/audible/AudibleMain.o Landroid/widget/ImageButton;]
       [589] aload_0 v0
-      [590] getfield #193
+      [590] getfield #194
         + Fieldref [com/softenido/audible/AudibleMain.aj Landroid/view/View$OnClickListener;]
-      [593] invokevirtual #275
+      [593] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [596] aload_0 v0
-      [597] getfield #224
+      [597] getfield #225
         + Fieldref [com/softenido/audible/AudibleMain.p Landroid/widget/ImageButton;]
       [600] aload_0 v0
-      [601] getfield #194
+      [601] getfield #195
         + Fieldref [com/softenido/audible/AudibleMain.ak Landroid/view/View$OnClickListener;]
-      [604] invokevirtual #275
+      [604] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [607] aload_0 v0
-      [608] getfield #225
+      [608] getfield #226
         + Fieldref [com/softenido/audible/AudibleMain.q Landroid/widget/ImageButton;]
       [611] aload_0 v0
-      [612] getfield #195
+      [612] getfield #196
         + Fieldref [com/softenido/audible/AudibleMain.al Landroid/view/View$OnClickListener;]
-      [615] invokevirtual #275
+      [615] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [618] aload_0 v0
-      [619] getfield #226
+      [619] getfield #227
         + Fieldref [com/softenido/audible/AudibleMain.r Landroid/widget/ToggleButton;]
       [622] aload_0 v0
-      [623] getfield #189
+      [623] getfield #190
         + Fieldref [com/softenido/audible/AudibleMain.af Landroid/view/View$OnClickListener;]
-      [626] invokevirtual #286
+      [626] invokevirtual #287
         + Methodref [android/widget/ToggleButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [629] aload_0 v0
-      [630] getfield #227
+      [630] getfield #228
         + Fieldref [com/softenido/audible/AudibleMain.s Landroid/widget/ToggleButton;]
       [633] aload_0 v0
-      [634] getfield #184
+      [634] getfield #185
         + Fieldref [com/softenido/audible/AudibleMain.aa Landroid/view/View$OnClickListener;]
-      [637] invokevirtual #286
+      [637] invokevirtual #287
         + Methodref [android/widget/ToggleButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [640] aload_0 v0
-      [641] getfield #228
+      [641] getfield #229
         + Fieldref [com/softenido/audible/AudibleMain.t Landroid/widget/ToggleButton;]
       [644] aload_0 v0
-      [645] getfield #188
+      [645] getfield #189
         + Fieldref [com/softenido/audible/AudibleMain.ae Landroid/view/View$OnClickListener;]
-      [648] invokevirtual #286
+      [648] invokevirtual #287
         + Methodref [android/widget/ToggleButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [651] aload_0 v0
-      [652] invokespecial #303
+      [652] invokespecial #305
         + Methodref [com/softenido/audible/AudibleMain.f ()V]
       [655] aload_0 v0
-      [656] invokestatic #320
+      [656] invokestatic #322
         + Methodref [com/softenido/audible/KeepAudibleLoadService.a (Landroid/app/Activity;)V]
       [659] aload_0 v0
-      [660] invokespecial #314
+      [660] invokespecial #316
         + Methodref [com/softenido/audible/AudibleMain.l ()V]
       [663] aload_0 v0
       [664] aload_0 v0
-      [665] getfield #199
+      [665] getfield #200
         + Fieldref [com/softenido/audible/AudibleMain.ap Ljava/lang/String;]
       [668] aload_0 v0
-      [669] getfield #200
+      [669] getfield #201
         + Fieldref [com/softenido/audible/AudibleMain.aq Ljava/lang/String;]
-      [672] invokespecial #300
+      [672] invokespecial #302
         + Methodref [com/softenido/audible/AudibleMain.b (Ljava/lang/String;Ljava/lang/String;)V]
       [675] aload_0 v0
       [676] aload_0 v0
-      [677] invokespecial #305
+      [677] invokespecial #307
         + Methodref [com/softenido/audible/AudibleMain.g ()Lcom/softenido/cafedroid/e/b;]
-      [680] putfield #205
+      [680] putfield #206
         + Fieldref [com/softenido/audible/AudibleMain.av Lcom/softenido/cafedroid/e/b;]
       [683] aload_0 v0
       [684] aload_0 v0
-      [685] getfield #205
+      [685] getfield #206
         + Fieldref [com/softenido/audible/AudibleMain.av Lcom/softenido/cafedroid/e/b;]
-      [688] invokevirtual #397
+      [688] invokevirtual #399
         + Methodref [com/softenido/cafedroid/e/b.b ()Lcom/softenido/cafedroid/e/j;]
-      [691] putfield #206
+      [691] putfield #207
         + Fieldref [com/softenido/audible/AudibleMain.aw Lcom/softenido/cafedroid/e/j;]
       [694] aload_0 v0
-      [695] getfield #206
+      [695] getfield #207
         + Fieldref [com/softenido/audible/AudibleMain.aw Lcom/softenido/cafedroid/e/j;]
-      [698] invokevirtual #419
+      [698] invokevirtual #421
         + Methodref [com/softenido/cafedroid/e/j.a ()Z]
       [701] pop
       [702] aload_0 v0
-      [703] invokespecial #315
+      [703] invokespecial #317
         + Methodref [com/softenido/audible/AudibleMain.m ()V]
       [706] aload_0 v0
       [707] aload_0 v0
-      [708] invokespecial #302
+      [708] invokespecial #304
         + Methodref [com/softenido/audible/AudibleMain.e ()Lcom/softenido/cafedroid/e/c;]
-      [711] putfield #207
+      [711] putfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [714] aload_0 v0
       [715] aload_0 v0
-      [716] getfield #227
+      [716] getfield #228
         + Fieldref [com/softenido/audible/AudibleMain.s Landroid/widget/ToggleButton;]
-      [719] invokevirtual #283
+      [719] invokevirtual #284
         + Methodref [android/widget/ToggleButton.getTextOn ()Ljava/lang/CharSequence;]
-      [722] invokevirtual #442
+      [722] invokevirtual #444
         + Methodref [java/lang/Object.toString ()Ljava/lang/String;]
-      [725] putfield #182
+      [725] putfield #183
         + Fieldref [com/softenido/audible/AudibleMain.Z Ljava/lang/String;]
       [728] aload_0 v0
-      [729] getfield #215
+      [729] getfield #216
         + Fieldref [com/softenido/audible/AudibleMain.g Landroid/widget/SeekBar;]
       [732] aload_0 v0
-      [733] getfield #207
+      [733] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
-      [736] invokevirtual #416
+      [736] invokevirtual #418
         + Methodref [com/softenido/cafedroid/e/c.g ()I]
-      [739] invokevirtual #279
+      [739] invokevirtual #280
         + Methodref [android/widget/SeekBar.setMax (I)V]
       [742] aload_0 v0
-      [743] getfield #214
+      [743] getfield #215
         + Fieldref [com/softenido/audible/AudibleMain.f Landroid/widget/LinearLayout;]
       [746] aload_0 v0
-      [747] getfield #227
+      [747] getfield #228
         + Fieldref [com/softenido/audible/AudibleMain.s Landroid/widget/ToggleButton;]
-      [750] invokevirtual #284
+      [750] invokevirtual #285
         + Methodref [android/widget/ToggleButton.isChecked ()Z]
       [753] ifeq +7 (target=760)
       [756] iconst_0
       [757] goto +5 (target=762)
       [760] bipush 8
-      [762] invokevirtual #277
+      [762] invokevirtual #278
         + Methodref [android/widget/LinearLayout.setVisibility (I)V]
       [765] aload_0 v0
-      [766] invokevirtual #301
+      [766] invokevirtual #303
         + Methodref [com/softenido/audible/AudibleMain.d ()V]
       [769] aload_0 v0
-      [770] getfield #219
+      [770] getfield #220
         + Fieldref [com/softenido/audible/AudibleMain.k Landroid/view/View;]
       [773] bipush 8
-      [775] invokevirtual #268
+      [775] invokevirtual #269
         + Methodref [android/view/View.setVisibility (I)V]
       [778] return
       Code attribute exceptions (count = 1):
@@ -25652,33 +25659,33 @@ Methods (count = 44):
       = private com.softenido.cafedroid.e.c e()
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 112, locals = 6, stack = 6):
-      [0] new #132
+      [0] new #133
         + Class [com/softenido/cafedroid/e/c]
       [3] dup
       [4] aload_0 v0
-      [5] getfield #206
+      [5] getfield #207
         + Fieldref [com/softenido/audible/AudibleMain.aw Lcom/softenido/cafedroid/e/j;]
       [8] aload_0 v0
-      [9] getfield #180
+      [9] getfield #181
         + Fieldref [com/softenido/audible/AudibleMain.X Lcom/softenido/b/c;]
       [12] aload_0 v0
-      [13] getfield #202
+      [13] getfield #203
         + Fieldref [com/softenido/audible/AudibleMain.as Ljava/util/List;]
-      [16] invokestatic #455
+      [16] invokestatic #458
         + Methodref [java/util/Locale.getDefault ()Ljava/util/Locale;]
-      [19] invokespecial #399
+      [19] invokespecial #401
         + Methodref [com/softenido/cafedroid/e/c.<init> (Lcom/softenido/cafedroid/e/j;Lcom/softenido/a/f/a/g;Ljava/util/List;Ljava/util/Locale;)V]
       [22] astore_1 v1
       [23] aload_1 v1
       [24] aload_0 v0
-      [25] invokevirtual #404
+      [25] invokevirtual #406
         + Methodref [com/softenido/cafedroid/e/c.a (Lcom/softenido/cafedroid/e/h;)V]
       [28] aload_0 v0
-      [29] ldc #63
+      [29] ldc #64
         + String [power]
-      [31] invokevirtual #309
+      [31] invokevirtual #311
         + Methodref [com/softenido/audible/AudibleMain.getSystemService (Ljava/lang/String;)Ljava/lang/Object;]
-      [34] checkcast #73
+      [34] checkcast #74
         + Class [android/os/PowerManager]
       [37] astore_2 v2
       [38] aload_1 v1
@@ -25686,20 +25693,20 @@ Methods (count = 44):
       [40] iconst_1
       [41] ldc #48
         + String [SpeechPlayer.WakeLock]
-      [43] invokevirtual #263
+      [43] invokevirtual #264
         + Methodref [android/os/PowerManager.newWakeLock (ILjava/lang/String;)Landroid/os/PowerManager$WakeLock;]
-      [46] invokevirtual #402
+      [46] invokevirtual #404
         + Methodref [com/softenido/cafedroid/e/c.a (Landroid/os/PowerManager$WakeLock;)V]
       [49] aload_0 v0
-      [50] getfield #179
+      [50] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [53] invokevirtual #343
+      [53] invokevirtual #345
         + Methodref [com/softenido/audible/ac.h ()[Ljava/lang/String;]
       [56] astore_3 v3
       [57] aload_0 v0
-      [58] getfield #179
+      [58] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [61] invokevirtual #344
+      [61] invokevirtual #346
         + Methodref [com/softenido/audible/ac.i ()[Ljava/lang/String;]
       [64] astore v4
       [66] iconst_0
@@ -25715,20 +25722,20 @@ Methods (count = 44):
       [81] aload v4
       [83] iload v5
       [85] aaload
-      [86] invokevirtual #405
+      [86] invokevirtual #407
         + Methodref [com/softenido/cafedroid/e/c.a (Ljava/lang/String;Ljava/lang/String;)V]
       [89] iinc v5, 1
       [92] goto -23 (target=69)
       [95] aload_1 v1
       [96] aload_0 v0
-      [97] getfield #179
+      [97] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [100] invokevirtual #342
+      [100] invokevirtual #344
         + Methodref [com/softenido/audible/ac.g ()Z]
-      [103] invokevirtual #412
+      [103] invokevirtual #414
         + Methodref [com/softenido/cafedroid/e/c.d (Z)V]
       [106] aload_1 v1
-      [107] invokevirtual #413
+      [107] invokevirtual #415
         + Methodref [com/softenido/cafedroid/e/c.e ()V]
       [110] aload_1 v1
       [111] areturn
@@ -25743,87 +25750,87 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 584, locals = 10, stack = 6):
       [0] aload_0 v0
-      [1] getfield #179
+      [1] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [4] invokevirtual #327
+      [4] invokevirtual #329
         + Methodref [com/softenido/audible/ac.B ()Z]
       [7] ifeq +9 (target=16)
-      [10] getstatic #244
+      [10] getstatic #245
         + Fieldref [com/softenido/cafedroid/c/b.d Lcom/softenido/cafedroid/c/b;]
       [13] goto +6 (target=19)
-      [16] getstatic #243
+      [16] getstatic #244
         + Fieldref [com/softenido/cafedroid/c/b.a Lcom/softenido/cafedroid/c/b;]
       [19] astore_1 v1
       [20] aload_0 v0
-      [21] getfield #212
+      [21] getfield #213
         + Fieldref [com/softenido/audible/AudibleMain.d Lcom/softenido/cafedroid/c/e;]
       [24] aload_1 v1
-      [25] invokevirtual #394
+      [25] invokevirtual #396
         + Methodref [com/softenido/cafedroid/c/e.a (Lcom/softenido/cafedroid/c/b;)V]
       [28] aload_0 v0
       [29] aload_0 v0
-      [30] getfield #179
+      [30] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [33] invokevirtual #345
+      [33] invokevirtual #347
         + Methodref [com/softenido/audible/ac.j ()Z]
-      [36] putfield #163
+      [36] putfield #164
         + Fieldref [com/softenido/audible/AudibleMain.G Z]
       [39] aload_0 v0
       [40] aload_0 v0
-      [41] getfield #179
+      [41] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [44] invokevirtual #346
+      [44] invokevirtual #348
         + Methodref [com/softenido/audible/ac.k ()Z]
-      [47] putfield #164
+      [47] putfield #165
         + Fieldref [com/softenido/audible/AudibleMain.H Z]
       [50] aload_0 v0
       [51] aload_0 v0
-      [52] getfield #179
+      [52] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [55] invokevirtual #347
+      [55] invokevirtual #349
         + Methodref [com/softenido/audible/ac.l ()Z]
-      [58] putfield #165
+      [58] putfield #166
         + Fieldref [com/softenido/audible/AudibleMain.I Z]
       [61] aload_0 v0
-      [62] getfield #179
+      [62] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [65] invokevirtual #348
+      [65] invokevirtual #350
         + Methodref [com/softenido/audible/ac.m ()Z]
       [68] istore_2 v2
       [69] aload_0 v0
-      [70] getfield #179
+      [70] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [73] invokevirtual #349
+      [73] invokevirtual #351
         + Methodref [com/softenido/audible/ac.n ()Z]
       [76] istore_3 v3
       [77] aload_0 v0
-      [78] getfield #179
+      [78] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [81] invokevirtual #350
+      [81] invokevirtual #352
         + Methodref [com/softenido/audible/ac.o ()Z]
       [84] istore v4
       [86] aload_0 v0
-      [87] getfield #179
+      [87] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [90] invokevirtual #351
+      [90] invokevirtual #353
         + Methodref [com/softenido/audible/ac.p ()Z]
       [93] istore v5
       [95] aload_0 v0
-      [96] getfield #179
+      [96] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [99] invokevirtual #352
+      [99] invokevirtual #354
         + Methodref [com/softenido/audible/ac.q ()Z]
       [102] istore v6
       [104] aload_0 v0
-      [105] getfield #179
+      [105] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [108] invokevirtual #353
+      [108] invokevirtual #355
         + Methodref [com/softenido/audible/ac.r ()Z]
       [111] istore v7
       [113] aload_0 v0
-      [114] getfield #179
+      [114] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [117] invokevirtual #354
+      [117] invokevirtual #356
         + Methodref [com/softenido/audible/ac.s ()Z]
       [120] istore v8
       [122] iload_2 v2
@@ -25836,10 +25843,10 @@ Methods (count = 44):
       [137] ifne +8 (target=145)
       [140] iload v7
       [142] ifeq +166 (target=308)
-      [145] new #149
+      [145] new #150
         + Class [java/lang/StringBuilder]
       [148] dup
-      [149] invokespecial #447
+      [149] invokespecial #450
         + Methodref [java/lang/StringBuilder.<init> ()V]
       [152] astore v9
       [154] iload v7
@@ -25847,7 +25854,7 @@ Methods (count = 44):
       [159] aload v9
       [161] ldc #38
         + String [(--+)]
-      [163] invokevirtual #450
+      [163] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [166] pop
       [167] iload_2 v2
@@ -25861,15 +25868,15 @@ Methods (count = 44):
       [185] iload v7
       [187] ifeq +11 (target=198)
       [190] aload v9
-      [192] ldc #65
+      [192] ldc #66
         + String [|]
-      [194] invokevirtual #450
+      [194] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [197] pop
       [198] aload v9
       [200] ldc #39
         + String [([]
-      [202] invokevirtual #450
+      [202] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [205] pop
       [206] iload_2 v2
@@ -25877,7 +25884,7 @@ Methods (count = 44):
       [210] aload v9
       [212] ldc #51
         + String [\(\)]
-      [214] invokevirtual #450
+      [214] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [217] pop
       [218] iload_3 v3
@@ -25885,7 +25892,7 @@ Methods (count = 44):
       [222] aload v9
       [224] ldc #52
         + String [\[\]]
-      [226] invokevirtual #450
+      [226] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [229] pop
       [230] iload v4
@@ -25893,7 +25900,7 @@ Methods (count = 44):
       [235] aload v9
       [237] ldc #53
         + String [\{\}]
-      [239] invokevirtual #450
+      [239] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [242] pop
       [243] iload v4
@@ -25901,7 +25908,7 @@ Methods (count = 44):
       [248] aload v9
       [250] ldc #54
         + String [\|]
-      [252] invokevirtual #450
+      [252] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [255] pop
       [256] iload v6
@@ -25909,7 +25916,7 @@ Methods (count = 44):
       [261] aload v9
       [263] ldc #56
         + String [_]
-      [265] invokevirtual #450
+      [265] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [268] pop
       [269] iload v8
@@ -25917,222 +25924,222 @@ Methods (count = 44):
       [274] aload v9
       [276] ldc #40
         + String [*]
-      [278] invokevirtual #450
+      [278] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [281] pop
       [282] aload v9
       [284] ldc #55
         + String []+)]
-      [286] invokevirtual #450
+      [286] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [289] pop
       [290] aload_0 v0
       [291] aload v9
-      [293] invokevirtual #451
+      [293] invokevirtual #454
         + Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [296] putfield #166
+      [296] putfield #167
         + Fieldref [com/softenido/audible/AudibleMain.J Ljava/lang/String;]
       [299] aload_0 v0
       [300] ldc #36
         + String [ ]
-      [302] putfield #167
+      [302] putfield #168
         + Fieldref [com/softenido/audible/AudibleMain.K Ljava/lang/String;]
       [305] goto +13 (target=318)
       [308] aload_0 v0
       [309] aconst_null
-      [310] putfield #166
+      [310] putfield #167
         + Fieldref [com/softenido/audible/AudibleMain.J Ljava/lang/String;]
       [313] aload_0 v0
       [314] aconst_null
-      [315] putfield #167
+      [315] putfield #168
         + Fieldref [com/softenido/audible/AudibleMain.K Ljava/lang/String;]
       [318] aload_0 v0
-      [319] getfield #230
+      [319] getfield #231
         + Fieldref [com/softenido/audible/AudibleMain.v Landroid/widget/ToggleButton;]
       [322] aload_0 v0
-      [323] getfield #179
+      [323] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [326] invokevirtual #358
+      [326] invokevirtual #360
         + Methodref [com/softenido/audible/ac.w ()Z]
-      [329] invokevirtual #285
+      [329] invokevirtual #286
         + Methodref [android/widget/ToggleButton.setChecked (Z)V]
       [332] aload_0 v0
-      [333] getfield #229
+      [333] getfield #230
         + Fieldref [com/softenido/audible/AudibleMain.u Landroid/widget/ToggleButton;]
       [336] aload_0 v0
-      [337] getfield #179
+      [337] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [340] invokevirtual #339
+      [340] invokevirtual #341
         + Methodref [com/softenido/audible/ac.d ()Z]
-      [343] invokevirtual #285
+      [343] invokevirtual #286
         + Methodref [android/widget/ToggleButton.setChecked (Z)V]
       [346] aload_0 v0
-      [347] getfield #228
+      [347] getfield #229
         + Fieldref [com/softenido/audible/AudibleMain.t Landroid/widget/ToggleButton;]
       [350] aload_0 v0
-      [351] getfield #179
+      [351] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [354] invokevirtual #342
+      [354] invokevirtual #344
         + Methodref [com/softenido/audible/ac.g ()Z]
-      [357] invokevirtual #285
+      [357] invokevirtual #286
         + Methodref [android/widget/ToggleButton.setChecked (Z)V]
       [360] aload_0 v0
-      [361] getfield #227
+      [361] getfield #228
         + Fieldref [com/softenido/audible/AudibleMain.s Landroid/widget/ToggleButton;]
       [364] aload_0 v0
-      [365] getfield #179
+      [365] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [368] invokevirtual #331
+      [368] invokevirtual #333
         + Methodref [com/softenido/audible/ac.F ()Z]
-      [371] invokevirtual #285
+      [371] invokevirtual #286
         + Methodref [android/widget/ToggleButton.setChecked (Z)V]
       [374] aload_0 v0
       [375] aload_0 v0
-      [376] getfield #179
+      [376] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [379] invokevirtual #359
+      [379] invokevirtual #361
         + Methodref [com/softenido/audible/ac.x ()Z]
-      [382] putfield #169
+      [382] putfield #170
         + Fieldref [com/softenido/audible/AudibleMain.M Z]
       [385] aload_0 v0
       [386] aload_0 v0
-      [387] getfield #179
+      [387] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [390] invokevirtual #360
+      [390] invokevirtual #362
         + Methodref [com/softenido/audible/ac.y ()Z]
-      [393] putfield #170
+      [393] putfield #171
         + Fieldref [com/softenido/audible/AudibleMain.N Z]
       [396] aload_0 v0
       [397] aload_0 v0
-      [398] getfield #179
+      [398] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [401] invokevirtual #361
+      [401] invokevirtual #363
         + Methodref [com/softenido/audible/ac.z ()Z]
-      [404] putfield #171
+      [404] putfield #172
         + Fieldref [com/softenido/audible/AudibleMain.O Z]
       [407] aload_0 v0
       [408] aload_0 v0
-      [409] getfield #179
+      [409] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [412] invokevirtual #332
+      [412] invokevirtual #334
         + Methodref [com/softenido/audible/ac.G ()I]
-      [415] putfield #172
+      [415] putfield #173
         + Fieldref [com/softenido/audible/AudibleMain.P I]
       [418] aload_0 v0
       [419] aload_0 v0
-      [420] getfield #179
+      [420] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [423] invokevirtual #340
+      [423] invokevirtual #342
         + Methodref [com/softenido/audible/ac.e ()Ljava/lang/String;]
-      [426] invokestatic #363
+      [426] invokestatic #365
         + Methodref [com/softenido/audible/ah.valueOf (Ljava/lang/String;)Lcom/softenido/audible/ah;]
-      [429] putfield #173
+      [429] putfield #174
         + Fieldref [com/softenido/audible/AudibleMain.Q Lcom/softenido/audible/ah;]
       [432] aload_0 v0
-      [433] new #97
+      [433] new #98
         + Class [com/softenido/audible/ad]
       [436] dup
       [437] aload_0 v0
-      [438] getfield #179
+      [438] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [441] invokevirtual #355
+      [441] invokevirtual #357
         + Methodref [com/softenido/audible/ac.t ()Ljava/lang/String;]
       [444] aload_0 v0
-      [445] getfield #179
+      [445] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [448] invokevirtual #357
+      [448] invokevirtual #359
         + Methodref [com/softenido/audible/ac.v ()Z]
       [451] aload_0 v0
-      [452] getfield #179
+      [452] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [455] invokevirtual #356
+      [455] invokevirtual #358
         + Methodref [com/softenido/audible/ac.u ()I]
       [458] i2f
-      [459] invokespecial #362
+      [459] invokespecial #364
         + Methodref [com/softenido/audible/ad.<init> (Ljava/lang/String;ZF)V]
-      [462] putfield #174
+      [462] putfield #175
         + Fieldref [com/softenido/audible/AudibleMain.R Lcom/softenido/audible/ad;]
       [465] aload_0 v0
       [466] aload_0 v0
-      [467] getfield #179
+      [467] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [470] invokevirtual #326
+      [470] invokevirtual #328
         + Methodref [com/softenido/audible/ac.A ()Z]
-      [473] putfield #175
+      [473] putfield #176
         + Fieldref [com/softenido/audible/AudibleMain.S Z]
       [476] aload_0 v0
       [477] aload_0 v0
-      [478] getfield #179
+      [478] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [481] invokevirtual #327
+      [481] invokevirtual #329
         + Methodref [com/softenido/audible/ac.B ()Z]
-      [484] putfield #176
+      [484] putfield #177
         + Fieldref [com/softenido/audible/AudibleMain.T Z]
       [487] aload_0 v0
       [488] aload_0 v0
-      [489] getfield #179
+      [489] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [492] invokevirtual #328
+      [492] invokevirtual #330
         + Methodref [com/softenido/audible/ac.C ()Z]
-      [495] putfield #177
+      [495] putfield #178
         + Fieldref [com/softenido/audible/AudibleMain.U Z]
       [498] aload_0 v0
       [499] aload_0 v0
-      [500] getfield #179
+      [500] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [503] invokevirtual #329
+      [503] invokevirtual #331
         + Methodref [com/softenido/audible/ac.D ()Z]
-      [506] putfield #178
+      [506] putfield #179
         + Fieldref [com/softenido/audible/AudibleMain.V Z]
       [509] aload_0 v0
-      [510] getfield #180
+      [510] getfield #181
         + Fieldref [com/softenido/audible/AudibleMain.X Lcom/softenido/b/c;]
       [513] aload_0 v0
-      [514] getfield #179
+      [514] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [517] invokevirtual #341
+      [517] invokevirtual #343
         + Methodref [com/softenido/audible/ac.f ()Ljava/lang/String;]
-      [520] invokevirtual #391
+      [520] invokevirtual #393
         + Methodref [com/softenido/b/c.f (Ljava/lang/String;)V]
       [523] aload_0 v0
-      [524] getfield #228
+      [524] getfield #229
         + Fieldref [com/softenido/audible/AudibleMain.t Landroid/widget/ToggleButton;]
-      [527] invokevirtual #284
+      [527] invokevirtual #285
         + Methodref [android/widget/ToggleButton.isChecked ()Z]
       [530] ifeq +53 (target=583)
       [533] aload_0 v0
-      [534] getfield #230
+      [534] getfield #231
         + Fieldref [com/softenido/audible/AudibleMain.v Landroid/widget/ToggleButton;]
-      [537] invokevirtual #284
+      [537] invokevirtual #285
         + Methodref [android/widget/ToggleButton.isChecked ()Z]
       [540] ifeq +43 (target=583)
       [543] aload_0 v0
-      [544] getfield #180
+      [544] getfield #181
         + Fieldref [com/softenido/audible/AudibleMain.X Lcom/softenido/b/c;]
       [547] aload_0 v0
-      [548] getfield #178
+      [548] getfield #179
         + Fieldref [com/softenido/audible/AudibleMain.V Z]
-      [551] invokevirtual #389
+      [551] invokevirtual #391
         + Methodref [com/softenido/b/c.a (Z)V]
       [554] aload_0 v0
-      [555] getfield #180
+      [555] getfield #181
         + Fieldref [com/softenido/audible/AudibleMain.X Lcom/softenido/b/c;]
       [558] aload_0 v0
-      [559] getfield #179
+      [559] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [562] invokevirtual #343
+      [562] invokevirtual #345
         + Methodref [com/softenido/audible/ac.h ()[Ljava/lang/String;]
-      [565] invokevirtual #390
+      [565] invokevirtual #392
         + Methodref [com/softenido/b/c.a ([Ljava/lang/String;)Z]
       [568] pop
       [569] aload_0 v0
-      [570] getfield #207
+      [570] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [573] ifnull +10 (target=583)
       [576] aload_0 v0
-      [577] getfield #207
+      [577] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
-      [580] invokevirtual #413
+      [580] invokevirtual #415
         + Methodref [com/softenido/cafedroid/e/c.e ()V]
       [583] return
       Code attribute exceptions (count = 0):
@@ -26161,65 +26168,65 @@ Methods (count = 44):
     + Code attribute instructions (code length = 159, locals = 7, stack = 8):
       [0] aload_0 v0
       [1] aload_1 v1
-      [2] putfield #199
+      [2] putfield #200
         + Fieldref [com/softenido/audible/AudibleMain.ap Ljava/lang/String;]
       [5] aload_0 v0
       [6] aload_2 v2
-      [7] putfield #200
+      [7] putfield #201
         + Fieldref [com/softenido/audible/AudibleMain.aq Ljava/lang/String;]
       [10] aload_0 v0
-      [11] getfield #177
+      [11] getfield #178
         + Fieldref [com/softenido/audible/AudibleMain.U Z]
       [14] ifeq +26 (target=40)
       [17] aload_0 v0
-      [18] getfield #179
+      [18] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
       [21] aload_1 v1
-      [22] invokevirtual #334
+      [22] invokevirtual #336
         + Methodref [com/softenido/audible/ac.a (Ljava/lang/String;)V]
       [25] aload_0 v0
-      [26] getfield #179
+      [26] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
       [29] aload_2 v2
-      [30] invokevirtual #336
+      [30] invokevirtual #338
         + Methodref [com/softenido/audible/ac.b (Ljava/lang/String;)V]
       [33] aload_0 v0
-      [34] getfield #179
+      [34] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [37] invokevirtual #333
+      [37] invokevirtual #335
         + Methodref [com/softenido/audible/ac.a ()V]
       [40] aload_0 v0
-      [41] getfield #183
+      [41] getfield #184
         + Fieldref [com/softenido/audible/AudibleMain.a Landroid/widget/TextView;]
       [44] aload_1 v1
-      [45] invokevirtual #282
+      [45] invokevirtual #283
         + Methodref [android/widget/TextView.setText (Ljava/lang/CharSequence;)V]
       [48] aload_0 v0
-      [49] new #152
+      [49] new #153
         + Class [java/util/ArrayList]
       [52] dup
-      [53] invokespecial #454
+      [53] invokespecial #457
         + Methodref [java/util/ArrayList.<init> ()V]
-      [56] putfield #201
+      [56] putfield #202
         + Fieldref [com/softenido/audible/AudibleMain.ar Ljava/util/List;]
       [59] aload_0 v0
-      [60] new #152
+      [60] new #153
         + Class [java/util/ArrayList]
       [63] dup
-      [64] invokespecial #454
+      [64] invokespecial #457
         + Methodref [java/util/ArrayList.<init> ()V]
-      [67] putfield #202
+      [67] putfield #203
         + Fieldref [com/softenido/audible/AudibleMain.as Ljava/util/List;]
       [70] aload_0 v0
-      [71] getfield #202
+      [71] getfield #203
         + Fieldref [com/softenido/audible/AudibleMain.as Ljava/util/List;]
       [74] aload_1 v1
-      [75] invokeinterface #458
+      [75] invokeinterface #461
         + InterfaceMethodref [java/util/List.add (Ljava/lang/Object;)Z]
       [80] pop
       [81] aload_2 v2
       [82] iconst_1
-      [83] invokestatic #291
+      [83] invokestatic #292
         + Methodref [com/softenido/a/g/b.a (Ljava/lang/String;Z)[Ljava/lang/String;]
       [86] astore_3 v3
       [87] aload_3 v3
@@ -26235,23 +26242,23 @@ Methods (count = 44):
       [104] aaload
       [105] astore v6
       [107] aload_0 v0
-      [108] getfield #201
+      [108] getfield #202
         + Fieldref [com/softenido/audible/AudibleMain.ar Ljava/util/List;]
       [111] aload v6
-      [113] invokeinterface #458
+      [113] invokeinterface #461
         + InterfaceMethodref [java/util/List.add (Ljava/lang/Object;)Z]
       [118] pop
       [119] aload_0 v0
-      [120] getfield #202
+      [120] getfield #203
         + Fieldref [com/softenido/audible/AudibleMain.as Ljava/util/List;]
       [123] aload v6
-      [125] invokeinterface #458
+      [125] invokeinterface #461
         + InterfaceMethodref [java/util/List.add (Ljava/lang/Object;)Z]
       [130] pop
       [131] iinc v5, 1
       [134] goto -40 (target=94)
       [137] aload_0 v0
-      [138] new #93
+      [138] new #94
         + Class [com/softenido/audible/a]
       [141] dup
       [142] aload_0 v0
@@ -26261,11 +26268,11 @@ Methods (count = 44):
       [146] ldc #33
         + Integer [2131165231]
       [148] aload_0 v0
-      [149] getfield #201
+      [149] getfield #202
         + Fieldref [com/softenido/audible/AudibleMain.ar Ljava/util/List;]
-      [152] invokespecial #323
+      [152] invokespecial #325
         + Methodref [com/softenido/audible/a.<init> (Lcom/softenido/audible/AudibleMain;Landroid/content/Context;IILjava/util/List;)V]
-      [155] invokevirtual #318
+      [155] invokevirtual #320
         + Methodref [com/softenido/audible/AudibleMain.setListAdapter (Landroid/widget/ListAdapter;)V]
       [158] return
       Code attribute exceptions (count = 0):
@@ -26280,30 +26287,30 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 68, locals = 6, stack = 4):
       [0] aload_0 v0
-      [1] getfield #179
+      [1] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [4] invokevirtual #326
+      [4] invokevirtual #328
         + Methodref [com/softenido/audible/ac.A ()Z]
       [7] ifeq +15 (target=22)
       [10] aload_0 v0
       [11] aload_0 v0
-      [12] getfield #161
+      [12] getfield #162
         + Fieldref [com/softenido/audible/AudibleMain.E Landroid/os/Handler;]
       [15] iload_2 v2
-      [16] invokestatic #433
+      [16] invokestatic #435
         + Methodref [com/softenido/cafedroid/util/ui/d.a (Landroid/content/Context;Landroid/os/Handler;Z)Lcom/softenido/cafedroid/util/ui/d;]
       [19] goto +6 (target=25)
-      [22] invokestatic #431
+      [22] invokestatic #433
         + Methodref [com/softenido/cafedroid/util/ui/d.a ()Lcom/softenido/cafedroid/util/ui/d;]
       [25] astore_3 v3
       [26] ldc #44
         + String [Audible]
       [28] iconst_4
-      [29] invokestatic #435
+      [29] invokestatic #437
         + Methodref [com/softenido/cafedroid/util/ui/d.a (Ljava/lang/String;I)Lcom/softenido/cafedroid/util/ui/d;]
       [32] astore v4
       [34] iconst_2
-      [35] anewarray #140
+      [35] anewarray #141
         + Class [com/softenido/cafedroid/util/ui/d]
       [38] dup
       [39] iconst_0
@@ -26313,7 +26320,7 @@ Methods (count = 44):
       [43] iconst_1
       [44] aload v4
       [46] aastore
-      [47] invokestatic #437
+      [47] invokestatic #439
         + Methodref [com/softenido/cafedroid/util/ui/d.a ([Lcom/softenido/cafedroid/util/ui/d;)Lcom/softenido/cafedroid/util/ui/d;]
       [50] astore v5
       [52] aload_3 v3
@@ -26322,7 +26329,7 @@ Methods (count = 44):
       [57] iconst_3
       [58] goto +4 (target=62)
       [61] iconst_4
-      [62] invokevirtual #432
+      [62] invokevirtual #434
         + Methodref [com/softenido/cafedroid/util/ui/d.a (I)V]
       [65] aload v5
       [67] areturn
@@ -26338,14 +26345,14 @@ Methods (count = 44):
       = private com.softenido.cafedroid.e.b g()
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 13, locals = 1, stack = 5):
-      [0] new #109
+      [0] new #110
         + Class [com/softenido/audible/l]
       [3] dup
       [4] aload_0 v0
       [5] aload_0 v0
-      [6] invokestatic #455
+      [6] invokestatic #458
         + Methodref [java/util/Locale.getDefault ()Ljava/util/Locale;]
-      [9] invokespecial #374
+      [9] invokespecial #376
         + Methodref [com/softenido/audible/l.<init> (Lcom/softenido/audible/AudibleMain;Landroid/app/Activity;Ljava/util/Locale;)V]
       [12] areturn
       Code attribute exceptions (count = 0):
@@ -26357,35 +26364,35 @@ Methods (count = 44):
     + Code attribute instructions (code length = 122, locals = 5, stack = 3):
       [0] iload_1 v1
       [1] ifeq +119 (target=120)
-      [4] new #137
+      [4] new #138
         + Class [com/softenido/cafedroid/os/c]
       [7] dup
       [8] iconst_1
-      [9] invokespecial #427
+      [9] invokespecial #429
         + Methodref [com/softenido/cafedroid/os/c.<init> (Z)V]
       [12] iconst_0
-      [13] invokevirtual #428
+      [13] invokevirtual #430
         + Methodref [com/softenido/cafedroid/os/c.a (Z)Lcom/softenido/cafedroid/os/c;]
-      [16] invokestatic #425
+      [16] invokestatic #427
         + Methodref [com/softenido/cafedroid/os/b.a (Lcom/softenido/cafedroid/os/c;)Z]
       [19] istore_2 v2
-      [20] new #138
+      [20] new #139
         + Class [com/softenido/cafedroid/os/d]
       [23] dup
       [24] iconst_1
-      [25] invokespecial #429
+      [25] invokespecial #431
         + Methodref [com/softenido/cafedroid/os/d.<init> (Z)V]
-      [28] invokestatic #426
+      [28] invokestatic #428
         + Methodref [com/softenido/cafedroid/os/b.a (Lcom/softenido/cafedroid/os/d;)Z]
       [31] istore_3 v3
       [32] iload_2 v2
       [33] ifne +7 (target=40)
       [36] iload_3 v3
       [37] ifeq +70 (target=107)
-      [40] new #149
+      [40] new #150
         + Class [java/lang/StringBuilder]
       [43] dup
-      [44] invokespecial #447
+      [44] invokespecial #450
         + Methodref [java/lang/StringBuilder.<init> ()V]
       [47] iload_2 v2
       [48] ifeq +8 (target=56)
@@ -26394,7 +26401,7 @@ Methods (count = 44):
       [53] goto +5 (target=58)
       [56] ldc #34
         + String []
-      [58] invokevirtual #450
+      [58] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [61] iload_2 v2
       [62] ifeq +12 (target=74)
@@ -26406,7 +26413,7 @@ Methods (count = 44):
       [71] goto +5 (target=76)
       [74] ldc #34
         + String []
-      [76] invokevirtual #450
+      [76] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [79] iload_3 v3
       [80] ifeq +8 (target=88)
@@ -26415,24 +26422,24 @@ Methods (count = 44):
       [85] goto +5 (target=90)
       [88] ldc #34
         + String []
-      [90] invokevirtual #450
+      [90] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [93] invokevirtual #451
+      [93] invokevirtual #454
         + Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
       [96] astore v4
       [98] aload_0 v0
-      [99] getfield #162
+      [99] getfield #163
         + Fieldref [com/softenido/audible/AudibleMain.F Lcom/softenido/cafedroid/util/ui/d;]
       [102] aload v4
-      [104] invokevirtual #434
+      [104] invokevirtual #436
         + Methodref [com/softenido/cafedroid/util/ui/d.a (Ljava/lang/String;)V]
       [107] iconst_1
-      [108] invokestatic #289
+      [108] invokestatic #290
         + Methodref [com/softenido/a/e/f.a (Z)V]
       [111] iconst_1
-      [112] invokestatic #290
+      [112] invokestatic #291
         + Methodref [com/softenido/a/e/f.b (Z)V]
-      [115] invokestatic #430
+      [115] invokestatic #432
         + Methodref [com/softenido/cafedroid/util/a/a.a ()V]
       [118] iconst_1
       [119] ireturn
@@ -26457,12 +26464,12 @@ Methods (count = 44):
     + Code attribute instructions (code length = 497, locals = 2, stack = 3):
       [0] aload_0 v0
       [1] aload_1 v1
-      [2] putfield #204
+      [2] putfield #205
         + Fieldref [com/softenido/audible/AudibleMain.au Lcom/softenido/audible/ab;]
-      [5] getstatic #242
+      [5] getstatic #243
         + Fieldref [com/softenido/audible/t.a [I]
       [8] aload_1 v1
-      [9] invokevirtual #325
+      [9] invokevirtual #327
         + Methodref [com/softenido/audible/ab.ordinal ()I]
       [12] iaload
       [13] tableswitch (5 offsets, default=310) (target=323)
@@ -26473,300 +26480,300 @@ Methods (count = 44):
         5: offset = 255, target = 268
         default: offset = 310, target = 323
       [48] aload_0 v0
-      [49] getfield #210
+      [49] getfield #211
         + Fieldref [com/softenido/audible/AudibleMain.b Landroid/widget/ListView;]
       [52] iconst_0
-      [53] invokevirtual #278
+      [53] invokevirtual #279
         + Methodref [android/widget/ListView.setVisibility (I)V]
       [56] aload_0 v0
-      [57] getfield #211
+      [57] getfield #212
         + Fieldref [com/softenido/audible/AudibleMain.c Landroid/widget/EditText;]
       [60] bipush 8
-      [62] invokevirtual #273
+      [62] invokevirtual #274
         + Methodref [android/widget/EditText.setVisibility (I)V]
       [65] aload_0 v0
-      [66] getfield #160
+      [66] getfield #161
         + Fieldref [com/softenido/audible/AudibleMain.D Landroid/widget/ImageButton;]
       [69] iconst_0
-      [70] invokevirtual #276
+      [70] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [73] aload_0 v0
-      [74] getfield #157
+      [74] getfield #158
         + Fieldref [com/softenido/audible/AudibleMain.A Landroid/widget/ImageButton;]
       [77] bipush 8
-      [79] invokevirtual #276
+      [79] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [82] aload_0 v0
-      [83] getfield #158
+      [83] getfield #159
         + Fieldref [com/softenido/audible/AudibleMain.B Landroid/widget/ImageButton;]
       [86] bipush 8
-      [88] invokevirtual #276
+      [88] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [91] aload_0 v0
-      [92] getfield #159
+      [92] getfield #160
         + Fieldref [com/softenido/audible/AudibleMain.C Landroid/widget/ImageButton;]
       [95] bipush 8
-      [97] invokevirtual #276
+      [97] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [100] goto +254 (target=354)
       [103] aload_0 v0
-      [104] getfield #210
+      [104] getfield #211
         + Fieldref [com/softenido/audible/AudibleMain.b Landroid/widget/ListView;]
       [107] iconst_0
-      [108] invokevirtual #278
+      [108] invokevirtual #279
         + Methodref [android/widget/ListView.setVisibility (I)V]
       [111] aload_0 v0
-      [112] getfield #211
+      [112] getfield #212
         + Fieldref [com/softenido/audible/AudibleMain.c Landroid/widget/EditText;]
       [115] bipush 8
-      [117] invokevirtual #273
+      [117] invokevirtual #274
         + Methodref [android/widget/EditText.setVisibility (I)V]
       [120] aload_0 v0
-      [121] getfield #160
+      [121] getfield #161
         + Fieldref [com/softenido/audible/AudibleMain.D Landroid/widget/ImageButton;]
       [124] bipush 8
-      [126] invokevirtual #276
+      [126] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [129] aload_0 v0
-      [130] getfield #157
+      [130] getfield #158
         + Fieldref [com/softenido/audible/AudibleMain.A Landroid/widget/ImageButton;]
       [133] iconst_0
-      [134] invokevirtual #276
+      [134] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [137] aload_0 v0
-      [138] getfield #158
+      [138] getfield #159
         + Fieldref [com/softenido/audible/AudibleMain.B Landroid/widget/ImageButton;]
       [141] bipush 8
-      [143] invokevirtual #276
+      [143] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [146] aload_0 v0
-      [147] getfield #159
+      [147] getfield #160
         + Fieldref [com/softenido/audible/AudibleMain.C Landroid/widget/ImageButton;]
       [150] bipush 8
-      [152] invokevirtual #276
+      [152] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [155] goto +199 (target=354)
       [158] aload_0 v0
-      [159] getfield #210
+      [159] getfield #211
         + Fieldref [com/softenido/audible/AudibleMain.b Landroid/widget/ListView;]
       [162] iconst_0
-      [163] invokevirtual #278
+      [163] invokevirtual #279
         + Methodref [android/widget/ListView.setVisibility (I)V]
       [166] aload_0 v0
-      [167] getfield #211
+      [167] getfield #212
         + Fieldref [com/softenido/audible/AudibleMain.c Landroid/widget/EditText;]
       [170] bipush 8
-      [172] invokevirtual #273
+      [172] invokevirtual #274
         + Methodref [android/widget/EditText.setVisibility (I)V]
       [175] aload_0 v0
-      [176] getfield #160
+      [176] getfield #161
         + Fieldref [com/softenido/audible/AudibleMain.D Landroid/widget/ImageButton;]
       [179] bipush 8
-      [181] invokevirtual #276
+      [181] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [184] aload_0 v0
-      [185] getfield #157
+      [185] getfield #158
         + Fieldref [com/softenido/audible/AudibleMain.A Landroid/widget/ImageButton;]
       [188] bipush 8
-      [190] invokevirtual #276
+      [190] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [193] aload_0 v0
-      [194] getfield #158
+      [194] getfield #159
         + Fieldref [com/softenido/audible/AudibleMain.B Landroid/widget/ImageButton;]
       [197] iconst_0
-      [198] invokevirtual #276
+      [198] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [201] aload_0 v0
-      [202] getfield #159
+      [202] getfield #160
         + Fieldref [com/softenido/audible/AudibleMain.C Landroid/widget/ImageButton;]
       [205] bipush 8
-      [207] invokevirtual #276
+      [207] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [210] goto +144 (target=354)
       [213] aload_0 v0
-      [214] getfield #210
+      [214] getfield #211
         + Fieldref [com/softenido/audible/AudibleMain.b Landroid/widget/ListView;]
       [217] iconst_0
-      [218] invokevirtual #278
+      [218] invokevirtual #279
         + Methodref [android/widget/ListView.setVisibility (I)V]
       [221] aload_0 v0
-      [222] getfield #211
+      [222] getfield #212
         + Fieldref [com/softenido/audible/AudibleMain.c Landroid/widget/EditText;]
       [225] bipush 8
-      [227] invokevirtual #273
+      [227] invokevirtual #274
         + Methodref [android/widget/EditText.setVisibility (I)V]
       [230] aload_0 v0
-      [231] getfield #160
+      [231] getfield #161
         + Fieldref [com/softenido/audible/AudibleMain.D Landroid/widget/ImageButton;]
       [234] bipush 8
-      [236] invokevirtual #276
+      [236] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [239] aload_0 v0
-      [240] getfield #157
+      [240] getfield #158
         + Fieldref [com/softenido/audible/AudibleMain.A Landroid/widget/ImageButton;]
       [243] bipush 8
-      [245] invokevirtual #276
+      [245] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [248] aload_0 v0
-      [249] getfield #158
+      [249] getfield #159
         + Fieldref [com/softenido/audible/AudibleMain.B Landroid/widget/ImageButton;]
       [252] bipush 8
-      [254] invokevirtual #276
+      [254] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [257] aload_0 v0
-      [258] getfield #159
+      [258] getfield #160
         + Fieldref [com/softenido/audible/AudibleMain.C Landroid/widget/ImageButton;]
       [261] iconst_0
-      [262] invokevirtual #276
+      [262] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [265] goto +89 (target=354)
       [268] aload_0 v0
-      [269] getfield #210
+      [269] getfield #211
         + Fieldref [com/softenido/audible/AudibleMain.b Landroid/widget/ListView;]
       [272] bipush 8
-      [274] invokevirtual #278
+      [274] invokevirtual #279
         + Methodref [android/widget/ListView.setVisibility (I)V]
       [277] aload_0 v0
-      [278] getfield #211
+      [278] getfield #212
         + Fieldref [com/softenido/audible/AudibleMain.c Landroid/widget/EditText;]
       [281] iconst_0
-      [282] invokevirtual #273
+      [282] invokevirtual #274
         + Methodref [android/widget/EditText.setVisibility (I)V]
       [285] aload_0 v0
-      [286] getfield #160
+      [286] getfield #161
         + Fieldref [com/softenido/audible/AudibleMain.D Landroid/widget/ImageButton;]
       [289] bipush 8
-      [291] invokevirtual #276
+      [291] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [294] aload_0 v0
-      [295] getfield #157
+      [295] getfield #158
         + Fieldref [com/softenido/audible/AudibleMain.A Landroid/widget/ImageButton;]
       [298] iconst_0
-      [299] invokevirtual #276
+      [299] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [302] aload_0 v0
-      [303] getfield #158
+      [303] getfield #159
         + Fieldref [com/softenido/audible/AudibleMain.B Landroid/widget/ImageButton;]
       [306] bipush 8
-      [308] invokevirtual #276
+      [308] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [311] aload_0 v0
-      [312] getfield #159
+      [312] getfield #160
         + Fieldref [com/softenido/audible/AudibleMain.C Landroid/widget/ImageButton;]
       [315] bipush 8
-      [317] invokevirtual #276
+      [317] invokevirtual #277
         + Methodref [android/widget/ImageButton.setVisibility (I)V]
       [320] goto +34 (target=354)
-      [323] ldc #90
+      [323] ldc #91
         + Class [com/softenido/audible/AudibleMain]
-      [325] invokevirtual #439
+      [325] invokevirtual #441
         + Methodref [java/lang/Class.getName ()Ljava/lang/String;]
-      [328] new #149
+      [328] new #150
         + Class [java/lang/StringBuilder]
       [331] dup
-      [332] invokespecial #447
+      [332] invokespecial #450
         + Methodref [java/lang/StringBuilder.<init> ()V]
-      [335] ldc #64
+      [335] ldc #65
         + String [unknown status ]
-      [337] invokevirtual #450
+      [337] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [340] aload_0 v0
-      [341] getfield #204
+      [341] getfield #205
         + Fieldref [com/softenido/audible/AudibleMain.au Lcom/softenido/audible/ab;]
-      [344] invokevirtual #449
+      [344] invokevirtual #452
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/Object;)Ljava/lang/StringBuilder;]
-      [347] invokevirtual #451
+      [347] invokevirtual #454
         + Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [350] invokestatic #267
+      [350] invokestatic #268
         + Methodref [android/util/Log.w (Ljava/lang/String;Ljava/lang/String;)I]
       [353] pop
       [354] aload_0 v0
-      [355] getfield #223
+      [355] getfield #224
         + Fieldref [com/softenido/audible/AudibleMain.o Landroid/widget/ImageButton;]
       [358] aload_1 v1
-      [359] getstatic #236
+      [359] getstatic #237
         + Fieldref [com/softenido/audible/ab.b Lcom/softenido/audible/ab;]
       [362] ifacmpeq +10 (target=372)
       [365] aload_1 v1
-      [366] getstatic #239
+      [366] getstatic #240
         + Fieldref [com/softenido/audible/ab.e Lcom/softenido/audible/ab;]
       [369] ifacmpne +7 (target=376)
       [372] iconst_1
       [373] goto +4 (target=377)
       [376] iconst_0
-      [377] invokevirtual #274
+      [377] invokevirtual #275
         + Methodref [android/widget/ImageButton.setEnabled (Z)V]
       [380] aload_0 v0
-      [381] getfield #231
+      [381] getfield #232
         + Fieldref [com/softenido/audible/AudibleMain.w Landroid/widget/ImageButton;]
       [384] aload_1 v1
-      [385] getstatic #235
+      [385] getstatic #236
         + Fieldref [com/softenido/audible/ab.a Lcom/softenido/audible/ab;]
       [388] ifacmpeq +10 (target=398)
       [391] aload_1 v1
-      [392] getstatic #236
+      [392] getstatic #237
         + Fieldref [com/softenido/audible/ab.b Lcom/softenido/audible/ab;]
       [395] ifacmpne +7 (target=402)
       [398] iconst_1
       [399] goto +4 (target=403)
       [402] iconst_0
-      [403] invokevirtual #274
+      [403] invokevirtual #275
         + Methodref [android/widget/ImageButton.setEnabled (Z)V]
       [406] aload_0 v0
-      [407] getfield #232
+      [407] getfield #233
         + Fieldref [com/softenido/audible/AudibleMain.x Landroid/widget/ImageButton;]
       [410] aload_1 v1
-      [411] getstatic #238
+      [411] getstatic #239
         + Fieldref [com/softenido/audible/ab.d Lcom/softenido/audible/ab;]
       [414] ifacmpeq +10 (target=424)
       [417] aload_1 v1
-      [418] getstatic #237
+      [418] getstatic #238
         + Fieldref [com/softenido/audible/ab.c Lcom/softenido/audible/ab;]
       [421] ifacmpne +7 (target=428)
       [424] iconst_1
       [425] goto +4 (target=429)
       [428] iconst_0
-      [429] invokevirtual #274
+      [429] invokevirtual #275
         + Methodref [android/widget/ImageButton.setEnabled (Z)V]
       [432] aload_0 v0
-      [433] getfield #233
+      [433] getfield #234
         + Fieldref [com/softenido/audible/AudibleMain.y Landroid/widget/ImageButton;]
       [436] aload_1 v1
-      [437] getstatic #238
+      [437] getstatic #239
         + Fieldref [com/softenido/audible/ab.d Lcom/softenido/audible/ab;]
       [440] ifacmpeq +10 (target=450)
       [443] aload_1 v1
-      [444] getstatic #237
+      [444] getstatic #238
         + Fieldref [com/softenido/audible/ab.c Lcom/softenido/audible/ab;]
       [447] ifacmpne +7 (target=454)
       [450] iconst_1
       [451] goto +4 (target=455)
       [454] iconst_0
-      [455] invokevirtual #274
+      [455] invokevirtual #275
         + Methodref [android/widget/ImageButton.setEnabled (Z)V]
       [458] aload_0 v0
-      [459] getfield #158
+      [459] getfield #159
         + Fieldref [com/softenido/audible/AudibleMain.B Landroid/widget/ImageButton;]
       [462] aload_1 v1
-      [463] getstatic #237
+      [463] getstatic #238
         + Fieldref [com/softenido/audible/ab.c Lcom/softenido/audible/ab;]
       [466] ifacmpne +7 (target=473)
       [469] iconst_1
       [470] goto +4 (target=474)
       [473] iconst_0
-      [474] invokevirtual #274
+      [474] invokevirtual #275
         + Methodref [android/widget/ImageButton.setEnabled (Z)V]
       [477] aload_0 v0
-      [478] getfield #157
+      [478] getfield #158
         + Fieldref [com/softenido/audible/AudibleMain.A Landroid/widget/ImageButton;]
       [481] aload_1 v1
-      [482] getstatic #236
+      [482] getstatic #237
         + Fieldref [com/softenido/audible/ab.b Lcom/softenido/audible/ab;]
       [485] ifacmpne +7 (target=492)
       [488] iconst_1
       [489] goto +4 (target=493)
       [492] iconst_0
-      [493] invokevirtual #274
+      [493] invokevirtual #275
         + Methodref [android/widget/ImageButton.setEnabled (Z)V]
       [496] return
       Code attribute exceptions (count = 0):
@@ -26801,9 +26808,9 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 8, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #206
+      [1] getfield #207
         + Fieldref [com/softenido/audible/AudibleMain.aw Lcom/softenido/cafedroid/e/j;]
-      [4] invokevirtual #420
+      [4] invokevirtual #422
         + Methodref [com/softenido/cafedroid/e/j.b ()V]
       [7] return
       Code attribute exceptions (count = 0):
@@ -26814,74 +26821,74 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 127, locals = 2, stack = 4):
       [0] aload_0 v0
-      [1] getstatic #237
+      [1] getstatic #238
         + Fieldref [com/softenido/audible/ab.c Lcom/softenido/audible/ab;]
-      [4] invokespecial #294
+      [4] invokespecial #295
         + Methodref [com/softenido/audible/AudibleMain.a (Lcom/softenido/audible/ab;)V]
       [7] aload_0 v0
-      [8] getfield #207
+      [8] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [11] aload_0 v0
-      [12] getfield #163
+      [12] getfield #164
         + Fieldref [com/softenido/audible/AudibleMain.G Z]
-      [15] invokevirtual #411
+      [15] invokevirtual #413
         + Methodref [com/softenido/cafedroid/e/c.c (Z)V]
       [18] aload_0 v0
-      [19] getfield #207
+      [19] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [22] aload_0 v0
-      [23] getfield #228
+      [23] getfield #229
         + Fieldref [com/softenido/audible/AudibleMain.t Landroid/widget/ToggleButton;]
-      [26] invokevirtual #284
+      [26] invokevirtual #285
         + Methodref [android/widget/ToggleButton.isChecked ()Z]
-      [29] invokevirtual #412
+      [29] invokevirtual #414
         + Methodref [com/softenido/cafedroid/e/c.d (Z)V]
       [32] aload_0 v0
-      [33] getfield #207
+      [33] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [36] aload_0 v0
-      [37] getfield #166
+      [37] getfield #167
         + Fieldref [com/softenido/audible/AudibleMain.J Ljava/lang/String;]
       [40] aload_0 v0
-      [41] getfield #167
+      [41] getfield #168
         + Fieldref [com/softenido/audible/AudibleMain.K Ljava/lang/String;]
-      [44] invokevirtual #409
+      [44] invokevirtual #411
         + Methodref [com/softenido/cafedroid/e/c.b (Ljava/lang/String;Ljava/lang/String;)V]
       [47] aload_0 v0
-      [48] getfield #207
+      [48] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [51] aload_0 v0
-      [52] getfield #212
+      [52] getfield #213
         + Fieldref [com/softenido/audible/AudibleMain.d Lcom/softenido/cafedroid/c/e;]
-      [55] invokestatic #287
+      [55] invokestatic #288
         + Methodref [com/softenido/a/a/b.a (Lcom/softenido/a/a/d;)Lcom/softenido/a/a/d;]
-      [58] invokevirtual #403
+      [58] invokevirtual #405
         + Methodref [com/softenido/cafedroid/e/c.a (Lcom/softenido/a/a/d;)V]
       [61] aload_0 v0
-      [62] getfield #207
+      [62] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
-      [65] invokevirtual #418
+      [65] invokevirtual #420
         + Methodref [com/softenido/cafedroid/e/c.i ()Lcom/softenido/a/a/c;]
       [68] iconst_1
       [69] iconst_1
       [70] iconst_1
-      [71] invokeinterface #457
+      [71] invokeinterface #460
         + InterfaceMethodref [com/softenido/a/a/c.a (ZZZ)V]
       [76] aload_0 v0
-      [77] getfield #164
+      [77] getfield #165
         + Fieldref [com/softenido/audible/AudibleMain.H Z]
       [80] ifne +24 (target=104)
       [83] aload_0 v0
-      [84] getfield #165
+      [84] getfield #166
         + Fieldref [com/softenido/audible/AudibleMain.I Z]
       [87] ifeq +21 (target=108)
       [90] aload_0 v0
-      [91] getfield #199
+      [91] getfield #200
         + Fieldref [com/softenido/audible/AudibleMain.ap Ljava/lang/String;]
       [94] aload_0 v0
-      [95] getfield #200
+      [95] getfield #201
         + Fieldref [com/softenido/audible/AudibleMain.aq Ljava/lang/String;]
-      [98] invokestatic #296
+      [98] invokestatic #297
         + Methodref [com/softenido/audible/AudibleMain.a (Ljava/lang/String;Ljava/lang/String;)Z]
       [101] ifeq +7 (target=108)
       [104] iconst_1
@@ -26889,15 +26896,15 @@ Methods (count = 44):
       [108] iconst_0
       [109] istore_1 v1
       [110] aload_0 v0
-      [111] getfield #207
+      [111] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [114] iload_1 v1
-      [115] invokevirtual #414
+      [115] invokevirtual #416
         + Methodref [com/softenido/cafedroid/e/c.e (Z)V]
       [118] aload_0 v0
-      [119] getfield #207
+      [119] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
-      [122] invokevirtual #400
+      [122] invokevirtual #402
         + Methodref [com/softenido/cafedroid/e/c.a ()Z]
       [125] pop
       [126] return
@@ -26913,14 +26920,14 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 15, locals = 1, stack = 2):
       [0] aload_0 v0
-      [1] getstatic #238
+      [1] getstatic #239
         + Fieldref [com/softenido/audible/ab.d Lcom/softenido/audible/ab;]
-      [4] invokespecial #294
+      [4] invokespecial #295
         + Methodref [com/softenido/audible/AudibleMain.a (Lcom/softenido/audible/ab;)V]
       [7] aload_0 v0
-      [8] getfield #207
+      [8] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
-      [11] invokevirtual #410
+      [11] invokevirtual #412
         + Methodref [com/softenido/cafedroid/e/c.c ()V]
       [14] return
       Code attribute exceptions (count = 0):
@@ -26931,14 +26938,14 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 15, locals = 1, stack = 2):
       [0] aload_0 v0
-      [1] getstatic #236
+      [1] getstatic #237
         + Fieldref [com/softenido/audible/ab.b Lcom/softenido/audible/ab;]
-      [4] invokespecial #294
+      [4] invokespecial #295
         + Methodref [com/softenido/audible/AudibleMain.a (Lcom/softenido/audible/ab;)V]
       [7] aload_0 v0
-      [8] getfield #207
+      [8] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
-      [11] invokevirtual #406
+      [11] invokevirtual #408
         + Methodref [com/softenido/cafedroid/e/c.b ()V]
       [14] return
       Code attribute exceptions (count = 0):
@@ -26949,18 +26956,18 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 44, locals = 4, stack = 4):
       [0] aload_0 v0
-      [1] getfield #205
+      [1] getfield #206
         + Fieldref [com/softenido/audible/AudibleMain.av Lcom/softenido/cafedroid/e/b;]
       [4] iload_1 v1
       [5] iload_2 v2
       [6] aload_3 v3
-      [7] invokevirtual #396
+      [7] invokevirtual #398
         + Methodref [com/softenido/cafedroid/e/b.a (IILandroid/content/Intent;)V]
       [10] iload_2 v2
       [11] sipush 9876
       [14] ificmpne +10 (target=24)
       [17] aload_0 v0
-      [18] invokespecial #303
+      [18] invokespecial #305
         + Methodref [com/softenido/audible/AudibleMain.f ()V]
       [21] goto +22 (target=43)
       [24] iload_1 v1
@@ -26970,10 +26977,10 @@ Methods (count = 44):
       [32] ifnull +11 (target=43)
       [35] aload_0 v0
       [36] aload_3 v3
-      [37] invokevirtual #256
+      [37] invokevirtual #257
         + Methodref [android/content/Intent.getData ()Landroid/net/Uri;]
-      [40] invokespecial #293
-        + Methodref [com/softenido/audible/AudibleMain.a (Landroid/net/Uri;)V]
+      [40] invokespecial #301
+        + Methodref [com/softenido/audible/AudibleMain.b (Landroid/net/Uri;)V]
       [43] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 1):
@@ -26986,81 +26993,81 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 105, locals = 1, stack = 5):
       [0] aload_0 v0
-      [1] getfield #180
+      [1] getfield #181
         + Fieldref [com/softenido/audible/AudibleMain.X Lcom/softenido/b/c;]
       [4] aconst_null
-      [5] invokevirtual #388
+      [5] invokevirtual #390
         + Methodref [com/softenido/b/c.a (Lcom/softenido/a/c/c;)V]
       [8] iconst_0
       [9] aload_0 v0
-      [10] getfield #179
+      [10] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [13] invokevirtual #330
+      [13] invokevirtual #332
         + Methodref [com/softenido/audible/ac.E ()I]
-      [16] invokestatic #322
+      [16] invokestatic #324
         + Methodref [com/softenido/audible/KeepAudibleLoadService.a (ZI)V]
       [19] aload_0 v0
-      [20] getfield #207
+      [20] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
-      [23] invokevirtual #406
+      [23] invokevirtual #408
         + Methodref [com/softenido/cafedroid/e/c.b ()V]
       [26] aload_0 v0
-      [27] getfield #179
+      [27] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
       [30] aload_0 v0
-      [31] getfield #199
+      [31] getfield #200
         + Fieldref [com/softenido/audible/AudibleMain.ap Ljava/lang/String;]
-      [34] invokevirtual #334
+      [34] invokevirtual #336
         + Methodref [com/softenido/audible/ac.a (Ljava/lang/String;)V]
       [37] aload_0 v0
-      [38] getfield #179
+      [38] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
       [41] aload_0 v0
-      [42] getfield #200
+      [42] getfield #201
         + Fieldref [com/softenido/audible/AudibleMain.aq Ljava/lang/String;]
-      [45] invokevirtual #336
+      [45] invokevirtual #338
         + Methodref [com/softenido/audible/ac.b (Ljava/lang/String;)V]
       [48] aload_0 v0
-      [49] getfield #179
+      [49] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
       [52] aload_0 v0
-      [53] getfield #230
+      [53] getfield #231
         + Fieldref [com/softenido/audible/AudibleMain.v Landroid/widget/ToggleButton;]
-      [56] invokevirtual #284
+      [56] invokevirtual #285
         + Methodref [android/widget/ToggleButton.isChecked ()Z]
-      [59] invokevirtual #337
+      [59] invokevirtual #339
         + Methodref [com/softenido/audible/ac.b (Z)V]
-      [62] new #151
+      [62] new #152
         + Class [java/lang/Thread]
       [65] dup
-      [66] new #118
+      [66] new #119
         + Class [com/softenido/audible/u]
       [69] dup
       [70] aload_0 v0
-      [71] invokespecial #382
+      [71] invokespecial #384
         + Methodref [com/softenido/audible/u.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [74] invokespecial #452
+      [74] invokespecial #455
         + Methodref [java/lang/Thread.<init> (Ljava/lang/Runnable;)V]
-      [77] invokevirtual #453
+      [77] invokevirtual #456
         + Methodref [java/lang/Thread.start ()V]
       [80] ldc #43
         + String [-audible-head]
       [82] aload_0 v0
-      [83] getfield #199
+      [83] getfield #200
         + Fieldref [com/softenido/audible/AudibleMain.ap Ljava/lang/String;]
-      [86] invokestatic #266
+      [86] invokestatic #267
         + Methodref [android/util/Log.v (Ljava/lang/String;Ljava/lang/String;)I]
       [89] pop
       [90] ldc #42
         + String [-audible-body]
       [92] aload_0 v0
-      [93] getfield #200
+      [93] getfield #201
         + Fieldref [com/softenido/audible/AudibleMain.aq Ljava/lang/String;]
-      [96] invokestatic #266
+      [96] invokestatic #267
         + Methodref [android/util/Log.v (Ljava/lang/String;Ljava/lang/String;)I]
       [99] pop
       [100] aload_0 v0
-      [101] invokespecial #252
+      [101] invokespecial #253
         + Methodref [android/app/ListActivity.onStop ()V]
       [104] return
       Code attribute exceptions (count = 0):
@@ -27071,12 +27078,12 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 12, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #205
+      [1] getfield #206
         + Fieldref [com/softenido/audible/AudibleMain.av Lcom/softenido/cafedroid/e/b;]
-      [4] invokevirtual #398
+      [4] invokevirtual #400
         + Methodref [com/softenido/cafedroid/e/b.c ()V]
       [7] aload_0 v0
-      [8] invokespecial #250
+      [8] invokespecial #251
         + Methodref [android/app/ListActivity.onDestroy ()V]
       [11] return
       Code attribute exceptions (count = 0):
@@ -27091,7 +27098,7 @@ Methods (count = 44):
       [4] aconst_null
       [5] areturn
       [6] aload_0 v0
-      [7] invokevirtual #442
+      [7] invokevirtual #444
         + Methodref [java/lang/Object.toString ()Ljava/lang/String;]
       [10] areturn
       Code attribute exceptions (count = 0):
@@ -27102,248 +27109,310 @@ Methods (count = 44):
     Access flags: 0x2
       = private void l()
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 183, locals = 5, stack = 4):
+    + Code attribute instructions (code length = 269, locals = 5, stack = 4):
       [0] aload_0 v0
-      [1] invokevirtual #308
+      [1] invokevirtual #310
         + Methodref [com/softenido/audible/AudibleMain.getIntent ()Landroid/content/Intent;]
       [4] astore_1 v1
       [5] aload_1 v1
-      [6] invokevirtual #255
+      [6] invokevirtual #256
         + Methodref [android/content/Intent.getAction ()Ljava/lang/String;]
       [9] astore_2 v2
       [10] aload_1 v1
-      [11] invokevirtual #258
+      [11] invokevirtual #259
         + Methodref [android/content/Intent.getType ()Ljava/lang/String;]
       [14] astore_3 v3
-      [15] aload_2 v2
-      [16] ifnull +121 (target=137)
-      [19] aload_1 v1
-      [20] ifnull +117 (target=137)
-      [23] aload_1 v1
-      [24] invokevirtual #257
-        + Methodref [android/content/Intent.getExtras ()Landroid/os/Bundle;]
-      [27] dup
-      [28] astore v4
-      [30] ifnull +107 (target=137)
-      [33] ldc #41
+      [15] ldc #58
+        + String [android.intent.action.VIEW]
+      [17] aload_2 v2
+      [18] invokevirtual #446
+        + Methodref [java/lang/String.equals (Ljava/lang/Object;)Z]
+      [21] ifeq +80 (target=101)
+      [24] aload_1 v1
+      [25] ifnull +76 (target=101)
+      [28] aload_1 v1
+      [29] invokevirtual #257
+        + Methodref [android/content/Intent.getData ()Landroid/net/Uri;]
+      [32] ifnull +69 (target=101)
+      [35] ldc #41
         + String [-audible-]
-      [35] new #149
+      [37] new #150
         + Class [java/lang/StringBuilder]
-      [38] dup
-      [39] invokespecial #447
+      [40] dup
+      [41] invokespecial #450
         + Methodref [java/lang/StringBuilder.<init> ()V]
-      [42] ldc #57
+      [44] ldc #57
         + String [action:]
-      [44] invokevirtual #450
+      [46] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [47] aload_2 v2
-      [48] invokevirtual #450
+      [49] aload_2 v2
+      [50] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [51] invokevirtual #451
+      [53] invokevirtual #454
         + Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [54] invokestatic #264
+      [56] invokestatic #265
         + Methodref [android/util/Log.d (Ljava/lang/String;Ljava/lang/String;)I]
-      [57] pop
-      [58] ldc #41
+      [59] pop
+      [60] ldc #41
         + String [-audible-]
-      [60] new #149
+      [62] new #150
         + Class [java/lang/StringBuilder]
-      [63] dup
-      [64] invokespecial #447
+      [65] dup
+      [66] invokespecial #450
         + Methodref [java/lang/StringBuilder.<init> ()V]
-      [67] ldc #60
+      [69] ldc #61
         + String [intent:]
-      [69] invokevirtual #450
+      [71] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [72] aload_1 v1
-      [73] invokevirtual #449
+      [74] aload_1 v1
+      [75] invokevirtual #452
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/Object;)Ljava/lang/StringBuilder;]
-      [76] invokevirtual #451
+      [78] invokevirtual #454
         + Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [79] invokestatic #264
+      [81] invokestatic #265
         + Methodref [android/util/Log.d (Ljava/lang/String;Ljava/lang/String;)I]
-      [82] pop
-      [83] aload_0 v0
-      [84] aload v4
-      [86] ldc #58
+      [84] pop
+      [85] aload_0 v0
+      [86] aload_1 v1
+      [87] invokevirtual #257
+        + Methodref [android/content/Intent.getData ()Landroid/net/Uri;]
+      [90] invokespecial #294
+        + Methodref [com/softenido/audible/AudibleMain.a (Landroid/net/Uri;)V]
+      [93] aload_0 v0
+      [94] iconst_1
+      [95] putfield #169
+        + Fieldref [com/softenido/audible/AudibleMain.L Z]
+      [98] goto +170 (target=268)
+      [101] aload_2 v2
+      [102] ifnull +121 (target=223)
+      [105] aload_1 v1
+      [106] ifnull +117 (target=223)
+      [109] aload_1 v1
+      [110] invokevirtual #258
+        + Methodref [android/content/Intent.getExtras ()Landroid/os/Bundle;]
+      [113] dup
+      [114] astore v4
+      [116] ifnull +107 (target=223)
+      [119] ldc #41
+        + String [-audible-]
+      [121] new #150
+        + Class [java/lang/StringBuilder]
+      [124] dup
+      [125] invokespecial #450
+        + Methodref [java/lang/StringBuilder.<init> ()V]
+      [128] ldc #57
+        + String [action:]
+      [130] invokevirtual #453
+        + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
+      [133] aload_2 v2
+      [134] invokevirtual #453
+        + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
+      [137] invokevirtual #454
+        + Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
+      [140] invokestatic #265
+        + Methodref [android/util/Log.d (Ljava/lang/String;Ljava/lang/String;)I]
+      [143] pop
+      [144] ldc #41
+        + String [-audible-]
+      [146] new #150
+        + Class [java/lang/StringBuilder]
+      [149] dup
+      [150] invokespecial #450
+        + Methodref [java/lang/StringBuilder.<init> ()V]
+      [153] ldc #61
+        + String [intent:]
+      [155] invokevirtual #453
+        + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
+      [158] aload_1 v1
+      [159] invokevirtual #452
+        + Methodref [java/lang/StringBuilder.append (Ljava/lang/Object;)Ljava/lang/StringBuilder;]
+      [162] invokevirtual #454
+        + Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
+      [165] invokestatic #265
+        + Methodref [android/util/Log.d (Ljava/lang/String;Ljava/lang/String;)I]
+      [168] pop
+      [169] aload_0 v0
+      [170] aload v4
+      [172] ldc #59
         + String [android.intent.extra.SUBJECT]
-      [88] invokevirtual #260
+      [174] invokevirtual #261
         + Methodref [android/os/Bundle.get (Ljava/lang/String;)Ljava/lang/Object;]
-      [91] invokevirtual #442
+      [177] invokevirtual #444
         + Methodref [java/lang/Object.toString ()Ljava/lang/String;]
-      [94] ldc #34
+      [180] ldc #34
         + String []
-      [96] iconst_0
-      [97] anewarray #148
+      [182] iconst_0
+      [183] anewarray #149
         + Class [java/lang/String]
-      [100] invokestatic #292
+      [186] invokestatic #293
         + Methodref [com/softenido/a/h/f.a (Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)Ljava/lang/String;]
-      [103] putfield #199
+      [189] putfield #200
         + Fieldref [com/softenido/audible/AudibleMain.ap Ljava/lang/String;]
-      [106] aload_0 v0
-      [107] aload v4
-      [109] ldc #59
+      [192] aload_0 v0
+      [193] aload v4
+      [195] ldc #60
         + String [android.intent.extra.TEXT]
-      [111] invokevirtual #260
+      [197] invokevirtual #261
         + Methodref [android/os/Bundle.get (Ljava/lang/String;)Ljava/lang/Object;]
-      [114] invokestatic #295
+      [200] invokestatic #296
         + Methodref [com/softenido/audible/AudibleMain.a (Ljava/lang/Object;)Ljava/lang/String;]
-      [117] ldc #34
+      [203] ldc #34
         + String []
-      [119] iconst_0
-      [120] anewarray #148
+      [205] iconst_0
+      [206] anewarray #149
         + Class [java/lang/String]
-      [123] invokestatic #292
+      [209] invokestatic #293
         + Methodref [com/softenido/a/h/f.a (Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)Ljava/lang/String;]
-      [126] putfield #200
+      [212] putfield #201
         + Fieldref [com/softenido/audible/AudibleMain.aq Ljava/lang/String;]
-      [129] aload_0 v0
-      [130] iconst_1
-      [131] putfield #168
+      [215] aload_0 v0
+      [216] iconst_1
+      [217] putfield #169
         + Fieldref [com/softenido/audible/AudibleMain.L Z]
-      [134] goto +48 (target=182)
-      [137] aload_0 v0
-      [138] aload_0 v0
-      [139] getfield #179
+      [220] goto +48 (target=268)
+      [223] aload_0 v0
+      [224] aload_0 v0
+      [225] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [142] invokevirtual #335
+      [228] invokevirtual #337
         + Methodref [com/softenido/audible/ac.b ()Ljava/lang/String;]
-      [145] ldc #34
+      [231] ldc #34
         + String []
-      [147] iconst_0
-      [148] anewarray #148
+      [233] iconst_0
+      [234] anewarray #149
         + Class [java/lang/String]
-      [151] invokestatic #292
+      [237] invokestatic #293
         + Methodref [com/softenido/a/h/f.a (Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)Ljava/lang/String;]
-      [154] putfield #199
+      [240] putfield #200
         + Fieldref [com/softenido/audible/AudibleMain.ap Ljava/lang/String;]
-      [157] aload_0 v0
-      [158] aload_0 v0
-      [159] getfield #179
+      [243] aload_0 v0
+      [244] aload_0 v0
+      [245] getfield #180
         + Fieldref [com/softenido/audible/AudibleMain.W Lcom/softenido/audible/ac;]
-      [162] invokevirtual #338
+      [248] invokevirtual #340
         + Methodref [com/softenido/audible/ac.c ()Ljava/lang/String;]
-      [165] ldc #34
+      [251] ldc #34
         + String []
-      [167] iconst_0
-      [168] anewarray #148
+      [253] iconst_0
+      [254] anewarray #149
         + Class [java/lang/String]
-      [171] invokestatic #292
+      [257] invokestatic #293
         + Methodref [com/softenido/a/h/f.a (Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;)Ljava/lang/String;]
-      [174] putfield #200
+      [260] putfield #201
         + Fieldref [com/softenido/audible/AudibleMain.aq Ljava/lang/String;]
-      [177] aload_0 v0
-      [178] iconst_0
-      [179] putfield #168
+      [263] aload_0 v0
+      [264] iconst_0
+      [265] putfield #169
         + Fieldref [com/softenido/audible/AudibleMain.L Z]
-      [182] return
+      [268] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 1):
-      + Stack map table attribute (count = 2):
-        - [137] Var: ...[a:android/content/Intent][a:java/lang/String][a:java/lang/String], Stack: (empty)
-        - [182] Var: ..., Stack: (empty)
+      + Stack map table attribute (count = 3):
+        - [101] Var: ...[a:android/content/Intent][a:java/lang/String][a:java/lang/String], Stack: (empty)
+        - [223] Var: ..., Stack: (empty)
+        - [268] Var: ..., Stack: (empty)
   + Method:       m()V
     Access flags: 0x2
       = private void m()
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 133, locals = 2, stack = 5):
-      [0] new #69
+      [0] new #70
         + Class [android/content/Intent]
       [3] dup
       [4] aload_0 v0
-      [5] ldc #91
+      [5] ldc #92
         + Class [com/softenido/audible/AudiblePreferenceActivity]
-      [7] invokespecial #254
+      [7] invokespecial #255
         + Methodref [android/content/Intent.<init> (Landroid/content/Context;Ljava/lang/Class;)V]
       [10] astore_1 v1
       [11] aload_0 v0
-      [12] getfield #231
+      [12] getfield #232
         + Fieldref [com/softenido/audible/AudibleMain.w Landroid/widget/ImageButton;]
-      [15] new #119
+      [15] new #120
         + Class [com/softenido/audible/v]
       [18] dup
       [19] aload_0 v0
       [20] aload_1 v1
-      [21] invokespecial #383
+      [21] invokespecial #385
         + Methodref [com/softenido/audible/v.<init> (Lcom/softenido/audible/AudibleMain;Landroid/content/Intent;)V]
-      [24] invokevirtual #275
+      [24] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [27] aload_0 v0
-      [28] getfield #232
+      [28] getfield #233
         + Fieldref [com/softenido/audible/AudibleMain.x Landroid/widget/ImageButton;]
-      [31] new #120
+      [31] new #121
         + Class [com/softenido/audible/w]
       [34] dup
       [35] aload_0 v0
-      [36] invokespecial #384
+      [36] invokespecial #386
         + Methodref [com/softenido/audible/w.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [39] invokevirtual #275
+      [39] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [42] aload_0 v0
-      [43] getfield #233
+      [43] getfield #234
         + Fieldref [com/softenido/audible/AudibleMain.y Landroid/widget/ImageButton;]
-      [46] new #121
+      [46] new #122
         + Class [com/softenido/audible/x]
       [49] dup
       [50] aload_0 v0
-      [51] invokespecial #385
+      [51] invokespecial #387
         + Methodref [com/softenido/audible/x.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [54] invokevirtual #275
+      [54] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [57] aload_0 v0
-      [58] getfield #234
+      [58] getfield #235
         + Fieldref [com/softenido/audible/AudibleMain.z Landroid/widget/ImageButton;]
-      [61] new #122
+      [61] new #123
         + Class [com/softenido/audible/y]
       [64] dup
       [65] aload_0 v0
-      [66] invokespecial #386
+      [66] invokespecial #388
         + Methodref [com/softenido/audible/y.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [69] invokevirtual #275
+      [69] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [72] aload_0 v0
-      [73] getfield #157
+      [73] getfield #158
         + Fieldref [com/softenido/audible/AudibleMain.A Landroid/widget/ImageButton;]
-      [76] new #123
+      [76] new #124
         + Class [com/softenido/audible/z]
       [79] dup
       [80] aload_0 v0
-      [81] invokespecial #387
+      [81] invokespecial #389
         + Methodref [com/softenido/audible/z.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [84] invokevirtual #275
+      [84] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [87] aload_0 v0
-      [88] getfield #158
+      [88] getfield #159
         + Fieldref [com/softenido/audible/AudibleMain.B Landroid/widget/ImageButton;]
-      [91] new #94
+      [91] new #95
         + Class [com/softenido/audible/aa]
       [94] dup
       [95] aload_0 v0
-      [96] invokespecial #324
+      [96] invokespecial #326
         + Methodref [com/softenido/audible/aa.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [99] invokevirtual #275
+      [99] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [102] aload_0 v0
-      [103] getfield #159
+      [103] getfield #160
         + Fieldref [com/softenido/audible/AudibleMain.C Landroid/widget/ImageButton;]
-      [106] new #99
+      [106] new #100
         + Class [com/softenido/audible/b]
       [109] dup
       [110] aload_0 v0
-      [111] invokespecial #364
+      [111] invokespecial #366
         + Methodref [com/softenido/audible/b.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [114] invokevirtual #275
+      [114] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [117] aload_0 v0
-      [118] getfield #160
+      [118] getfield #161
         + Fieldref [com/softenido/audible/AudibleMain.D Landroid/widget/ImageButton;]
-      [121] new #100
+      [121] new #101
         + Class [com/softenido/audible/c]
       [124] dup
       [125] aload_0 v0
-      [126] invokespecial #365
+      [126] invokespecial #367
         + Methodref [com/softenido/audible/c.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [129] invokevirtual #275
+      [129] invokevirtual #276
         + Methodref [android/widget/ImageButton.setOnClickListener (Landroid/view/View$OnClickListener;)V]
       [132] return
       Code attribute exceptions (count = 0):
@@ -27354,38 +27423,38 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 54, locals = 1, stack = 2):
       [0] aload_0 v0
-      [1] getfield #230
+      [1] getfield #231
         + Fieldref [com/softenido/audible/AudibleMain.v Landroid/widget/ToggleButton;]
-      [4] invokevirtual #284
+      [4] invokevirtual #285
         + Methodref [android/widget/ToggleButton.isChecked ()Z]
       [7] ifeq +46 (target=53)
       [10] aload_0 v0
-      [11] getfield #171
+      [11] getfield #172
         + Fieldref [com/softenido/audible/AudibleMain.O Z]
       [14] ifeq +39 (target=53)
-      [17] getstatic #181
+      [17] getstatic #182
         + Fieldref [com/softenido/audible/AudibleMain.Y Lcom/softenido/cafedroid/os/PolicyAdmin;]
-      [20] invokevirtual #422
+      [20] invokevirtual #424
         + Methodref [com/softenido/cafedroid/os/PolicyAdmin.a ()Z]
       [23] ifeq +21 (target=44)
       [26] aload_0 v0
-      [27] getfield #162
+      [27] getfield #163
         + Fieldref [com/softenido/audible/AudibleMain.F Lcom/softenido/cafedroid/util/ui/d;]
       [30] ldc #45
         + String [Auto Lock Screen]
-      [32] invokevirtual #434
+      [32] invokevirtual #436
         + Methodref [com/softenido/cafedroid/util/ui/d.a (Ljava/lang/String;)V]
-      [35] getstatic #181
+      [35] getstatic #182
         + Fieldref [com/softenido/audible/AudibleMain.Y Lcom/softenido/cafedroid/os/PolicyAdmin;]
-      [38] invokevirtual #423
+      [38] invokevirtual #425
         + Methodref [com/softenido/cafedroid/os/PolicyAdmin.b ()V]
       [41] goto +12 (target=53)
       [44] aload_0 v0
-      [45] getfield #162
+      [45] getfield #163
         + Fieldref [com/softenido/audible/AudibleMain.F Lcom/softenido/cafedroid/util/ui/d;]
       [48] ldc #46
         + String [Can't Lock Screen. Set Admin permit using 'Lock Screen' configuration option.]
-      [50] invokevirtual #434
+      [50] invokevirtual #436
         + Methodref [com/softenido/cafedroid/util/ui/d.a (Ljava/lang/String;)V]
       [53] return
       Code attribute exceptions (count = 0):
@@ -27402,20 +27471,20 @@ Methods (count = 44):
       [1] iconst_1
       [2] isub
       [3] iconst_0
-      [4] invokestatic #441
+      [4] invokestatic #443
         + Methodref [java/lang/Math.max (II)I]
       [7] istore v5
       [9] aload_0 v0
-      [10] getfield #161
+      [10] getfield #162
         + Fieldref [com/softenido/audible/AudibleMain.E Landroid/os/Handler;]
-      [13] new #101
+      [13] new #102
         + Class [com/softenido/audible/d]
       [16] dup
       [17] aload_0 v0
       [18] iload v5
-      [20] invokespecial #366
+      [20] invokespecial #368
         + Methodref [com/softenido/audible/d.<init> (Lcom/softenido/audible/AudibleMain;I)V]
-      [23] invokevirtual #262
+      [23] invokevirtual #263
         + Methodref [android/os/Handler.post (Ljava/lang/Runnable;)Z]
       [26] pop
       [27] return
@@ -27427,15 +27496,15 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 17, locals = 1, stack = 4):
       [0] aload_0 v0
-      [1] getfield #161
+      [1] getfield #162
         + Fieldref [com/softenido/audible/AudibleMain.E Landroid/os/Handler;]
-      [4] new #102
+      [4] new #103
         + Class [com/softenido/audible/e]
       [7] dup
       [8] aload_0 v0
-      [9] invokespecial #367
+      [9] invokespecial #369
         + Methodref [com/softenido/audible/e.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [12] invokevirtual #262
+      [12] invokevirtual #263
         + Methodref [android/os/Handler.post (Ljava/lang/Runnable;)Z]
       [15] pop
       [16] return
@@ -27447,15 +27516,15 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 17, locals = 1, stack = 4):
       [0] aload_0 v0
-      [1] getfield #161
+      [1] getfield #162
         + Fieldref [com/softenido/audible/AudibleMain.E Landroid/os/Handler;]
-      [4] new #103
+      [4] new #104
         + Class [com/softenido/audible/f]
       [7] dup
       [8] aload_0 v0
-      [9] invokespecial #368
+      [9] invokespecial #370
         + Methodref [com/softenido/audible/f.<init> (Lcom/softenido/audible/AudibleMain;)V]
-      [12] invokevirtual #262
+      [12] invokevirtual #263
         + Methodref [android/os/Handler.post (Ljava/lang/Runnable;)Z]
       [15] pop
       [16] return
@@ -27467,16 +27536,16 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 18, locals = 2, stack = 2):
       [0] aload_1 v1
-      [1] invokevirtual #446
+      [1] invokevirtual #449
         + Methodref [java/lang/String.trim ()Ljava/lang/String;]
-      [4] invokevirtual #445
+      [4] invokevirtual #448
         + Methodref [java/lang/String.toLowerCase ()Ljava/lang/String;]
       [7] aload_0 v0
-      [8] invokevirtual #446
+      [8] invokevirtual #449
         + Methodref [java/lang/String.trim ()Ljava/lang/String;]
-      [11] invokevirtual #445
+      [11] invokevirtual #448
         + Methodref [java/lang/String.toLowerCase ()Ljava/lang/String;]
-      [14] invokevirtual #444
+      [14] invokevirtual #447
         + Methodref [java/lang/String.startsWith (Ljava/lang/String;)Z]
       [17] ireturn
       Code attribute exceptions (count = 0):
@@ -27487,22 +27556,22 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 28, locals = 2, stack = 3):
       [0] aload_0 v0
-      [1] getfield #207
+      [1] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [4] iload_1 v1
       [5] aload_0 v0
-      [6] getfield #227
+      [6] getfield #228
         + Fieldref [com/softenido/audible/AudibleMain.s Landroid/widget/ToggleButton;]
-      [9] invokevirtual #284
+      [9] invokevirtual #285
         + Methodref [android/widget/ToggleButton.isChecked ()Z]
       [12] ifeq +7 (target=19)
       [15] iconst_0
       [16] goto +4 (target=20)
       [19] iconst_1
-      [20] invokevirtual #401
+      [20] invokevirtual #403
         + Methodref [com/softenido/cafedroid/e/c.a (II)V]
       [23] aload_0 v0
-      [24] invokevirtual #301
+      [24] invokevirtual #303
         + Methodref [com/softenido/audible/AudibleMain.d ()V]
       [27] return
       Code attribute exceptions (count = 0):
@@ -27516,22 +27585,22 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 28, locals = 2, stack = 3):
       [0] aload_0 v0
-      [1] getfield #207
+      [1] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [4] iload_1 v1
       [5] aload_0 v0
-      [6] getfield #227
+      [6] getfield #228
         + Fieldref [com/softenido/audible/AudibleMain.s Landroid/widget/ToggleButton;]
-      [9] invokevirtual #284
+      [9] invokevirtual #285
         + Methodref [android/widget/ToggleButton.isChecked ()Z]
       [12] ifeq +7 (target=19)
       [15] iconst_0
       [16] goto +4 (target=20)
       [19] iconst_1
-      [20] invokevirtual #407
+      [20] invokevirtual #409
         + Methodref [com/softenido/cafedroid/e/c.b (II)V]
       [23] aload_0 v0
-      [24] invokevirtual #301
+      [24] invokevirtual #303
         + Methodref [com/softenido/audible/AudibleMain.d ()V]
       [27] return
       Code attribute exceptions (count = 0):
@@ -27545,77 +27614,77 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 106, locals = 3, stack = 3):
       [0] aload_0 v0
-      [1] getfield #207
+      [1] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
-      [4] invokevirtual #415
+      [4] invokevirtual #417
         + Methodref [com/softenido/cafedroid/e/c.f ()I]
       [7] istore_1 v1
       [8] aload_0 v0
-      [9] getfield #207
+      [9] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
-      [12] invokevirtual #417
+      [12] invokevirtual #419
         + Methodref [com/softenido/cafedroid/e/c.h ()I]
       [15] istore_2 v2
       [16] aload_0 v0
-      [17] getfield #215
+      [17] getfield #216
         + Fieldref [com/softenido/audible/AudibleMain.g Landroid/widget/SeekBar;]
       [20] iload_1 v1
-      [21] invokevirtual #281
+      [21] invokevirtual #282
         + Methodref [android/widget/SeekBar.setProgress (I)V]
       [24] aload_0 v0
-      [25] getfield #216
+      [25] getfield #217
         + Fieldref [com/softenido/audible/AudibleMain.h Landroid/widget/TextView;]
-      [28] new #149
+      [28] new #150
         + Class [java/lang/StringBuilder]
       [31] dup
-      [32] invokespecial #447
+      [32] invokespecial #450
         + Methodref [java/lang/StringBuilder.<init> ()V]
       [35] aload_0 v0
-      [36] getfield #182
+      [36] getfield #183
         + Fieldref [com/softenido/audible/AudibleMain.Z Ljava/lang/String;]
-      [39] invokevirtual #450
+      [39] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [42] ldc #36
         + String [ ]
-      [44] invokevirtual #450
+      [44] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
       [47] iload_2 v2
-      [48] invokevirtual #448
+      [48] invokevirtual #451
         + Methodref [java/lang/StringBuilder.append (I)Ljava/lang/StringBuilder;]
       [51] ldc #37
         + String [%]
-      [53] invokevirtual #450
+      [53] invokevirtual #453
         + Methodref [java/lang/StringBuilder.append (Ljava/lang/String;)Ljava/lang/StringBuilder;]
-      [56] invokevirtual #451
+      [56] invokevirtual #454
         + Methodref [java/lang/StringBuilder.toString ()Ljava/lang/String;]
-      [59] invokevirtual #282
+      [59] invokevirtual #283
         + Methodref [android/widget/TextView.setText (Ljava/lang/CharSequence;)V]
       [62] iload_1 v1
       [63] ifne +22 (target=85)
       [66] aload_0 v0
-      [67] getfield #196
+      [67] getfield #197
         + Fieldref [com/softenido/audible/AudibleMain.am Z]
       [70] ifne +15 (target=85)
       [73] aload_0 v0
       [74] iconst_1
-      [75] putfield #196
+      [75] putfield #197
         + Fieldref [com/softenido/audible/AudibleMain.am Z]
       [78] aload_0 v0
-      [79] invokespecial #312
+      [79] invokespecial #314
         + Methodref [com/softenido/audible/AudibleMain.j ()V]
       [82] goto +23 (target=105)
       [85] iload_1 v1
       [86] ifle +19 (target=105)
       [89] aload_0 v0
-      [90] getfield #196
+      [90] getfield #197
         + Fieldref [com/softenido/audible/AudibleMain.am Z]
       [93] ifeq +12 (target=105)
       [96] aload_0 v0
       [97] iconst_0
-      [98] putfield #196
+      [98] putfield #197
         + Fieldref [com/softenido/audible/AudibleMain.am Z]
       [101] aload_0 v0
-      [102] invokespecial #311
+      [102] invokespecial #313
         + Methodref [com/softenido/audible/AudibleMain.i ()V]
       [105] return
       Code attribute exceptions (count = 0):
@@ -27635,20 +27704,20 @@ Methods (count = 44):
         default: offset = 41, target = 42
       [28] aload_0 v0
       [29] iconst_m1
-      [30] invokevirtual #299
+      [30] invokevirtual #300
         + Methodref [com/softenido/audible/AudibleMain.b (I)V]
       [33] iconst_1
       [34] ireturn
       [35] aload_0 v0
       [36] iconst_1
-      [37] invokevirtual #299
+      [37] invokevirtual #300
         + Methodref [com/softenido/audible/AudibleMain.b (I)V]
       [40] iconst_1
       [41] ireturn
       [42] aload_0 v0
       [43] iload_1 v1
       [44] aload_2 v2
-      [45] invokespecial #251
+      [45] invokespecial #252
         + Methodref [android/app/ListActivity.onKeyDown (ILandroid/view/KeyEvent;)Z]
       [48] ireturn
       Code attribute exceptions (count = 0):
@@ -27663,61 +27732,61 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 86, locals = 1, stack = 3):
       [0] aload_0 v0
-      [1] getfield #211
+      [1] getfield #212
         + Fieldref [com/softenido/audible/AudibleMain.c Landroid/widget/EditText;]
-      [4] invokevirtual #271
+      [4] invokevirtual #272
         + Methodref [android/widget/EditText.getVisibility ()I]
       [7] ifne +60 (target=67)
       [10] aload_0 v0
       [11] aload_0 v0
-      [12] getfield #199
+      [12] getfield #200
         + Fieldref [com/softenido/audible/AudibleMain.ap Ljava/lang/String;]
       [15] aload_0 v0
-      [16] getfield #211
+      [16] getfield #212
         + Fieldref [com/softenido/audible/AudibleMain.c Landroid/widget/EditText;]
-      [19] invokevirtual #270
+      [19] invokevirtual #271
         + Methodref [android/widget/EditText.getText ()Landroid/text/Editable;]
-      [22] invokevirtual #442
+      [22] invokevirtual #444
         + Methodref [java/lang/Object.toString ()Ljava/lang/String;]
-      [25] invokespecial #300
+      [25] invokespecial #302
         + Methodref [com/softenido/audible/AudibleMain.b (Ljava/lang/String;Ljava/lang/String;)V]
       [28] aload_0 v0
-      [29] getfield #207
+      [29] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [32] aload_0 v0
-      [33] invokevirtual #408
+      [33] invokevirtual #410
         + Methodref [com/softenido/cafedroid/e/c.b (Lcom/softenido/cafedroid/e/h;)V]
       [36] aload_0 v0
       [37] aload_0 v0
-      [38] invokespecial #302
+      [38] invokespecial #304
         + Methodref [com/softenido/audible/AudibleMain.e ()Lcom/softenido/cafedroid/e/c;]
-      [41] putfield #207
+      [41] putfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [44] aload_0 v0
       [45] aload_0 v0
-      [46] getfield #208
+      [46] getfield #209
         + Fieldref [com/softenido/audible/AudibleMain.ay Z]
       [49] ifeq +9 (target=58)
-      [52] getstatic #235
+      [52] getstatic #236
         + Fieldref [com/softenido/audible/ab.a Lcom/softenido/audible/ab;]
       [55] goto +6 (target=61)
-      [58] getstatic #236
+      [58] getstatic #237
         + Fieldref [com/softenido/audible/ab.b Lcom/softenido/audible/ab;]
-      [61] invokespecial #294
+      [61] invokespecial #295
         + Methodref [com/softenido/audible/AudibleMain.a (Lcom/softenido/audible/ab;)V]
       [64] goto +21 (target=85)
       [67] aload_0 v0
-      [68] getfield #211
+      [68] getfield #212
         + Fieldref [com/softenido/audible/AudibleMain.c Landroid/widget/EditText;]
       [71] aload_0 v0
-      [72] getfield #200
+      [72] getfield #201
         + Fieldref [com/softenido/audible/AudibleMain.aq Ljava/lang/String;]
-      [75] invokevirtual #272
+      [75] invokevirtual #273
         + Methodref [android/widget/EditText.setText (Ljava/lang/CharSequence;)V]
       [78] aload_0 v0
-      [79] getstatic #239
+      [79] getstatic #240
         + Fieldref [com/softenido/audible/ab.e Lcom/softenido/audible/ab;]
-      [82] invokespecial #294
+      [82] invokespecial #295
         + Methodref [com/softenido/audible/AudibleMain.a (Lcom/softenido/audible/ab;)V]
       [85] return
       Code attribute exceptions (count = 0):
@@ -27731,123 +27800,165 @@ Methods (count = 44):
     Access flags: 0x2
       = private void a(android.net.Uri)
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 140, locals = 4, stack = 4):
+    + Code attribute instructions (code length = 100, locals = 4, stack = 4):
       [0] aload_1 v1
-      [1] ifnull +96 (target=97)
+      [1] ifnull +98 (target=99)
+      [4] aload_0 v0
+      [5] invokevirtual #309
+        + Methodref [com/softenido/audible/AudibleMain.getContentResolver ()Landroid/content/ContentResolver;]
+      [8] aload_1 v1
+      [9] invokevirtual #254
+        + Methodref [android/content/ContentResolver.openInputStream (Landroid/net/Uri;)Ljava/io/InputStream;]
+      [12] astore_2 v2
+      [13] new #149
+        + Class [java/lang/String]
+      [16] dup
+      [17] aload_2 v2
+      [18] getstatic #198
+        + Fieldref [com/softenido/audible/AudibleMain.an I]
+      [21] invokestatic #289
+        + Methodref [com/softenido/a/b/a.a (Ljava/io/InputStream;I)[B]
+      [24] invokespecial #445
+        + Methodref [java/lang/String.<init> ([B)V]
+      [27] astore_3 v3
+      [28] aload_0 v0
+      [29] aload_1 v1
+      [30] invokevirtual #260
+        + Methodref [android/net/Uri.getLastPathSegment ()Ljava/lang/String;]
+      [33] putfield #200
+        + Fieldref [com/softenido/audible/AudibleMain.ap Ljava/lang/String;]
+      [36] aload_0 v0
+      [37] aload_3 v3
+      [38] putfield #201
+        + Fieldref [com/softenido/audible/AudibleMain.aq Ljava/lang/String;]
+      [41] goto +58 (target=99)
+      [44] astore_2 v2
+      [45] ldc #91
+        + Class [com/softenido/audible/AudibleMain]
+      [47] invokevirtual #442
+        + Methodref [java/lang/Class.getSimpleName ()Ljava/lang/String;]
+      [50] ldc #62
+        + String [loadHeadAndBody]
+      [52] aload_2 v2
+      [53] invokestatic #266
+        + Methodref [android/util/Log.e (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I]
+      [56] pop
+      [57] aload_0 v0
+      [58] getfield #163
+        + Fieldref [com/softenido/audible/AudibleMain.F Lcom/softenido/cafedroid/util/ui/d;]
+      [61] ldc #47
+        + String [Out of Memory]
+      [63] aload_2 v2
+      [64] invokevirtual #438
+        + Methodref [com/softenido/cafedroid/util/ui/d.a (Ljava/lang/String;Ljava/lang/Throwable;)V]
+      [67] goto +32 (target=99)
+      [70] astore_2 v2
+      [71] ldc #91
+        + Class [com/softenido/audible/AudibleMain]
+      [73] invokevirtual #442
+        + Methodref [java/lang/Class.getSimpleName ()Ljava/lang/String;]
+      [76] ldc #62
+        + String [loadHeadAndBody]
+      [78] aload_2 v2
+      [79] invokestatic #266
+        + Methodref [android/util/Log.e (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I]
+      [82] pop
+      [83] goto +16 (target=99)
+      [86] astore_2 v2
+      [87] ldc #91
+        + Class [com/softenido/audible/AudibleMain]
+      [89] invokevirtual #442
+        + Methodref [java/lang/Class.getSimpleName ()Ljava/lang/String;]
+      [92] ldc #62
+        + String [loadHeadAndBody]
+      [94] aload_2 v2
+      [95] invokestatic #266
+        + Methodref [android/util/Log.e (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I]
+      [98] pop
+      [99] return
+      Code attribute exceptions (count = 3):
+      - ExceptionInfo (4 -> 41: 44):
+      + Class [java/lang/OutOfMemoryError]
+      - ExceptionInfo (4 -> 41: 70):
+      + Class [java/io/FileNotFoundException]
+      - ExceptionInfo (4 -> 41: 86):
+      + Class [java/io/IOException]
+      Code attribute attributes (attribute count = 1):
+      + Stack map table attribute (count = 4):
+        - [44] Var: ..., Stack: [a:java/lang/OutOfMemoryError]
+        - [70] Var: ..., Stack: [a:java/io/FileNotFoundException]
+        - [86] Var: ..., Stack: [a:java/io/IOException]
+        - [99] Var: ..., Stack: (empty)
+  + Method:       b(Landroid/net/Uri;)V
+    Access flags: 0x2
+      = private void b(android.net.Uri)
+    Class member attributes (count = 1):
+    + Code attribute instructions (code length = 82, locals = 2, stack = 3):
+      [0] aload_1 v1
+      [1] ifnull +80 (target=81)
       [4] aload_0 v0
       [5] ldc #34
         + String []
       [7] ldc #34
         + String []
-      [9] invokespecial #300
+      [9] invokespecial #302
         + Methodref [com/softenido/audible/AudibleMain.b (Ljava/lang/String;Ljava/lang/String;)V]
       [12] aload_0 v0
-      [13] getfield #207
+      [13] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [16] aload_0 v0
-      [17] invokevirtual #408
+      [17] invokevirtual #410
         + Methodref [com/softenido/cafedroid/e/c.b (Lcom/softenido/cafedroid/e/h;)V]
       [20] aload_0 v0
       [21] aload_0 v0
-      [22] invokespecial #302
+      [22] invokespecial #304
         + Methodref [com/softenido/audible/AudibleMain.e ()Lcom/softenido/cafedroid/e/c;]
-      [25] putfield #207
+      [25] putfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [28] aload_0 v0
-      [29] invokevirtual #307
-        + Methodref [com/softenido/audible/AudibleMain.getContentResolver ()Landroid/content/ContentResolver;]
-      [32] aload_1 v1
-      [33] invokevirtual #253
-        + Methodref [android/content/ContentResolver.openInputStream (Landroid/net/Uri;)Ljava/io/InputStream;]
-      [36] astore_2 v2
-      [37] new #148
-        + Class [java/lang/String]
-      [40] dup
-      [41] aload_2 v2
-      [42] getstatic #197
-        + Fieldref [com/softenido/audible/AudibleMain.an I]
-      [45] invokestatic #288
-        + Methodref [com/softenido/a/b/a.a (Ljava/io/InputStream;I)[B]
-      [48] invokespecial #443
-        + Methodref [java/lang/String.<init> ([B)V]
-      [51] astore_3 v3
-      [52] aload_0 v0
-      [53] aload_1 v1
-      [54] invokevirtual #259
-        + Methodref [android/net/Uri.getLastPathSegment ()Ljava/lang/String;]
-      [57] aload_3 v3
-      [58] invokespecial #300
+      [29] aload_1 v1
+      [30] invokespecial #294
+        + Methodref [com/softenido/audible/AudibleMain.a (Landroid/net/Uri;)V]
+      [33] aload_0 v0
+      [34] aload_0 v0
+      [35] getfield #200
+        + Fieldref [com/softenido/audible/AudibleMain.ap Ljava/lang/String;]
+      [38] aload_0 v0
+      [39] getfield #201
+        + Fieldref [com/softenido/audible/AudibleMain.aq Ljava/lang/String;]
+      [42] invokespecial #302
         + Methodref [com/softenido/audible/AudibleMain.b (Ljava/lang/String;Ljava/lang/String;)V]
-      [61] aload_0 v0
-      [62] getfield #207
+      [45] aload_0 v0
+      [46] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
-      [65] aload_0 v0
-      [66] invokevirtual #408
+      [49] aload_0 v0
+      [50] invokevirtual #410
         + Methodref [com/softenido/cafedroid/e/c.b (Lcom/softenido/cafedroid/e/h;)V]
-      [69] aload_0 v0
-      [70] aload_0 v0
-      [71] invokespecial #302
+      [53] aload_0 v0
+      [54] aload_0 v0
+      [55] invokespecial #304
         + Methodref [com/softenido/audible/AudibleMain.e ()Lcom/softenido/cafedroid/e/c;]
-      [74] putfield #207
+      [58] putfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
-      [77] aload_0 v0
-      [78] aload_0 v0
-      [79] getfield #208
+      [61] aload_0 v0
+      [62] aload_0 v0
+      [63] getfield #209
         + Fieldref [com/softenido/audible/AudibleMain.ay Z]
-      [82] ifeq +9 (target=91)
-      [85] getstatic #235
+      [66] ifeq +9 (target=75)
+      [69] getstatic #236
         + Fieldref [com/softenido/audible/ab.a Lcom/softenido/audible/ab;]
-      [88] goto +6 (target=94)
-      [91] getstatic #236
+      [72] goto +6 (target=78)
+      [75] getstatic #237
         + Fieldref [com/softenido/audible/ab.b Lcom/softenido/audible/ab;]
-      [94] invokespecial #294
+      [78] invokespecial #295
         + Methodref [com/softenido/audible/AudibleMain.a (Lcom/softenido/audible/ab;)V]
-      [97] goto +42 (target=139)
-      [100] astore_2 v2
-      [101] ldc #90
-        + Class [com/softenido/audible/AudibleMain]
-      [103] invokevirtual #440
-        + Methodref [java/lang/Class.getSimpleName ()Ljava/lang/String;]
-      [106] ldc #61
-        + String [loadTextFile]
-      [108] aload_2 v2
-      [109] invokestatic #265
-        + Methodref [android/util/Log.e (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I]
-      [112] pop
-      [113] goto +26 (target=139)
-      [116] astore_2 v2
-      [117] ldc #90
-        + Class [com/softenido/audible/AudibleMain]
-      [119] invokevirtual #440
-        + Methodref [java/lang/Class.getSimpleName ()Ljava/lang/String;]
-      [122] ldc #61
-        + String [loadTextFile]
-      [124] aload_2 v2
-      [125] invokestatic #265
-        + Methodref [android/util/Log.e (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I]
-      [128] pop
-      [129] aload_0 v0
-      [130] getfield #162
-        + Fieldref [com/softenido/audible/AudibleMain.F Lcom/softenido/cafedroid/util/ui/d;]
-      [133] ldc #47
-        + String [Out of Memory]
-      [135] aload_2 v2
-      [136] invokevirtual #436
-        + Methodref [com/softenido/cafedroid/util/ui/d.a (Ljava/lang/String;Ljava/lang/Throwable;)V]
-      [139] return
-      Code attribute exceptions (count = 2):
-      - ExceptionInfo (0 -> 97: 100):
-      + Class [java/io/IOException]
-      - ExceptionInfo (0 -> 97: 116):
-      + Class [java/lang/OutOfMemoryError]
+      [81] return
+      Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 1):
-      + Stack map table attribute (count = 6):
-        - [91] Var: [a:com/softenido/audible/AudibleMain][a:android/net/Uri][a:java/io/InputStream][a:java/lang/String], Stack: [a:com/softenido/audible/AudibleMain]
-        - [94] Var: [a:com/softenido/audible/AudibleMain][a:android/net/Uri][a:java/io/InputStream][a:java/lang/String], Stack: [a:com/softenido/audible/AudibleMain][a:com/softenido/audible/ab]
-        - [97] Var: -2, Stack: (empty)
-        - [100] Var: ..., Stack: [a:java/io/IOException]
-        - [116] Var: ..., Stack: [a:java/lang/OutOfMemoryError]
-        - [139] Var: ..., Stack: (empty)
+      + Stack map table attribute (count = 3):
+        - [75] Var: ..., Stack: [a:com/softenido/audible/AudibleMain]
+        - [78] Var: [a:com/softenido/audible/AudibleMain][a:android/net/Uri], Stack: [a:com/softenido/audible/AudibleMain][a:com/softenido/audible/ab]
+        - [81] Var: ..., Stack: (empty)
   + Method:       a(Lcom/softenido/audible/AudibleMain;Z)Z
     Access flags: 0x1008
       = static synthetic boolean a(com.softenido.audible.AudibleMain,boolean)
@@ -27856,7 +27967,7 @@ Methods (count = 44):
       [0] aload_0 v0
       [1] iload_1 v1
       [2] dup_x1
-      [3] putfield #208
+      [3] putfield #209
         + Fieldref [com/softenido/audible/AudibleMain.ay Z]
       [6] ireturn
       Code attribute exceptions (count = 0):
@@ -27868,7 +27979,7 @@ Methods (count = 44):
     + Code attribute instructions (code length = 6, locals = 2, stack = 2):
       [0] aload_0 v0
       [1] aload_1 v1
-      [2] invokespecial #294
+      [2] invokespecial #295
         + Methodref [com/softenido/audible/AudibleMain.a (Lcom/softenido/audible/ab;)V]
       [5] return
       Code attribute exceptions (count = 0):
@@ -27879,7 +27990,7 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] invokespecial #311
+      [1] invokespecial #313
         + Methodref [com/softenido/audible/AudibleMain.i ()V]
       [4] return
       Code attribute exceptions (count = 0):
@@ -27890,7 +28001,7 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #207
+      [1] getfield #208
         + Fieldref [com/softenido/audible/AudibleMain.ax Lcom/softenido/cafedroid/e/c;]
       [4] areturn
       Code attribute exceptions (count = 0):
@@ -27901,7 +28012,7 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] invokespecial #313
+      [1] invokespecial #315
         + Methodref [com/softenido/audible/AudibleMain.k ()V]
       [4] return
       Code attribute exceptions (count = 0):
@@ -27912,7 +28023,7 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] invokespecial #312
+      [1] invokespecial #314
         + Methodref [com/softenido/audible/AudibleMain.j ()V]
       [4] return
       Code attribute exceptions (count = 0):
@@ -27923,7 +28034,7 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] invokespecial #310
+      [1] invokespecial #312
         + Methodref [com/softenido/audible/AudibleMain.h ()V]
       [4] return
       Code attribute exceptions (count = 0):
@@ -27934,7 +28045,7 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #209
+      [1] getfield #210
         + Fieldref [com/softenido/audible/AudibleMain.az I]
       [4] ireturn
       Code attribute exceptions (count = 0):
@@ -27947,7 +28058,7 @@ Methods (count = 44):
       [0] aload_0 v0
       [1] iload_1 v1
       [2] dup_x1
-      [3] putfield #209
+      [3] putfield #210
         + Fieldref [com/softenido/audible/AudibleMain.az I]
       [6] ireturn
       Code attribute exceptions (count = 0):
@@ -27958,7 +28069,7 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #200
+      [1] getfield #201
         + Fieldref [com/softenido/audible/AudibleMain.aq Ljava/lang/String;]
       [4] areturn
       Code attribute exceptions (count = 0):
@@ -27971,7 +28082,7 @@ Methods (count = 44):
       [0] aload_0 v0
       [1] aload_1 v1
       [2] aload_2 v2
-      [3] invokespecial #300
+      [3] invokespecial #302
         + Methodref [com/softenido/audible/AudibleMain.b (Ljava/lang/String;Ljava/lang/String;)V]
       [6] return
       Code attribute exceptions (count = 0):
@@ -27982,7 +28093,7 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] invokespecial #316
+      [1] invokespecial #318
         + Methodref [com/softenido/audible/AudibleMain.n ()V]
       [4] return
       Code attribute exceptions (count = 0):
@@ -27993,7 +28104,7 @@ Methods (count = 44):
     Class member attributes (count = 1):
     + Code attribute instructions (code length = 5, locals = 1, stack = 1):
       [0] aload_0 v0
-      [1] getfield #199
+      [1] getfield #200
         + Fieldref [com/softenido/audible/AudibleMain.ap Ljava/lang/String;]
       [4] areturn
       Code attribute exceptions (count = 0):
@@ -28005,18 +28116,18 @@ Methods (count = 44):
     + Code attribute instructions (code length = 21, locals = 0, stack = 1):
       [0] ldc #1
         + Integer [524288]
-      [2] putstatic #197
+      [2] putstatic #198
         + Fieldref [com/softenido/audible/AudibleMain.an I]
-      [5] ldc #90
+      [5] ldc #91
         + Class [com/softenido/audible/AudibleMain]
-      [7] invokevirtual #439
+      [7] invokevirtual #441
         + Methodref [java/lang/Class.getName ()Ljava/lang/String;]
-      [10] invokestatic #456
+      [10] invokestatic #459
         + Methodref [java/util/logging/Logger.getLogger (Ljava/lang/String;)Ljava/util/logging/Logger;]
-      [13] putstatic #198
+      [13] putstatic #199
         + Fieldref [com/softenido/audible/AudibleMain.ao Ljava/util/logging/Logger;]
       [16] aconst_null
-      [17] putstatic #181
+      [17] putstatic #182
         + Fieldref [com/softenido/audible/AudibleMain.Y Lcom/softenido/cafedroid/os/PolicyAdmin;]
       [20] return
       Code attribute exceptions (count = 0):
@@ -83298,7 +83409,7 @@ _____________________________________________________________________
 
 Interfaces (count = 0):
 
-Constant Pool (count = 497):
+Constant Pool (count = 501):
   + Integer [2131034112]
   + Integer [2131034113]
   + Integer [2131034114]
@@ -83421,6 +83532,7 @@ Constant Pool (count = 497):
   + Integer [2131034231]
   + Integer [2131034232]
   + Integer [2131034233]
+  + Integer [2131034234]
   + Class [com/softenido/cafedroid/d]
   + Class [java/lang/Object]
   + Fieldref [com/softenido/cafedroid/d.about I]
@@ -83538,6 +83650,7 @@ Constant Pool (count = 497):
   + Fieldref [com/softenido/cafedroid/d.preferences_ui_toasts_summary_off I]
   + Fieldref [com/softenido/cafedroid/d.preferences_ui_toasts_summary_on I]
   + Fieldref [com/softenido/cafedroid/d.preferences_ui_toasts_title I]
+  + Fieldref [com/softenido/cafedroid/d.resolve_view I]
   + Fieldref [com/softenido/cafedroid/d.setup I]
   + Fieldref [com/softenido/cafedroid/d.toggle_advance I]
   + Fieldref [com/softenido/cafedroid/d.toggle_auto I]
@@ -83660,6 +83773,7 @@ Constant Pool (count = 497):
   + NameAndType [preferences_ui_toasts_summary_off I]
   + NameAndType [preferences_ui_toasts_summary_on I]
   + NameAndType [preferences_ui_toasts_title I]
+  + NameAndType [resolve_view I]
   + NameAndType [setup I]
   + NameAndType [toggle_advance I]
   + NameAndType [toggle_auto I]
@@ -83788,6 +83902,7 @@ Constant Pool (count = 497):
   + Utf8 [preferences_ui_toasts_summary_off]
   + Utf8 [preferences_ui_toasts_summary_on]
   + Utf8 [preferences_ui_toasts_title]
+  + Utf8 [resolve_view]
   + Utf8 [setup]
   + Utf8 [toggle_advance]
   + Utf8 [toggle_auto]
@@ -83796,7 +83911,7 @@ Constant Pool (count = 497):
   + Utf8 [toggle_seek_by_phrase]
   + Utf8 [toggle_volume]
 
-Fields (count = 122):
+Fields (count = 123):
   + Field:        about I
     Access flags: 0x9
       = public static int about
@@ -84142,6 +84257,9 @@ Fields (count = 122):
   + Field:        preferences_ui_toasts_title I
     Access flags: 0x9
       = public static int preferences_ui_toasts_title
+  + Field:        resolve_view I
+    Access flags: 0x9
+      = public static int resolve_view
   + Field:        setup I
     Access flags: 0x9
       = public static int setup
@@ -84169,496 +84287,500 @@ Methods (count = 1):
     Access flags: 0x8
       = static void <clinit>()
     Class member attributes (count = 1):
-    + Code attribute instructions (code length = 611, locals = 0, stack = 1):
+    + Code attribute instructions (code length = 616, locals = 0, stack = 1):
       [0] ldc #22
         + Integer [2131034133]
-      [2] putstatic #125
+      [2] putstatic #126
         + Fieldref [com/softenido/cafedroid/d.about I]
       [5] ldc #17
         + Integer [2131034128]
-      [7] putstatic #126
+      [7] putstatic #127
         + Fieldref [com/softenido/cafedroid/d.about_feedback I]
       [10] ldc #18
         + Integer [2131034129]
-      [12] putstatic #127
+      [12] putstatic #128
         + Fieldref [com/softenido/cafedroid/d.about_feedback_title I]
       [15] ldc #117
         + Integer [2131034228]
-      [17] putstatic #128
+      [17] putstatic #129
         + Fieldref [com/softenido/cafedroid/d.activity_preference_label I]
       [20] ldc #38
         + Integer [2131034149]
-      [22] putstatic #129
+      [22] putstatic #130
         + Fieldref [com/softenido/cafedroid/d.advanced_early_save I]
       [25] ldc #40
         + Integer [2131034151]
-      [27] putstatic #130
+      [27] putstatic #131
         + Fieldref [com/softenido/cafedroid/d.advanced_early_save_off I]
       [30] ldc #39
         + Integer [2131034150]
-      [32] putstatic #131
+      [32] putstatic #132
         + Fieldref [com/softenido/cafedroid/d.advanced_early_save_on I]
       [35] ldc #37
         + Integer [2131034148]
-      [37] putstatic #132
+      [37] putstatic #133
         + Fieldref [com/softenido/cafedroid/d.advanced_quick_start I]
       [40] ldc #20
         + Integer [2131034131]
-      [42] putstatic #133
+      [42] putstatic #134
         + Fieldref [com/softenido/cafedroid/d.app_name I]
       [45] ldc #21
         + Integer [2131034132]
-      [47] putstatic #134
+      [47] putstatic #135
         + Fieldref [com/softenido/cafedroid/d.app_name_version I]
       [50] ldc #11
         + Integer [2131034122]
-      [52] putstatic #135
+      [52] putstatic #136
         + Fieldref [com/softenido/cafedroid/d.battery_health_cold I]
       [55] ldc #5
         + Integer [2131034116]
-      [57] putstatic #136
+      [57] putstatic #137
         + Fieldref [com/softenido/cafedroid/d.battery_health_dead I]
       [60] ldc #6
         + Integer [2131034117]
-      [62] putstatic #137
+      [62] putstatic #138
         + Fieldref [com/softenido/cafedroid/d.battery_health_good I]
       [65] ldc #8
         + Integer [2131034119]
-      [67] putstatic #138
+      [67] putstatic #139
         + Fieldref [com/softenido/cafedroid/d.battery_health_over_voltage I]
       [70] ldc #7
         + Integer [2131034118]
-      [72] putstatic #139
+      [72] putstatic #140
         + Fieldref [com/softenido/cafedroid/d.battery_health_overheat I]
       [75] ldc #9
         + Integer [2131034120]
-      [77] putstatic #140
+      [77] putstatic #141
         + Fieldref [com/softenido/cafedroid/d.battery_health_unknown I]
       [80] ldc #10
         + Integer [2131034121]
-      [82] putstatic #141
+      [82] putstatic #142
         + Fieldref [com/softenido/cafedroid/d.battery_health_unspecified_failure I]
       [85] ldc #2
         + Integer [2131034113]
-      [87] putstatic #142
+      [87] putstatic #143
         + Fieldref [com/softenido/cafedroid/d.battery_plugged_ac I]
       [90] ldc #1
         + Integer [2131034112]
-      [92] putstatic #143
+      [92] putstatic #144
         + Fieldref [com/softenido/cafedroid/d.battery_plugged_battery I]
       [95] ldc #4
         + Integer [2131034115]
-      [97] putstatic #144
+      [97] putstatic #145
         + Fieldref [com/softenido/cafedroid/d.battery_plugged_plugged I]
       [100] ldc #3
         + Integer [2131034114]
-      [102] putstatic #145
+      [102] putstatic #146
         + Fieldref [com/softenido/cafedroid/d.battery_plugged_usb I]
       [105] ldc #12
         + Integer [2131034123]
-      [107] putstatic #146
+      [107] putstatic #147
         + Fieldref [com/softenido/cafedroid/d.battery_status_charging I]
       [110] ldc #13
         + Integer [2131034124]
-      [112] putstatic #147
+      [112] putstatic #148
         + Fieldref [com/softenido/cafedroid/d.battery_status_discharging I]
       [115] ldc #14
         + Integer [2131034125]
-      [117] putstatic #148
+      [117] putstatic #149
         + Fieldref [com/softenido/cafedroid/d.battery_status_full I]
       [120] ldc #15
         + Integer [2131034126]
-      [122] putstatic #149
+      [122] putstatic #150
         + Fieldref [com/softenido/cafedroid/d.battery_status_not_charging I]
       [125] ldc #16
         + Integer [2131034127]
-      [127] putstatic #150
+      [127] putstatic #151
         + Fieldref [com/softenido/cafedroid/d.battery_status_unknown I]
       [130] ldc #122
         + Integer [2131034233]
-      [132] putstatic #151
+      [132] putstatic #152
         + Fieldref [com/softenido/cafedroid/d.choose_send_with I]
       [135] ldc #121
         + Integer [2131034232]
-      [137] putstatic #152
+      [137] putstatic #153
         + Fieldref [com/softenido/cafedroid/d.choose_text_file_with I]
       [140] ldc #23
         + Integer [2131034134]
-      [142] putstatic #153
+      [142] putstatic #154
         + Fieldref [com/softenido/cafedroid/d.end_of_the_reading I]
       [145] ldc #19
         + Integer [2131034130]
-      [147] putstatic #154
+      [147] putstatic #155
         + Fieldref [com/softenido/cafedroid/d.gplv3_brief I]
       [150] ldc #29
         + Integer [2131034140]
-      [152] putstatic #155
+      [152] putstatic #156
         + Fieldref [com/softenido/cafedroid/d.lang_prompt_doc I]
       [155] ldc #30
         + Integer [2131034141]
-      [157] putstatic #156
+      [157] putstatic #157
         + Fieldref [com/softenido/cafedroid/d.lang_prompt_par I]
       [160] ldc #32
         + Integer [2131034143]
-      [162] putstatic #157
+      [162] putstatic #158
         + Fieldref [com/softenido/cafedroid/d.locknow_description I]
       [165] ldc #33
         + Integer [2131034144]
-      [167] putstatic #158
+      [167] putstatic #159
         + Fieldref [com/softenido/cafedroid/d.locknow_explanation I]
       [170] ldc #36
         + Integer [2131034147]
-      [172] putstatic #159
+      [172] putstatic #160
         + Fieldref [com/softenido/cafedroid/d.notify_keep_text I]
       [175] ldc #35
         + Integer [2131034146]
-      [177] putstatic #160
+      [177] putstatic #161
         + Fieldref [com/softenido/cafedroid/d.notify_keep_ticker I]
       [180] ldc #116
         + Integer [2131034227]
-      [182] putstatic #161
+      [182] putstatic #162
         + Fieldref [com/softenido/cafedroid/d.preferences_about_title I]
       [185] ldc #115
         + Integer [2131034226]
-      [187] putstatic #162
+      [187] putstatic #163
         + Fieldref [com/softenido/cafedroid/d.preferences_advanced I]
       [190] ldc #73
         + Integer [2131034184]
-      [192] putstatic #163
+      [192] putstatic #164
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_auto_summary_off I]
       [195] ldc #72
         + Integer [2131034183]
-      [197] putstatic #164
+      [197] putstatic #165
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_auto_summary_on I]
       [200] ldc #71
         + Integer [2131034182]
-      [202] putstatic #165
+      [202] putstatic #166
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_auto_title I]
       [205] ldc #79
         + Integer [2131034190]
-      [207] putstatic #166
+      [207] putstatic #167
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_exit_summary_off I]
       [210] ldc #78
         + Integer [2131034189]
-      [212] putstatic #167
+      [212] putstatic #168
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_exit_summary_on I]
       [215] ldc #77
         + Integer [2131034188]
-      [217] putstatic #168
+      [217] putstatic #169
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_exit_title I]
       [220] ldc #76
         + Integer [2131034187]
-      [222] putstatic #169
+      [222] putstatic #170
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_play_summary_off I]
       [225] ldc #75
         + Integer [2131034186]
-      [227] putstatic #170
+      [227] putstatic #171
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_play_summary_on I]
       [230] ldc #74
         + Integer [2131034185]
-      [232] putstatic #171
+      [232] putstatic #172
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_play_title I]
       [235] ldc #82
         + Integer [2131034193]
-      [237] putstatic #172
+      [237] putstatic #173
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_screenlock_summary_off I]
       [240] ldc #81
         + Integer [2131034192]
-      [242] putstatic #173
+      [242] putstatic #174
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_screenlock_summary_on I]
       [245] ldc #80
         + Integer [2131034191]
-      [247] putstatic #174
+      [247] putstatic #175
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_screenlock_title I]
       [250] ldc #70
         + Integer [2131034181]
-      [252] putstatic #175
+      [252] putstatic #176
         + Fieldref [com/softenido/cafedroid/d.preferences_auto_title I]
       [255] ldc #69
         + Integer [2131034180]
-      [257] putstatic #176
+      [257] putstatic #177
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_asterisk_summary I]
       [260] ldc #68
         + Integer [2131034179]
-      [262] putstatic #177
+      [262] putstatic #178
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_asterisk_title I]
       [265] ldc #59
         + Integer [2131034170]
-      [267] putstatic #178
+      [267] putstatic #179
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_curlybrackets_summry_off I]
       [270] ldc #58
         + Integer [2131034169]
-      [272] putstatic #179
+      [272] putstatic #180
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_curlybrackets_summry_on I]
       [275] ldc #57
         + Integer [2131034168]
-      [277] putstatic #180
+      [277] putstatic #181
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_curlybrackets_title I]
       [280] ldc #67
         + Integer [2131034178]
-      [282] putstatic #181
+      [282] putstatic #182
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_hyphens_summary I]
       [285] ldc #66
         + Integer [2131034177]
-      [287] putstatic #182
+      [287] putstatic #183
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_hyphens_title I]
       [290] ldc #53
         + Integer [2131034164]
-      [292] putstatic #183
+      [292] putstatic #184
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_parentheses_summary_off I]
       [295] ldc #52
         + Integer [2131034163]
-      [297] putstatic #184
+      [297] putstatic #185
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_parentheses_summary_on I]
       [300] ldc #51
         + Integer [2131034162]
-      [302] putstatic #185
+      [302] putstatic #186
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_parentheses_title I]
       [305] ldc #62
         + Integer [2131034173]
-      [307] putstatic #186
+      [307] putstatic #187
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_pipe_summary_off I]
       [310] ldc #61
         + Integer [2131034172]
-      [312] putstatic #187
+      [312] putstatic #188
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_pipe_summary_on I]
       [315] ldc #60
         + Integer [2131034171]
-      [317] putstatic #188
+      [317] putstatic #189
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_pipe_title I]
       [320] ldc #50
         + Integer [2131034161]
-      [322] putstatic #189
+      [322] putstatic #190
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_repeated_title_summary_off I]
       [325] ldc #49
         + Integer [2131034160]
-      [327] putstatic #190
+      [327] putstatic #191
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_repeated_title_summary_on I]
       [330] ldc #48
         + Integer [2131034159]
-      [332] putstatic #191
+      [332] putstatic #192
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_repeated_title_title I]
       [335] ldc #56
         + Integer [2131034167]
-      [337] putstatic #192
+      [337] putstatic #193
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_squarebrackets_summary_off I]
       [340] ldc #55
         + Integer [2131034166]
-      [342] putstatic #193
+      [342] putstatic #194
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_squarebrackets_summary_on I]
       [345] ldc #54
         + Integer [2131034165]
-      [347] putstatic #194
+      [347] putstatic #195
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_squarebrackets_title I]
       [350] ldc #46
         + Integer [2131034157]
-      [352] putstatic #195
+      [352] putstatic #196
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_summary I]
       [355] ldc #45
         + Integer [2131034156]
-      [357] putstatic #196
+      [357] putstatic #197
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_title I]
       [360] ldc #47
         + Integer [2131034158]
-      [362] putstatic #197
+      [362] putstatic #198
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_title_title I]
       [365] ldc #65
         + Integer [2131034176]
-      [367] putstatic #198
+      [367] putstatic #199
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_underscore_summary_off I]
       [370] ldc #64
         + Integer [2131034175]
-      [372] putstatic #199
+      [372] putstatic #200
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_underscore_summary_on I]
       [375] ldc #63
         + Integer [2131034174]
-      [377] putstatic #200
+      [377] putstatic #201
         + Fieldref [com/softenido/cafedroid/d.preferences_ignore_underscore_title I]
       [380] ldc #91
         + Integer [2131034202]
-      [382] putstatic #201
+      [382] putstatic #202
         + Fieldref [com/softenido/cafedroid/d.preferences_language_avaliable_summary I]
       [385] ldc #90
         + Integer [2131034201]
-      [387] putstatic #202
+      [387] putstatic #203
         + Fieldref [com/softenido/cafedroid/d.preferences_language_avaliable_title I]
       [390] ldc #83
         + Integer [2131034194]
-      [392] putstatic #203
+      [392] putstatic #204
         + Fieldref [com/softenido/cafedroid/d.preferences_language_category I]
       [395] ldc #89
         + Integer [2131034200]
-      [397] putstatic #204
+      [397] putstatic #205
         + Fieldref [com/softenido/cafedroid/d.preferences_language_default_summary I]
       [400] ldc #88
         + Integer [2131034199]
-      [402] putstatic #205
+      [402] putstatic #206
         + Fieldref [com/softenido/cafedroid/d.preferences_language_default_title I]
       [405] ldc #87
         + Integer [2131034198]
-      [407] putstatic #206
+      [407] putstatic #207
         + Fieldref [com/softenido/cafedroid/d.preferences_language_detect_summary_off I]
       [410] ldc #86
         + Integer [2131034197]
-      [412] putstatic #207
+      [412] putstatic #208
         + Fieldref [com/softenido/cafedroid/d.preferences_language_detect_summary_on I]
       [415] ldc #85
         + Integer [2131034196]
-      [417] putstatic #208
+      [417] putstatic #209
         + Fieldref [com/softenido/cafedroid/d.preferences_language_detect_title I]
       [420] ldc #120
         + Integer [2131034231]
-      [422] putstatic #209
+      [422] putstatic #210
         + Fieldref [com/softenido/cafedroid/d.preferences_language_early_detect_summary_off I]
       [425] ldc #119
         + Integer [2131034230]
-      [427] putstatic #210
+      [427] putstatic #211
         + Fieldref [com/softenido/cafedroid/d.preferences_language_early_detect_summary_on I]
       [430] ldc #118
         + Integer [2131034229]
-      [432] putstatic #211
+      [432] putstatic #212
         + Fieldref [com/softenido/cafedroid/d.preferences_language_early_detect_title I]
       [435] ldc #93
         + Integer [2131034204]
-      [437] putstatic #212
+      [437] putstatic #213
         + Fieldref [com/softenido/cafedroid/d.preferences_language_gender_summary I]
       [440] ldc #92
         + Integer [2131034203]
-      [442] putstatic #213
+      [442] putstatic #214
         + Fieldref [com/softenido/cafedroid/d.preferences_language_gender_title I]
       [445] ldc #114
         + Integer [2131034225]
-      [447] putstatic #214
+      [447] putstatic #215
         + Fieldref [com/softenido/cafedroid/d.preferences_optimize_keeps_summary I]
       [450] ldc #113
         + Integer [2131034224]
-      [452] putstatic #215
+      [452] putstatic #216
         + Fieldref [com/softenido/cafedroid/d.preferences_optimize_keeps_title I]
       [455] ldc #84
         + Integer [2131034195]
-      [457] putstatic #216
+      [457] putstatic #217
         + Fieldref [com/softenido/cafedroid/d.preferences_reading_category I]
       [460] ldc #44
         + Integer [2131034155]
-      [462] putstatic #217
+      [462] putstatic #218
         + Fieldref [com/softenido/cafedroid/d.preferences_reading_lowercase_summary_off I]
       [465] ldc #43
         + Integer [2131034154]
-      [467] putstatic #218
+      [467] putstatic #219
         + Fieldref [com/softenido/cafedroid/d.preferences_reading_lowercase_summary_on I]
       [470] ldc #42
         + Integer [2131034153]
-      [472] putstatic #219
+      [472] putstatic #220
         + Fieldref [com/softenido/cafedroid/d.preferences_reading_lowercase_title I]
       [475] ldc #41
         + Integer [2131034152]
-      [477] putstatic #220
+      [477] putstatic #221
         + Fieldref [com/softenido/cafedroid/d.preferences_title_optimization I]
       [480] ldc #94
         + Integer [2131034205]
-      [482] putstatic #221
+      [482] putstatic #222
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_category I]
       [485] ldc #103
         + Integer [2131034214]
-      [487] putstatic #222
+      [487] putstatic #223
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_fontbold_summary_off I]
       [490] ldc #102
         + Integer [2131034213]
-      [492] putstatic #223
+      [492] putstatic #224
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_fontbold_summary_on I]
       [495] ldc #101
         + Integer [2131034212]
-      [497] putstatic #224
+      [497] putstatic #225
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_fontbold_title I]
       [500] ldc #98
         + Integer [2131034209]
-      [502] putstatic #225
+      [502] putstatic #226
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_fontfamily_summary I]
       [505] ldc #97
         + Integer [2131034208]
-      [507] putstatic #226
+      [507] putstatic #227
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_fontfamily_title I]
       [510] ldc #100
         + Integer [2131034211]
-      [512] putstatic #227
+      [512] putstatic #228
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_fontsize_summary I]
       [515] ldc #99
         + Integer [2131034210]
-      [517] putstatic #228
+      [517] putstatic #229
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_fontsize_title I]
       [520] ldc #108
         + Integer [2131034219]
-      [522] putstatic #229
+      [522] putstatic #230
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_progress_summary I]
       [525] ldc #109
         + Integer [2131034220]
-      [527] putstatic #230
+      [527] putstatic #231
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_progress_summary_off I]
       [530] ldc #107
         + Integer [2131034218]
-      [532] putstatic #231
+      [532] putstatic #232
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_progress_title I]
       [535] ldc #112
         + Integer [2131034223]
-      [537] putstatic #232
+      [537] putstatic #233
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_progress_volume_off I]
       [540] ldc #111
         + Integer [2131034222]
-      [542] putstatic #233
+      [542] putstatic #234
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_progress_volume_summary_on I]
       [545] ldc #110
         + Integer [2131034221]
-      [547] putstatic #234
+      [547] putstatic #235
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_progress_volume_title I]
       [550] ldc #96
         + Integer [2131034207]
-      [552] putstatic #235
+      [552] putstatic #236
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_theme_summary I]
       [555] ldc #95
         + Integer [2131034206]
-      [557] putstatic #236
+      [557] putstatic #237
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_theme_title I]
       [560] ldc #106
         + Integer [2131034217]
-      [562] putstatic #237
+      [562] putstatic #238
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_toasts_summary_off I]
       [565] ldc #105
         + Integer [2131034216]
-      [567] putstatic #238
+      [567] putstatic #239
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_toasts_summary_on I]
       [570] ldc #104
         + Integer [2131034215]
-      [572] putstatic #239
+      [572] putstatic #240
         + Fieldref [com/softenido/cafedroid/d.preferences_ui_toasts_title I]
-      [575] ldc #25
+      [575] ldc #123
+        + Integer [2131034234]
+      [577] putstatic #241
+        + Fieldref [com/softenido/cafedroid/d.resolve_view I]
+      [580] ldc #25
         + Integer [2131034136]
-      [577] putstatic #240
+      [582] putstatic #242
         + Fieldref [com/softenido/cafedroid/d.setup I]
-      [580] ldc #31
+      [585] ldc #31
         + Integer [2131034142]
-      [582] putstatic #241
+      [587] putstatic #243
         + Fieldref [com/softenido/cafedroid/d.toggle_advance I]
-      [585] ldc #28
+      [590] ldc #28
         + Integer [2131034139]
-      [587] putstatic #242
+      [592] putstatic #244
         + Fieldref [com/softenido/cafedroid/d.toggle_auto I]
-      [590] ldc #24
+      [595] ldc #24
         + Integer [2131034135]
-      [592] putstatic #243
+      [597] putstatic #245
         + Fieldref [com/softenido/cafedroid/d.toggle_detect_lang I]
-      [595] ldc #26
+      [600] ldc #26
         + Integer [2131034137]
-      [597] putstatic #244
+      [602] putstatic #246
         + Fieldref [com/softenido/cafedroid/d.toggle_extra I]
-      [600] ldc #27
+      [605] ldc #27
         + Integer [2131034138]
-      [602] putstatic #245
+      [607] putstatic #247
         + Fieldref [com/softenido/cafedroid/d.toggle_seek_by_phrase I]
-      [605] ldc #34
+      [610] ldc #34
         + Integer [2131034145]
-      [607] putstatic #246
+      [612] putstatic #248
         + Fieldref [com/softenido/cafedroid/d.toggle_volume I]
-      [610] return
+      [615] return
       Code attribute exceptions (count = 0):
       Code attribute attributes (attribute count = 0):
 
