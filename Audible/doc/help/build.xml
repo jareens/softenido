@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<project name="help" default="assets">
+
+    <target name="clean" description="remove intermediate files">
+        <delete dir="html"/>
+        <delete dir="." includes="*.htm" />
+    </target>
+
+    <target name="html" description="create html directory">
+        <mkdir dir="html" />
+    </target>
+
+    <target name="compile" description="compile Markdown Extra using command 'markdown'" depends="html">
+        <exec executable="markdown" >
+            <arg file="index.md"/>
+            <arg value="-o"/>
+            <arg file="index.htm"/>
+        </exec>
+        <exec executable="markdown" >
+            <arg file="index-eng.md"/>
+            <arg value="-o"/>
+            <arg file="index-eng.htm"/>
+        </exec>
+        <exec executable="markdown" >
+            <arg file="index-spa.md"/>
+            <arg value="-o"/>
+            <arg file="index-spa.htm"/>
+        </exec>
+    </target>
+
+    <target name="concat" description="include html, head, and body marks" depends="compile">
+        <concat destfile="html/index.html">
+            <string value="&lt;html&gt; &#10;  " />
+            <string value="&lt;head&gt; &#10;" />
+            <string value="&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; &gt; &#10;" />
+            <string value="&lt;/head&gt; &#10;" />
+            <string value="&lt;body&gt; &#10;" />
+            <string value="&lt;div style=&quot;text-align: justify;&quot;&gt; &#10;" />
+            <fileset dir="." file="index.htm" />
+            <string value="&lt;/div&gt; &#10;" />
+            <string value="&lt;/body&gt; &#10;" />
+            <string value="&lt;/html&gt; &#10;" />
+        </concat>
+        <concat destfile="html/index-eng.html">
+            <string value=" &lt;html&gt; &#10; " />
+            <string value=" &lt;head&gt; &#10;" />
+            <string value="&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; &gt; &#10;" />
+            <string value="&lt;/head&gt; &#10;" />
+            <string value="&lt;body&gt; &#10;" />
+            <string value="&lt;div style=&quot;text-align: justify;&quot;&gt; &#10;" />
+            <fileset dir="." file="index-eng.htm" />
+            <string value="&lt;/div&gt; &#10;" />
+            <string value="&lt;/body&gt; &#10;" />
+            <string value="&lt;/html&gt; &#10;" />
+        </concat>
+        <concat destfile="html/index-spa.html">
+            <string value=" &lt;html&gt; &#10; " />
+            <string value=" &lt;head&gt; &#10;" />
+            <string value="&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; &gt; &#10;" />
+            <string value="&lt;/head&gt; &#10;" />
+            <string value="&lt;body&gt; &#10;" />
+            <string value="&lt;div style=&quot;text-align: justify;&quot;&gt; &#10;" />
+            <fileset dir="." file="index-spa.htm" />
+            <string value="&lt;/div&gt; &#10;" />
+            <string value="&lt;/body&gt; &#10;" />
+            <string value="&lt;/html&gt; &#10;" />
+        </concat>
+    </target>
+
+    <target name="assets" description="move files to assets" depends="concat">
+        <delete dir="../../assets/help/html"/>
+        <delete dir="../../assets/help/img"/>
+
+        <copy  todir="../../assets/help/html" >
+            <fileset dir="html"/>
+        </copy>
+        <copy  todir="../../assets/help/img" >
+            <fileset dir="img"/>
+        </copy>
+    </target>
+</project>

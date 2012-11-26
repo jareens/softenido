@@ -47,6 +47,8 @@
     <string name="preferences_ignore_underscore_summary_off">los guiones bajos o subrayados _ se leeran</string>
     <string name="preferences_ignore_hyphens_title">Ignorar guiones --</string>
     <string name="preferences_ignore_hyphens_summary">ignorar guiones -- (dos o más) se ignorarán</string>
+    <string name="preferences_ignore_asterisk_title">Ignora *</string>
+    <string name="preferences_ignore_asterisk_summary">ignora asteriscos \'*\' en la lectura</string>
     <string name="preferences_auto_title">auto</string>
     <string name="preferences_auto_auto_title">Auto</string>
     <string name="preferences_auto_auto_summary_on">las siguientes acciones están habilitadas</string>
@@ -77,7 +79,7 @@
     <string name="preferences_ui_fontfamily_title">Familia Tipográfica</string>
     <string name="preferences_ui_fontfamily_summary">la Familia Tipográfica es %s</string>
     <string name="preferences_ui_fontsize_title">Tamaño de Tipografía</string>
-    <string name="preferences_ui_fontsize_summary">es tamaño de tipografía es %s</string>
+    <string name="preferences_ui_fontsize_summary">el tamaño de la tipografía es %s</string>
     <string name="preferences_ui_fontbold_title">Estilo Negríta</string>
     <string name="preferences_ui_fontbold_summary_on">el estilo es Negríta</string>
     <string name="preferences_ui_fontbold_summary_off">el estilo es Normal</string>
@@ -93,6 +95,7 @@
     <string name="preferences_optimize_keeps_title">Inicio Rápido</string>
     <string name="preferences_optimize_keeps_summary">Inicio Rápido se mantendrá en memoria durante %s</string>
     <string name="preferences_advanced">avanzado (sólo desarrolladores)</string>
+    <string name="preferences_about">acerca de</string>
     <string name="preferences_about_title">Acerca de Audible</string>
     <string name="activity_preference_label">Preferencias</string>
     <string name="preferences_language_early_detect_title">Detección Temprana</string>
@@ -101,4 +104,12 @@
     <string name="choose_text_file_with">Seleccionar fichero de texto con...</string>
     <string name="choose_send_with">Enviar contenido con...</string>
     <string name="resolve_view">Ver contenido con...</string>
+    <string name="preferences_ui_join_lines_title">Unir Líneas</string>
+    <string name="preferences_ui_join_lines_summary">unir las líneas de cada parrafo</string>
+    <string name="main_menu_help_title">Ayuda</string>
+    <string name="main_menu_about_title">Acerca de</string>
+    <string name="main_menu_rotate_title">Rotar</string>
+    <string name="main_menu_settings_title">Configuración</string>
+    <string name="help">Ayuda</string>
+
 </resources>

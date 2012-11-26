@@ -289,6 +289,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         {
             this.start();
 
+            this.speaker.waitForStarted(60000);
             Log.d("SpeechPlayer", "speaker.getAvailableLocales()="+Arrays.toString(this.speaker.getAvailableLocales()));
             Log.d("SpeechPlayer", "speaker.areDefaultsEnforced()="+speaker.areDefaultsEnforced());
             Log.d("SpeechPlayer", "speaker.getDefaultEngine()="+speaker.getDefaultEngine());

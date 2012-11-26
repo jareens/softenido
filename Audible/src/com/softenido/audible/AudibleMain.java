@@ -21,20 +21,17 @@
 
 package com.softenido.audible;
 
-import android.app.ActivityManager;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.text.ClipboardManager;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 import com.softenido.cafecore.gauge.DebugGauge;
 import com.softenido.cafecore.io.Files;
@@ -54,12 +51,13 @@ import com.softenido.cafedroid.speech.SpeechPlayer;
 import com.softenido.cafedroid.speech.SpeechSpeaker;
 import com.softenido.cafedroid.util.InvokeIntents;
 import com.softenido.cafedroid.util.logging.LogCatHandler;
+import com.softenido.cafedroid.util.ui.AboutGPL3Activity;
 import com.softenido.cafedroid.util.ui.Notifier;
+import com.softenido.cafedroid.web.WebHelpActivity;
 import com.softenido.gutenberg.GutenbergLanguageClassifier;
 import org.apache.http.protocol.HTTP;
 
 import java.io.*;
-import java.net.URI;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,8 +97,8 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     LinearLayout volumePannel = null;
     SeekBar volumeBar = null;
     TextView volumeText = null;
-    Button volumeAdd = null;
-    Button volumeSub = null;
+    ImageButton volumeAdd = null;
+    ImageButton volumeSub = null;
 
     View layoutHomeExtra =null;
     ImageButton extraCopy = null;
@@ -117,6 +115,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     ToggleButton toggleAuto =null;
 
     ImageButton setup=null;
+    ImageButton queue=null;
     ImageButton prev = null;
     ImageButton next = null;
     ImageButton stop = null;
@@ -208,8 +207,8 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         volumeBar = (SeekBar)findViewById(R.id.seekbar_view_bar);
         volumeBar.setOnSeekBarChangeListener(volumeBarListener);
         volumeText= (TextView)findViewById(R.id.seekbar_view_text);
-        volumeAdd = (Button)findViewById(R.id.seekbar_view_add);
-        volumeSub = (Button)findViewById(R.id.seekbar_view_sub);
+        volumeAdd = (ImageButton)findViewById(R.id.seekbar_view_add);
+        volumeSub = (ImageButton)findViewById(R.id.seekbar_view_sub);
         //get components for toggle pannel
         toggleExtra = (ToggleButton)findViewById(R.id.toggle_extra);
         toggleVolume = (ToggleButton)findViewById(R.id.toggle_volume);
@@ -218,6 +217,9 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         toggleAuto = (ToggleButton)findViewById(R.id.toggle_auto);
         //get components for buttons pannel
         setup= (ImageButton) findViewById(R.id.setup);
+        queue= (ImageButton) findViewById(R.id.queue);
+        queue.setEnabled(false);
+
         prev = (ImageButton) findViewById(R.id.player_prev);
         next = (ImageButton) findViewById(R.id.player_next);
         stop = (ImageButton) findViewById(R.id.player_stop);
@@ -369,9 +371,11 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         this.paragraphs = new ArrayList<String>();
         this.paragraphs.add(head);
 
+        boolean joinLines = this.settings.isJoinLines();
+
         for(String item : Paragraphs.split(body,true))
         {
-            bodyParts.add(item);
+            bodyParts.add(joinLines?item.replace("\n"," "):item);
             paragraphs.add(item);
         }
 
@@ -558,7 +562,6 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     protected void onStop()
     {
         classifier.setStatusNotifier(null);
-        KeepAudibleLoadService.setActive(false, settings.getQuickStart());
         player.stop();
         settings.setTitle(head);
         settings.setBody(body);
@@ -578,6 +581,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     @Override
     protected void onDestroy()
     {
+        KeepAudibleLoadService.setActive(false, settings.getQuickStart());
         manager.shutdown();
         super.onDestroy();
     }
@@ -623,15 +627,14 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     private void setButtonsListeners()
     {
         //get components for buttons pannel
-        final Intent about = new Intent(this,AudiblePreferenceActivity.class);
         setup.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View arg0)
             {
-                settings.setAuto(toggleAuto.isChecked());
-                startActivityForResult(about, 0);
+                showSettings();
             }
         });
+        queue.setOnClickListener(queueListener);
         prev.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View arg0)
@@ -858,6 +861,13 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             InvokeIntents.send(AudibleMain.this, HTTP.PLAIN_TEXT_TYPE, R.string.choose_send_with, head, body);
         }
     };
+    final View.OnClickListener queueListener = new View.OnClickListener()
+    {
+        public void onClick(View arg0)
+        {
+            // not implemented yet
+        }
+    };
 
     static boolean isTitleRepeated(String title, String body)
     {
@@ -969,4 +979,82 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             setStatus(needInstallEngine?Status.INSTALL:Status.READY);
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.main_menu_settings:
+                showSettings();
+                return true;
+            case R.id.main_menu_help:
+                showHelp();
+                return true;
+            case R.id.main_menu_about:
+                showAbout();
+                return true;
+            case R.id.main_menu_rotate:
+                rotateScreen();
+                return true;
+        }
+        return false;
+    }
+
+    private void showSettings()
+    {
+        final Intent intent = new Intent(this,AudiblePreferenceActivity.class);
+        settings.setAuto(toggleAuto.isChecked());
+        startActivityForResult(intent, 0);
+    }
+
+    private void showHelp()
+    {
+        String url = "file:///android_asset/help/html/index-eng.html";
+        if(Locale.getDefault().getISO3Language().equals("spa"))
+        {
+            url = "file:///android_asset/help/html/index-spa.html";
+        }
+        WebHelpActivity.startUrl(AudibleMain.this, url);
+    }
+
+    private void showAbout()
+    {
+        final Intent intent = new Intent(this, AboutGPL3Activity.class);
+        startActivityForResult(intent, 0);
+    }
+
+    private void rotateScreen()
+    {
+        int orientation = this.getRequestedOrientation();
+        switch (orientation)
+        {
+//            case ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED:
+            case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
+                this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                break;
+            case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
+                this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                break;
+//            case ActivityInfo.SCREEN_ORIENTATION_USER:
+//            case ActivityInfo.SCREEN_ORIENTATION_BEHIND:
+//            case ActivityInfo.SCREEN_ORIENTATION_SENSOR:
+//            case ActivityInfo.SCREEN_ORIENTATION_NOSENSOR:
+//            case ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE:
+//            case ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT:
+//            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE:
+//            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT:
+//            case ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR:
+
+        }
+    }
+
 }

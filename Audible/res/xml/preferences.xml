@@ -101,6 +101,7 @@
         <CheckBoxPreference android:title="@string/preferences_ui_toasts_title" android:defaultValue="true" android:key="ui.toasts" android:persistent="true" android:summaryOn="@string/preferences_ui_toasts_summary_on" android:summaryOff="@string/preferences_ui_toasts_summary_off"/>
         <CheckBoxPreference android:title="@string/preferences_ui_progress_title" android:defaultValue="true" android:key="ui.progress" android:persistent="true" android:summaryOn="@string/preferences_ui_progress_summary" android:summaryOff="@string/preferences_ui_progress_summary_off"/>
         <CheckBoxPreference android:title="@string/preferences_ui_progress_volume_title" android:defaultValue="false" android:key="ui.volume" android:persistent="true" android:summaryOn="@string/preferences_ui_progress_volume_summary_on" android:summaryOff="@string/preferences_ui_progress_volume_off"/>
+        <CheckBoxPreference android:title="@string/preferences_ui_join_lines_title" android:defaultValue="false" android:key="ui.joinlines" android:persistent="true" android:summaryOn="@string/preferences_ui_join_lines_summary" android:summaryOff="@string/preferences_ui_join_lines_summary"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/preferences_title_optimization">
         <ListPreference android:title="@string/preferences_optimize_keeps_title" android:entries="@array/keep_quick_start" android:entryValues="@array/keep_quick_start_values" android:key="advanced.keep_quick_start" android:defaultValue="86400" android:summary="@string/preferences_optimize_keeps_summary"/>
@@ -109,7 +110,7 @@
     <PreferenceCategory android:title="@string/preferences_advanced">
         <CheckBoxPreference android:title="@string/advanced_early_save" android:defaultValue="false" android:key="advanced.ealysave" android:persistent="true" android:summaryOn="@string/advanced_early_save_on" android:summaryOff="@string/advanced_early_save_off"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="about">
+    <PreferenceCategory android:title="@string/preferences_about">
         <Preference android:title="@string/preferences_about_title" >
             <intent android:targetPackage="com.softenido.audible" android:targetClass="com.softenido.cafedroid.util.ui.AboutGPL3Activity"/>
         </Preference>

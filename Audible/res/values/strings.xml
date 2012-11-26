@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Audible</string>
-    <string name="app_name_version">Audible</string>
+    <string name="app_name">Audible TTS</string>
+    <string name="app_name_version">Audible TTS</string>
     <string name="about">About</string>
     <string name="end_of_the_reading">end of the reading</string>
     <string name="toggle_detect_lang">detect language</string>
@@ -18,7 +18,7 @@
     <string name="notify_keep_ticker">Audible Quick Starter</string>
     <string name="notify_keep_text">Helps for a quick start</string>
     <string name="advanced_quick_start">Quick Start</string>
-    <string name="advanced_early_save">Guardar al inicio</string>
+    <string name="advanced_early_save">Early Save</string>
     <string name="advanced_early_save_on">title and body will be saved as early as possible</string>
     <string name="advanced_early_save_off">title and body will be saved only at normal exit</string>
     <string name="preferences_title_optimization">optimization</string>
@@ -96,6 +96,7 @@
     <string name="preferences_optimize_keeps_title">Quick Start</string>
     <string name="preferences_optimize_keeps_summary">Quick Start will be keept in memory for %s</string>
     <string name="preferences_advanced">advanced (developers only)</string>
+    <string name="preferences_about">about</string>
     <string name="preferences_about_title">About Audible</string>
     <string name="activity_preference_label">Preferences</string>
     <string name="preferences_language_early_detect_title">Detect Early</string>
@@ -104,4 +105,12 @@
     <string name="choose_text_file_with">Choose text file with...</string>
     <string name="choose_send_with">Send content with...</string>
     <string name="resolve_view">View content with...</string>
+    <string name="preferences_ui_join_lines_title">Join Lines</string>
+    <string name="preferences_ui_join_lines_summary">join lines of every paragraph</string>
+    <string name="main_menu_help_title">Help</string>
+    <string name="main_menu_about_title">About</string>
+    <string name="main_menu_rotate_title">Rotate</string>
+    <string name="main_menu_settings_title">Settings</string>
+    <string name="help">Help</string>
+
 </resources>

@@ -65,6 +65,8 @@ public class AudiblePreferences
     private static final String UI_TOASTS        = "ui.toasts";
     private static final String UI_PROGRESS      = "ui.progress";
     private static final String UI_VOLUME        = "ui.volume";
+    private static final String UI_JOINLINES     = "ui.joinlines";
+
 
     private static final String EARLY_SAVE       = "advanced.ealysave";
     private static final String EARLY_DETECT     = "advanced.ealydetect";
@@ -339,6 +341,11 @@ public class AudiblePreferences
     public void setVolume(boolean value)
     {
         edit().putBoolean(UI_VOLUME, value);
+    }
+
+    public boolean isJoinLines()
+    {
+        return settings.getBoolean(UI_JOINLINES, false);
     }
 
     public int getLangUnit()

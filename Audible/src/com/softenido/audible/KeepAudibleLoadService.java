@@ -144,9 +144,13 @@ public class KeepAudibleLoadService extends LocalService
             {
                 while(active || countdown>0)
                 {
-                    countdown--;
                     try
                     {
+                        while(active)
+                        {
+                            Thread.sleep(60*1000);
+                        }
+                        countdown--;
                         Log.d(KeepAudibleLoadService.class.getSimpleName(),"countdown="+(countdown)+"min");
                         Thread.sleep(60*1000);
                     }
@@ -163,7 +167,7 @@ public class KeepAudibleLoadService extends LocalService
 
     static public void setActive(boolean active, int seconds)
     {
-         KeepAudibleLoadService.active = active;
+        KeepAudibleLoadService.active = active;
         KeepAudibleLoadService.countdown = seconds/60;
     }
 }

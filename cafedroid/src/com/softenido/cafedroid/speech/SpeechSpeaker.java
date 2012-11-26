@@ -111,23 +111,27 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
 
     void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        switch(resultCode)
+        synchronized(lock)
         {
-            case TextToSpeech.Engine.CHECK_VOICE_DATA_PASS:
-                InstallNeeded =false;
-                tts = new TextToSpeech(activity, this);
-                tts.setLanguage(locale);
-                break;
-            case TextToSpeech.Engine.CHECK_VOICE_DATA_MISSING_DATA:
-                InstallNeeded =true;
-                manager.onSpeekerInstallNeeded();
-                break;
-            case TextToSpeech.Engine.CHECK_VOICE_DATA_FAIL:
-            case TextToSpeech.Engine.CHECK_VOICE_DATA_BAD_DATA:
-            case TextToSpeech.Engine.CHECK_VOICE_DATA_MISSING_VOLUME:
-            default:
-                InstallNeeded =false;
-                break;
+            switch(resultCode)
+            {
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_PASS:
+                    InstallNeeded =false;
+                    tts = new TextToSpeech(activity, this);
+                    tts.setLanguage(locale);
+                    break;
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_MISSING_DATA:
+                    InstallNeeded =true;
+                    manager.onSpeekerInstallNeeded();
+                    break;
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_FAIL:
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_BAD_DATA:
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_MISSING_VOLUME:
+                default:
+                    InstallNeeded=false;
+                    break;
+            }
+            lock.notifyAll();
         }
     }
 
@@ -168,6 +172,34 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
     {
         return tts.isLanguageAvailable(loc);
     }
+
+    public boolean isStarted()
+    {
+        return (tts!=null);
+    }
+    public boolean waitForStarted(int millis)
+    {
+        try
+        {
+            long nanos = System.nanoTime();
+            long timeout = nanos+(millis*1000000);
+            long remain = nanos;
+            while( !this.isStarted() && !InstallNeeded && System.nanoTime()<timeout)
+            {
+                synchronized (lock)
+                {
+                    remain = (timeout - System.nanoTime()) / 1000000;
+                    lock.wait();
+                }
+            }
+        }
+        catch (InterruptedException ex)
+        {
+            Log.e(tag,"waitForStarted("+millis+")", ex);
+        }
+        return isStarted();
+    }
+
     public Locale[] getAvailableLocales()
     {
         return getAvailableLocales(Locale.getAvailableLocales());

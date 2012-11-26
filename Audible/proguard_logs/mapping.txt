@@ -485,13 +485,13 @@ com.google.ads.z$c -> com.google.ads.at:
     android.webkit.WebView b -> b
     void run() -> run
 com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
-    int FILE_READ_LIMIT -> an
-    java.util.logging.Logger logger -> ao
-    java.lang.String head -> ap
-    java.lang.String body -> aq
-    java.util.List bodyParts -> ar
-    java.util.List paragraphs -> as
-    com.softenido.cafedroid.admob.AdMob admob -> at
+    int FILE_READ_LIMIT -> ap
+    java.util.logging.Logger logger -> aq
+    java.lang.String head -> ar
+    java.lang.String body -> as
+    java.util.List bodyParts -> at
+    java.util.List paragraphs -> au
+    com.softenido.cafedroid.admob.AdMob admob -> av
     android.widget.TextView title -> a
     android.widget.ListView textList -> b
     android.widget.EditText textEdit -> c
@@ -500,8 +500,8 @@ com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
     android.widget.LinearLayout volumePannel -> f
     android.widget.SeekBar volumeBar -> g
     android.widget.TextView volumeText -> h
-    android.widget.Button volumeAdd -> i
-    android.widget.Button volumeSub -> j
+    android.widget.ImageButton volumeAdd -> i
+    android.widget.ImageButton volumeSub -> j
     android.view.View layoutHomeExtra -> k
     android.widget.ImageButton extraCopy -> l
     android.widget.ImageButton extraPaste -> m
@@ -515,54 +515,56 @@ com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
     android.widget.ToggleButton togglePhrase -> u
     android.widget.ToggleButton toggleAuto -> v
     android.widget.ImageButton setup -> w
-    android.widget.ImageButton prev -> x
-    android.widget.ImageButton next -> y
-    android.widget.ImageButton stop -> z
-    android.widget.ImageButton play -> A
-    android.widget.ImageButton pause -> B
-    android.widget.ImageButton resume -> C
-    android.widget.ImageButton install -> D
-    android.os.Handler handler -> E
-    com.softenido.audible.AudibleMain$Status status -> au
-    com.softenido.cafedroid.speech.SpeechManager manager -> av
-    com.softenido.cafedroid.speech.SpeechSpeaker speaker -> aw
-    com.softenido.cafedroid.speech.SpeechPlayer player -> ax
-    com.softenido.cafedroid.util.ui.Notifier notifier -> F
-    boolean readingLowercase -> G
-    boolean readingIgnoreTitle -> H
-    boolean readingIgnoreTitleRepeated -> I
-    java.lang.String readingIgnore -> J
-    java.lang.String readingAlternative -> K
-    boolean autoPlayExit -> L
-    boolean autoPlay -> M
-    boolean autoExit -> N
-    boolean autoScreenLock -> O
-    int langUnit -> P
-    com.softenido.audible.Theme theme -> Q
-    com.softenido.audible.FontConfig font -> R
-    boolean showToasts -> S
-    boolean showProgress -> T
-    boolean earlySave -> U
-    boolean earlyDetect -> V
-    boolean needInstallEngine -> ay
-    com.softenido.audible.AudiblePreferences settings -> W
-    com.softenido.gutenberg.GutenbergLanguageClassifier classifier -> X
-    com.softenido.cafedroid.os.PolicyAdmin policyAdmin -> Y
-    java.lang.String volumePrefix -> Z
-    int lastSmoothScroll -> az
-    android.view.View$OnClickListener toggleVolumeListener -> aa
-    android.widget.SeekBar$OnSeekBarChangeListener volumeBarListener -> ab
-    android.view.View$OnClickListener volumeAddListener -> ac
-    android.view.View$OnClickListener volumeSubListener -> ad
-    android.view.View$OnClickListener toggleLangListener -> ae
-    android.view.View$OnClickListener toggleExtraListener -> af
-    android.view.View$OnClickListener extraCopyListener -> ag
-    android.view.View$OnClickListener extraPasteListener -> ah
-    android.view.View$OnClickListener extraEraseListener -> ai
-    android.view.View$OnClickListener extraKeyboardListener -> aj
-    android.view.View$OnClickListener extraFileListener -> ak
-    android.view.View$OnClickListener extraSendtoListener -> al
-    boolean stoppedByVolume -> am
+    android.widget.ImageButton queue -> x
+    android.widget.ImageButton prev -> y
+    android.widget.ImageButton next -> z
+    android.widget.ImageButton stop -> A
+    android.widget.ImageButton play -> B
+    android.widget.ImageButton pause -> C
+    android.widget.ImageButton resume -> D
+    android.widget.ImageButton install -> E
+    android.os.Handler handler -> F
+    com.softenido.audible.AudibleMain$Status status -> aw
+    com.softenido.cafedroid.speech.SpeechManager manager -> ax
+    com.softenido.cafedroid.speech.SpeechSpeaker speaker -> ay
+    com.softenido.cafedroid.speech.SpeechPlayer player -> az
+    com.softenido.cafedroid.util.ui.Notifier notifier -> G
+    boolean readingLowercase -> H
+    boolean readingIgnoreTitle -> I
+    boolean readingIgnoreTitleRepeated -> J
+    java.lang.String readingIgnore -> K
+    java.lang.String readingAlternative -> L
+    boolean autoPlayExit -> M
+    boolean autoPlay -> N
+    boolean autoExit -> O
+    boolean autoScreenLock -> P
+    int langUnit -> Q
+    com.softenido.audible.Theme theme -> R
+    com.softenido.audible.FontConfig font -> S
+    boolean showToasts -> T
+    boolean showProgress -> U
+    boolean earlySave -> V
+    boolean earlyDetect -> W
+    boolean needInstallEngine -> aA
+    com.softenido.audible.AudiblePreferences settings -> X
+    com.softenido.gutenberg.GutenbergLanguageClassifier classifier -> Y
+    com.softenido.cafedroid.os.PolicyAdmin policyAdmin -> Z
+    java.lang.String volumePrefix -> aa
+    int lastSmoothScroll -> aB
+    android.view.View$OnClickListener toggleVolumeListener -> ab
+    android.widget.SeekBar$OnSeekBarChangeListener volumeBarListener -> ac
+    android.view.View$OnClickListener volumeAddListener -> ad
+    android.view.View$OnClickListener volumeSubListener -> ae
+    android.view.View$OnClickListener toggleLangListener -> af
+    android.view.View$OnClickListener toggleExtraListener -> ag
+    android.view.View$OnClickListener extraCopyListener -> ah
+    android.view.View$OnClickListener extraPasteListener -> ai
+    android.view.View$OnClickListener extraEraseListener -> aj
+    android.view.View$OnClickListener extraKeyboardListener -> ak
+    android.view.View$OnClickListener extraFileListener -> al
+    android.view.View$OnClickListener extraSendtoListener -> am
+    android.view.View$OnClickListener queueListener -> an
+    boolean stoppedByVolume -> ao
     void onCreate(android.os.Bundle) -> onCreate
     com.softenido.cafedroid.speech.SpeechPlayer buildSpeechPlayer() -> e
     void loadPreferences() -> f
@@ -593,19 +595,26 @@ com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
     void toggleEdit() -> n
     void loadHeadAndBody(android.net.Uri) -> a
     void loadTextFile(android.net.Uri) -> b
+    boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    boolean onMenuItemSelected(int,android.view.MenuItem) -> onMenuItemSelected
+    void showSettings() -> o
+    void showHelp() -> p
+    void showAbout() -> q
+    void rotateScreen() -> r
     boolean access$002(com.softenido.audible.AudibleMain,boolean) -> a
     void access$100(com.softenido.audible.AudibleMain,com.softenido.audible.AudibleMain$Status) -> a
     void access$200(com.softenido.audible.AudibleMain) -> a
-    com.softenido.cafedroid.speech.SpeechPlayer access$300(com.softenido.audible.AudibleMain) -> b
-    void access$400(com.softenido.audible.AudibleMain) -> c
+    void access$300(com.softenido.audible.AudibleMain) -> b
+    com.softenido.cafedroid.speech.SpeechPlayer access$400(com.softenido.audible.AudibleMain) -> c
     void access$500(com.softenido.audible.AudibleMain) -> d
     void access$600(com.softenido.audible.AudibleMain) -> e
-    int access$700(com.softenido.audible.AudibleMain) -> f
-    int access$702(com.softenido.audible.AudibleMain,int) -> a
-    java.lang.String access$800(com.softenido.audible.AudibleMain) -> g
-    void access$900(com.softenido.audible.AudibleMain,java.lang.String,java.lang.String) -> a
-    void access$1000(com.softenido.audible.AudibleMain) -> h
-    java.lang.String access$1100(com.softenido.audible.AudibleMain) -> i
+    void access$700(com.softenido.audible.AudibleMain) -> f
+    int access$800(com.softenido.audible.AudibleMain) -> g
+    int access$802(com.softenido.audible.AudibleMain,int) -> a
+    java.lang.String access$900(com.softenido.audible.AudibleMain) -> h
+    void access$1000(com.softenido.audible.AudibleMain,java.lang.String,java.lang.String) -> a
+    void access$1100(com.softenido.audible.AudibleMain) -> i
+    java.lang.String access$1200(com.softenido.audible.AudibleMain) -> j
 com.softenido.audible.AudibleMain$1 -> com.softenido.audible.a:
     com.softenido.audible.AudibleMain this$0 -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
@@ -668,30 +677,32 @@ com.softenido.audible.AudibleMain$26 -> com.softenido.audible.s:
     com.softenido.audible.AudibleMain this$0 -> a
     void onClick(android.view.View) -> onClick
 com.softenido.audible.AudibleMain$27 -> com.softenido.audible.t:
+    com.softenido.audible.AudibleMain this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softenido.audible.AudibleMain$28 -> com.softenido.audible.u:
     int[] $SwitchMap$com$softenido$audible$AudibleMain$Status -> a
-com.softenido.audible.AudibleMain$3 -> com.softenido.audible.u:
+com.softenido.audible.AudibleMain$3 -> com.softenido.audible.v:
     com.softenido.audible.AudibleMain this$0 -> a
     void run() -> run
-com.softenido.audible.AudibleMain$4 -> com.softenido.audible.v:
-    android.content.Intent val$about -> a
-    com.softenido.audible.AudibleMain this$0 -> b
-    void onClick(android.view.View) -> onClick
-com.softenido.audible.AudibleMain$5 -> com.softenido.audible.w:
+com.softenido.audible.AudibleMain$4 -> com.softenido.audible.w:
     com.softenido.audible.AudibleMain this$0 -> a
     void onClick(android.view.View) -> onClick
-com.softenido.audible.AudibleMain$6 -> com.softenido.audible.x:
+com.softenido.audible.AudibleMain$5 -> com.softenido.audible.x:
     com.softenido.audible.AudibleMain this$0 -> a
     void onClick(android.view.View) -> onClick
-com.softenido.audible.AudibleMain$7 -> com.softenido.audible.y:
+com.softenido.audible.AudibleMain$6 -> com.softenido.audible.y:
     com.softenido.audible.AudibleMain this$0 -> a
     void onClick(android.view.View) -> onClick
-com.softenido.audible.AudibleMain$8 -> com.softenido.audible.z:
+com.softenido.audible.AudibleMain$7 -> com.softenido.audible.z:
     com.softenido.audible.AudibleMain this$0 -> a
     void onClick(android.view.View) -> onClick
-com.softenido.audible.AudibleMain$9 -> com.softenido.audible.aa:
+com.softenido.audible.AudibleMain$8 -> com.softenido.audible.aa:
     com.softenido.audible.AudibleMain this$0 -> a
     void onClick(android.view.View) -> onClick
-com.softenido.audible.AudibleMain$Status -> com.softenido.audible.ab:
+com.softenido.audible.AudibleMain$9 -> com.softenido.audible.ab:
+    com.softenido.audible.AudibleMain this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softenido.audible.AudibleMain$Status -> com.softenido.audible.ac:
     com.softenido.audible.AudibleMain$Status INSTALL -> a
     com.softenido.audible.AudibleMain$Status READY -> b
     com.softenido.audible.AudibleMain$Status PLAYING -> c
@@ -705,7 +716,7 @@ com.softenido.audible.AudiblePreferenceActivity -> com.softenido.audible.Audible
     com.softenido.audible.AudiblePreferences preferences -> a
     void onCreate(android.os.Bundle) -> onCreate
     void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
-com.softenido.audible.AudiblePreferences -> com.softenido.audible.ac:
+com.softenido.audible.AudiblePreferences -> com.softenido.audible.ad:
     com.softenido.audible.AudiblePreferences instance -> a
     android.content.SharedPreferences settings -> b
     android.content.SharedPreferences$Editor editor -> c
@@ -716,7 +727,7 @@ com.softenido.audible.AudiblePreferences -> com.softenido.audible.ac:
     java.util.HashMap countryKey -> g
     java.lang.String[] locales -> i
     com.softenido.audible.AudiblePreferences getInstance(android.content.Context) -> a
-    android.content.SharedPreferences$Editor edit() -> H
+    android.content.SharedPreferences$Editor edit() -> I
     void commit() -> a
     void setModified(boolean) -> a
     java.lang.String getTitle() -> b
@@ -753,9 +764,10 @@ com.softenido.audible.AudiblePreferences -> com.softenido.audible.ac:
     boolean isEarlyDetect() -> D
     int getQuickStart() -> E
     boolean isVolume() -> F
-    int getLangUnit() -> G
+    boolean isJoinLines() -> G
+    int getLangUnit() -> H
     int getInt(java.lang.String,int) -> a
-com.softenido.audible.FontConfig -> com.softenido.audible.ad:
+com.softenido.audible.FontConfig -> com.softenido.audible.ae:
     int dp -> a
     android.graphics.Typeface typeface -> b
     float size -> c
@@ -782,15 +794,15 @@ com.softenido.audible.KeepAudibleLoadService -> com.softenido.audible.KeepAudibl
     com.softenido.audible.KeepAudibleLoadService access$102(com.softenido.audible.KeepAudibleLoadService) -> a
     com.softenido.audible.KeepAudibleLoadService access$100() -> d
     int access$200() -> e
-com.softenido.audible.KeepAudibleLoadService$1 -> com.softenido.audible.ae:
+com.softenido.audible.KeepAudibleLoadService$1 -> com.softenido.audible.af:
     boolean initialize(java.lang.String) -> a
-com.softenido.audible.KeepAudibleLoadService$2 -> com.softenido.audible.af:
+com.softenido.audible.KeepAudibleLoadService$2 -> com.softenido.audible.ag:
     android.content.Context val$context -> a
     void onConnected(com.softenido.cafedroid.services.LocalService) -> a
-com.softenido.audible.KeepAudibleLoadService$3 -> com.softenido.audible.ag:
+com.softenido.audible.KeepAudibleLoadService$3 -> com.softenido.audible.ah:
     com.softenido.audible.KeepAudibleLoadService this$0 -> a
     void run() -> run
-com.softenido.audible.Theme -> com.softenido.audible.ah:
+com.softenido.audible.Theme -> com.softenido.audible.ai:
     com.softenido.audible.Theme Light -> a
     com.softenido.audible.Theme Gray -> b
     com.softenido.audible.Theme Dark -> c
@@ -1063,6 +1075,10 @@ com.softenido.cafedroid.R$id -> com.softenido.cafedroid.b:
     int layout_home_extra -> layout_home_extra
     int layout_home_text -> layout_home_text
     int mainLayout -> mainLayout
+    int main_menu_about -> main_menu_about
+    int main_menu_help -> main_menu_help
+    int main_menu_rotate -> main_menu_rotate
+    int main_menu_settings -> main_menu_settings
     int main_toggle_pannel -> main_toggle_pannel
     int paragraph_id -> paragraph_id
     int player_next -> player_next
@@ -1085,6 +1101,13 @@ com.softenido.cafedroid.R$id -> com.softenido.cafedroid.b:
     int toggle_extra -> toggle_extra
     int toggle_phrase -> toggle_phrase
     int toggle_volume -> toggle_volume
+    int web_back -> web_back
+    int web_buttons_layout -> web_buttons_layout
+    int web_forward -> web_forward
+    int web_home -> web_home
+    int web_search_edit -> web_search_edit
+    int web_search_go -> web_search_go
+    int web_view -> web_view
 com.softenido.cafedroid.R$layout -> com.softenido.cafedroid.c:
     int about_generic -> about_generic
     int about_gpl3 -> about_gpl3
@@ -1102,6 +1125,8 @@ com.softenido.cafedroid.R$layout -> com.softenido.cafedroid.c:
     int preferences -> preferences
     int seekbar_view -> seekbar_view
     int seekbar_view_add_sub -> seekbar_view_add_sub
+    int web_layout_black -> web_layout_black
+    int web_layout_blue -> web_layout_blue
 com.softenido.cafedroid.R$string -> com.softenido.cafedroid.d:
     int about -> about
     int about_feedback -> about_feedback
@@ -1133,12 +1158,18 @@ com.softenido.cafedroid.R$string -> com.softenido.cafedroid.d:
     int choose_text_file_with -> choose_text_file_with
     int end_of_the_reading -> end_of_the_reading
     int gplv3_brief -> gplv3_brief
+    int help -> help
     int lang_prompt_doc -> lang_prompt_doc
     int lang_prompt_par -> lang_prompt_par
     int locknow_description -> locknow_description
     int locknow_explanation -> locknow_explanation
+    int main_menu_about_title -> main_menu_about_title
+    int main_menu_help_title -> main_menu_help_title
+    int main_menu_rotate_title -> main_menu_rotate_title
+    int main_menu_settings_title -> main_menu_settings_title
     int notify_keep_text -> notify_keep_text
     int notify_keep_ticker -> notify_keep_ticker
+    int preferences_about -> preferences_about
     int preferences_about_title -> preferences_about_title
     int preferences_advanced -> preferences_advanced
     int preferences_auto_auto_summary_off -> preferences_auto_auto_summary_off
@@ -1207,6 +1238,8 @@ com.softenido.cafedroid.R$string -> com.softenido.cafedroid.d:
     int preferences_ui_fontfamily_title -> preferences_ui_fontfamily_title
     int preferences_ui_fontsize_summary -> preferences_ui_fontsize_summary
     int preferences_ui_fontsize_title -> preferences_ui_fontsize_title
+    int preferences_ui_join_lines_summary -> preferences_ui_join_lines_summary
+    int preferences_ui_join_lines_title -> preferences_ui_join_lines_title
     int preferences_ui_progress_summary -> preferences_ui_progress_summary
     int preferences_ui_progress_summary_off -> preferences_ui_progress_summary_off
     int preferences_ui_progress_title -> preferences_ui_progress_title
@@ -1582,24 +1615,26 @@ com.softenido.cafedroid.speech.SpeechSpeaker -> com.softenido.cafedroid.e.j:
     void onInit(int) -> onInit
     int setLanguage(java.util.Locale) -> a
     int isLanguageAvailable(java.util.Locale) -> b
-    java.util.Locale[] getAvailableLocales() -> c
+    boolean isStarted() -> c
+    boolean waitForStarted(int) -> a
+    java.util.Locale[] getAvailableLocales() -> d
     java.util.Locale[] getAvailableLocales(java.util.Locale[]) -> a
-    void stop() -> d
-    void pause() -> e
-    void shutdown() -> f
+    void stop() -> e
+    void pause() -> f
+    void shutdown() -> g
     java.lang.String speak(java.lang.String,boolean,boolean) -> a
     java.lang.String speak(java.lang.String,boolean,boolean,java.lang.String) -> a
     void onUtteranceCompleted(java.lang.String) -> onUtteranceCompleted
     void registerOnSpeakingListener(com.softenido.cafedroid.speech.SpeechSpeaker$OnSpeakingListener) -> a
     void unregisterOnSpeakingListener(com.softenido.cafedroid.speech.SpeechSpeaker$OnSpeakingListener) -> b
-    android.media.AudioManager getAudioManager() -> l
-    int getVolume() -> g
-    int getMaxVolume() -> h
+    android.media.AudioManager getAudioManager() -> m
+    int getVolume() -> h
+    int getMaxVolume() -> i
     void setVolume(int,int) -> a
     void adjustVolume(int,int) -> b
-    int getVolumePercentage() -> i
-    boolean areDefaultsEnforced() -> j
-    java.lang.String getDefaultEngine() -> k
+    int getVolumePercentage() -> j
+    boolean areDefaultsEnforced() -> k
+    java.lang.String getDefaultEngine() -> l
 com.softenido.cafedroid.speech.SpeechSpeaker$OnSpeakingListener -> com.softenido.cafedroid.e.k:
     void onSpeaking() -> d
 com.softenido.cafedroid.speech.SpeechSpeaker$Status -> com.softenido.cafedroid.e.l:
@@ -1683,6 +1718,72 @@ com.softenido.cafedroid.util.ui.Notifier$6 -> com.softenido.cafedroid.util.ui.i:
 com.softenido.cafedroid.util.ui.Views -> com.softenido.cafedroid.util.ui.j:
     android.view.View inflate(android.app.Activity,android.widget.LinearLayout,int,int) -> a
     android.view.View inflateBefore(android.app.Activity,int,int,int) -> a
+com.softenido.cafedroid.web.WebActivity -> com.softenido.cafedroid.web.WebActivity:
+    com.softenido.cafedroid.web.WebConfig config -> a
+    android.webkit.WebView wv -> d
+    java.lang.String url -> e
+    android.widget.LinearLayout buttons -> b
+    android.view.View zoom -> f
+    android.widget.ImageButton back -> g
+    android.widget.ImageButton forward -> h
+    android.widget.ImageButton home -> i
+    android.widget.EditText searchEdit -> j
+    android.widget.ImageButton searchGo -> k
+    android.view.View$OnClickListener backOnClickListener -> l
+    android.view.View$OnClickListener forwardOnClickListener -> m
+    android.view.View$OnClickListener homeOnClickListener -> n
+    android.view.View$OnKeyListener searchEditOnKeyListener -> o
+    android.view.View$OnClickListener searchGoOnClickListener -> p
+    java.lang.String lastSearch -> c
+    void onCreate(android.os.Bundle) -> onCreate
+    void startUrl(android.app.Activity,java.lang.String,java.lang.Class) -> a
+    void onBack() -> a
+    void onForward() -> b
+    void onHome() -> c
+    void onSearch(java.lang.String) -> a
+    boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    android.widget.EditText access$000(com.softenido.cafedroid.web.WebActivity) -> a
+com.softenido.cafedroid.web.WebActivity$1 -> com.softenido.cafedroid.web.a:
+    com.softenido.cafedroid.web.WebActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softenido.cafedroid.web.WebActivity$2 -> com.softenido.cafedroid.web.b:
+    com.softenido.cafedroid.web.WebActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softenido.cafedroid.web.WebActivity$3 -> com.softenido.cafedroid.web.c:
+    com.softenido.cafedroid.web.WebActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softenido.cafedroid.web.WebActivity$4 -> com.softenido.cafedroid.web.d:
+    com.softenido.cafedroid.web.WebActivity this$0 -> a
+    boolean onKey(android.view.View,int,android.view.KeyEvent) -> onKey
+com.softenido.cafedroid.web.WebActivity$5 -> com.softenido.cafedroid.web.e:
+    com.softenido.cafedroid.web.WebActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.softenido.cafedroid.web.WebConfig -> com.softenido.cafedroid.web.f:
+    int NONE -> d
+    int BACK -> e
+    int FORWARD -> f
+    int HOME -> g
+    int SEARCH -> h
+    int ZOOMCTRL -> i
+    int BUILTIN -> j
+    int WIDEVIEW -> k
+    int layout -> a
+    int modeBar -> b
+    int modeZoom -> c
+    com.softenido.cafedroid.web.WebConfig getSimpleInstance() -> a
+    com.softenido.cafedroid.web.WebConfig getHelpInstance() -> b
+    boolean hasBar() -> c
+    boolean hasBack() -> d
+    boolean hasForward() -> e
+    boolean hasHome() -> f
+    boolean hasSearch() -> g
+    boolean hasZoom() -> h
+    boolean hasZoomCtrl() -> i
+    boolean hasBuiltIn() -> j
+    boolean hasWideView() -> k
+com.softenido.cafedroid.web.WebHelpActivity -> com.softenido.cafedroid.web.WebHelpActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+    void startUrl(android.app.Activity,java.lang.String) -> a
 com.softenido.cafedroid.widget.ToggleImageButton -> com.softenido.cafedroid.widget.ToggleImageButton:
     java.lang.Object lock -> c
     int state -> a

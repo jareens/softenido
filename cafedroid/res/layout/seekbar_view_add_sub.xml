@@ -27,11 +27,11 @@
                   android:layout_weight="1"/>
     </LinearLayout>
     <Button android:id="@+id/seekbar_view_sub"
-            android:drawableLeft="@drawable/ic_sub"
+            android:drawableLeft="@drawable/ic_sub_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     <Button android:id="@+id/seekbar_view_add"
-            android:drawableLeft="@drawable/ic_add"
+            android:drawableLeft="@drawable/ic_add_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 </LinearLayout>

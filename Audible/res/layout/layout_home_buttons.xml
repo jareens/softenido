@@ -8,11 +8,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:src="@drawable/ic_settings"/>
-    <Button android:id="@+id/queue"
+    <ImageButton android:id="@+id/queue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_queue"
+            android:src="@drawable/ic_queue"
             android:enabled="false"/>
     <ImageButton android:id="@+id/player_prev"
             android:layout_width="wrap_content"

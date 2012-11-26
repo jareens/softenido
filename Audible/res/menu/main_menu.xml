@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/main_menu_about" android:title="@string/main_menu_about_title" android:icon="@drawable/ic_menu_about" android:showAsAction="ifRoom|withText"/>
+    <item android:id="@+id/main_menu_help" android:title="@string/main_menu_help_title" android:icon="@drawable/ic_menu_help" android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/main_menu_rotate" android:title="@string/main_menu_rotate_title" android:icon="@drawable/ic_menu_rotate" android:showAsAction="ifRoom|withText" />
+    <item android:id="@+id/main_menu_settings" android:title="@string/main_menu_settings_title" android:icon="@drawable/ic_menu_settings" android:showAsAction="ifRoom|withText" />
+</menu>
