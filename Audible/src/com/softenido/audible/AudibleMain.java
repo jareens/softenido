@@ -21,8 +21,10 @@
 
 package com.softenido.audible;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -788,6 +790,20 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         }
     };
 
+    private DialogInterface.OnClickListener toggleLangAcceptListener = new DialogInterface.OnClickListener()
+    {
+        public void onClick(DialogInterface dialog, int id)
+        {
+            setup.performClick();
+        }
+    };
+    private DialogInterface.OnClickListener toggleLangCancelListener = new DialogInterface.OnClickListener()
+    {
+        public void onClick(DialogInterface dialog, int id)
+        {
+            toggleLang.setChecked(false);
+        }
+    };
     final View.OnClickListener toggleLangListener = new View.OnClickListener()
     {
         public void onClick(View arg0)
@@ -795,6 +811,18 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             player.setDetection(toggleLang.isChecked());
             if(toggleLang.isChecked())
             {
+                String[] languages = settings.getLanguages();
+                if(languages.length==0)
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AudibleMain.this);
+                    builder.setMessage(R.string.no_avaliable_language_text)
+                           .setTitle(R.string.no_avaliable_language_title)
+                           .setCancelable(false)
+                           .setPositiveButton(R.string.ok, toggleLangAcceptListener)
+                           .setNegativeButton(R.string.cancel, toggleLangCancelListener);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
                 player.start();
             }
         }
