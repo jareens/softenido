@@ -1,0 +1,18 @@
+- aplicación para cara o cruz (multimples monedas), usando open-gl para rotar la moneda.
+- aplicación para jugar a los datos (kiriki, ...)
+- tic tac toe / tres en raya
+- la jerezana
+- cifras y letras
+- temporizado (tostadas, te, ...)
+- sopa de letras
+- crucigramas
+- generador de crucigramas
+- Ahorcado / hangman
+- Contador de cartas de BlackJack - permite practicar: n cartas/minuto, 1 carta/toque
+- los barquitos (hundir la flota)
+- Math Practice, enseña las operaciones básicas: suma, resta, multiplicación, división, raiz cuadrada, matrices, ..., simulando el cálculo manual, y corrigiendo al usuario.
+- calculadora de superficies, volumenes, angulos, ...
+- solitario y otros juegos de cartas.
+- Chanllenges: test sobre Banderas, Rios, Capitales, Monedas, Mapas ciegos (pulsar sobre el pais, provincia, estado, ..., zoom tipo admob)
+- rubik solver
+- dominó

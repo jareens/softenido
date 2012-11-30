@@ -23,6 +23,9 @@ package com.softenido.audible;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceScreen;
+import android.widget.ListView;
 import com.softenido.cafedroid.os.PolicyAdmin;
 import com.softenido.cafedroid.preference.SummaryPrefereceActivity;
 
@@ -45,6 +48,11 @@ public class AudiblePreferenceActivity extends SummaryPrefereceActivity
 
         this.setResult(AudibleMain.CODE_PREFERENCES);
         preferences = AudiblePreferences.getInstance(this);
+
+//        ListView listView = getListView();
+//        Preference pf = this.findPreference("lang.avaliables");
+//        listView.smoothScrollToPosition(9);
+
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)

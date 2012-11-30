@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="ok">@android:string/ok</string>
+    <string name="cancel">@android:string/cancel</string>
+    <string name="yes">@android:string/yes</string>
+
+
     <string name="app_name">Audible TTS</string>
     <string name="app_name_version">Audible TTS</string>
     <string name="about">About</string>
@@ -112,5 +117,8 @@
     <string name="main_menu_rotate_title">Rotate</string>
     <string name="main_menu_settings_title">Settings</string>
     <string name="help">Help</string>
+
+    <string name="no_avaliable_language_title">No avaliable languages</string>
+    <string name="no_avaliable_language_text">No avaliable language. Want to enable one or two now?</string>
 
 </resources>

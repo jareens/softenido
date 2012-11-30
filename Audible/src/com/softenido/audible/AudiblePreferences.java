@@ -54,7 +54,7 @@ public class AudiblePreferences
     private static final String AUTO_EXIT = "auto.exit";
 
     private static final String LANG_DEFAULT  = "lang.default";
-    private static final String LANG_DETECT   = "lang.detect";
+    static final String LANG_DETECT   = "lang.detect";
     private static final String LANG_UNIT = "lang.unit";
 
     public static final String AUTO_SCREEN_LOCK = "auto.screen.lock";

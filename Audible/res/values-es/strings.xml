@@ -112,4 +112,7 @@
     <string name="main_menu_settings_title">Configuración</string>
     <string name="help">Ayuda</string>
 
+    <string name="no_avaliable_language_title">Ningún idioma disponible</string>
+    <string name="no_avaliable_language_text">Ningún idioma disponible. ¿Quieres habilitar uno o dos ahora?</string>
+
 </resources>
