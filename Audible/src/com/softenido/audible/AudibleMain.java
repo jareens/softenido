@@ -601,8 +601,8 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     {
         //set text, from intent or saved
         Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
+        String action = intent!=null?intent.getAction():null;
+        String type = intent!=null?intent.getType():null;
         Bundle bundle;
         if(Intent.ACTION_VIEW.equals(action) && intent!=null && intent.getData()!=null)
         {
