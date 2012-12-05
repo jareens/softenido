@@ -1,7 +1,7 @@
 /*
  *  ZooJava.java
  *
- *  Copyright (C) 2011  Francisco Gómez Carrasco
+ *  Copyright (C) 2012  Francisco Gómez Carrasco
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@
 package com.softenido.zoo;
 
 import com.softenido.zoo.classifier.ZooClassifier;
+import com.softenido.zoo.gutenberg.ZooGutenberg;
+import com.softenido.zoo.text.ZooPhrases;
 import java.io.IOException;
 
 /**
@@ -41,9 +43,17 @@ public class ZooJava
         {
             System.out.printf(HELP);
         }
+        else if(args[0].equalsIgnoreCase("gutenberg"))
+        {
+            ZooGutenberg.main(args);
+        }
         else if(args[0].equalsIgnoreCase("classifier"))
         {
             ZooClassifier.main(args);
+        }
+        else if(args[0].equalsIgnoreCase("phrases"))
+        {
+            ZooPhrases.main(args);
         }
         else
         {
