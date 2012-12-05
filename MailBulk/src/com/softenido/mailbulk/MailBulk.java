@@ -21,8 +21,9 @@
  */
 package com.softenido.mailbulk;
 
-import com.softenido.cafedark.misc.ConsoleGauge;
-import com.softenido.cafedark.misc.Gauge;
+import com.softenido.cafecore.gauge.Gauge;
+import com.softenido.cafecore.gauge.GaugeProgress;
+import com.softenido.cafedark.gauge.ConsoleGauge;
 import com.softenido.cafedark.util.launcher.LauncherParser;
 import com.softenido.cafedark.util.options.BooleanOption;
 import com.softenido.cafedark.util.options.InvalidOptionException;
@@ -385,16 +386,16 @@ public class MailBulk
         Arrays.sort(files);
 
         long fullsize = 0;
-        Gauge gauge = new ConsoleGauge();
+        GaugeProgress gauge = new ConsoleGauge();
 
-        gauge.begin(100);
+        gauge.start(100);
 
         for (int i = skipValue; i < files.length; i++)
         {
             sizes[i] = files[i].length();
             fullsize += sizes[i];
         }
-        gauge.begin((int) fullsize);
+        gauge.start((int) fullsize);
 
         for (int i = skipValue; i < files.length;)
         {
@@ -414,6 +415,6 @@ public class MailBulk
 
             sender.flush();
         }
-        gauge.end();
+        gauge.close();
     }
 }
