@@ -97,7 +97,7 @@ public abstract class Strings
         //verificar si es más rápido o no antes de realizar el cambio
         return str.replaceAll(TRIM, "");
     }
-    public static String isnull(String first, String second, String... others)
+    public static String firstNonNull(String first, String second, String... others)
     {
         if(first!=null)
         {
@@ -115,6 +115,25 @@ public abstract class Strings
             }
         }
         return null;
+    }
+    public static String firstNonEmpty(String first, String second, String... others)
+    {
+        if(first!=null && first.length()>0)
+        {
+            return first;
+        }
+        if(second!=null && second.length()>0)
+        {
+            return second;
+        }
+        for(String item : others)
+        {
+            if(item!=null && item.length()>0)
+            {
+                return item;
+            }
+        }
+        return "";
     }
 
 }
