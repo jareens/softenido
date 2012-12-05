@@ -21,19 +21,12 @@
  */
 package com.softenido.imagewizard;
 
-import com.softenido.cafecore.text.CardinalFormat;
-import com.softenido.cafecore.util.ArrayUtils;
+import com.softenido.cafecore.logging.VerboseHandler;
 import com.softenido.cafecore.util.SizeUnits;
-import com.softenido.cafedark.imageio.ScaleImage;
-import com.softenido.cafedark.io.Files;
-import com.softenido.cafedark.util.VerboseHandler;
-import com.softenido.cafedark.util.concurrent.actor.Actor;
-import com.softenido.cafedark.util.concurrent.actor.ActorPool;
 import com.softenido.cafedark.util.launcher.LauncherParser;
 import com.softenido.cafedark.util.options.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
