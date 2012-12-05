@@ -117,6 +117,14 @@ public abstract class Classifiers
                 }
             }
 
+            public boolean setPreferred(String... categories)
+            {
+                synchronized(lock)
+                {
+                    return classifier.setPreferred(categories);
+                }
+            }
+
             public String getUnmatched()
             {
                 synchronized(lock)

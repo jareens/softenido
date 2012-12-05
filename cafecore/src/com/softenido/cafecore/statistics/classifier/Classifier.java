@@ -35,8 +35,9 @@ public interface Classifier
     Score[] classify(Score[] scores, String[] words);
     Score classify(String[] words);
     boolean containsCategory(String category);
-    void setUnmatched(String unmatched);
     String getUnmatched();
+    boolean setPreferred(String... categories);
+    void setUnmatched(String unmatched);
     void coach(String category, String word, int n);
     void coach(String category, String[] word, int[] n);
     void load(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException;

@@ -38,9 +38,11 @@ public interface TextClassifier
     void coach(String category, InputStream text);
     boolean containsCategory(String category);
     String getUnmatched();
+    boolean setPreferred(String... categories);
+    void setUnmatched(String unmatched);
     void load(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException;
     void loadGZ(InputStream in, boolean strict, String... allowedCategories) throws ClassifierFormatException, IOException, NoSuchAlgorithmException;
     void save(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException;
     void saveGZ(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException, IOException, NoSuchAlgorithmException;
-    void setUnmatched(String unmatched);
+
 }

@@ -40,6 +40,8 @@ import java.util.zip.GZIPOutputStream;
 public abstract class AbstractClassifier implements Classifier
 {
     String unmatched;
+    private static HashSet<String> EMPTY_PREFERRED = new HashSet<String>();
+    private HashSet<String> preferred = EMPTY_PREFERRED;
 
     public AbstractClassifier(String unmatched)
     {
@@ -79,7 +81,7 @@ public abstract class AbstractClassifier implements Classifier
             max = scores[0];
             for(int i = 1;i<scores.length;i++)
             {
-                if(scores[i].getValue()>max.getValue())
+                if(scores[i].getValue()>max.getValue() && isPreferred(scores[i].getName()))
                 {
                     max = scores[i];
                 }
@@ -258,6 +260,21 @@ public abstract class AbstractClassifier implements Classifier
     public void setUnmatched(String unmatched)
     {
         this.unmatched = unmatched;
+    }
+
+    public boolean setPreferred(String... categories)
+    {
+        HashSet<String> hashset = categories!=null?new HashSet<String>(Arrays.asList(categories)):EMPTY_PREFERRED;
+        if(!this.preferred.equals(hashset))
+        {
+            this.preferred = hashset;
+            return true;
+        }
+        return false;
+    }
+    private boolean isPreferred(String name)
+    {
+        return (preferred.isEmpty() || preferred.contains(name));
     }
 
     public static int getSaveThresold()

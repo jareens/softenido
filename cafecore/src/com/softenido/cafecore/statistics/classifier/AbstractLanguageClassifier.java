@@ -71,6 +71,12 @@ public abstract class AbstractLanguageClassifier extends BaseTextClassifier impl
         }
         return false;
     }
+    public boolean set(final String... languages)
+    {
+        boolean ret1 = this.add(languages);
+        boolean ret2 = this.setPreferred(languages);
+        return (ret1||ret2);
+    }
 
     public boolean initialize()
     {

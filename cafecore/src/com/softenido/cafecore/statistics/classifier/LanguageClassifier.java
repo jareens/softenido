@@ -37,6 +37,7 @@ import java.security.NoSuchAlgorithmException;
 public interface LanguageClassifier
 {
     boolean add(final String... languages);
+    boolean set(final String... languages);
     Score classify(String text);
     Score classify(InputStream text);
     void save(OutputStream out, int min, int max, String... allowedCategories) throws UnsupportedEncodingException;

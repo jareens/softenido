@@ -380,17 +380,20 @@ public class BaseTextClassifier implements TextClassifier
         return group;
     }
 
-    public static void setGroup(boolean group)
+    public String getUnmatched()
     {
-        BaseTextClassifier.group = group;
+        return classifier.getUnmatched();
     }
-
+    public boolean setPreferred(String... categories)
+    {
+        return classifier.setPreferred(categories);
+    }
     public void setUnmatched(String unmatched)
     {
         classifier.setUnmatched(unmatched);
     }
-    public String getUnmatched()
+    public static void setGroup(boolean group)
     {
-        return classifier.getUnmatched();
+        BaseTextClassifier.group = group;
     }
 }
