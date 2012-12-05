@@ -12,6 +12,7 @@
             <CheckBoxPreference android:title="@string/preferences_ignore_underscore_title" android:key="reading.ignore.underscore" android:defaultValue="false" android:summaryOn="@string/preferences_ignore_underscore_summary_on" android:summaryOff="@string/preferences_ignore_underscore_summary_off"/>
             <CheckBoxPreference android:title="@string/preferences_ignore_hyphens_title" android:key="reading.ignore.hyphens" android:defaultValue="false" android:summary="@string/preferences_ignore_hyphens_summary" />
             <CheckBoxPreference android:title="@string/preferences_ignore_asterisk_title" android:key="reading.ignore.asterisk" android:defaultValue="false" android:summary="@string/preferences_ignore_asterisk_summary" />
+            <CheckBoxPreference android:title="@string/preferences_ignore_ampersand_title" android:key="reading.ignore.ampersand" android:defaultValue="false" android:summary="@string/preferences_ignore_ampersand_summary" />
             <!--<EditTextPreference android:enabled="false" android:text="" android:title="Say when reading finish" android:defaultValue="End of the reading" android:key="lang.end.text"/>-->
         </PreferenceScreen>
     </PreferenceCategory>
@@ -22,10 +23,8 @@
         <CheckBoxPreference android:title="@string/preferences_auto_screenlock_title" android:key="auto.screen.lock" android:dependency="auto" android:defaultValue="false" android:summaryOn="@string/preferences_auto_screenlock_summary_on" android:summaryOff="@string/preferences_auto_screenlock_summary_off"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/preferences_language_category">
-        <CheckBoxPreference android:title="@string/preferences_language_detect_title" android:defaultValue="true" android:key="lang.detect" android:persistent="true" android:summaryOn="@string/preferences_language_detect_summary_on" android:summaryOff="@string/preferences_language_detect_summary_off"/>
-        <!--<ListPreference android:title="Unit" android:entries="@array/detect_unit_name" android:entryValues="@array/detect_unit_value" android:key="lang.unit" android:defaultValue="2" android:summary="minimum text unit for language detection is %s"/>-->
         <ListPreference android:title="@string/preferences_language_default_title" android:entries="@array/avaliable_languajes_name" android:entryValues="@array/avaliable_languajes_iso3" android:key="lang.default" android:defaultValue="" android:summary="@string/preferences_language_default_summary"/>
-        <PreferenceScreen  android:title="@string/preferences_language_avaliable_title" android:dependency="lang.detect" android:summary="@string/preferences_language_avaliable_summary" android:key="lang.avaliables" >
+        <PreferenceScreen  android:title="@string/preferences_language_avaliable_title" android:summary="@string/preferences_language_avaliable_summary" android:key="lang.avaliables" >
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Afrikaans" android:defaultValue="false" android:key="lang.iso3.afr" android:persistent="true"/>&ndash;&gt;-->
             <!--..<CheckBoxPreference android:title="Indonesian/Bahasa Indonesia" android:defaultValue="false" android:key="lang.iso3.ind" android:persistent="true"/>-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Bahasa Melayu" android:defaultValue="false" android:key="lang.iso3.msa" android:persistent="true"/>&ndash;&gt;-->
@@ -35,14 +34,14 @@
             <CheckBoxPreference android:title="German/Deutsch" android:defaultValue="false" android:key="lang.iso3.deu" android:persistent="true"/>
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Eesti" android:defaultValue="false" android:key="lang.iso3.est" android:persistent="true"/>&ndash;&gt;-->
             <CheckBoxPreference android:title="English" android:defaultValue="false" android:key="lang.iso3.eng" android:persistent="true"/>
-            <ListPreference android:title="English (Country)" android:dependency="lang.iso3.eng" android:entries="@array/eng_countries_names" android:entryValues="@array/eng_countries_iso2" android:key="lang.iso3.eng.country" android:defaultValue="US"/>
+            <ListPreference android:title="English (Country)" android:dependency="lang.iso3.eng" android:entries="@array/eng_countries_names" android:entryValues="@array/eng_countries_iso2" android:key="lang.iso3.eng.country" android:defaultValue="en_US"/>
             <CheckBoxPreference android:title="Spanish/Español" android:defaultValue="false" android:key="lang.iso3.spa" android:persistent="true"/>
-            <ListPreference android:title="Spanish/Español (Country)" android:dependency="lang.iso3.spa" android:entries="@array/spa_countries_names" android:entryValues="@array/spa_countries_iso2" android:key="lang.iso3.spa.country" android:defaultValue="ES"/>
+            <ListPreference android:title="Spanish/Español (Country)" android:dependency="lang.iso3.spa" android:entries="@array/spa_countries_names" android:entryValues="@array/spa_countries_iso2" android:key="lang.iso3.spa.country" android:defaultValue="es_ES"/>
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Esperanto" android:defaultValue="false" android:key="lang.iso3.epo" android:persistent="true"/>&ndash;&gt;-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Euskara" android:defaultValue="false" android:key="lang.iso3.eus" android:persistent="true"/>&ndash;&gt;-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Filipino" android:defaultValue="false" android:key="lang.iso3.fil" android:persistent="true"/>&ndash;&gt;-->
             <CheckBoxPreference android:title="French/Français" android:defaultValue="false" android:key="lang.iso3.fra" android:persistent="true"/>
-            <ListPreference android:title="French/Français (Country)" android:dependency="lang.iso3.fra" android:entries="@array/fra_countries_names" android:entryValues="@array/fra_countries_iso2" android:key="lang.iso3.fra.country" android:defaultValue="FR"/>
+            <ListPreference android:title="French/Français (Country)" android:dependency="lang.iso3.fra" android:entries="@array/fra_countries_names" android:entryValues="@array/fra_countries_iso2" android:key="lang.iso3.fra.country" android:defaultValue="fra_FR"/>
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Galego" android:defaultValue="false" android:key="lang.iso3.glg" android:persistent="true"/>&ndash;&gt;-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Hrvatski" android:defaultValue="false" android:key="lang.iso3.hrv" android:persistent="true"/>&ndash;&gt;&ndash;&gt;-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Isizulu" android:defaultValue="false" android:key="lang.iso3.zul" android:persistent="true"/>&ndash;&gt;-->
@@ -85,12 +84,14 @@
             <!--..<CheckBoxPreference android:title="Thai/ไทย" android:defaultValue="false" android:key="lang.iso3.tha" android:persistent="true"/>-->
             <CheckBoxPreference android:title="Korean/한국어" android:defaultValue="false" android:key="lang.iso3.kor" android:persistent="true"/>
             <CheckBoxPreference android:title="Chinese/中文" android:defaultValue="false" android:key="lang.iso3.zho" android:persistent="true"/>
-            <ListPreference android:title="Chinese/中文 (Country)" android:dependency="lang.iso3.zho" android:entries="@array/zho_countries_names" android:entryValues="@array/zho_countries_iso2" android:key="lang.iso3.zho.country" android:defaultValue="CN"/>
+            <ListPreference android:title="Chinese/中文 (Country)" android:dependency="lang.iso3.zho" android:entries="@array/zho_countries_names" android:entryValues="@array/zho_countries_iso2" android:key="lang.iso3.zho.country" android:defaultValue="zh_CN"/>
             <CheckBoxPreference android:title="Japanese/日本語" android:defaultValue="false" android:key="lang.iso3.jpn" android:persistent="true"/>
             <!--lista de voces que existen pero no reconozco aún
             Welsh	Cymraeg	cy	cym	wel	cym
             -->
         </PreferenceScreen>
+        <CheckBoxPreference android:title="@string/preferences_language_detect_title" android:defaultValue="false" android:key="lang.detect" android:persistent="true" android:summaryOn="@string/preferences_language_detect_summary_on" android:summaryOff="@string/preferences_language_detect_summary_off"/>
+        <!--<ListPreference android:title="Unit" android:entries="@array/detect_unit_name" android:entryValues="@array/detect_unit_value" android:key="lang.unit" android:defaultValue="2" android:summary="minimum text unit for language detection is %s"/>-->
         <ListPreference android:enabled="false" android:title="@string/preferences_language_gender_title" android:entries="@array/preferred_gender_names" android:entryValues="@array/preferred_gender_codes" android:key="lang.gender" android:defaultValue="" android:summary="@string/preferences_language_gender_summary"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/preferences_ui_category">

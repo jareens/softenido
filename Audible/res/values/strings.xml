@@ -26,6 +26,7 @@
     <string name="advanced_early_save">Early Save</string>
     <string name="advanced_early_save_on">title and body will be saved as early as possible</string>
     <string name="advanced_early_save_off">title and body will be saved only at normal exit</string>
+
     <string name="preferences_title_optimization">optimization</string>
     <string name="preferences_reading_lowercase_title">LowerCase</string>
     <string name="preferences_reading_lowercase_summary_on">text will be lowercased before been read</string>
@@ -55,6 +56,9 @@
     <string name="preferences_ignore_hyphens_summary">ignore hyphens -- (two or more) while reading</string>
     <string name="preferences_ignore_asterisk_title">Ignore *</string>
     <string name="preferences_ignore_asterisk_summary">ignore asterisks \'*\' while reading</string>
+    <string name="preferences_ignore_ampersand_title">Ignore &amp;</string>
+    <string name="preferences_ignore_ampersand_summary">ignore ampersand \'&amp;\' while reading</string>
+
     <string name="preferences_auto_title">auto</string>
     <string name="preferences_auto_auto_title">Auto</string>
     <string name="preferences_auto_auto_summary_on">following actions are enabled</string>
@@ -71,8 +75,8 @@
     <string name="preferences_language_category">language</string>
     <string name="preferences_reading_category">reading</string>
     <string name="preferences_language_detect_title">Detect</string>
-    <string name="preferences_language_detect_summary_on">text will be read as detected from the enabled ones</string>
-    <string name="preferences_language_detect_summary_off">text will be read in default language</string>
+    <string name="preferences_language_detect_summary_on">detect language for the text</string>
+    <string name="preferences_language_detect_summary_off">ignore text language</string>
     <string name="preferences_language_default_title">Default</string>
     <string name="preferences_language_default_summary">%s will be used as Default Language</string>
     <string name="preferences_language_avaliable_title">Available Languages</string>
@@ -118,7 +122,8 @@
     <string name="main_menu_settings_title">Settings</string>
     <string name="help">Help</string>
 
-    <string name="no_avaliable_language_title">No avaliable languages</string>
-    <string name="no_avaliable_language_text">No avaliable language. Want to enable one or two now?</string>
+    <string name="no_enabled_languages_title">No enabled languages</string>
+    <string name="no_enabled_languages_text">%s. Enable now?</string>
+    <string name="no_enabled_languages_toast" formatted="false">%s. Enable using %s</string>
 
 </resources>

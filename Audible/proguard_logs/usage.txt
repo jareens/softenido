@@ -27,6 +27,7 @@ com.google.ads.AdSize:
     38:39:public AdSize(int,int)
 com.google.ads.AdView:
     478:482:public boolean isReady()
+    523:524:public void setAdListener(com.google.ads.AdListener)
     535:536:public void stopLoading()
 com.google.ads.InterstitialAd:
     private com.google.ads.d a
@@ -74,7 +75,10 @@ com.softenido.audible.AudibleMain:
     public static final int CODE_PREFERENCES
     public static final int CODE_PICK_TEXT_FILE
     static final boolean parallel
+com.softenido.audible.AudiblePreferenceActivity:
+    static final java.lang.String LANG_AVALIABLES_KEY
 com.softenido.audible.AudiblePreferences:
+    private static final java.lang.String VERSION_CODE
     private static final java.lang.String READING_LOWERCASE
     private static final java.lang.String READING_IGNORE_TITLE
     private static final java.lang.String READING_IGNORE_TITLE_REPEATED
@@ -89,8 +93,9 @@ com.softenido.audible.AudiblePreferences:
     private static final java.lang.String AUTO_PLAY
     private static final java.lang.String AUTO_EXIT
     private static final java.lang.String LANG_DEFAULT
-    private static final java.lang.String LANG_DETECT
+    static final java.lang.String LANG_DETECT
     private static final java.lang.String LANG_UNIT
+    private static final java.lang.String LANG_GENDER
     public static final java.lang.String AUTO_SCREEN_LOCK
     private static final java.lang.String UI_FONT_TYPEFACE
     private static final java.lang.String UI_FONT_SIZE
@@ -110,11 +115,10 @@ com.softenido.audible.AudiblePreferences:
     private static final java.lang.String THEME_DEFAULT
     private static final java.lang.String PHRASE
     static final java.lang.String iso3Compressed
-    static final java.lang.String countriesCompressed
-    118:118:public boolean isModified()
-    154:155:public void setPhrase(boolean)
-    343:344:public void setVolume(boolean)
-    373:380:private boolean getBoolean(java.lang.String,boolean)
+    122:122:public boolean isModified()
+    158:159:public void setPhrase(boolean)
+    336:337:public void setVolume(boolean)
+    366:373:private boolean getBoolean(java.lang.String,boolean)
 com.softenido.audible.BuildConfig
 com.softenido.audible.KeepAudibleLoadService:
     static final int MAX_LANGS
@@ -524,7 +528,7 @@ com.softenido.cafecore.util.Strings:
 com.softenido.cafecore.util.regex.RegExs
 com.softenido.cafedroid.BuildConfig
 com.softenido.cafedroid.R:
-    10:299:public R()
+    10:304:public R()
 com.softenido.cafedroid.R$array
 com.softenido.cafedroid.R$attr
 com.softenido.cafedroid.R$drawable
@@ -627,7 +631,7 @@ com.softenido.cafedroid.os.PolicyAdmin:
     public static final int RESULT_ENABLE
     56:58:public varargs void setActiveAdmin(int,java.lang.Object[])
 com.softenido.cafedroid.os.PolicyAdmin$Receiver:
-    87:87:static android.content.SharedPreferences getSamplePreferences(android.content.Context)
+    95:95:static android.content.SharedPreferences getSamplePreferences(android.content.Context)
 com.softenido.cafedroid.services.LocalService:
     123:124:public static void setToastDebug(boolean)
     128:129:public static void setToastLength(int)
@@ -740,8 +744,15 @@ com.softenido.cafedroid.web.WebConfig:
     73:73:public int getLayout()
 com.softenido.cafedroid.widget.ToggleImageButton:
     43:44:public ToggleImageButton(android.content.Context)
+    57:62:public void setStateResources(int[])
+    81:81:public int getState()
+    86:87:public void setState(int)
 com.softenido.cafedroid.widget.ToggleTextButton:
     44:45:public ToggleTextButton(android.content.Context)
+    58:64:public void setStateResources(int[])
+    67:73:public void setStateNames(java.lang.String[])
+    97:97:public int getState()
+    102:103:public void setState(int)
 com.softenido.gutenberg.Gutenberg:
     java.util.HashMap map
     66:66:public static java.lang.String[] getISO3Languages()

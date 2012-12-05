@@ -20,7 +20,8 @@
     <string name="advanced_early_save">Salvar temprano</string>
     <string name="advanced_early_save_on">título y texto se salvarán tan pronto como sea posible</string>
     <string name="advanced_early_save_off">título y texto se salvarán sólo al salir normalmente</string>
-    <string name="preferences_title_optimization">optimización</string>
+
+    <string name="preferences_title_optimization">optimization</string>
     <string name="preferences_reading_lowercase_title">Minúsculas</string>
     <string name="preferences_reading_lowercase_summary_on">el texto será convertido a minúsculas antes de leerlo</string>
     <string name="preferences_reading_lowercase_summary_off">el texto será leído tal cual está</string>
@@ -49,6 +50,9 @@
     <string name="preferences_ignore_hyphens_summary">ignorar guiones -- (dos o más) se ignorarán</string>
     <string name="preferences_ignore_asterisk_title">Ignora *</string>
     <string name="preferences_ignore_asterisk_summary">ignora asteriscos \'*\' en la lectura</string>
+    <string name="preferences_ignore_ampersand_title">Ignora &amp;</string>
+    <string name="preferences_ignore_ampersand_summary">ignora el signo \'&amp;\' en la lectura</string>
+
     <string name="preferences_auto_title">auto</string>
     <string name="preferences_auto_auto_title">Auto</string>
     <string name="preferences_auto_auto_summary_on">las siguientes acciones están habilitadas</string>
@@ -65,8 +69,8 @@
     <string name="preferences_language_category">idioma</string>
     <string name="preferences_reading_category">lectura</string>
     <string name="preferences_language_detect_title">Detectar</string>
-    <string name="preferences_language_detect_summary_on">el texto se leerá según se detecte de entre los habilitados</string>
-    <string name="preferences_language_detect_summary_off">el texto se leerá en el idioma por defecto</string>
+    <string name="preferences_language_detect_summary_on">detectar lenguaje del texto</string>
+    <string name="preferences_language_detect_summary_off">ignorar lenguaje del texto</string>
     <string name="preferences_language_default_title">Por defecto</string>
     <string name="preferences_language_default_summary">%s se usará como idioma por defecto</string>
     <string name="preferences_language_avaliable_title">Idiomas Disponibles</string>
@@ -112,7 +116,8 @@
     <string name="main_menu_settings_title">Configuración</string>
     <string name="help">Ayuda</string>
 
-    <string name="no_avaliable_language_title">Ningún idioma disponible</string>
-    <string name="no_avaliable_language_text">Ningún idioma disponible. ¿Quieres habilitar uno o dos ahora?</string>
+    <string name="no_enabled_languages_title">No hay lenguajes habilitados</string>
+    <string name="no_enabled_languages_text">%s. ¿Habilitar ahora?</string>
+    <string name="no_enabled_languages_toast" formatted="false">%s. Habilitar usando %s</string>
 
 </resources>

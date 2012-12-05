@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="admob">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../lib/GoogleAdMobAdsSdk-4.3.1.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

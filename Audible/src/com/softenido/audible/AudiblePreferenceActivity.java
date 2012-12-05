@@ -21,13 +21,18 @@
 
 package com.softenido.audible;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
+import android.os.Handler;
+import android.preference.CheckBoxPreference;
 import android.preference.PreferenceScreen;
 import android.widget.ListView;
-import com.softenido.cafedroid.os.PolicyAdmin;
+import android.widget.Toast;
+import com.softenido.cafedroid.admob.AdMob;
 import com.softenido.cafedroid.preference.SummaryPrefereceActivity;
+import com.softenido.cafedroid.util.ui.Notifier;
+import com.softenido.cafedroid.util.ui.ViewsHandler;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,7 +43,14 @@ import com.softenido.cafedroid.preference.SummaryPrefereceActivity;
  */
 public class AudiblePreferenceActivity extends SummaryPrefereceActivity
 {
+    @SuppressWarnings("FieldCanBeLocal")
+    private AdMob admob=null;
+
+    static final String LANG_AVALIABLES_KEY = "lang.avaliables";
+
     AudiblePreferences preferences=null;
+    Notifier notifier;
+    ViewsHandler vh;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -49,10 +61,22 @@ public class AudiblePreferenceActivity extends SummaryPrefereceActivity
         this.setResult(AudibleMain.CODE_PREFERENCES);
         preferences = AudiblePreferences.getInstance(this);
 
-//        ListView listView = getListView();
-//        Preference pf = this.findPreference("lang.avaliables");
-//        listView.smoothScrollToPosition(9);
+        Handler handler = new Handler();
+        vh = new ViewsHandler(handler);
+        notifier = Notifier.build(this,handler,true);
 
+        Intent intent = getIntent();
+        if(intent!=null && LANG_AVALIABLES_KEY.equals(intent.getAction()))
+        {
+            ListView listView = getListView();
+            PreferenceScreen pf = (PreferenceScreen)this.findPreference(LANG_AVALIABLES_KEY);
+            this.setPreferenceScreen(pf);
+        }
+    }
+
+    @Override
+    public void setPreferenceScreen(PreferenceScreen preferenceScreen) {
+        super.setPreferenceScreen(preferenceScreen);    //To change body of overridden methods use File | Settings | File Templates.
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
@@ -70,8 +94,25 @@ public class AudiblePreferenceActivity extends SummaryPrefereceActivity
                 AudibleMain.policyAdmin.removeActiveAdmin();
             }
         }
+        else if(key.equals(AudiblePreferences.LANG_DETECT))
+        {
+            boolean active = sharedPreferences.getBoolean(key,false);
+            if(active && preferences.getLanguages().length==0)
+            {
+                String noLang =getString(R.string.no_enabled_languages_title);
+                String optionName = getString(R.string.preferences_language_avaliable_title);
+                String msg = getString(R.string.no_enabled_languages_toast, noLang, optionName);
+                CheckBoxPreference cp = (CheckBoxPreference)findPreference(key);
+                if(cp!=null)
+                {
+                    notifier.w(msg);
+                    vh.setChecked(cp,false);
+                }
+            }
+        }
         super.onSharedPreferenceChanged(sharedPreferences, key);
         preferences.setModified(true);
     }
+
 
 }

@@ -70,9 +70,17 @@ public class PolicyAdmin
         return this.dpm.isAdminActive(componentName);
     }
 
-    public void lockNow()
+    public boolean lockNow()
     {
-        this.dpm.lockNow();
+        try
+        {
+            this.dpm.lockNow();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
     }
 
     public void  removeActiveAdmin()

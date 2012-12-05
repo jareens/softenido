@@ -230,40 +230,59 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
     }
 
     private final AtomicBoolean firstClassify = new AtomicBoolean();
+    private volatile boolean reclassify=false;
     private void classify()
     {
         if(!firstClassify.compareAndSet(false, true))
             return;
         try
         {
-            classifier.firstPass();
-            for(int i=0;i<langs.length && status!=Status.EXIT;i++)
+            boolean first = true;
+            while( first || reclassify )
             {
-                // wait for split task
-                waitFor(langs, i);
-                for(int j=0;j<langs[i].length && status!=Status.EXIT;j++)
+                first = false;
+                // classify again (something has changed)
+                if(reclassify)
                 {
-                    if(langs[i][j]!=null)
-                        continue;
-                    Score score = classifier.classify(phrases[i][j]);
-                    synchronized(lock)
+                    for(int i=0;i<langs.length;i++)
                     {
-                        langs[i][j] = score!=null?score.getName():"";
-                        lock.notifyAll();
+                        if(langs[i]!=null)
+                            for(int j=0;j<langs[i].length;j++)
+                                langs[i][j] = null;
                     }
+                    reclassify=false;
                 }
-            }
-            if(classifier.secondPass())
-            {
-                for(int i=0;i<langs.length && status!=Status.EXIT;i++)
+
+                classifier.firstPass();
+                for(int i=0;i<langs.length && status!=Status.EXIT && !reclassify;i++)
                 {
-                    for(int j=0;j<langs[i].length && status!=Status.EXIT;j++)
+                    // wait for split task
+                    waitFor(langs, i);
+                    for(int j=0;j<langs[i].length && status!=Status.EXIT && !reclassify;j++)
                     {
+                        if(langs[i][j]!=null)
+                            continue;
                         Score score = classifier.classify(phrases[i][j]);
-                        langs[i][j] = score!=null?score.getName():"";
+                        synchronized(lock)
+                        {
+                            langs[i][j] = score!=null?score.getName():"";
+                            lock.notifyAll();
+                        }
+                    }
+                }
+                if(classifier.secondPass())
+                {
+                    for(int i=0;i<langs.length && status!=Status.EXIT && !reclassify;i++)
+                    {
+                        for(int j=0;j<langs[i].length && status!=Status.EXIT && !reclassify;j++)
+                        {
+                            Score score = classifier.classify(phrases[i][j]);
+                            langs[i][j] = score!=null?score.getName():"";
+                        }
                     }
                 }
             }
+
         }
         catch (InterruptedException ex)
         {
@@ -275,7 +294,6 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
             Log.d(SpeechPlayer.class.getSimpleName(),"SpeechPlayer.classify finally");
         }
     }
-
     private final AtomicBoolean firstSpeak = new AtomicBoolean();
     private void speak()
     {
@@ -662,5 +680,21 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
     public GaugeProgress getGaugeProgress()
     {
         return this.gauge;
+    }
+
+    public boolean set(String... languages)
+    {
+        if(classifier.set(languages))
+        {
+            //wake up classifier if sleeping
+            synchronized (lock)
+            {
+                reclassify=true;
+                lock.notifyAll();
+            }
+            this.start();
+            return true;
+        }
+        return false;
     }
 }

@@ -24,10 +24,10 @@ package com.softenido.audible;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.text.Editable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -38,6 +38,8 @@ import java.util.HashMap;
  */
 public class AudiblePreferences
 {
+    private static final String VERSION_CODE = "version.code";
+
     private static final String READING_LOWERCASE = "reading.lowercase";
     private static final String READING_IGNORE_TITLE = "reading.ignore.title";
     private static final String READING_IGNORE_TITLE_REPEATED = "reading.ignore.title.repeated";
@@ -48,6 +50,7 @@ public class AudiblePreferences
     private static final String READING_IGNORE_UNDERSCORE = "reading.ignore.underscore";
     private static final String READING_IGNORE_HYPHENS = "reading.ignore.hyphens";
     private static final String READING_IGNORE_ASTERISK = "reading.ignore.asterisk";
+    private static final String READING_IGNORE_AMPERSAND = "reading.ignore.ampersand";
 
     private static final String AUTO  = "auto";
     private static final String AUTO_PLAY = "auto.play";
@@ -56,6 +59,7 @@ public class AudiblePreferences
     private static final String LANG_DEFAULT  = "lang.default";
     static final String LANG_DETECT   = "lang.detect";
     private static final String LANG_UNIT = "lang.unit";
+    private static final String LANG_GENDER = "lang.gender";
 
     public static final String AUTO_SCREEN_LOCK = "auto.screen.lock";
 
@@ -96,6 +100,7 @@ public class AudiblePreferences
         if(instance==null)
         {
             instance = new AudiblePreferences(ctx);
+            instance.updateVersion();
         }
         return instance;
     }
@@ -167,29 +172,29 @@ public class AudiblePreferences
     {
         return settings.getBoolean(LANG_DETECT, false);
     }
+    public void setLangDetect(boolean value)
+    {
+        edit().putBoolean(LANG_DETECT, value);
+    }
+    private String getLangGender()
+    {
+        return settings.getString(LANG_GENDER, "");
+    }
 
 //    static final String iso3Compressed = "afr,ind,msa,cat,ces,dan,deu,est,eng,spa,epo,eus,fil,fra,glg,hrv,zul,isl,ita,swa,lav,lit,hun,nld,nor,pol,por,ron,slk,slv,fin,swe,vie,tur,ell,bul,rus,srp,ukr,heb,urd,ara,fas,amh,mar,hin,ben,guj,tam,tel,kan,mal,tha,kor,zho,jpn";
     static final String iso3Compressed = "deu,eng,spa,fra,ita,rus,kor,zho,jpn";
     static String[] iso3 = null;
-    static String[] iso3Key = null;
     private String[] languajes = null;
     public String[] getLanguages()
     {
-        if(iso3==null)
-        {
-            iso3 = iso3Compressed.split(",");
-            iso3Key = new String[iso3.length];
-            for(int i=0;i<iso3.length;i++)
-            {
-                iso3Key[i] = "lang.iso3."+iso3[i];
-            }
-        }
         if(languajes==null)
         {
+            iso3 =  iso3==null? iso3Compressed.split(",") : iso3;
+
             ArrayList<String> langs = new ArrayList<String>(iso3.length);
             for(int i=0;i<iso3.length;i++)
             {
-                if(!settings.getBoolean(iso3Key[i],false))
+                if(!settings.getBoolean("lang.iso3."+iso3[i],false))
                 {
                     continue;
                 }
@@ -200,36 +205,24 @@ public class AudiblePreferences
         return languajes;
     }
 
-    static final String countriesCompressed = "eng,spa,fra,por,zho";
-    static HashMap<String,String> countryKey = null;
     private String[] locales   = null;
     public String[] getLocales()
     {
-        if(countryKey ==null)
-        {
-            countryKey = new HashMap<String, String>(countriesCompressed.length());
-            String[] countries = countriesCompressed.split(",");
-            for(int i=0;i<countries.length;i++)
-            {
-                countryKey.put(countries[i], "lang.iso3." + countries[i] + ".country");
-            }
-        }
         if(locales==null)
         {
+            String gender = getLangGender();
             String[] langs = getLanguages();
             ArrayList<String> locs = new ArrayList<String>(langs.length);
             for(int i=0;i<langs.length;i++)
             {
-                String country = countryKey.get(langs[i]);
-                String code = (country==null)? langs[i] : settings.getString(country,langs[i]);
+                String key = "lang.iso3."+langs[i] + ".country";
+                String code = settings.getString(key,langs[i]+"_")+"_"+gender;
                 locs.add(code);
             }
             locales = locs.toArray(new String[0]);
         }
         return locales;
-
     }
-
 
     public boolean getReadingLowercase()
     {
@@ -276,6 +269,10 @@ public class AudiblePreferences
     {
         return settings.getBoolean(READING_IGNORE_ASTERISK, false);
     }
+    public boolean getReadingIgnoreAmpersand()
+    {
+        return settings.getBoolean(READING_IGNORE_AMPERSAND, false);
+    }
 
     public String getFontTypeFace()
     {
@@ -311,6 +308,11 @@ public class AudiblePreferences
     {
         return settings.getBoolean(AUTO_SCREEN_LOCK, false);
     }
+    public void setAutoScreenLock(boolean value)
+    {
+        edit().putBoolean(AUTO_SCREEN_LOCK, value);
+    }
+
     public boolean isToasts()
     {
         return settings.getBoolean(UI_TOASTS, true);
@@ -370,7 +372,7 @@ public class AudiblePreferences
     {
         try
         {
-            return Boolean.parseBoolean(settings.getString(key, ""+defaultValue));
+            return Boolean.parseBoolean(settings.getString(key, "" + defaultValue));
         }
         catch(NumberFormatException ex)
         {
@@ -378,6 +380,66 @@ public class AudiblePreferences
             edit.putBoolean(key, defaultValue);
             edit.commit();
             return defaultValue;
+        }
+    }
+    boolean updateVersion()
+    {
+        boolean ret = false;
+        int vc = settings.getInt(VERSION_CODE,0);
+        switch (vc)
+        {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                fixVersion4();
+                setVersion(5);
+                ret=true;
+            case 5:
+                break;
+        }
+        return ret;
+    }
+    private void setVersion(int vc)
+    {
+        try
+        {
+            SharedPreferences.Editor edit = settings.edit();
+            edit.putInt(VERSION_CODE, vc);
+            edit.commit();
+        }
+        catch(Exception ex)
+        {
+            Logger.getLogger(AudiblePreferences.class.getName()).log(Level.SEVERE,"error updading version",ex);
+        }
+    }
+
+    private void fixVersion4()
+    {
+        String[][] keys =
+        {
+                {"lang.iso3.eng.country","US","en_US"},
+                {"lang.iso3.spa.country","ES","es_US"},
+                {"lang.iso3.fra.country","FR","fr_FR"},
+                {"lang.iso3.zho.country","CN","zh_CN"}
+        };
+        try
+        {
+            for(int i=0;i<keys.length;i++)
+            {
+                String value = settings.getString(keys[i][0],"");
+                if(value.equals(keys[i][1]))
+                {
+                    SharedPreferences.Editor edit = settings.edit();
+                    edit.putString(keys[i][0], keys[i][2]);
+                    edit.commit();
+                }
+            }
+        }
+        catch(Exception ex)
+        {
+            Logger.getLogger(AudiblePreferences.class.getName()).log(Level.SEVERE,"error fixing version 4",ex);
         }
     }
 }

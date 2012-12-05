@@ -244,7 +244,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         toggleVolume.setOnClickListener(toggleVolumeListener);
         toggleLang.setOnClickListener(toggleLangListener);
 
-        this.loadPreferences();
+        this.loadSettings();
         KeepAudibleLoadService.connect(this);
         //remember toggles
 
@@ -257,6 +257,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
 
         this.setButtonsListeners();
         player = buildSpeechPlayer();
+        this.preparePlayer();
 
         volumePrefix = toggleVolume.getTextOn().toString();
         volumeBar.setMax(player.getMaxVolume());
@@ -271,18 +272,10 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         player.registerOnStatusChangedListener(this);
         PowerManager pm = (PowerManager)this.getSystemService(Context.POWER_SERVICE);
         player.setWakeLock(pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "SpeechPlayer.WakeLock"));
-        String[] languages = settings.getLanguages();
-        String[] locales = settings.getLocales();
-        for(int i=0;i<languages.length;i++)
-        {
-            player.setLocale(languages[i],locales[i]);
-        }
-        player.setDetection(settings.getLangDetect());
-        player.start();
         return player;
     }
 
-    private void loadPreferences()
+    private void loadSettings()
     {
         DroidGaugeBuilder.Mode mode = settings.isProgress()? DroidGaugeBuilder.Mode.BAR_TEXT: DroidGaugeBuilder.Mode.NONE;
         gaugePlayer.setMode(mode);
@@ -298,6 +291,8 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         boolean under = settings.getReadingIgnoreUnderscore();
         boolean hyphen = settings.getReadingIgnoreHyphens();
         boolean asterisk = settings.getReadingIgnoreAsterisk();
+        boolean ampersand = settings.getReadingIgnoreAmpersand();
+
 
         if(parentheses||square||curly||pipe||hyphen)
         {
@@ -315,6 +310,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
                 if(curly) sb.append("\\|");
                 if(under) sb.append("_");
                 if(asterisk) sb.append("*");
+                if(ampersand) sb.append("&");
                 sb.append("]+)");
             }
 
@@ -343,18 +339,8 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         this.earlySave = settings.isEarlySave();
         this.earlyDetect= settings.isEarlyDetect();
 
-        this.classifier.setUnmatched(settings.getLangDefault());
-        if(toggleLang.isChecked() && toggleAuto.isChecked())
-        {
-            classifier.setTwoPasses(earlyDetect);
-            classifier.add(settings.getLanguages());
-
-            //classifier.setLanguages(settings.getLanguages());
-            if(player!=null)
-            {
-                player.start();
-            }
-        }
+        //prepare classifier and player with new settings
+        this.preparePlayer();
     }
 
     private void setTitleAndText(String head, String body)
@@ -516,7 +502,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         prev.setEnabled(value==Status.PAUSED||value==Status.PLAYING);
         next.setEnabled(value==Status.PAUSED||value==Status.PLAYING);
         pause.setEnabled(value==Status.PLAYING);
-        play.setEnabled(value==Status.READY);
+        play.setEnabled(value == Status.READY);
     }
     private void speakerInstall()
     {
@@ -525,13 +511,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     private void speakerPlay()
     {
         setStatus(Status.PLAYING);
-        player.setLowerCase(readingLowercase);
-        player.setDetection(this.toggleLang.isChecked());
-        player.setIgnorable(this.readingIgnore, this.readingAlternative);
-        player.setView(DebugGauge.wrap(gaugePlayer));
-        player.getGaugeProgress().setShow(true, true, true);
-        boolean ignoreTitle = this.readingIgnoreTitle || (this.readingIgnoreTitleRepeated && isTitleRepeated(this.head, this.body));
-        player.setIgnoreFirst(ignoreTitle);
+        preparePlayer();
         player.play();
     }
     private void speakerPause()
@@ -544,12 +524,36 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         setStatus(Status.READY);
         player.stop();
     }
+    private void preparePlayer()
+    {
+        classifier.setUnmatched(settings.getLangDefault());
+        classifier.setTwoPasses(earlyDetect);
+        if(player!=null)
+        {
+            player.setLowerCase(readingLowercase);
+            player.setIgnorable(this.readingIgnore, this.readingAlternative);
+            player.setView(DebugGauge.wrap(gaugePlayer));
+            player.getGaugeProgress().setShow(true, true, true);
+            boolean ignoreTitle = this.readingIgnoreTitle || (this.readingIgnoreTitleRepeated && isTitleRepeated(this.head, this.body));
+            player.setIgnoreFirst(ignoreTitle);
+
+            player.set(settings.getLanguages());
+            String[] languages = settings.getLanguages();
+            String[] locales = settings.getLocales();
+            for(int i=0;i<languages.length;i++)
+            {
+                player.setLocale(languages[i],locales[i]);
+            }
+            player.setDetection(settings.getLangDetect());
+            player.start();
+        }
+    }
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         manager.onActivityResult(requestCode, resultCode, data);
         if(resultCode==CODE_PREFERENCES)
         {
-            loadPreferences();
+            loadSettings();
         }
         else if (requestCode==CODE_PICK_TEXT_FILE)
         {
@@ -565,9 +569,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     {
         classifier.setStatusNotifier(null);
         player.stop();
-        settings.setTitle(head);
-        settings.setBody(body);
-        settings.setAuto(toggleAuto.isChecked());
+        saveSettings();
         new Thread(new Runnable()
         {
             public void run()
@@ -578,6 +580,15 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         Log.v("-audible-head",head);
         Log.v("-audible-body",body);
         super.onStop();
+    }
+    void saveSettings()
+    {
+        settings.setTitle(head);
+        settings.setBody(body);
+        settings.setAuto(toggleAuto.isChecked());
+        settings.setPhrase(togglePhrase.isChecked());
+        settings.setLangDetect(toggleLang.isChecked());
+        settings.setVolume(toggleVolume.isChecked());
     }
 
     @Override
@@ -633,7 +644,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         {
             public void onClick(View arg0)
             {
-                showSettings();
+                showSettings(null);
             }
         });
         queue.setOnClickListener(queueListener);
@@ -699,7 +710,14 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             if(policyAdmin.isAdminActive())
             {
                 notifier.i("Auto Lock Screen");
-                policyAdmin.lockNow();
+                boolean ok = policyAdmin.lockNow();
+                if(!ok)
+                {
+                    AudibleMain.policyAdmin.removeActiveAdmin();
+                    settings.setAutoScreenLock(false);
+                    settings.commit();
+                    notifier.i("'Lock Screen'=false");
+                }
             }
             else
             {
@@ -794,7 +812,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     {
         public void onClick(DialogInterface dialog, int id)
         {
-            setup.performClick();
+            showSettings(AudiblePreferenceActivity.LANG_AVALIABLES_KEY);
         }
     };
     private DialogInterface.OnClickListener toggleLangCancelListener = new DialogInterface.OnClickListener()
@@ -804,6 +822,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             toggleLang.setChecked(false);
         }
     };
+
     final View.OnClickListener toggleLangListener = new View.OnClickListener()
     {
         public void onClick(View arg0)
@@ -814,10 +833,11 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
                 String[] languages = settings.getLanguages();
                 if(languages.length==0)
                 {
+                    String title = getString(R.string.no_enabled_languages_title);
+                    String msg = getString(R.string.no_enabled_languages_text, title);
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(AudibleMain.this);
-                    builder.setMessage(R.string.no_avaliable_language_text)
-                           .setTitle(R.string.no_avaliable_language_title)
-                           .setCancelable(false)
+                    builder.setMessage(msg).setTitle(title).setCancelable(false)
                            .setPositiveButton(R.string.ok, toggleLangAcceptListener)
                            .setNegativeButton(R.string.cancel, toggleLangCancelListener);
                     AlertDialog dialog = builder.create();
@@ -954,6 +974,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             this.setTitleAndText(head, textEdit.getText().toString());
             player.unregisterOnStatusChangedListener(this);
             player = buildSpeechPlayer();
+            this.preparePlayer();
             setStatus(needInstallEngine?Status.INSTALL:Status.READY);
         }
         else
@@ -1003,6 +1024,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             this.setTitleAndText(head, body);
             player.unregisterOnStatusChangedListener(this);
             player = buildSpeechPlayer();
+            this.preparePlayer();
 
             setStatus(needInstallEngine?Status.INSTALL:Status.READY);
         }
@@ -1022,7 +1044,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         switch(item.getItemId())
         {
             case R.id.main_menu_settings:
-                showSettings();
+                showSettings(null);
                 return true;
             case R.id.main_menu_help:
                 showHelp();
@@ -1037,15 +1059,18 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         return false;
     }
 
-    private void showSettings()
+    private void showSettings(String data)
     {
+        saveSettings();
         final Intent intent = new Intent(this,AudiblePreferenceActivity.class);
         settings.setAuto(toggleAuto.isChecked());
+        if(data!=null) intent.setAction(data);
         startActivityForResult(intent, 0);
     }
 
     private void showHelp()
     {
+        saveSettings();
         String url = "file:///android_asset/help/html/index-eng.html";
         if(Locale.getDefault().getISO3Language().equals("spa"))
         {
@@ -1084,5 +1109,4 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
 
         }
     }
-
 }
