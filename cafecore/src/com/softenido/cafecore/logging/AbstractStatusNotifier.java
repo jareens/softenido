@@ -38,10 +38,10 @@ public abstract class AbstractStatusNotifier implements StatusNotifier
     }
     public boolean isLoggable(Level level) 
     {
-	if (level.intValue() < levelValue || levelValue == offValue) 
+        if (level.intValue() < levelValue || levelValue == offValue)
         {
-	    return false;
-	}
+            return false;
+        }
 	return true;
     }
 }

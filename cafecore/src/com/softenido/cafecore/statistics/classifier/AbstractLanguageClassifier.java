@@ -137,6 +137,7 @@ public abstract class AbstractLanguageClassifier extends BaseTextClassifier impl
                 ret=true;
                 if(!this.containsCategory(item))
                 {
+                    statusNotifier.log(Level.INFO, "[{0}] ...",item);
                     long started = System.nanoTime();
                     initialize(item);
                     long finalized = System.nanoTime();
