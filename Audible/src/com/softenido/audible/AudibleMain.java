@@ -85,6 +85,10 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             this.value = value;
         }
     }
+    static enum ScreenOrientation
+    {
+        LANDSCAPE, PORTRAIT;
+    }
 
     @SuppressWarnings("FieldCanBeLocal")
     private AdMob admob=null;
@@ -158,6 +162,9 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     volatile boolean earlyDetect = false;
     private volatile boolean needInstallEngine=false;
 
+    private static volatile ScreenOrientation orientation=null;
+    private volatile boolean rotating=false;
+
     AudiblePreferences settings=null;
     GutenbergLanguageClassifier classifier = null;
     static volatile PolicyAdmin policyAdmin = null;//static because it's referenced in preferences activity
@@ -186,6 +193,13 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         boolean debuggable = Debug.isDebuggable(this);
         notifier = buildNotifier(debuggable, false);
         this.strictMode(debuggable);
+
+        rotating = false;
+        if(setOrientation(getOrientation()))
+        {
+            rotating = true;
+            return;
+        }
 
         //get views
         title = (TextView) findViewById(R.id.title);
@@ -567,18 +581,20 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     @Override
     protected void onStop()
     {
-        classifier.setStatusNotifier(null);
-        player.stop();
-        saveSettings();
-        new Thread(new Runnable()
+        if(player!=null) player.stop();
+        if(!rotating)
         {
-            public void run()
+            saveSettings();
+            new Thread(new Runnable()
             {
-                settings.commit();
-            }
-        }).start();
-        Log.v("-audible-head",head);
-        Log.v("-audible-body",body);
+                public void run()
+                {
+                    settings.commit();
+                }
+            }).start();
+            Log.v("-audible-head",head);
+            Log.v("-audible-body",body);
+        }
         super.onStop();
     }
     void saveSettings()
@@ -589,13 +605,15 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         settings.setPhrase(togglePhrase.isChecked());
         settings.setLangDetect(toggleLang.isChecked());
         settings.setVolume(toggleVolume.isChecked());
+        settings.commit();
     }
 
     @Override
     protected void onDestroy()
     {
+        classifier.setStatusNotifier(null);
         KeepAudibleLoadService.setActive(false, settings.getQuickStart());
-        manager.shutdown();
+        if(manager!=null) manager.shutdown();
         super.onDestroy();
     }
 
@@ -608,6 +626,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         return obj.toString();
     }
     static final boolean parallel=true;
+
     private void loadHeadAndBody()
     {
         //set text, from intent or saved
@@ -626,14 +645,14 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         {
             Log.d("-audible-","action:"+action);
             Log.d("-audible-","intent:"+intent);
-            head = Strings.isnull(bundle.get(Intent.EXTRA_SUBJECT).toString(),"");
-            body = Strings.isnull(toString(bundle.get(Intent.EXTRA_TEXT)),"");
+            head = Strings.firstNonNull(bundle.get(Intent.EXTRA_SUBJECT).toString(),"");
+            body = Strings.firstNonNull(toString(bundle.get(Intent.EXTRA_TEXT)),"");
             autoPlayExit = true;
         }
         else
         {
-            head = Strings.isnull(settings.getTitle(),"");
-            body= Strings.isnull(settings.getBody(),"");
+            head = Strings.firstNonNull(settings.getTitle(),"");
+            body= Strings.firstNonNull(settings.getBody(),"");
             autoPlayExit = false;
         }
     }
@@ -750,7 +769,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             public void run()
             {
                 setStatus(Status.READY);
-                if(autoPlayExit && toggleAuto.isChecked() && autoExit)
+                if(autoPlayExit && toggleAuto.isChecked() && autoExit && !rotating)
                 {
                     notifier.i("auto-exit");
                     AudibleMain.this.finish();
@@ -1053,7 +1072,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
                 showAbout();
                 return true;
             case R.id.main_menu_rotate:
-                rotateScreen();
+                setOrientation(rotate());
                 return true;
         }
         return false;
@@ -1085,28 +1104,44 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         startActivityForResult(intent, 0);
     }
 
-    private void rotateScreen()
+    private ScreenOrientation rotate()
     {
-        int orientation = this.getRequestedOrientation();
-        switch (orientation)
+        switch(getOrientation())
         {
-//            case ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED:
-            case ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE:
-                this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                break;
-            case ActivityInfo.SCREEN_ORIENTATION_PORTRAIT:
-                this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                break;
-//            case ActivityInfo.SCREEN_ORIENTATION_USER:
-//            case ActivityInfo.SCREEN_ORIENTATION_BEHIND:
-//            case ActivityInfo.SCREEN_ORIENTATION_SENSOR:
-//            case ActivityInfo.SCREEN_ORIENTATION_NOSENSOR:
-//            case ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE:
-//            case ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT:
-//            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE:
-//            case ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT:
-//            case ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR:
-
+            case LANDSCAPE:
+                return ScreenOrientation.PORTRAIT;
+            case PORTRAIT:
+                return ScreenOrientation.LANDSCAPE;
         }
+        return orientation;
+    }
+    private ScreenOrientation getOrientation()
+    {
+        // get configured orientation
+        if(orientation==null)
+        {
+            String value = Strings.firstNonEmpty(settings.getOrientation(),ScreenOrientation.PORTRAIT.name());
+            orientation = ScreenOrientation.valueOf(value.toUpperCase());
+        }
+        return orientation;
+    }
+
+    private boolean setOrientation(ScreenOrientation value)
+    {
+        int current = this.getRequestedOrientation();
+        if( ScreenOrientation.LANDSCAPE.equals(value) && current!=ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+        {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            orientation=value;
+            return true;
+        }
+        else if( ScreenOrientation.PORTRAIT.equals(value) && current!=ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+        {
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            orientation=value;
+            return true;
+        }
+        orientation=value;
+        return false;
     }
 }

@@ -4,7 +4,11 @@ Audible (Beta)
 
 Description:
 
-Puede obtener textos de aplicaciones como feedme o K9-Mail, del porta-papeles (mediante Copiar y Pegar) y ficheros de texto situados en la MicroSD. Además leerá cada frase usando el idioma correcto en textos mixtos. Sin necesidad de tener que seleccionarlo manualmente.
+Puede obtener textos de aplicaciones como feedme o K9-Mail, 
+del porta-papeles (mediante Copiar y Pegar) y ficheros de texto 
+situados en la MicroSD. Además leerá cada frase usando el idioma 
+correcto en textos mixtos. Sin necesidad de tener que 
+seleccionarlo manualmente.
 
 Audible aún está en fase BETA, por lo que pueden producirse 
 errores de forma esporádica. Existen aún dispositivos en los 
@@ -18,18 +22,18 @@ Es preciso tener instalados un sintetizador de voz (tal como PICO
 o SVOX) y las voces correspondientes a los idiomas que se usen.
 
 Los idiomas soportados son:
-- German/Deutsch, 
-- English, 
-- Spanish/Español, 
-- French/Français, 
-- Italian/Italiano, 
-- Russian/Русский, 
-- Korean/한국어, 
-- Chinese/中文, 
+- German/Deutsch
+- English
+- Spanish/Español 
+- French/Français 
+- Italian/Italiano
+- Russian/Русский
+- Korean/한국어
+- Chinese/中文
 - Japanese/日本語
 
-Es preciso tener instalados un sintetizador de voz (como PICO o SVOX) 
-y las voces correspondientes a los idiomas que se usen.
+POR FAVOR antes de dar una mala puntación por un bug, comunicamelo
+he intentaré solucionarlo. Recuerda que aún es una versión Beta.
 
 
 Promo text:

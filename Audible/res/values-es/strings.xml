@@ -119,5 +119,6 @@
     <string name="no_enabled_languages_title">No hay lenguajes habilitados</string>
     <string name="no_enabled_languages_text">%s. ¿Habilitar ahora?</string>
     <string name="no_enabled_languages_toast" formatted="false">%s. Habilitar usando %s</string>
-
+    <string name="preferences_ui_orientation_title">Orientación</string>
+    <string name="preferences_ui_orientation_summary">orientación de la pantalla principal (%s)</string>
 </resources>

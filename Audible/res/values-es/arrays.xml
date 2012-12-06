@@ -25,4 +25,8 @@
         <item>1 día</item>
         <item>1 semana</item>
     </string-array>
+    <string-array name="orientations_names">
+        <item>Apaisado</item>
+        <item>Vertical</item>
+    </string-array>
 </resources>

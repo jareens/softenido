@@ -70,7 +70,7 @@ public class AudiblePreferences
     private static final String UI_PROGRESS      = "ui.progress";
     private static final String UI_VOLUME        = "ui.volume";
     private static final String UI_JOINLINES     = "ui.joinlines";
-
+    private static final String UI_ORIENTATION   = "ui.orientation";
 
     private static final String EARLY_SAVE       = "advanced.ealysave";
     private static final String EARLY_DETECT     = "advanced.ealydetect";
@@ -348,6 +348,10 @@ public class AudiblePreferences
     public boolean isJoinLines()
     {
         return settings.getBoolean(UI_JOINLINES, false);
+    }
+    public String getOrientation()
+    {
+        return settings.getString(UI_ORIENTATION, "");
     }
 
     public int getLangUnit()
