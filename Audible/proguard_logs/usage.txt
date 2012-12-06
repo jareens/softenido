@@ -27,7 +27,6 @@ com.google.ads.AdSize:
     38:39:public AdSize(int,int)
 com.google.ads.AdView:
     478:482:public boolean isReady()
-    523:524:public void setAdListener(com.google.ads.AdListener)
     535:536:public void stopLoading()
 com.google.ads.InterstitialAd:
     private com.google.ads.d a
@@ -89,6 +88,7 @@ com.softenido.audible.AudiblePreferences:
     private static final java.lang.String READING_IGNORE_UNDERSCORE
     private static final java.lang.String READING_IGNORE_HYPHENS
     private static final java.lang.String READING_IGNORE_ASTERISK
+    private static final java.lang.String READING_IGNORE_AMPERSAND
     private static final java.lang.String AUTO
     private static final java.lang.String AUTO_PLAY
     private static final java.lang.String AUTO_EXIT
@@ -104,6 +104,7 @@ com.softenido.audible.AudiblePreferences:
     private static final java.lang.String UI_PROGRESS
     private static final java.lang.String UI_VOLUME
     private static final java.lang.String UI_JOINLINES
+    private static final java.lang.String UI_ORIENTATION
     private static final java.lang.String EARLY_SAVE
     private static final java.lang.String EARLY_DETECT
     private static final java.lang.String KEEP_QUICK_START
@@ -115,10 +116,8 @@ com.softenido.audible.AudiblePreferences:
     private static final java.lang.String THEME_DEFAULT
     private static final java.lang.String PHRASE
     static final java.lang.String iso3Compressed
-    122:122:public boolean isModified()
-    158:159:public void setPhrase(boolean)
-    336:337:public void setVolume(boolean)
-    366:373:private boolean getBoolean(java.lang.String,boolean)
+    123:123:public boolean isModified()
+    379:386:private boolean getBoolean(java.lang.String,boolean)
 com.softenido.audible.BuildConfig
 com.softenido.audible.KeepAudibleLoadService:
     static final int MAX_LANGS
@@ -312,25 +311,25 @@ com.softenido.cafecore.statistics.MovingAverage
 com.softenido.cafecore.statistics.SimpleMovingAverage
 com.softenido.cafecore.statistics.Statistics
 com.softenido.cafecore.statistics.classifier.AbstractClassifier:
-    51:52:final void coach(java.lang.String,java.lang.String,double,double)
-    55:57:final void coach(java.lang.String,java.lang.String,double)
-    62:66:public final void coach(java.lang.String,java.lang.String[],int[])
+    53:54:final void coach(java.lang.String,java.lang.String,double,double)
+    57:59:final void coach(java.lang.String,java.lang.String,double)
+    64:68:public final void coach(java.lang.String,java.lang.String[],int[])
     abstract int wordCount(java.lang.String,java.lang.String)
     abstract int getTotal()
     abstract java.lang.String[] getCategories()
     abstract java.lang.String[] getWords()
-    139:208:public final varargs void save(java.io.OutputStream,int,int,java.lang.String[])
-    211:212:public final varargs void loadGZ(java.io.InputStream,boolean,java.lang.String[])
-    215:216:public final varargs void saveGZ(java.io.OutputStream,int,int,java.lang.String[])
-    255:255:public java.lang.String getUnmatched()
-    265:265:public static int getSaveThresold()
-    270:271:public static void setSaveThresold(int)
+    141:210:public final varargs void save(java.io.OutputStream,int,int,java.lang.String[])
+    213:214:public final varargs void loadGZ(java.io.InputStream,boolean,java.lang.String[])
+    217:218:public final varargs void saveGZ(java.io.OutputStream,int,int,java.lang.String[])
+    257:257:public java.lang.String getUnmatched()
+    282:282:public static int getSaveThresold()
+    287:288:public static void setSaveThresold(int)
 com.softenido.cafecore.statistics.classifier.AbstractLanguageClassifier:
     49:51:public AbstractLanguageClassifier(java.lang.String)
     54:60:public AbstractLanguageClassifier(java.lang.String,java.lang.String[])
-    105:106:public com.softenido.cafecore.statistics.classifier.Score classify(java.io.InputStream)
-    112:114:public varargs void save(java.io.OutputStream,int,int,java.lang.String[])
-    119:121:public varargs void saveGZ(java.io.OutputStream,int,int,java.lang.String[])
+    111:112:public com.softenido.cafecore.statistics.classifier.Score classify(java.io.InputStream)
+    118:120:public varargs void save(java.io.OutputStream,int,int,java.lang.String[])
+    125:127:public varargs void saveGZ(java.io.OutputStream,int,int,java.lang.String[])
 com.softenido.cafecore.statistics.classifier.BaseTextClassifier:
     static final java.lang.String DELIMITER
     static final int SUCCESS
@@ -351,8 +350,8 @@ com.softenido.cafecore.statistics.classifier.BaseTextClassifier:
     365:365:public static int getSampleLimit()
     370:371:public static void setSampleLimit(int)
     380:380:public static boolean isGroup()
-    385:386:public static void setGroup(boolean)
-    394:394:public java.lang.String getUnmatched()
+    385:385:public java.lang.String getUnmatched()
+    397:398:public static void setGroup(boolean)
 com.softenido.cafecore.statistics.classifier.Classifier:
     public abstract com.softenido.cafecore.statistics.classifier.Score[] classify(com.softenido.cafecore.statistics.classifier.Score[],java.lang.String[])
     public abstract java.lang.String getUnmatched()
@@ -528,17 +527,17 @@ com.softenido.cafecore.util.Strings:
 com.softenido.cafecore.util.regex.RegExs
 com.softenido.cafedroid.BuildConfig
 com.softenido.cafedroid.R:
-    10:304:public R()
+    10:311:public R()
 com.softenido.cafedroid.R$array
 com.softenido.cafedroid.R$attr
 com.softenido.cafedroid.R$drawable
 com.softenido.cafedroid.R$id:
-    82:82:public R$id()
+    84:84:public R$id()
 com.softenido.cafedroid.R$layout:
-    143:143:public R$layout()
+    145:145:public R$layout()
 com.softenido.cafedroid.R$menu
 com.softenido.cafedroid.R$string:
-    166:166:public R$string()
+    168:168:public R$string()
 com.softenido.cafedroid.R$xml
 com.softenido.cafedroid.admob.AdMob:
     public static final java.lang.String ADMOB_PUBLISHER_ID
@@ -659,15 +658,15 @@ com.softenido.cafedroid.speech.SpeechPlayer:
     public static final int ADJUST_LOWER
     public static final int ADJUST_RAISE
     public static final int ADJUST_SAME
-    495:495:public boolean isLowerCase()
-    505:505:public boolean isDetection()
-    528:528:public int getMinPhraseSize()
-    533:534:public void setMinPhraseSize(int)
-    627:628:public void setVolume(int)
-    637:638:public void adjustVolume(int)
-    646:647:public void setVolumePercentage(int)
-    650:651:public void setVolumePercentage(int,int)
-    660:661:public void setGaugeView(com.softenido.cafecore.gauge.GaugeView)
+    513:513:public boolean isLowerCase()
+    523:523:public boolean isDetection()
+    546:546:public int getMinPhraseSize()
+    551:552:public void setMinPhraseSize(int)
+    645:646:public void setVolume(int)
+    655:656:public void adjustVolume(int)
+    664:665:public void setVolumePercentage(int)
+    668:669:public void setVolumePercentage(int,int)
+    678:679:public void setGaugeView(com.softenido.cafecore.gauge.GaugeView)
 com.softenido.cafedroid.speech.SpeechSpeaker:
     public static final int FLAG_ALLOW_RINGER_MODES
     public static final int FLAG_PLAY_SOUND
@@ -721,7 +720,6 @@ com.softenido.cafedroid.util.ui.Notifier:
     191:192:public final void d(java.lang.String)
     195:196:public final void d(java.lang.String,java.lang.Throwable)
     203:204:public final void i(java.lang.String,java.lang.Throwable)
-    207:208:public final void w(java.lang.String)
     211:212:public final void w(java.lang.String,java.lang.Throwable)
     215:216:public final void e(java.lang.String)
     224:224:public int getLevel()
@@ -744,15 +742,8 @@ com.softenido.cafedroid.web.WebConfig:
     73:73:public int getLayout()
 com.softenido.cafedroid.widget.ToggleImageButton:
     43:44:public ToggleImageButton(android.content.Context)
-    57:62:public void setStateResources(int[])
-    81:81:public int getState()
-    86:87:public void setState(int)
 com.softenido.cafedroid.widget.ToggleTextButton:
     44:45:public ToggleTextButton(android.content.Context)
-    58:64:public void setStateResources(int[])
-    67:73:public void setStateNames(java.lang.String[])
-    97:97:public int getState()
-    102:103:public void setState(int)
 com.softenido.gutenberg.Gutenberg:
     java.util.HashMap map
     66:66:public static java.lang.String[] getISO3Languages()
