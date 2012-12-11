@@ -42,7 +42,8 @@ public class AdMobBanner extends AdMob
     @Override
     protected void finalize() throws Throwable
     {
-        adView.destroy();
+        // find a best way of destroying because it complains about calling in finalizer thread
+        // adView.destroy();
         super.finalize();
     }
 }

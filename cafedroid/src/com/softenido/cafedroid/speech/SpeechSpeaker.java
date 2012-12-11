@@ -54,7 +54,9 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
     public static final int ADJUST_SAME = AudioManager.ADJUST_SAME;
 
     final static String tag = SpeechSpeaker.class.getSimpleName();
-    final String SILENCE="[SILENCE]=";
+    final static String SILENCE="[SILENCE]=";
+    final static int EMPTY_MILLIS = 123;
+
     final Activity activity;
     final Locale locale;
     final SpeechManager manager;
@@ -357,7 +359,12 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
             //save utterance for completed event
             utteranceLock = utterance;
             int ret;
-            if(text.startsWith(SILENCE))
+            if(text.trim().length()==0)
+            {
+                //emtpy strings do not create utterance completion event, so convert to a short silence
+                ret = tts.playSilence(EMPTY_MILLIS, flush?TextToSpeech.QUEUE_FLUSH:TextToSpeech.QUEUE_ADD, params);
+            }
+            else if(text.startsWith(SILENCE))
             {
                 long millis = Long.parseLong(text.substring(SILENCE.length()));
                 ret = tts.playSilence(millis, flush?TextToSpeech.QUEUE_FLUSH:TextToSpeech.QUEUE_ADD, params);
@@ -559,8 +566,10 @@ public class SpeechSpeaker implements TextToSpeech.OnInitListener, TextToSpeech.
         return tts.getDefaultEngine();
     }
 
-    public List<TextToSpeech.EngineInfo> getEngines()
-    {
-        return tts.getEngines();
-    }
+//API 14
+//    public List<TextToSpeech.EngineInfo> getEngines()
+//    {
+//        return tts.getEngines();
+//    }
+
 }

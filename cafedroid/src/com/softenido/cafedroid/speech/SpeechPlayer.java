@@ -23,7 +23,6 @@ package com.softenido.cafedroid.speech;
 
 import android.media.AudioManager;
 import android.os.PowerManager;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import com.softenido.cafecore.gauge.GaugeProgress;
 import com.softenido.cafecore.gauge.GaugeView;
@@ -35,8 +34,6 @@ import com.softenido.cafecore.text.Phrases;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -85,10 +82,12 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
     private volatile boolean detection = true;
     private volatile String ignoreRegex = null;
     private volatile String alternative = null;
-    private volatile ProxyGaugeProgress gauge = new ProxyGaugeProgress();
+    private final ProxyGaugeProgress gauge = new ProxyGaugeProgress();
     private volatile PowerManager.WakeLock wakeLock = null;
     private volatile boolean ignoreFirst=false;
     private volatile int minPhraseSize = 16;
+
+    private static int WAIT_FOR_MILLIS = 12345;
 
     public static interface OnStatusChangedListener
     {
@@ -177,7 +176,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         {
             while(array[x]==null)
             {
-                lock.wait(54321);
+                lock.wait(WAIT_FOR_MILLIS);
             }
         }
     }
@@ -187,7 +186,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         {
             while(array[x]==null || array[x][y]==null)
             {
-                lock.wait(54321);
+                lock.wait(WAIT_FOR_MILLIS);
             }
         }
     }
@@ -457,8 +456,6 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
             }
         }
     }
-
-
     public boolean play()
     {
         synchronized(lock)
@@ -472,6 +469,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
                     speak();
                 }
             },"SpeechPlayer.speak").start();
+            lock.notifyAll();
             return ret;
         }
     }
@@ -481,6 +479,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         {
             status=Status.STOP;
             speaker.stop();
+            lock.notifyAll();
         }
     }
     public void pause()
@@ -488,6 +487,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         synchronized(lock)
         {
             status=Status.PAUSE;
+            lock.notifyAll();
             speaker.pause();
         }
     }
@@ -496,6 +496,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         synchronized(lock)
         {
             status=phrase?Status.PREV_COL:Status.PREV_ROW;
+            lock.notifyAll();
             speaker.pause();
         }
     }
@@ -504,6 +505,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         synchronized(lock)
         {
             status=phrase?Status.NEXT_COL:Status.NEXT_ROW;
+            lock.notifyAll();
             speaker.pause();
         }
     }
@@ -525,7 +527,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
 
     public void setDetection(boolean detection)
     {
-        synchronized (lock)
+        synchronized(lock)
         {
             this.detection = detection;
             lock.notifyAll();
@@ -538,6 +540,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         {
             this.ignoreRegex= ignoreRegex;
             this.alternative = alternative;
+            lock.notifyAll();
         }
     }
 
@@ -697,4 +700,59 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         }
         return false;
     }
+
+    public static final class Mark
+    {
+        final int row;
+        final int col;
+        final Status status;
+
+        public Mark(int row, int col, Status status)
+        {
+            this.col = col;
+            this.row = row;
+            this.status = status;
+        }
+        public boolean isPlaying()
+        {
+            return status==Status.PLAY;
+        }
+        public boolean isPaused()
+        {
+            return status==Status.PAUSE;
+        }
+    }
+    public Mark getMark()
+    {
+        synchronized (lock)
+        {
+            return new Mark(row,col, status);
+        }
+    }
+    public boolean setMark(Mark mark)
+    {
+        boolean ret = false;
+        synchronized(lock)
+        {
+            if(mark!=null)
+            {
+                this.row = mark.row;
+                this.col = mark.col;
+                switch(mark.status)
+                {
+                    case PLAY:
+                        this.play();
+                        ret=true;
+                        break;
+                    case PAUSE:
+                        this.pause();
+                        ret=true;
+                        break;
+                }
+            }
+            lock.notifyAll();
+            return ret;
+        }
+    }
+
 }
