@@ -136,6 +136,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     private volatile SpeechManager manager = null;
     private volatile SpeechSpeaker speaker = null;
     private volatile SpeechPlayer player=null;
+    private static volatile SpeechPlayer.Mark mark=null;
 
     volatile Notifier notifier = null;
 
@@ -254,9 +255,13 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         extraFile.setOnClickListener(extraFileListener);
         extraSendto.setOnClickListener(extraSendtoListener);
 
-        toggleExtra.setOnClickListener(toggleExtraListener);
-        toggleVolume.setOnClickListener(toggleVolumeListener);
-        toggleLang.setOnClickListener(toggleLangListener);
+        //setup synchronizer
+        settings.add(AudiblePreferences.EXTRA, toggleExtra, toggleExtraListener, true);
+        settings.add(AudiblePreferences.UI_VOLUME, toggleVolume, toggleVolumeListener, true);
+        settings.add(AudiblePreferences.LANG_DETECT, toggleLang, toggleLangListener);
+        settings.add(AudiblePreferences.PHRASE, togglePhrase);
+        settings.add(AudiblePreferences.AUTO, toggleAuto);
+        settings.sync(true);
 
         this.loadSettings();
         KeepAudibleLoadService.connect(this);
@@ -336,12 +341,8 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             this.readingIgnore = null;
             this.readingAlternative = null;
         }
+        settings.sync();
 
-        toggleAuto.setChecked(settings.isAuto());
-        togglePhrase.setChecked(settings.isPhrase());
-
-        toggleLang.setChecked(settings.getLangDetect());
-        toggleVolume.setChecked(settings.isVolume());
         this.autoPlay = settings.isAutoPlay();
         this.autoExit = settings.isAutoExit();
         this.autoScreenLock = settings.isAutoScreenLock();
@@ -430,7 +431,11 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
 //                    extraLangPar.setAdapter(adapter);
 
                     setStatus(Status.READY);
-                    if(autoPlayExit && toggleAuto.isChecked() && autoPlay)
+                    if(mark!=null && ( mark.isPlaying() || mark.isPaused() ) )
+                    {
+                            speakerStatus();
+                    }
+                    else if(autoPlayExit && toggleAuto.isChecked() && autoPlay)
                     {
                         notifier.i("auto-play");
                         speakerPlay();
@@ -462,8 +467,14 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         }
         return false;
     }
-
-    private void setStatus(Status value)
+    private void  fixStatus(Status value)
+    {
+        if(!this.status.equals(value))
+        {
+            setStatus(value);
+        }
+    }
+    private void  setStatus(Status value)
     {
         this.status = value;
         switch (value)
@@ -475,6 +486,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
                 play.setVisibility(View.GONE);
                 pause.setVisibility(View.GONE);
                 resume.setVisibility(View.GONE);
+                notifier.i("[install]");
                 break;
             case READY:
                 textList.setVisibility(View.VISIBLE);
@@ -483,6 +495,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
                 play.setVisibility(View.VISIBLE);
                 pause.setVisibility(View.GONE);
                 resume.setVisibility(View.GONE);
+                notifier.i("[ready]");
                 break;
             case PLAYING:
                 textList.setVisibility(View.VISIBLE);
@@ -491,6 +504,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
                 play.setVisibility(View.GONE);
                 pause.setVisibility(View.VISIBLE);
                 resume.setVisibility(View.GONE);
+                notifier.i("[play]");
                 break;
             case PAUSED:
                 textList.setVisibility(View.VISIBLE);
@@ -499,6 +513,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
                 play.setVisibility(View.GONE);
                 pause.setVisibility(View.GONE);
                 resume.setVisibility(View.VISIBLE);
+                notifier.i("[pause]");
                 break;
             case EDIT:
                 textList.setVisibility(View.GONE);
@@ -507,9 +522,10 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
                 play.setVisibility(View.VISIBLE);
                 pause.setVisibility(View.GONE);
                 resume.setVisibility(View.GONE);
+                notifier.i("[edit]");
                 break;
             default:
-                Log.w(AudibleMain.class.getName(),"unknown status "+status);
+                notifier.i("[unknown]");
         }
         extraKeyboard.setEnabled(value==Status.READY||value==Status.EDIT);
         setup.setEnabled(value==Status.INSTALL||value==Status.READY);
@@ -521,6 +537,20 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     private void speakerInstall()
     {
         speaker.install();
+    }
+    private void speakerStatus()
+    {
+        if(mark.isPlaying())
+        {
+            setStatus(Status.PLAYING);
+        }
+        else if(mark.isPaused())
+        {
+            setStatus(Status.PAUSED);
+        }
+        preparePlayer();
+        player.setMark(mark);
+        mark = null;
     }
     private void speakerPlay()
     {
@@ -601,10 +631,6 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     {
         settings.setTitle(head);
         settings.setBody(body);
-        settings.setAuto(toggleAuto.isChecked());
-        settings.setPhrase(togglePhrase.isChecked());
-        settings.setLangDetect(toggleLang.isChecked());
-        settings.setVolume(toggleVolume.isChecked());
         settings.commit();
     }
 
@@ -726,6 +752,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     {
         if(toggleAuto.isChecked() && autoScreenLock)
         {
+            fixStatus(Status.PLAYING);
             if(policyAdmin.isAdminActive())
             {
                 notifier.i("Auto Lock Screen");
@@ -768,7 +795,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         {
             public void run()
             {
-                setStatus(Status.READY);
+                fixStatus(Status.READY);
                 if(autoPlayExit && toggleAuto.isChecked() && autoExit && !rotating)
                 {
                     notifier.i("auto-exit");
@@ -1082,7 +1109,6 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     {
         saveSettings();
         final Intent intent = new Intent(this,AudiblePreferenceActivity.class);
-        settings.setAuto(toggleAuto.isChecked());
         if(data!=null) intent.setAction(data);
         startActivityForResult(intent, 0);
     }
@@ -1131,14 +1157,24 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         int current = this.getRequestedOrientation();
         if( ScreenOrientation.LANDSCAPE.equals(value) && current!=ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
         {
-            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             orientation=value;
+            rotating=true;
+            if(player!=null)
+            {
+                mark = player.getMark();
+            }
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             return true;
         }
         else if( ScreenOrientation.PORTRAIT.equals(value) && current!=ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         {
-            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             orientation=value;
+            rotating=true;
+            if(player!=null)
+            {
+                mark = player.getMark();
+            }
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             return true;
         }
         orientation=value;

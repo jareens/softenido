@@ -26,6 +26,7 @@ com.google.ads.AdRequest:
 com.google.ads.AdSize:
     38:39:public AdSize(int,int)
 com.google.ads.AdView:
+    237:238:public void destroy()
     478:482:public boolean isReady()
     535:536:public void stopLoading()
 com.google.ads.InterstitialAd:
@@ -45,9 +46,13 @@ com.google.ads.a:
     79:81:private a()
 com.google.ads.aa:
     18:18:public aa()
+com.google.ads.c:
+    371:387:final void a()
 com.google.ads.d:
+    276:279:public final synchronized void b()
     464:464:public final synchronized boolean o()
     777:778:public final synchronized void y()
+    809:816:public final synchronized void z()
 com.google.ads.searchads.SearchAdRequest:
     88:89:public void setQuery(java.lang.String)
     98:104:public void setBackgroundColor(int)
@@ -89,20 +94,22 @@ com.softenido.audible.AudiblePreferences:
     private static final java.lang.String READING_IGNORE_HYPHENS
     private static final java.lang.String READING_IGNORE_ASTERISK
     private static final java.lang.String READING_IGNORE_AMPERSAND
-    private static final java.lang.String AUTO
-    private static final java.lang.String AUTO_PLAY
-    private static final java.lang.String AUTO_EXIT
-    private static final java.lang.String LANG_DEFAULT
+    static final java.lang.String EXTRA
+    static final java.lang.String PHRASE
+    static final java.lang.String AUTO
+    static final java.lang.String AUTO_PLAY
+    static final java.lang.String AUTO_EXIT
+    static final java.lang.String AUTO_SCREEN_LOCK
+    static final java.lang.String LANG_DEFAULT
     static final java.lang.String LANG_DETECT
     private static final java.lang.String LANG_UNIT
     private static final java.lang.String LANG_GENDER
-    public static final java.lang.String AUTO_SCREEN_LOCK
     private static final java.lang.String UI_FONT_TYPEFACE
     private static final java.lang.String UI_FONT_SIZE
     private static final java.lang.String UI_FONT_BOLD
     private static final java.lang.String UI_TOASTS
     private static final java.lang.String UI_PROGRESS
-    private static final java.lang.String UI_VOLUME
+    static final java.lang.String UI_VOLUME
     private static final java.lang.String UI_JOINLINES
     private static final java.lang.String UI_ORIENTATION
     private static final java.lang.String EARLY_SAVE
@@ -110,14 +117,19 @@ com.softenido.audible.AudiblePreferences:
     private static final java.lang.String KEEP_QUICK_START
     private static final java.lang.String TITLE
     private static final java.lang.String BODY
-    private static final java.lang.String EXTRA
     private static final java.lang.String LEARN
     private static final java.lang.String THEME
     private static final java.lang.String THEME_DEFAULT
-    private static final java.lang.String PHRASE
     static final java.lang.String iso3Compressed
-    123:123:public boolean isModified()
-    379:386:private boolean getBoolean(java.lang.String,boolean)
+    150:150:public boolean isModified()
+    182:182:public boolean isPhrase()
+    186:187:public void setPhrase(boolean)
+    204:205:public void setLangDetect(boolean)
+    320:320:public boolean isAuto()
+    324:325:public void setAuto(boolean)
+    368:368:public boolean isVolume()
+    372:373:public void setVolume(boolean)
+    406:413:private boolean getBoolean(java.lang.String,boolean)
 com.softenido.audible.BuildConfig
 com.softenido.audible.KeepAudibleLoadService:
     static final int MAX_LANGS
@@ -527,7 +539,7 @@ com.softenido.cafecore.util.Strings:
 com.softenido.cafecore.util.regex.RegExs
 com.softenido.cafedroid.BuildConfig
 com.softenido.cafedroid.R:
-    10:311:public R()
+    10:312:public R()
 com.softenido.cafedroid.R$array
 com.softenido.cafedroid.R$attr
 com.softenido.cafedroid.R$drawable
@@ -537,7 +549,7 @@ com.softenido.cafedroid.R$layout:
     145:145:public R$layout()
 com.softenido.cafedroid.R$menu
 com.softenido.cafedroid.R$string:
-    168:168:public R$string()
+    169:169:public R$string()
 com.softenido.cafedroid.R$xml
 com.softenido.cafedroid.admob.AdMob:
     public static final java.lang.String ADMOB_PUBLISHER_ID
@@ -658,15 +670,15 @@ com.softenido.cafedroid.speech.SpeechPlayer:
     public static final int ADJUST_LOWER
     public static final int ADJUST_RAISE
     public static final int ADJUST_SAME
-    513:513:public boolean isLowerCase()
-    523:523:public boolean isDetection()
-    546:546:public int getMinPhraseSize()
-    551:552:public void setMinPhraseSize(int)
-    645:646:public void setVolume(int)
-    655:656:public void adjustVolume(int)
-    664:665:public void setVolumePercentage(int)
-    668:669:public void setVolumePercentage(int,int)
-    678:679:public void setGaugeView(com.softenido.cafecore.gauge.GaugeView)
+    515:515:public boolean isLowerCase()
+    525:525:public boolean isDetection()
+    549:549:public int getMinPhraseSize()
+    554:555:public void setMinPhraseSize(int)
+    648:649:public void setVolume(int)
+    658:659:public void adjustVolume(int)
+    667:668:public void setVolumePercentage(int)
+    671:672:public void setVolumePercentage(int,int)
+    681:682:public void setGaugeView(com.softenido.cafecore.gauge.GaugeView)
 com.softenido.cafedroid.speech.SpeechSpeaker:
     public static final int FLAG_ALLOW_RINGER_MODES
     public static final int FLAG_PLAY_SOUND
@@ -676,20 +688,21 @@ com.softenido.cafedroid.speech.SpeechSpeaker:
     public static final int ADJUST_LOWER
     public static final int ADJUST_RAISE
     public static final int ADJUST_SAME
+    static final java.lang.String SILENCE
+    static final int EMPTY_MILLIS
     public static final int LANG_AVAILABLE
     public static final int LANG_COUNTRY_AVAILABLE
     public static final int LANG_COUNTRY_VAR_AVAILABLE
-    158:158:public boolean isSpeaking()
-    168:168:public java.util.Locale getLanguage()
-    290:290:public boolean isInstallNeeded()
-    295:295:public java.lang.String silence(long,boolean,boolean)
-    318:323:public void resume()
-    417:479:public java.lang.String[] speak(java.lang.String[],boolean,boolean)
-    512:513:public void setVolume(int)
-    522:523:public void adjustVolume(int)
-    538:539:public void setVolumePercentage(int)
-    542:550:public void setVolumePercentage(int,int)
-    564:564:public java.util.List getEngines()
+    160:160:public boolean isSpeaking()
+    170:170:public java.util.Locale getLanguage()
+    292:292:public boolean isInstallNeeded()
+    297:297:public java.lang.String silence(long,boolean,boolean)
+    320:325:public void resume()
+    424:486:public java.lang.String[] speak(java.lang.String[],boolean,boolean)
+    519:520:public void setVolume(int)
+    529:530:public void adjustVolume(int)
+    545:546:public void setVolumePercentage(int)
+    549:557:public void setVolumePercentage(int,int)
     44:44:static synthetic java.lang.Object access$000(com.softenido.cafedroid.speech.SpeechSpeaker)
     44:44:static synthetic java.lang.Object access$100(com.softenido.cafedroid.speech.SpeechSpeaker)
     44:44:static synthetic com.softenido.cafedroid.speech.SpeechSpeaker$Status access$200(com.softenido.cafedroid.speech.SpeechSpeaker)
@@ -740,6 +753,8 @@ com.softenido.cafedroid.web.WebActivity:
 com.softenido.cafedroid.web.WebConfig:
     64:64:public static com.softenido.cafedroid.web.WebConfig getBlueInstance()
     73:73:public int getLayout()
+com.softenido.cafedroid.widget.SharedPreferencesSynchronizer$OnClickListener:
+    static final int TOGGLE_BUTTON
 com.softenido.cafedroid.widget.ToggleImageButton:
     43:44:public ToggleImageButton(android.content.Context)
 com.softenido.cafedroid.widget.ToggleTextButton:

@@ -170,6 +170,7 @@ com.softenido.audible.R$layout: int layout_home_extra
 com.softenido.audible.R$layout: int layout_home_text
 com.softenido.audible.R$layout: int layout_home_toggle
 com.softenido.audible.R$layout: int layout_home_volume
+com.softenido.audible.R$layout: int main
 com.softenido.audible.R$layout: int paragraph_view
 com.softenido.audible.R$layout: int preferences
 com.softenido.audible.R$layout: int seekbar_view
@@ -470,6 +471,7 @@ com.softenido.cafedroid.R$layout: int layout_home_extra
 com.softenido.cafedroid.R$layout: int layout_home_text
 com.softenido.cafedroid.R$layout: int layout_home_toggle
 com.softenido.cafedroid.R$layout: int layout_home_volume
+com.softenido.cafedroid.R$layout: int main
 com.softenido.cafedroid.R$layout: int paragraph_view
 com.softenido.cafedroid.R$layout: int preferences
 com.softenido.cafedroid.R$layout: int seekbar_view

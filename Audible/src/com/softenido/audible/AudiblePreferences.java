@@ -24,6 +24,9 @@ package com.softenido.audible;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.view.View;
+import android.widget.ToggleButton;
+import com.softenido.cafedroid.widget.SharedPreferencesSynchronizer;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -52,47 +55,46 @@ public class AudiblePreferences
     private static final String READING_IGNORE_ASTERISK = "reading.ignore.asterisk";
     private static final String READING_IGNORE_AMPERSAND = "reading.ignore.ampersand";
 
-    private static final String AUTO  = "auto";
-    private static final String AUTO_PLAY = "auto.play";
-    private static final String AUTO_EXIT = "auto.exit";
+    static final String EXTRA = "extra";
+    static final String PHRASE= "phrase";
 
-    private static final String LANG_DEFAULT  = "lang.default";
+    static final String AUTO  = "auto";
+    static final String AUTO_PLAY = "auto.play";
+    static final String AUTO_EXIT = "auto.exit";
+    static final String AUTO_SCREEN_LOCK = "auto.screen.lock";
+    static final String LANG_DEFAULT  = "lang.default";
     static final String LANG_DETECT   = "lang.detect";
     private static final String LANG_UNIT = "lang.unit";
+
     private static final String LANG_GENDER = "lang.gender";
-
-    public static final String AUTO_SCREEN_LOCK = "auto.screen.lock";
-
     private static final String UI_FONT_TYPEFACE = "ui.font.typeface";
     private static final String UI_FONT_SIZE     = "ui.font.size";
     private static final String UI_FONT_BOLD     = "ui.font.bold";
     private static final String UI_TOASTS        = "ui.toasts";
     private static final String UI_PROGRESS      = "ui.progress";
-    private static final String UI_VOLUME        = "ui.volume";
+    static final String UI_VOLUME        = "ui.volume";
     private static final String UI_JOINLINES     = "ui.joinlines";
-    private static final String UI_ORIENTATION   = "ui.orientation";
 
+    private static final String UI_ORIENTATION   = "ui.orientation";
     private static final String EARLY_SAVE       = "advanced.ealysave";
     private static final String EARLY_DETECT     = "advanced.ealydetect";
-    private static final String KEEP_QUICK_START = "advanced.keep_quick_start";
 
+    private static final String KEEP_QUICK_START = "advanced.keep_quick_start";
     private static final String TITLE = "title";
     private static final String BODY  = "body";
-    private static final String EXTRA = "extra";
     private static final String LEARN = "learn";
     private static final String THEME = "theme";
+
     private static final String THEME_DEFAULT = "Dark";
 
-    private static final String PHRASE= "phrase";
-
     static volatile AudiblePreferences instance=null;
-    final SharedPreferences settings;
+    final SharedPreferencesSynchronizer settings;
     volatile SharedPreferences.Editor editor=null;
     volatile boolean modified=true;
 
     AudiblePreferences(Context ctx)
     {
-        this.settings = PreferenceManager.getDefaultSharedPreferences(ctx);
+        this.settings = new SharedPreferencesSynchronizer(PreferenceManager.getDefaultSharedPreferences(ctx));
     }
 
     public static AudiblePreferences getInstance(Context ctx)
@@ -103,6 +105,31 @@ public class AudiblePreferences
             instance.updateVersion();
         }
         return instance;
+    }
+
+    public void add(String name, ToggleButton view)
+    {
+        settings.add(name, view);
+    }
+
+    public void add(String name, ToggleButton view, View.OnClickListener listener)
+    {
+        settings.add(name, view, listener);
+    }
+
+    public void add(String name, ToggleButton view, View.OnClickListener listener, boolean clickOnSync)
+    {
+        settings.add(name, view, listener, clickOnSync);
+    }
+
+    public void sync()
+    {
+        settings.sync();
+    }
+
+    public void sync(boolean clickOnSync)
+    {
+        settings.sync(clickOnSync);
     }
 
     private SharedPreferences.Editor edit()
