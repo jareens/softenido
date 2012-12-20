@@ -357,4 +357,53 @@ public class Sorts
             }
         };
     }
+    
+    public static int[] sequence(int[] values, int from)
+    {
+        for(int i=0;i<values.length;i++, from++)
+        {
+            values[i] = from;
+        }
+        return values;
+    }
+    public static int[] sequence(int[] values)
+    {
+        for(int i=0;i<values.length;i++)
+        {
+            values[i] = i;
+        }
+        return values;
+    }
+    public static long[] sequence(long[] values, long from)
+    {
+        for(int i=0;i<values.length;i++, from++)
+        {
+            values[i] = from;
+        }
+        return values;
+    }
+    public static long[] sequence(long[] values)
+    {
+        for(int i=0;i<values.length;i++)
+        {
+            values[i] = i;
+        }
+        return values;
+    }
+    public static String[] sequence(String[] values, int from)
+    {
+        for(int i=0;i<values.length;i++, from++)
+        {
+            values[i] = Integer.toString(from);
+        }
+        return values;
+    }
+    public static String[] sequence(String[] values)
+    {
+        for(int i=0;i<values.length;i++)
+        {
+            values[i] = Integer.toString(i);
+        }
+        return values;
+    }
 }

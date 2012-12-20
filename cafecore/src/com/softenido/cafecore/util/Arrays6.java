@@ -59,6 +59,12 @@ public class Arrays6
         System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
         return copy;
     }
+    public static long[] copyOf(long[] original, int newLength) 
+    {
+        long[] copy = new long[newLength];
+        System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
+        return copy;
+    }
     
     /**
      * Copies the specified array, truncating or padding with zeros (if necessary)

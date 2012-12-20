@@ -432,5 +432,34 @@ public class SortsTest
         Arrays.sort(tmp, cmp);
         assertArrayEquals(INTEGER_DES, tmp);
     }
+
+    /**
+     * Test of sequence method, of class Sorts.
+     */
+    @Test
+    public void testSequence_intArr_int()
+    {
+        int[] values = Sorts.sequence(new int[0], 0);
+        assertEquals(values.length, 0);
+        
+        values = Sorts.sequence(new int[10], 0);
+        assertArrayEquals(new int[]{0,1,2,3,4,5,6,7,8,9}, values);
+
+        values = Sorts.sequence(new int[10], 10);
+        assertArrayEquals(new int[]{10,11,12,13,14,15,16,17,18,19}, values);
+    }
+
+    /**
+     * Test of sequence method, of class Sorts.
+     */
+    @Test
+    public void testSequence_intArr()
+    {
+        int[] values = Sorts.sequence(new int[0]);
+        assertEquals(values.length, 0);
+        
+        values = Sorts.sequence(new int[10]);
+        assertArrayEquals(new int[]{0,1,2,3,4,5,6,7,8,9}, values);
+    }
     
 }
