@@ -1,4 +1,4 @@
-Classifier:937863
+Classifier:1174920
 word|deu
 a|7
 ab|21
@@ -330,7 +330,7 @@ cosmus|6
 cyrus|9
 cäsar|21
 d|4
-da|111
+da|110
 dabei|18
 dachte|7
 dadurch|38
@@ -367,7 +367,7 @@ daß|422
 de|8
 deaktivieren|4
 definiert|5
-della|6
+della|5
 dem|421
 demjenigen|11
 demselben|14
@@ -845,7 +845,6 @@ gibt|30
 gilt|16
 ging|13
 gingen|6
-giovanni|13
 glaube|5
 glauben|16
 gleich|30
@@ -1328,7 +1327,6 @@ open|4
 ordnung|21
 orsini|16
 orte|4
-pandolfo|10
 papst|42
 papste|4
 papstes|11
@@ -1341,7 +1339,6 @@ persönliche|8
 persönlichen|8
 persönlichkeit|4
 pertinax|6
-petrucci|14
 pflegen|4
 pflichten|4
 philipp|7
@@ -1491,7 +1488,7 @@ siebente|4
 sieg|11
 sieger|7
 sieht|24
-siena|15
+siena|13
 sind|254
 sinn|6
 sinne|11
@@ -2025,4 +2022,4 @@ zwölften|4
 üblen|4
 übrig|8
 übrigen|14
-words=2025
+words=2022

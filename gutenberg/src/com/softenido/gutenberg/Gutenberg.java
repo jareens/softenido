@@ -1,7 +1,7 @@
 /*
  * Gutenberg.java
  *
- * Copyright (c) 2012 Francisco Gómez Carrasco
+ * Copyright (c) 2012-2013 Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,13 +37,13 @@ public class Gutenberg
     {
         INSTANCE;
         private final String ISO3_LANGUAGES =
-                    "deu,eng,fra,ita,jpn,kor,por,rus,spa,zho,";
-//                  "afr,amh,ara,ben,bul,cat,ces,dan,deu,ell,"
+                    "ara,deu,eng,fra,ita,jpn,kor,nld,por,rus,spa,tur,zho,";
+//                  "afr,amh,ARA,ben,bul,cat,ces,dan,deu,ell,"
 //                + "ENG,epo,est,eus,fas,fil,fin,FRA,glg,guj,"
 //                + "heb,hin,hrv,hun,ind,isl,ITA,JPN,kan,KOR,"
-//                + "lav,lit,mal,mar,msa,nld,nor,pol,POR,ron,"
+//                + "lav,lit,mal,mar,msa,NLD,nor,pol,POR,ron,"
 //                + "RUS,slk,slv,SPA,srp,swa,swe,tam,tel,tha,"
-//                + "tur,ukr,urd,vie,ZHO,zul,";
+//                + "TUR,ukr,urd,vie,ZHO,zul,";
         final String[] iso3Languages;
         Set<String> iso3Set;
         Holder()

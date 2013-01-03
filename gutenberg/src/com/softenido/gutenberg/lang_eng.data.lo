@@ -1,4 +1,4 @@
-Classifier:937863
+Classifier:1103562
 word|eng
 aar|11
 abandoning|10
@@ -424,6 +424,7 @@ apsley|1
 apt|1
 aptitude|2
 aquiline|3
+arabic|1
 arbiter|1
 arbitrarily|2
 arbitrary|2
@@ -1436,6 +1437,7 @@ chill|1
 chimneys|1
 chin|1
 china|1
+chinese|1
 chinks|1
 chisholm|4
 chivalrous|9
@@ -4904,6 +4906,7 @@ israel|2
 issued|8
 issuing|1
 itala|4
+italian|1
 italy|2
 item|8
 items|1
@@ -4926,6 +4929,7 @@ jammed|1
 jammersberg|3
 jamming|1
 jan|1
+japanese|1
 jarvis|1
 jaw|4
 jaws|1
@@ -5070,6 +5074,7 @@ koodoosberg|3
 koodoosdrift|2
 koodoosrand|1
 kops|1
+korean|1
 kraai|1
 kraaipan|3
 kraals|1
@@ -6714,7 +6719,7 @@ port|9
 portents|1
 porter|5
 portions|8
-portuguese|5
+portuguese|6
 positive|9
 possess|3
 possessed|12
@@ -7720,7 +7725,7 @@ rushes|8
 rushing|7
 russet|3
 russia|2
-russian|2
+russian|3
 russians|1
 rustenberg|1
 rustic|1
@@ -8367,7 +8372,7 @@ spades|2
 spain|2
 span|4
 spaniards|1
-spanish|2
+spanish|3
 spanned|1
 spare|8
 spared|6
@@ -10210,4 +10215,4 @@ zuurberg|1
 zuurfontein|5
 zwaggenhoek|1
 zyl|1
-words=10210
+words=10215

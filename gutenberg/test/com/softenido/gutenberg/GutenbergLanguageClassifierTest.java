@@ -1,7 +1,7 @@
 /*
  * GutenbergLanguageClassifierTest.java
  *
- * Copyright (c) 2012 Francisco Gómez Carrasco
+ * Copyright (c) 2012-2013 Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,6 +56,8 @@ public class GutenbergLanguageClassifierTest
         {"spa", "La Asamblea General"},
         {"zho", "大 会, 发 布 这 一 世 界 人 权 宣 言 ,"},
         {"deu", "Generalversammlung"},
+        {"ara", "هناك طرق عديدة ومتنوعة يمكنك من خلالها الاستفادة من خدماتنا، كالبحث عن المعلومات ومشاركتها أو الاتصال بأشخاص آخرين أو إنشاء محتوى جديد. عند مشاركة معلومات معنا، من"},
+        {"nld", "Niemand zal onderworpen worden aan folteringen, noch aan een wrede, onmenselijke of onterende behandeling of bestraffing."},
     };
 
     
@@ -110,8 +112,8 @@ public class GutenbergLanguageClassifierTest
         {
             assertEquals(item[0], classifier.classify(item[1]).getName());
         }
-        // there are only 15 files 10 hi and 5 lo
-        assertEquals(15, counterLoad.get());
+        // there are only 23 files 13 hi and 10 lo
+        assertEquals(23, counterLoad.get());
     }
     @Test
     public void testTwoPass()
