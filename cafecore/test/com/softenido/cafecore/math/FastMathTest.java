@@ -237,4 +237,100 @@ public class FastMathTest
         assertArrayEquals(FIBONACCI, fibonacci);
     }
 
+    /**
+     * Test of maxDouble method, of class FastMath.
+     */
+    @Test
+    public void testMaxDouble()
+    {
+        assertEquals(2d, FastMath.maxDouble(1d, 2d), 0.0d);
+        assertEquals(3d, FastMath.maxDouble(1d, 2d, 3d), 0.0d);
+        assertEquals(3d, FastMath.maxDouble(3d, 2d, 1d), 0.0d);
+        assertEquals(9d, FastMath.maxDouble(9d, 8d, 7d, 6d, 5d), 0.0d);
+    }
+
+    /**
+     * Test of maxFloat method, of class FastMath.
+     */
+    @Test
+    public void testMaxFloat()
+    {
+        assertEquals(2f, FastMath.maxFloat(1f, 2f), 0.0f);
+        assertEquals(3f, FastMath.maxFloat(1f, 2f, 3f), 0.0f);
+        assertEquals(3f, FastMath.maxFloat(3f, 2f, 1f), 0.0f);
+        assertEquals(9f, FastMath.maxFloat(9f, 8f, 7f, 6f, 5f), 0.0f);
+    }
+
+    /**
+     * Test of maxInteger method, of class FastMath.
+     */
+    @Test
+    public void testMaxInteger()
+    {
+        assertEquals(2, FastMath.maxInteger(1, 2));
+        assertEquals(3, FastMath.maxInteger(1, 2, 3));
+        assertEquals(3, FastMath.maxInteger(3, 2, 1));
+        assertEquals(9, FastMath.maxInteger(9, 8, 7, 6, 5));
+    }
+
+    /**
+     * Test of maxLong method, of class FastMath.
+     */
+    @Test
+    public void testMaxLong()
+    {
+        assertEquals(2L, FastMath.maxLong(1L, 2L));
+        assertEquals(3L, FastMath.maxLong(1L, 2L, 3L));
+        assertEquals(3L, FastMath.maxLong(3L, 2L, 1L));
+        assertEquals(9L, FastMath.maxLong(9L, 8L, 7L, 6L, 5L));
+    }
+
+    /**
+     * Test of minDouble method, of class FastMath.
+     */
+    @Test
+    public void testMinDouble()
+    {
+        assertEquals(1d, FastMath.minDouble(1d, 2d), 0.0d);
+        assertEquals(1d, FastMath.minDouble(1d, 2d, 3d), 0.0d);
+        assertEquals(1d, FastMath.minDouble(3d, 2d, 1d), 0.0d);
+        assertEquals(5d, FastMath.minDouble(9d, 8d, 7d, 6d, 5d), 0.0d);
+    }
+
+    /**
+     * Test of minFloat method, of class FastMath.
+     */
+    @Test
+    public void testMinFloat()
+    {
+        assertEquals(1f, FastMath.minFloat(1f, 2f), 0.0f);
+        assertEquals(1f, FastMath.minFloat(1f, 2f, 3f), 0.0f);
+        assertEquals(1f, FastMath.minFloat(3f, 2f, 1f), 0.0f);
+        assertEquals(5f, FastMath.minFloat(9f, 8f, 7f, 6f, 5f), 0.0f);
+    }
+
+    /**
+     * Test of minInt method, of class FastMath.
+     */
+    @Test
+    public void testMinInteger()
+    {
+        assertEquals(1, FastMath.minInteger(1, 2));
+        assertEquals(1, FastMath.minInteger(1, 2, 3));
+        assertEquals(1, FastMath.minInteger(3, 2, 1));
+        assertEquals(5, FastMath.minInteger(9, 8, 7, 6, 5));
+    }
+
+    /**
+     * Test of minLong method, of class FastMath.
+     */
+    @Test
+    public void testMinLong()
+    {
+        assertEquals(1L, FastMath.minLong(1L, 2L));
+        assertEquals(1L, FastMath.minLong(1L, 2L, 3L));
+        assertEquals(1L, FastMath.minLong(3L, 2L, 1L));
+        assertEquals(5L, FastMath.minLong(9L, 8L, 7L, 6L, 5L));
+    }
+
 }

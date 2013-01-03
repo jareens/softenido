@@ -1,7 +1,7 @@
 /*
  * BaseTextClassifierTest.java
  *
- * Copyright (c) 2012  Francisco Gómez Carrasco
+ * Copyright (c) 2012-2013  Francisco Gómez Carrasco
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 package com.softenido.cafecore.statistics.classifier;
 
 import com.softenido.cafecore.io.Files;
+import com.softenido.cafecore.math.FastMath;
 import com.softenido.cafecore.util.Arrays6;
 import com.softenido.cafecore.util.Locales;
 import java.io.ByteArrayInputStream;
@@ -111,14 +112,18 @@ public class BaseTextClassifierTest
         {"zh", "zh_hk","google-terms-of-service-zh_HK.txt.gz"},//chino hongkong
         {"zh", "zh_tw","google-terms-of-service-zh_TW.txt.gz"},//chino taiwan
         {"zu", "zu","google-terms-of-service-zu.txt.gz"},//Zulu-Isizulu
-        {"de", "de","udhr-deu.txt.gz"},//inglés
+        {"de", "de","udhr-deu.txt.gz"},//alemán
         {"en", "en","udhr-eng.txt.gz"},//inglés
+        {"es", "es","udhr-spa.txt.gz"},//español
         {"fr", "fr","udhr-fra.txt.gz"},//frances
         {"it", "it","udhr-ita.txt.gz"},//italiano
-        {"ja", "ja","udhr-jpn.txt.gz"},//japones
-        {"ko", "ko","udhr-kor.txt.gz"},//koreano
+        {"pt", "pt","udhr-pt.txt.gz"},//portugués
+        {"nl", "nl","udhr-nl.txt.gz"},//holandes
+        {"ar", "ar","udhr-ar.txt.gz"},//arabe
+        {"tr", "tr","udhr-tr.txt.gz"},//turko
         {"ru", "ru","udhr-rus.txt.gz"},//ruso
-        {"es", "es","udhr-spa.txt.gz"},//español
+        {"ko", "ko","udhr-kor.txt.gz"},//koreano
+        {"ja", "ja","udhr-jpn.txt.gz"},//japones
         {"zh", "zh_cn","udhr-zho.txt.gz"},//chino mandarín
         {"en", "en","google-privacy-en.txt.gz"},//ingles
         {"es", "es","google-privacy-es.txt.gz"},//español
@@ -145,11 +150,29 @@ public class BaseTextClassifierTest
         {"es", "es","La_obscenidad_y_el_símbolo_-_sobre_la_acción_política_del_SAT.txt.gz"},//español
         {"en", "en","TheGreatBoerWar-ArthurConanDoyle.txt.gz"},//inglés
         {"es", "es","Historia_de_la_vida_del_Buscón-Francisco_de_Quevedo.txt.gz"},//español
-        {"de", "de","Macchiavellis_Buch_vom_Fürsten-Niccolò_Machiavelli.txt.gz"},//alemán
+        {"de", "de","Macchiavellis_Buch_vom_Fürsten-Niccolò_Machiavelli-[cuts]-de.txt.gz"},//alemán
         {"fr", "fr","LesTroisMousquetaires-AlexandreDumas.fr.txt.gz"},//francés
+        {"ar", "ar","1001noches-LaHistoriaDeSimbad-ar.txt.gz"},//arabe
+        {"ar", "ar","microsoft-services-agreement.ar.txt.gz"},//arabe 
+        {"pt", "pt","A_agua_profunda-Paul_Bourget-pt.txt.gz"},//portugués
+        {"nl", "nl","DeDoodVanSherlockHolmes-SirArthurConanDoyle-nl.txt.gz"},//holandes
+        {"tr", "tr","atatürkiye.belgeler-tr.txt.gz"},//turco
+        {"it", "it","Passeggiate-per-l'Italia-v1-ita.txt.gz"},//italiano
+        {"de", "de","_profiler-deu.txt.gz"},//aleman
+        {"en", "en","_profiler-eng.txt.gz"},//inglés
+        {"es", "es","_profiler-spa.txt.gz"},//español
+        {"fr", "fr","_profiler-fra.txt.gz"},//francés
+        {"it", "it","_profiler-ita.txt.gz"},//italiano
+        {"nl", "nl","_profiler-nld.txt.gz"},//holandés
+        {"pt", "pt","_profiler-por.txt.gz"},//portugués
+        {"ru", "ru","_profiler-rus.txt.gz"},//ruso
+        {"ar", "ar","_profiler-ara.txt.gz"},//arabe
+        {"ko", "ko","_profiler-kor.txt.gz"},//koreano
+        {"zh", "zh","_profiler-zho.txt.gz"},//chino
+        {"jp", "jp","_profiler-jpn.txt.gz"},//japonés        
     };    
     static final String LINE = "^[A-Za-z0-9]+.+$";
-    public static final String AMBIGUOUS = ".*(Copyright|Parkway|Google|escrito|EXEMPLARES|Estados *Unidos|vaststelt|Mountain View|Perlindungan Privasi|Laas gewysig|Ultima modifica|našich Službách|PUNITIVE DAMAGES|sublime au ridicule|London, _sir,|_Thank you, be easy._).*";
+    public static final String AMBIGUOUS = ".*(Copyright|Parkway|Google|escrito|EXEMPLARES|Estados *Unidos|vaststelt|Mountain View|Perlindungan Privasi|Laas gewysig|Ultima modifica|našich Službách|PUNITIVE DAMAGES|sublime au ridicule|London, _sir,|_Thank you, be easy._|grandes catastrophes.).*";
     
     public BaseTextClassifierTest()
     {
@@ -250,9 +273,7 @@ public class BaseTextClassifierTest
                         String langInc= classifierInc.classify(line).getName();
                         //System.out.println(lang+"-"+lang2+"("+line+")");
                         String msg = "lang="+lang+" text="+line;
-                        int n   =Math.min(3,lang.length());
-                        int nAll=Math.min(3,langAll.length());
-                        int nInc=Math.min(3,langInc.length());
+                        int n = FastMath.minInteger(3, lang.length(), langAll.length(), langInc.length());
                         // por ahora confunde los chinos entre sí cuando hay pocas ocurrencias.
                         assertEquals(file+" all"+msg,lang.substring(0,n), langAll.substring(0,n));
                         assertEquals(file+" inc"+msg,lang.substring(0,n), langInc.substring(0,n));
@@ -262,8 +283,8 @@ public class BaseTextClassifierTest
             
             if(parallel)
             {
-                final String[] export = {"deu", "eng",  "fra",  "ita",  "jpn",  "kor",  "por",  "rus",  "spa",  "zho"};
-                final int[] threshold = {4,     13,      11,      0,      0,      0,      0,      2,      4,      0};
+                final String[] export = {"deu", "eng",  "fra",  "ita",  "jpn",  "kor",  "por",  "rus",  "spa",  "zho", "ara", "nld", "tur"};
+                final int[] threshold = {4,     13,      11,      5,      0,      0,      3,      2,      4,      0,   3,     4,     3};
                                 
                 for(int i=0;i<export.length;i++)
                 {

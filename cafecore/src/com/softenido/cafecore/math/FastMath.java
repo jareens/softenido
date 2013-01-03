@@ -751,4 +751,68 @@ public class FastMath
         }            
         return count;
     }
+    public static double maxDouble(double a, double... b) 
+    {
+        for(int i=0;i<b.length;i++)
+        {
+            a = Math.max(a,b[i]);
+        }
+        return a;
+    }
+    public static float maxFloat(float a, float... b) 
+    {
+        for(int i=0;i<b.length;i++)
+        {
+            a = Math.max(a,b[i]);
+        }
+        return a;
+    }
+    public static int maxInteger(int a, int... b)
+    {
+        for(int i=0;i<b.length;i++)
+        {
+            a = Math.max(a,b[i]);
+        }
+        return a;
+    }
+    public static long	maxLong(long a, long... b) 
+    {
+        for(int i=0;i<b.length;i++)
+        {
+            a = Math.max(a,b[i]);
+        }
+        return a;
+    }
+    public static double minDouble(double a, double... b) 
+    {
+        for(int i=0;i<b.length;i++)
+        {
+            a = Math.min(a,b[i]);
+        }
+        return a;
+    }
+    public static float minFloat(float a, float... b) 
+    {
+        for(int i=0;i<b.length;i++)
+        {
+            a = Math.min(a,b[i]);
+        }
+        return a;
+    }
+    public static int minInteger(int a, int... b) 
+    {
+        for(int i=0;i<b.length;i++)
+        {
+            a = Math.min(a,b[i]);
+        }
+        return a;
+    }
+    public static long	minLong(long a, long... b) 
+    {
+        for(int i=0;i<b.length;i++)
+        {
+            a = Math.min(a,b[i]);
+        }
+        return a;
+    }
 }
