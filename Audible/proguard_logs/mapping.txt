@@ -550,12 +550,13 @@ com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
     com.softenido.cafedroid.os.PolicyAdmin policyAdmin -> Z
     java.lang.String volumePrefix -> aa
     int lastSmoothScroll -> aE
+    java.util.Locale lastLocale -> aF
     android.view.View$OnClickListener toggleVolumeListener -> ab
     android.widget.SeekBar$OnSeekBarChangeListener volumeBarListener -> ac
     android.view.View$OnClickListener volumeAddListener -> ad
     android.view.View$OnClickListener volumeSubListener -> ae
-    android.content.DialogInterface$OnClickListener toggleLangAcceptListener -> aF
-    android.content.DialogInterface$OnClickListener toggleLangCancelListener -> aG
+    android.content.DialogInterface$OnClickListener toggleLangAcceptListener -> aG
+    android.content.DialogInterface$OnClickListener toggleLangCancelListener -> aH
     android.view.View$OnClickListener toggleLangListener -> af
     android.view.View$OnClickListener toggleExtraListener -> ag
     android.view.View$OnClickListener extraCopyListener -> ah
@@ -620,14 +621,16 @@ com.softenido.audible.AudibleMain -> com.softenido.audible.AudibleMain:
     void access$900(com.softenido.audible.AudibleMain) -> f
     int access$1000(com.softenido.audible.AudibleMain) -> g
     int access$1002(com.softenido.audible.AudibleMain,int) -> a
-    void access$1100(com.softenido.audible.AudibleMain,com.softenido.audible.AudibleMain$Status) -> b
-    boolean access$1200(com.softenido.audible.AudibleMain) -> h
-    android.content.DialogInterface$OnClickListener access$1300(com.softenido.audible.AudibleMain) -> i
+    java.util.Locale access$1100(com.softenido.audible.AudibleMain) -> h
+    java.util.Locale access$1102(com.softenido.audible.AudibleMain,java.util.Locale) -> a
+    void access$1200(com.softenido.audible.AudibleMain,com.softenido.audible.AudibleMain$Status) -> b
+    boolean access$1300(com.softenido.audible.AudibleMain) -> i
     android.content.DialogInterface$OnClickListener access$1400(com.softenido.audible.AudibleMain) -> j
-    java.lang.String access$1500(com.softenido.audible.AudibleMain) -> k
-    void access$1600(com.softenido.audible.AudibleMain,java.lang.String,java.lang.String) -> a
-    void access$1700(com.softenido.audible.AudibleMain) -> l
-    java.lang.String access$1800(com.softenido.audible.AudibleMain) -> m
+    android.content.DialogInterface$OnClickListener access$1500(com.softenido.audible.AudibleMain) -> k
+    java.lang.String access$1600(com.softenido.audible.AudibleMain) -> l
+    void access$1700(com.softenido.audible.AudibleMain,java.lang.String,java.lang.String) -> a
+    void access$1800(com.softenido.audible.AudibleMain) -> m
+    java.lang.String access$1900(com.softenido.audible.AudibleMain) -> n
 com.softenido.audible.AudibleMain$1 -> com.softenido.audible.a:
     com.softenido.audible.AudibleMain this$0 -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
@@ -639,7 +642,8 @@ com.softenido.audible.AudibleMain$11 -> com.softenido.audible.c:
     void onClick(android.view.View) -> onClick
 com.softenido.audible.AudibleMain$12 -> com.softenido.audible.d:
     int val$index -> a
-    com.softenido.audible.AudibleMain this$0 -> b
+    java.util.Locale val$locale -> b
+    com.softenido.audible.AudibleMain this$0 -> c
     void run() -> run
 com.softenido.audible.AudibleMain$13 -> com.softenido.audible.e:
     com.softenido.audible.AudibleMain this$0 -> a
@@ -1060,35 +1064,12 @@ com.softenido.cafecore.text.Phrases$Phrase -> com.softenido.a.g.d:
     java.lang.String full -> a
     java.lang.String trim -> b
     int size -> c
-com.softenido.cafecore.util.Locales -> com.softenido.a.h.a:
-    java.lang.String[] getDisplayLanguageCountry(java.util.Locale[],java.util.Locale) -> a
-    java.lang.String getDisplayLanguageCountry(java.util.Locale,java.util.Locale) -> a
-com.softenido.cafecore.util.RepeatedMap -> com.softenido.a.h.b:
-    java.util.HashMap map -> a
-    int size() -> size
-    boolean isEmpty() -> isEmpty
-    boolean containsKey(java.lang.Object) -> containsKey
-    boolean containsValue(java.lang.Object) -> containsValue
-    java.lang.Object get(java.lang.Object) -> get
-    java.lang.Object[] get(java.lang.Object[],java.lang.Object) -> a
-    java.lang.Object put(java.lang.Object,java.lang.Object) -> put
-    java.lang.Object remove(java.lang.Object) -> remove
-    void putAll(java.util.Map) -> putAll
-    void clear() -> clear
-    java.util.Set keySet() -> keySet
-    java.util.Collection values() -> values
-    java.util.Set entrySet() -> entrySet
-    java.lang.String toString() -> toString
-com.softenido.cafecore.util.SimpleInteger -> com.softenido.a.h.c:
+com.softenido.cafecore.util.SimpleInteger -> com.softenido.a.h.a:
     int value -> a
     int hashCode() -> hashCode
     boolean equals(java.lang.Object) -> equals
     int get() -> a
-com.softenido.cafecore.util.Sorts -> com.softenido.a.h.d:
-    java.util.Comparator asStringComparatorIgnoreCase() -> a
-com.softenido.cafecore.util.Sorts$2 -> com.softenido.a.h.e:
-    int compare(java.lang.Object,java.lang.Object) -> compare
-com.softenido.cafecore.util.Strings -> com.softenido.a.h.f:
+com.softenido.cafecore.util.Strings -> com.softenido.a.h.b:
     java.lang.String trimWhitespaces(java.lang.String) -> a
     java.lang.String firstNonNull(java.lang.String,java.lang.String,java.lang.String[]) -> a
     java.lang.String firstNonEmpty(java.lang.String,java.lang.String,java.lang.String[]) -> b
@@ -1558,34 +1539,36 @@ com.softenido.cafedroid.speech.SpeechPlayer -> com.softenido.cafedroid.e.c:
     java.lang.Object lock -> b
     boolean classified -> c
     com.softenido.cafedroid.speech.SpeechPlayer$Status status -> d
-    com.softenido.cafedroid.speech.SpeechSpeaker speaker -> e
-    com.softenido.cafecore.statistics.classifier.LanguageClassifier classifier -> f
-    java.lang.String[] paragraphs -> g
-    java.lang.String[][] phrases -> h
-    java.lang.String[][] langs -> i
-    boolean[][] empty -> j
-    int[][] progress -> k
-    java.util.Locale locale -> l
-    int progressMax -> m
-    int row -> n
-    int col -> o
-    java.util.Locale loc -> p
-    java.lang.String utterance -> q
-    boolean lowerCase -> r
-    boolean detection -> s
-    java.lang.String ignoreRegex -> t
-    java.lang.String alternative -> u
-    com.softenido.cafecore.gauge.ProxyGaugeProgress gauge -> v
-    android.os.PowerManager$WakeLock wakeLock -> w
-    boolean ignoreFirst -> x
-    int minPhraseSize -> y
-    int WAIT_FOR_MILLIS -> z
-    java.util.List listener -> A
+    boolean pending -> e
+    com.softenido.cafedroid.speech.SpeechSpeaker speaker -> f
+    com.softenido.cafecore.statistics.classifier.LanguageClassifier classifier -> g
+    java.lang.String[] paragraphs -> h
+    java.lang.String[][] phrases -> i
+    java.lang.String[][] langs -> j
+    boolean[][] empty -> k
+    int[][] progress -> l
+    java.util.Locale locale -> m
+    int progressMax -> n
+    int row -> o
+    int col -> p
+    java.util.Locale loc -> q
+    java.lang.String utterance -> r
+    boolean lowerCase -> s
+    boolean detection -> t
+    java.lang.String ignoreRegex -> u
+    java.lang.String alternative -> v
+    com.softenido.cafecore.gauge.ProxyGaugeProgress gauge -> w
+    android.os.PowerManager$WakeLock wakeLock -> x
+    boolean ignoreFirst -> y
+    int minPhraseSize -> z
+    int WAIT_FOR_MILLIS -> A
+    int TOO_MANY_LOOPS -> B
+    java.util.List listener -> C
     java.util.HashMap localeMap -> a
-    java.util.concurrent.atomic.AtomicBoolean firstSplit -> B
-    java.util.concurrent.atomic.AtomicBoolean firstClassify -> C
-    boolean reclassify -> D
-    java.util.concurrent.atomic.AtomicBoolean firstSpeak -> E
+    java.util.concurrent.atomic.AtomicBoolean firstSplit -> D
+    java.util.concurrent.atomic.AtomicBoolean firstClassify -> E
+    boolean reclassify -> F
+    java.util.concurrent.atomic.AtomicBoolean firstSpeak -> G
     void finalize() -> finalize
     void setLocale(java.lang.String,java.lang.String) -> a
     java.util.Locale getLocaleFor(java.lang.String) -> a
@@ -1683,24 +1666,20 @@ com.softenido.cafedroid.speech.SpeechSpeaker -> com.softenido.cafedroid.e.k:
     int isLanguageAvailable(java.util.Locale) -> b
     boolean isStarted() -> c
     boolean waitForStarted(int) -> a
-    java.util.Locale[] getAvailableLocales() -> d
-    java.util.Locale[] getAvailableLocales(java.util.Locale[]) -> a
-    void stop() -> e
-    void pause() -> f
-    void shutdown() -> g
+    void stop() -> d
+    void pause() -> e
+    void shutdown() -> f
     java.lang.String speak(java.lang.String,boolean,boolean) -> a
     java.lang.String speak(java.lang.String,boolean,boolean,java.lang.String) -> a
     void onUtteranceCompleted(java.lang.String) -> onUtteranceCompleted
     void registerOnSpeakingListener(com.softenido.cafedroid.speech.SpeechSpeaker$OnSpeakingListener) -> a
     void unregisterOnSpeakingListener(com.softenido.cafedroid.speech.SpeechSpeaker$OnSpeakingListener) -> b
-    android.media.AudioManager getAudioManager() -> m
-    int getVolume() -> h
-    int getMaxVolume() -> i
+    android.media.AudioManager getAudioManager() -> j
+    int getVolume() -> g
+    int getMaxVolume() -> h
     void setVolume(int,int) -> a
     void adjustVolume(int,int) -> b
-    int getVolumePercentage() -> j
-    boolean areDefaultsEnforced() -> k
-    java.lang.String getDefaultEngine() -> l
+    int getVolumePercentage() -> i
 com.softenido.cafedroid.speech.SpeechSpeaker$OnSpeakingListener -> com.softenido.cafedroid.e.l:
     void onSpeaking() -> d
 com.softenido.cafedroid.speech.SpeechSpeaker$Status -> com.softenido.cafedroid.e.m:

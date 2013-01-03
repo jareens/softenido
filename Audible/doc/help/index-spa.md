@@ -8,8 +8,17 @@ portapapeles, archivos de texto y texto tecleado por el usuario.
 
 Además  puede leer textos mixtos (escritos  en varios idiomas), usando
 la voz  adecuada para  cada  frase, según  el  idioma  en  el  que  se
-encuentre escrita. Reconoce  9  idiomas:  Alemán,  Inglés,  Español,
-Frances, Italiano, Ruso, Koreano, Chino y Japonés.
+encuentre escrita. Reconoce  13 idiomas: Alemán, Inglés, Español, Francés,
+Italiano, Holandés, Portugués, Turco, Ruso, Arabe, Koreano, Chino y Japonés.
+
+## **Videos**   ![Vídeos](../img/video.png)
+
+Puedes ver un vídeo de ejemplo en los siguientes enlaces:
+
+* [Ejemplo en 13 Idiomas (Inglés)](http://www.youtube.com/watch?v=QgFzoaj6OI4)
+
+* [Ejemplo en 13 Idiomas (Español)](http://www.youtube.com/watch?v=z4z6G-MKoxg)
+
 
 ## **Privacidad**
 Audible&nbsp;TTS no recaba, ni envía, información alguna del usuario
@@ -316,23 +325,25 @@ al primer paso de la operación anterior para instalarlo.
 
 * **Ignorar** permite ignorar determinados caracteres o secuencias caracteres
 
-* **Ignorar título** ignora siempre el título.
+    * **Ignorar título** ignora siempre el título.
 
-* **Ignorar título repetido** ignora el título cuando este se repite al inicio del primer parrafo (recomendado).
+    * **Ignorar título repetido** ignora el título cuando este se repite al inicio del primer parrafo (recomendado).
 
-* **Ignorar ()** ignora los parentesis, es conveniente sólo en algunos tipos de texto.
+    * **Ignorar ()** ignora los parentesis, es conveniente sólo en algunos tipos de texto.
 
-* **Ignorar []** ignora los corchetes, es conveniente sólo en algunos tipos de texto.
+    * **Ignorar []** ignora los corchetes, es conveniente sólo en algunos tipos de texto.
 
-* **Ignorar {}** ignora las llaves, es conveniente sólo en algunos tipos de texto.
+    * **Ignorar {}** ignora las llaves, es conveniente sólo en algunos tipos de texto.
 
-* **Ignorar |** ignora las plecas, es conveniente en la mayoría de tipos de texto.
+    * **Ignorar |** ignora las plecas, es conveniente en la mayoría de tipos de texto.
 
-* **Ignorar _** ignora los guiones bajos o subrayados, es conveniente en la mayoría de tipos de texto.
+    * **Ignorar _** ignora los guiones bajos o subrayados, es conveniente en la mayoría de tipos de texto.
 
-* **Ignorar --** ignora los guiones cuando son dos o más, es conveniente en la mayoría de tipos de texto.
+    * **Ignorar --** ignora los guiones cuando son dos o más, es conveniente en la mayoría de tipos de texto.
 
-* **Ignorar \*** ignora los asteriscos, es conveniente en la mayoría de tipos de texto.
+    * **Ignorar \*** ignora los asteriscos, es conveniente en la mayoría de tipos de texto.
+
+    * **Ignorar \&** ignora los andpersand, es conveniente en la mayoría de tipos de texto.
 
 
 ### Categoría **auto**
@@ -354,33 +365,55 @@ al primer paso de la operación anterior para instalarlo.
 * **Idiomas Disponibles** idiomas que se permite identificar. A mayor número de ellos se tardará más en cargarse
     la primera vez, en las siguientes no tiene ningún efecto de retardo significativo.
 
-* **German/Deutsch** permite que se identifique el idioma alemán
+    * **German/Deutsch** permite que se identifique el idioma Alemán
 
-* **English** permite que se identifique el idioma inglés
+    * **English** permite que se identifique el idioma Inglés
 
-* **Spanish/Español** permite que se identifique el idioma español.
+    * **Spanish/Español** permite que se identifique el idioma Español.
 
-* **Spanish/Español (Country)** permite seleccionar la variante de
-    país que se intentará usar para el idioma español: ES (España), MX (México) y US (Estados Unidos).
+    * **Spanish/Español (Country)** permite seleccionar la variante de
+        país que se intentará usar para el idioma Español:
+        * ES (España)
+        * MX (México)
+        * US (Estados Unidos)
 
-* **French/Français** permite que se identifique el idioma francés.
+    * **French/Français** permite que se identifique el idioma francés.
 
-* **French/Français (Country)** permite seleccionar la variante de
-    país que se intentará usar para el idioma francés: FR (Francia), CA (Canadá).
+    * **French/Français (Country)** permite seleccionar la variante de
+        país que se intentará usar para el idioma francés:
+        * FR (Francia)
+        * CA (Canadá)
 
-* **Italian/Italiano** permite que se identifique el idioma italiano.
+    * **Italian/Italiano** permite que se identifique el idioma Italiano.
 
-* **Russian/Русский** permite que se identifique el idioma ruso.
+    * **Dutch/Nederlands** permite que se identifique el idioma Holandés.
 
-* **Korean/한국어** permite que se identifique el idioma koreano.
+    * **Portuguese/Português** permite que se identifique el idioma Portugués.
 
-* **Chinese/中文** permite que se identifique el idioma chino.
+    * **Portuguese/Português (Country)** permite seleccionar la variante de
+        país que se intentará usar para el idioma Portugués:
+        * BR (Brasil)
+        * PT (Portugal).
 
-* **Chinese/中文 (Country)** permite seleccionar la variante de
-    país o dialecto que se intentará usar para el idioma chino:
-    (CN) 中国, (TW)台灣, (HK) 香港, (cmn) 普通话/Mandarin, (yue) 粵語/Cantonese
+    * **Turkish/Türkçe** permite que se identifique el idioma Turco.
 
-* **Japanese/日本語** permite que se identifique el idioma japonés.
+    * **Russian/Русский** permite que se identifique el idioma ruso.
+
+    * **Arabic/العربي** permite que se identifique el idioma arabe.
+
+    * **Korean/한국어** permite que se identifique el idioma koreano.
+
+    * **Chinese/中文** permite que se identifique el idioma chino.
+
+    * **Chinese/中文 (Country)** permite seleccionar la variante de Idioma
+        que se intentará usar para el idioma chino:
+        * (CN) 中国
+        * (TW)台灣
+        * (HK) 香港
+        * (cmn) 普通话/Mandarin
+        * (yue) 粵語/Cantonese
+
+    * **Japanese/日本語** permite que se identifique el idioma japonés.
 
 * **Género** opción aún no implementada.
 
@@ -449,10 +482,17 @@ al primer paso de la operación anterior para instalarlo.
 
 ## Novedades
 
+* 0.5.0 vc7: añade Holandés, Portugués, Turco y Árabe.
+
+* 0.4.1 vc6: continua leyendo depues de rotar, corrección de bugs y cambios menores.
+
+* 0.4.0 vc5: mejora la rotation, pide habilitar idiomas cuando se activa la detección,
+ evita detectar idiomas no activados, cambios menores y corrección de bugs menores.
+
 * v0.3.0 vc4: añade menú, rotación, ayuda y cambios menores.
 
 * v0.2.0 vc3: iniciar la lectura desde un explorador de archivos
 
 * v0.0.2 vc2: optimiza el uso de memoria y mejora el tratamiento de errores del tipo memoria agotada.
 
-* v0.0.1 vc1: versión inicial
+* v0.0.1 vc1: versión inicial.

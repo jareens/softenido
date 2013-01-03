@@ -1,3 +1,8 @@
+* 0.4.1
+- continuar leyendo después de rotar
+- corrección de bugs
+- cambios menores
+
 v0.4.0 vc5 (2012-12-06)
 --------------------------
 - mejorar la rotación

@@ -6,8 +6,17 @@ voices installed on your device. Allows read: texts sent
 by other applications (FeedMe, K9-Mail, ...), clipboard text, text files and text typed by the user.
 
 It can also read mixed texts (written in several languages​​), using
-the right voice for each sentence, depending on the language it's written. Recognizes 9 ​​languages​​: German, English, Spanish,
-French, Italian, Russian, Korean, Chinese and Japanese.
+the right voice for each sentence, depending on the language it's
+written. Recognizes 13 ​​languages​​: German, English, Spanish, French, Italian,
+Dutch, Portuguese, Turkish, Russian, Arabic, Korean, Chinese and Japanese.
+
+## **Videos** ![Videos](../img/video.png)
+
+You can watch sample videos in the following links:
+
+* [Sample in 13 Languages (English)](http://www.youtube.com/watch?v=QgFzoaj6OI4)
+
+* [Sample in 13 Languages (Spanish)](http://www.youtube.com/watch?v=z4z6G-MKoxg)
 
 ## **Privacy**
 Audible&nbsp;TTS do not request, nor sends any user information
@@ -291,17 +300,20 @@ to the first step of the above operation to install it.
 
   * **Ignore ()** ignore parentheses, suitable only for some types of text.
 
-  * **Ignore []** ignores brackets, is suitable only for some types of text.
+  * **Ignore []** ignores brackets, suitable only for some types of text.
 
-  * **Ignore {}** Ignores curly brackets, is suitable only for some types of text.
+  * **Ignore {}** Ignores curly brackets, suitable only for some types of text.
 
-  * **Ignore |** ignores the pipe character, is suitable for most types of text.
+  * **Ignore |** ignores the pipe character, suitable for most types of text.
 
-  * **Ignore _** ignores underscores or underlined, is suitable for most types of text.
+  * **Ignore _** ignores underscores or underlined, suitable for most types of text.
 
-  * **Ignore --** ignores two or more hyphens, it is suitable for most types of text.
+  * **Ignore --** ignores two or more hyphens, suitable for most types of text.
 
-  * **Ignore \*** ignores asterisks is suitable for most types of text.
+  * **Ignore \*** ignores asterisks, suitable for most types of text.
+
+  * **Ignore \&** ignores andpersands, suitable for most types of text.
+
 
 ### Category **auto**
 
@@ -321,29 +333,49 @@ to the first step of the above operation to install it.
 
 * ** ​​Available Languages** languages allowed to be detected​​. The mor you allow the more it will take to load first time, second and the following will have no significative delay.
 
-* **German/Deutsch** allows to identify German language
+    * **German/Deutsch** allows to identify German language
 
-* **English** allows to identify English language
+    * **English** allows to identify English language
 
-* **Spanish/Español** allows to identify Spanish language
+    * **Spanish/Español** allows to identify Spanish language
 
-* **Spanish/Español (Country)** allows to select the preferred country variant for Spanish: ES (Spain), MX (México) y US (United States).
+    * **Spanish/Español (Country)** allows to select the preferred country variant for Spanish:
+        * ES (Spain)
+        * MX (México)
+        * US (United States)
 
-* **French/Français** allows to identify French language.
+    * **French/Français** allows to identify French language.
 
-* **French/Français (Country)**  allows to select the preferred country variant for French: FR (France), CA (Canadá).
+    * **French/Français (Country)**  allows to select the preferred country variant for French: FR (France), CA (Canadá).
 
-* **Italian/Italiano** allows to identify Italian language.
+    * **Italian/Italiano** allows to identify Italian language.
 
-* **Russian/Русский** allows to identify Russian language.
+    * **Dutch/Nederlands** allows to identify Dutch language.
 
-* **Korean/한국어** allows to identify Korean language.
+    * **Portuguese/Português** allows to identify Portuguese language.
 
-* **Chinese/中文** allows to identify Chinese language.
+    * **Portuguese/Português (Country)**  allows to select the preferred country variant for Portuguese:
+        * BR (Brasil)
+        * PT (Portugal)
 
-* **Chinese/中文 (Country)** allows to select the preferred country variant for Chinese: (CN) 中国, (TW)台灣, (HK) 香港, (cmn) 普通话/Mandarin, (yue) 粵語/Cantonese
+    * **Turkish/Türkçe** allows to identify Turkish language.
 
-* **Japanese/日本語**  allows to identify Japanese language.
+    * **Russian/Русский** allows to identify Russian language.
+
+    * **Arabic/العربي** allows to identify Arabic language.
+
+    * **Korean/한국어** allows to identify Korean language.
+
+    * **Chinese/中文** allows to identify Chinese language.
+
+    * **Chinese/中文 (Country)** allows to select the preferred country variant for Chinese:
+        * (CN) 中国
+        * (TW)台灣
+        * (HK) 香港
+        * (cmn) 普通话/Mandarin
+        * (yue) 粵語/Cantonese
+
+    * **Japanese/日本語**  allows to identify Japanese language.
 
 * **Gender** not yet implemented.
 
@@ -395,6 +427,13 @@ to the first step of the above operation to install it.
 * **My question is not in this list what I can do?** You can send an e-mail to <flikxxi@gmail.com>, I will try to answer as soon as possible.
 
 ## What's New
+
+* 0.5.0 vc7: adds Dutch, Portuguese, Turkish and Arabic.
+
+* 0.4.1 vc5: continue reading after rotation, fix bugs y minor changes
+
+* 0.4.0 vc5: improve rotation, ask for languages when detect languages is active,
+ do not detect languages not enabled, minor bugs fixed and minor changes.
 
 * v0.3.0 vc4: added menu, rotation, help and minor changes.
 

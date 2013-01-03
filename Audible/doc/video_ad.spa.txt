@@ -1,0 +1,46 @@
+Audible TTS
+
+Audible lee textos en voz alta, desde otras aplicaciones, del
+porta-papeles, mediante Copiar y Pegar, o archivos de texto 
+situados en la Micro SD. Además leerá cada frase usando el idioma
+correcto en textos mixtos. Sin necesidad de tener que
+seleccionarlo manualmente.
+
+Los siguientes 13 párrafos se corresponden con el Artículo 1 de
+la Declaración Universal de Derechos Humanos en los 13 idiomas
+soportados por Audible: Alemán, Inglés, Español, Francés, 
+Italiano, Holandés, Portugués, Turco, Ruso, Koreano, Chino y 
+Japonés.
+
+Deutsch - Alle Menschen sind frei und gleich an Würde und Rechten geboren. Sie sind mit Vernunft und Gewissen begabt und sollen einander im Geiste der Brüderlichkeit begegnen.
+
+English - All human beings are born free and equal in dignity and rights. They are endowed with reason and conscience and should act towards one another in a spirit of brotherhood.
+
+Español - Todos los seres humanos nacen libres e iguales en dignidad y derechos y, dotados como están de razón y conciencia, deben comportarse fraternalmente los unos con los otros.
+
+Français - Tous les êtres humains naissent libres et égaux en dignité et en droits. Ils sont doués de raison et de conscience et doivent agir les uns envers les autres dans un esprit de fraternité.
+
+Italiano - Tutti gli esseri umani nascono liberi ed eguali in dignità e diritti. Essi sono dotati di ragione e di coscienza e devono agire gli uni verso gli altri in spirito di fratellanza.
+
+Nederlands - Alle mensen worden vrij en gelijk in waardigheid en rechten geboren. Zij zijn begiftigd met verstand en geweten, en behoren zich jegens elkander in een geest van broederschap te gedragen.
+
+Português - Todos os seres humanos nascem livres e iguais em dignidade e em direitos. Dotados de razão e de consciência, devem agir uns para com os outros em espírito de fraternidade.
+
+Türkçe - Bütün insanlar hür, haysiyet ve haklar bakımından eşit doğarlar. Akıl ve vicdana sahiptirler ve birbirlerine karşı kardeşlik zihniyeti ile hareket etmelidirler.
+
+Русский - Все люди рождаются свободными и равными в своем достоинстве и правах. Они наделены разумом и совестью и должны поступать в отношении друг друга в духе братства.
+
+العربي - يولد جميع الناس أحراراً متساوين في الكرامة والحقوق، وقد وهبوا عقلاً وضميراً وعليهم أن يعامل بعضهم بعضاً بروح الإخاء.
+
+한국어 - 모든 인간은 태어날 때부터 자유로우며 그 존엄과 권리에 있어 동등하다. 인간은 천부적으로 이성과 양심을 부여받았으며 서로 형제애의 정신으로 행동하여야 한다.
+
+中文 - 人 人 生 而 自 由, 在 尊 严 和 权 利 上 一 律 平 等。 他 们 赋 有 理 性 和 良 心, 并 应 以 兄 弟 关 系 的 精 神 相 对 待。
+
+日本語 - すべての人間は、生まれながらにして自由であり、かつ、尊厳と権利と について平等である。人間は、理性と良心とを授けられており、互いに同 胞の精神をもって行動しなければならない。
+
+No olvides instalar las voces y el sintetizador de voz (PICO o
+SVOX) para los idiomas que quieras usar, si tu dispositivo no los
+trae de fábrica.
+
+Instala Audible TTS y disfruta leyendo con tus
+orejas.

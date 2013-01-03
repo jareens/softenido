@@ -17,10 +17,30 @@ a message indicating it will be appreciated. If you want to help
 to see the app translated to your language send a message and you
 will receive the instructions.
 
+Audible TTS can be used by:
+
+-Feed readers: 
+  -FeedMe (Google Reader/RSS)
+  -JustReader News-RSS
+  -EasyRSS (Google Reader|RSS)
+  -RssDemon News & Podcast Reader
+  -Feed+ News&Podcast Reader
+
+-E-mail readers: 
+  -K9-Mail
+
+-File Explorers: 
+  -OI File Manager
+  -FO
+  -Solid Explorer
+
 You must have installed a voice synthesizer (such as PICO
 or SVOX) and voices for the languages ​​to be used.
 
-Currently supported languages ​​are:
+Languajes of texts and help: English and Spanish.
+
+Languages supported for reading:
+
 - German/Deutsch
 - English
 - Spanish/Español
@@ -31,13 +51,19 @@ Currently supported languages ​​are:
 - Chinese/中文 
 - Japanese/日本語
 
+If you want Audible TTS in your language you can help. Send an e-mail
+to flikxxi@gmail.com and I'll tell you how to, is straightforward. If what you 
+want is support for reading for that language and your device already has a voice
+for it, is straightforward too, so let me know.
+
 PLEASE before giving a bad rating for a bug, 
 let me know I'll try to fix it. Remember that it is still a Beta version.
 
 Promo text:
+-----------
 
 Audible reads text aloud, from other apps, the clipboard 
-or even Text files.
+or even text files.
 
 Recent changes:
 

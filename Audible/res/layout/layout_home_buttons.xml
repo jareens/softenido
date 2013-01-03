@@ -50,6 +50,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/install"
+            android:src="@drawable/ic_install_engine"
             android:visibility="gone"/>
 </LinearLayout>

@@ -39,8 +39,6 @@ import com.softenido.cafecore.gauge.DebugGauge;
 import com.softenido.cafecore.io.Files;
 import com.softenido.cafecore.profile.Profiler;
 import com.softenido.cafecore.text.Paragraphs;
-import com.softenido.cafecore.util.Locales;
-import com.softenido.cafecore.util.Sorts;
 import com.softenido.cafecore.util.Strings;
 import com.softenido.cafedroid.admob.AdMob;
 import com.softenido.cafedroid.gauge.DroidGaugeBuilder;
@@ -59,8 +57,12 @@ import com.softenido.cafedroid.web.WebHelpActivity;
 import com.softenido.gutenberg.GutenbergLanguageClassifier;
 import org.apache.http.protocol.HTTP;
 
-import java.io.*;
-import java.util.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -419,17 +421,6 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
             {
                 if(success)
                 {
-                    Locale[] locales = getSpeaker().getAvailableLocales(Locale.getAvailableLocales());
-                    Arrays.sort(locales, Sorts.asStringComparatorIgnoreCase());
-
-                    String[] langs = Locales.getDisplayLanguageCountry(locales,Locale.getDefault());
-
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(AudibleMain.this,android.R.layout.simple_spinner_item,langs);
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-//                    extraLangDoc.setAdapter(adapter);
-//                    extraLangPar.setAdapter(adapter);
-
                     setStatus(Status.READY);
                     if(mark!=null && ( mark.isPlaying() || mark.isPaused() ) )
                     {
@@ -773,6 +764,7 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
     }
 
     private volatile int lastSmoothScroll = 0;
+    private volatile Locale lastLocale=null;
     public void onStatusPlaying(int row, int col, final Locale locale, String utterance)
     {
         final int index = Math.max(row-1,0);
@@ -784,6 +776,11 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
                 {
                     textList.smoothScrollToPosition(index);
                     lastSmoothScroll = index;
+                }
+                if(!locale.equals(lastLocale))
+                {
+                    notifier.i("["+locale.toString()+"]");
+                    lastLocale=locale;
                 }
             }
         });
@@ -1181,3 +1178,16 @@ public class AudibleMain extends ListActivity implements SpeechPlayer.OnStatusCh
         return false;
     }
 }
+
+//http://m.facebook.com/sharer.php?u=https://play.google.com/store/apps/details?id=com.softenido.audible&t=Audible TTS
+//
+//        http://mobile.twitter.com/home?status=<urlencoded status>
+//        https://mobile.twitter.com/compose/tweet?status=<urlencoded status>
+//
+//        http://m.facebook.com/sharer.php
+//
+//
+//        http://mobile.twitter.com/home?status
+//
+//
+//        http://mobile.twitter.com/home?status=Wayne's%20World

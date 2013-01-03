@@ -83,17 +83,17 @@
         <!--..&lt;!&ndash;<item>Latviešu</item>&ndash;&gt;-->
         <!--..&lt;!&ndash;<item>Lietuvių</item>&ndash;&gt;-->
         <!--..<item>Hungarian/Magyar</item>-->
-        <!--..<item>Dutch/Nederlands</item>-->
+        <item>Dutch/Nederlands</item>
         <!--..<item>Norwegian/Norsk</item>-->
         <!--..<item>Polish/Polska</item>-->
-        <!--..<item>Portuguese/Português</item>-->
+        <item>Portuguese/Português</item>
         <!--..<item>Romanian/Română</item>-->
         <!--..<item>Slovak/Slovenčina</item>-->
         <!--..&lt;!&ndash;<item>Slovenščina</item>&ndash;&gt;-->
         <!--..<item>Finnish/Suomi</item>-->
         <!--..<item>Swedish/Svenska</item>-->
         <!--..&lt;!&ndash;<item>Tiếng Việt</item>&ndash;&gt;-->
-        <!--..<item>Turkish/Türk</item>-->
+        <item>Turkish/Türk</item>
         <!--..<item>Greek/Ελληνικά</item>-->
         <!--..&lt;!&ndash;<item>Български</item>&ndash;&gt;-->
         <item>Russian/Русский</item>
@@ -101,7 +101,7 @@
         <!--..&lt;!&ndash;<item>Українська</item>&ndash;&gt;-->
         <!--..&lt;!&ndash;<item>עברית</item>&ndash;&gt;-->
         <!--..&lt;!&ndash;<item>اردو</item>&ndash;&gt;-->
-        <!--..<item>Arabic/العربي</item>-->
+        <item>Arabic/العربي</item>
         <!--..&lt;!&ndash;<item>فارسی</item>&ndash;&gt;-->
         <!--..&lt;!&ndash;<item>አማርኛ</item>&ndash;&gt;-->
         <!--..&lt;!&ndash;<item>मराठी</item>&ndash;&gt;-->
@@ -142,17 +142,17 @@
         <!--..&lt;!&ndash;<item>lav</item>&ndash;&gt;-->
         <!--..&lt;!&ndash;<item>lit</item>&ndash;&gt;-->
         <!--..<item>hun</item>-->
-        <!--..<item>nld</item>-->
+        <item>nld</item>
         <!--..<item>nor</item>-->
         <!--..<item>pol</item>-->
-        <!--..<item>por</item>-->
+        <item>por</item>
         <!--..<item>ron</item>-->
         <!--..<item>slk</item>-->
         <!--..&lt;!&ndash;<item>slv</item>&ndash;&gt;-->
         <!--..<item>fin</item>-->
         <!--..<item>swe</item>-->
         <!--..&lt;!&ndash;<item>vie</item>&ndash;&gt;-->
-        <!--..<item>tur</item>-->
+        <item>tur</item>
         <!--..<item>ell</item>-->
         <!--..&lt;!&ndash;<item>bul</item>&ndash;&gt;-->
         <item>rus</item>
@@ -160,7 +160,7 @@
         <!--..&lt;!&ndash;<item>ukr</item>&ndash;&gt;-->
         <!--..&lt;!&ndash;<item>heb</item>&ndash;&gt;-->
         <!--..&lt;!&ndash;<item>urd</item>&ndash;&gt;-->
-        <!--..<item>ara</item>-->
+        <item>ara</item>
         <!--..&lt;!&ndash;<item>fas</item>&ndash;&gt;-->
         <!--..&lt;!&ndash;<item>amh</item>&ndash;&gt;-->
         <!--..&lt;!&ndash;<item>mar</item>&ndash;&gt;-->

@@ -208,8 +208,8 @@ public class AudiblePreferences
         return settings.getString(LANG_GENDER, "");
     }
 
-//    static final String iso3Compressed = "afr,ind,msa,cat,ces,dan,deu,est,eng,spa,epo,eus,fil,fra,glg,hrv,zul,isl,ita,swa,lav,lit,hun,nld,nor,pol,por,ron,slk,slv,fin,swe,vie,tur,ell,bul,rus,srp,ukr,heb,urd,ara,fas,amh,mar,hin,ben,guj,tam,tel,kan,mal,tha,kor,zho,jpn";
-    static final String iso3Compressed = "deu,eng,spa,fra,ita,rus,kor,zho,jpn";
+//    static final String iso3Compressed = "afr,ind,msa,cat,ces,dan,DEU,est,ENG,SPA,epo,eus,fil,FRA,glg,hrv,zul,isl,ITA,swa,lav,lit,hun,NLD,nor,pol,POR,ron,slk,slv,fin,swe,vie,TUR,ell,bul,RUS,srp,ukr,heb,urd,ARA,fas,amh,mar,hin,ben,guj,tam,tel,kan,mal,tha,KOR,ZHO,JPN";
+    static final String iso3Compressed = "deu,eng,spa,fra,ita,nld,por,tur,rus,ara,kor,zho,jpn";
     static String[] iso3 = null;
     private String[] languajes = null;
     public String[] getLanguages()
@@ -451,7 +451,7 @@ public class AudiblePreferences
         String[][] keys =
         {
                 {"lang.iso3.eng.country","US","en_US"},
-                {"lang.iso3.spa.country","ES","es_US"},
+                {"lang.iso3.spa.country","ES","es_ES"},
                 {"lang.iso3.fra.country","FR","fr_FR"},
                 {"lang.iso3.zho.country","CN","zh_CN"}
         };

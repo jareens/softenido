@@ -133,7 +133,7 @@ com.softenido.audible.AudiblePreferences:
 com.softenido.audible.BuildConfig
 com.softenido.audible.KeepAudibleLoadService:
     static final int MAX_LANGS
-    129:134:private static void disconnect()
+    128:133:private static void disconnect()
 com.softenido.audible.R
 com.softenido.audible.R$array
 com.softenido.audible.R$attr
@@ -296,6 +296,14 @@ com.softenido.cafecore.math.FastMath:
     725:725:public static int fibonacci(int[])
     729:729:public static int fibonacci(int[],int,int)
     733:752:public static int fibonacci(int[],int,int,int,int)
+    756:760:public static varargs double maxDouble(double,double[])
+    764:768:public static varargs float maxFloat(float,float[])
+    772:776:public static varargs int maxInteger(int,int[])
+    780:784:public static varargs long maxLong(long,long[])
+    788:792:public static varargs double minDouble(double,double[])
+    796:800:public static varargs float minFloat(float,float[])
+    804:808:public static varargs int minInteger(int,int[])
+    812:816:public static varargs long minLong(long,long[])
 com.softenido.cafecore.math.LongMath
 com.softenido.cafecore.misc.EuroCheckSum
 com.softenido.cafecore.net.MailToBuilder
@@ -456,62 +464,23 @@ com.softenido.cafecore.util.GenericObserver
 com.softenido.cafecore.util.Language
 com.softenido.cafecore.util.LanguageHolder
 com.softenido.cafecore.util.LanguageHolder$1
-com.softenido.cafecore.util.Locales:
-    278:403:public Locales()
-    282:282:public static java.lang.String getISO2Country(java.lang.String)
-    286:286:public static java.lang.String getISO2Language(java.lang.String)
-    290:290:public static java.lang.String getISO3Country(java.lang.String)
-    294:294:public static java.lang.String getISO3Language(java.lang.String)
-    298:298:public static java.lang.String getDisplayCountry(java.lang.String)
-    302:302:public static java.lang.String getDisplayCountry(java.lang.String,java.util.Locale)
-    306:307:public static java.lang.String getDisplayCountry(java.lang.String,java.lang.String)
-    311:311:public static java.lang.String getDisplayLanguage(java.lang.String)
-    315:320:public static java.lang.String[] getDisplayLanguage(java.lang.String[])
-    324:324:public static java.lang.String getDisplayLanguage(java.lang.String,java.util.Locale)
-    328:333:public static java.lang.String[] getDisplayLanguage(java.lang.String[],java.util.Locale)
-    337:338:public static java.lang.String getDisplayLanguage(java.lang.String,java.lang.String)
-    342:347:public static java.lang.String[] getDisplayLanguage(java.lang.String[],java.lang.String)
-    351:351:public static java.lang.String getDisplayLanguageNative(java.lang.String)
-    355:360:public static java.lang.String[] getDisplayLanguageNative(java.lang.String[])
-    365:365:public static java.lang.String[] getDisplayLanguageCountry(java.util.Locale[])
-    378:378:public static java.lang.String getDisplayLanguageCountry(java.util.Locale)
-    415:416:public static void setDefault(java.util.Locale)
+com.softenido.cafecore.util.Locales
 com.softenido.cafecore.util.Locales$DefaultHolder
 com.softenido.cafecore.util.ObserverWrapper
 com.softenido.cafecore.util.Pair
+com.softenido.cafecore.util.RepeatedMap
 com.softenido.cafecore.util.RepeatedSet
+com.softenido.cafecore.util.Shuffles
 com.softenido.cafecore.util.SimpleInteger:
     75:76:public void add(int)
     79:80:public int addAndGet(int)
 com.softenido.cafecore.util.SizeUnits
-com.softenido.cafecore.util.Sorts:
-    30:30:public Sorts()
-    34:40:public static void reverse(int[])
-    43:49:public static void reverse(double[])
-    52:58:public static void reverse(java.lang.Object[])
-    96:109:public static void sort(int[],int[],int,int,boolean)
-    112:113:public static void sort(int[],int[])
-    116:117:public static void sort(int[],int[],boolean)
-    120:121:public static void sort(int[],int[],int,int)
-    159:172:public static void sort(double[],double[],int,int,boolean)
-    175:176:public static void sort(double[],double[])
-    179:180:public static void sort(double[],double[],boolean)
-    183:184:public static void sort(double[],double[],int,int)
-    222:235:public static void sort(int[],java.lang.Object[],int,int,boolean)
-    238:239:public static void sort(int[],java.lang.Object[])
-    242:243:public static void sort(int[],java.lang.Object[],boolean)
-    246:247:public static void sort(int[],java.lang.Object[],int,int)
-    285:298:public static void sort(java.lang.Object[],java.lang.Object[],int,int,boolean)
-    301:302:public static void sort(java.lang.Object[],java.lang.Object[])
-    305:306:public static void sort(java.lang.Object[],java.lang.Object[],boolean)
-    309:310:public static void sort(java.lang.Object[],java.lang.Object[],int,int)
-    314:314:public static java.util.Comparator asStringComparator()
-    338:338:public static java.util.Comparator asStringComparatorReverse()
-    350:350:public static java.util.Comparator asStringComparatorIgnoreCaseReverse()
+com.softenido.cafecore.util.Sorts
 com.softenido.cafecore.util.Sorts$1
 com.softenido.cafecore.util.Sorts$1Entry
 com.softenido.cafecore.util.Sorts$1EntryComparator
 com.softenido.cafecore.util.Sorts$1ReverseEntryComparator
+com.softenido.cafecore.util.Sorts$2
 com.softenido.cafecore.util.Sorts$2Entry
 com.softenido.cafecore.util.Sorts$2EntryComparator
 com.softenido.cafecore.util.Sorts$2ReverseEntryComparator
@@ -670,15 +639,15 @@ com.softenido.cafedroid.speech.SpeechPlayer:
     public static final int ADJUST_LOWER
     public static final int ADJUST_RAISE
     public static final int ADJUST_SAME
-    515:515:public boolean isLowerCase()
-    525:525:public boolean isDetection()
-    549:549:public int getMinPhraseSize()
-    554:555:public void setMinPhraseSize(int)
-    648:649:public void setVolume(int)
-    658:659:public void adjustVolume(int)
-    667:668:public void setVolumePercentage(int)
-    671:672:public void setVolumePercentage(int,int)
-    681:682:public void setGaugeView(com.softenido.cafecore.gauge.GaugeView)
+    531:531:public boolean isLowerCase()
+    541:541:public boolean isDetection()
+    565:565:public int getMinPhraseSize()
+    570:571:public void setMinPhraseSize(int)
+    664:665:public void setVolume(int)
+    674:675:public void adjustVolume(int)
+    683:684:public void setVolumePercentage(int)
+    687:688:public void setVolumePercentage(int,int)
+    697:698:public void setGaugeView(com.softenido.cafecore.gauge.GaugeView)
 com.softenido.cafedroid.speech.SpeechSpeaker:
     public static final int FLAG_ALLOW_RINGER_MODES
     public static final int FLAG_PLAY_SOUND
@@ -695,6 +664,8 @@ com.softenido.cafedroid.speech.SpeechSpeaker:
     public static final int LANG_COUNTRY_VAR_AVAILABLE
     160:160:public boolean isSpeaking()
     170:170:public java.util.Locale getLanguage()
+    207:207:public java.util.Locale[] getAvailableLocales()
+    212:287:public java.util.Locale[] getAvailableLocales(java.util.Locale[])
     292:292:public boolean isInstallNeeded()
     297:297:public java.lang.String silence(long,boolean,boolean)
     320:325:public void resume()
@@ -703,6 +674,8 @@ com.softenido.cafedroid.speech.SpeechSpeaker:
     529:530:public void adjustVolume(int)
     545:546:public void setVolumePercentage(int)
     549:557:public void setVolumePercentage(int,int)
+    561:561:public boolean areDefaultsEnforced()
+    566:566:public java.lang.String getDefaultEngine()
     44:44:static synthetic java.lang.Object access$000(com.softenido.cafedroid.speech.SpeechSpeaker)
     44:44:static synthetic java.lang.Object access$100(com.softenido.cafedroid.speech.SpeechSpeaker)
     44:44:static synthetic com.softenido.cafedroid.speech.SpeechSpeaker$Status access$200(com.softenido.cafedroid.speech.SpeechSpeaker)

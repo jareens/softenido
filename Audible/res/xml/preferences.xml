@@ -51,18 +51,18 @@
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Latviešu" android:defaultValue="false" android:key="lang.iso3.lav" android:persistent="true"/>&ndash;&gt;-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Lietuvių" android:defaultValue="false" android:key="lang.iso3.lit" android:persistent="true"/>&ndash;&gt;-->
             <!--..<CheckBoxPreference android:title="Hungarian/Magyar" android:defaultValue="false" android:key="lang.iso3.hun" android:persistent="true"/>-->
-            <!--..<CheckBoxPreference android:title="Dutch/Nederlands" android:defaultValue="false" android:key="lang.iso3.nld" android:persistent="true"/>-->
+            <CheckBoxPreference android:title="Dutch/Nederlands" android:defaultValue="false" android:key="lang.iso3.nld" android:persistent="true"/>
             <!--..<CheckBoxPreference android:title="Norwegian/Norsk" android:defaultValue="false" android:key="lang.iso3.nor" android:persistent="true"/>-->
             <!--..<CheckBoxPreference android:title="Polish/Polska" android:defaultValue="false" android:key="lang.iso3.pol" android:persistent="true"/>-->
-            <!--..<CheckBoxPreference android:title="Portuguese/Português" android:defaultValue="false" android:key="lang.iso3.por" android:persistent="true"/>-->
-            <!--..<ListPreference android:title="Portuguese/Português (Country)" android:dependency="lang.iso3.por" android:entries="@array/por_countries_names" android:entryValues="@array/por_countries_iso2" android:key="lang.iso3.por.country" android:defaultValue="FR"/>-->
+            <CheckBoxPreference android:title="Portuguese/Português" android:defaultValue="false" android:key="lang.iso3.por" android:persistent="true"/>
+            <ListPreference android:title="Portuguese/Português (Country)" android:dependency="lang.iso3.por" android:entries="@array/por_countries_names" android:entryValues="@array/por_countries_iso2" android:key="lang.iso3.por.country" android:defaultValue="pt_PT"/>
             <!--..<CheckBoxPreference android:title="Romanian/Română" android:defaultValue="false" android:key="lang.iso3.ron" android:persistent="true"/>-->
             <!--..<CheckBoxPreference android:title="Slovak/Slovenčina" android:defaultValue="false" android:key="lang.iso3.slk" android:persistent="true"/>-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Slovenščina" android:defaultValue="false" android:key="lang.iso3.slv" android:persistent="true"/>&ndash;&gt;-->
             <!--..<CheckBoxPreference android:title="Finnish/Suomi" android:defaultValue="false" android:key="lang.iso3.fin" android:persistent="true"/>-->
             <!--..<CheckBoxPreference android:title="Swedish/Svenska" android:defaultValue="false" android:key="lang.iso3.swe" android:persistent="true"/>-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Tiếng Việt" android:defaultValue="false" android:key="lang.iso3.vie" android:persistent="true"/>&ndash;&gt;-->
-            <!--..<CheckBoxPreference android:title="Turkish/Türk" android:defaultValue="false" android:key="lang.iso3.tur" android:persistent="true"/>-->
+            <CheckBoxPreference android:title="Turkish/Türkçe" android:defaultValue="false" android:key="lang.iso3.tur" android:persistent="true"/>
             <!--..<CheckBoxPreference android:title="Greek/Ελληνικά" android:defaultValue="false" android:key="lang.iso3.ell" android:persistent="true"/>-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Български" android:defaultValue="false" android:key="lang.iso3.bul" android:persistent="true"/>&ndash;&gt;-->
             <CheckBoxPreference android:title="Russian/Русский" android:defaultValue="false" android:key="lang.iso3.rus" android:persistent="true"/>
@@ -70,7 +70,7 @@
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="Українська" android:defaultValue="false" android:key="lang.iso3.ukr" android:persistent="true"/>&ndash;&gt;-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="עברית" android:defaultValue="false" android:key="lang.iso3.heb" android:persistent="true"/>&ndash;&gt;-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="اردو" android:defaultValue="false" android:key="lang.iso3.urd" android:persistent="true"/>&ndash;&gt;-->
-            <!--..<CheckBoxPreference android:title="Arabic/العربي" android:defaultValue="false" android:key="lang.iso3.ara" android:persistent="true"/>-->
+            <CheckBoxPreference android:title="Arabic/العربي" android:defaultValue="false" android:key="lang.iso3.ara" android:persistent="true"/>
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="فارسی" android:defaultValue="false" android:key="lang.iso3.fas" android:persistent="true"/>&ndash;&gt;-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="አማርኛ" android:defaultValue="false" android:key="lang.iso3.amh" android:persistent="true"/>&ndash;&gt;-->
             <!--..&lt;!&ndash;<CheckBoxPreference android:title="मराठी" android:defaultValue="false" android:key="lang.iso3.mar" android:persistent="true"/>&ndash;&gt;-->
@@ -104,8 +104,6 @@
         <CheckBoxPreference android:title="@string/preferences_ui_progress_volume_title" android:defaultValue="false" android:key="ui.volume" android:persistent="true" android:summaryOn="@string/preferences_ui_progress_volume_summary_on" android:summaryOff="@string/preferences_ui_progress_volume_off"/>
         <CheckBoxPreference android:title="@string/preferences_ui_join_lines_title" android:defaultValue="false" android:key="ui.joinlines" android:persistent="true" android:summaryOn="@string/preferences_ui_join_lines_summary" android:summaryOff="@string/preferences_ui_join_lines_summary"/>
         <ListPreference android:title="@string/preferences_ui_orientation_title" android:entries="@array/orientations_names" android:entryValues="@array/orientations_values" android:key="ui.orientation" android:defaultValue="portrait" android:summary="@string/preferences_ui_orientation_summary"/>
-
-
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/preferences_title_optimization">
         <ListPreference android:title="@string/preferences_optimize_keeps_title" android:entries="@array/keep_quick_start" android:entryValues="@array/keep_quick_start_values" android:key="advanced.keep_quick_start" android:defaultValue="86400" android:summary="@string/preferences_optimize_keeps_summary"/>

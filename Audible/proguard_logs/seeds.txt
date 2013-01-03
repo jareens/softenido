@@ -65,6 +65,7 @@ com.softenido.audible.R$drawable: int ic_download
 com.softenido.audible.R$drawable: int ic_folder
 com.softenido.audible.R$drawable: int ic_home_black
 com.softenido.audible.R$drawable: int ic_home_blue
+com.softenido.audible.R$drawable: int ic_install_engine
 com.softenido.audible.R$drawable: int ic_keyboard
 com.softenido.audible.R$drawable: int ic_launcher
 com.softenido.audible.R$drawable: int ic_menu_about
@@ -95,7 +96,6 @@ com.softenido.audible.R$drawable: int ic_settings
 com.softenido.audible.R$drawable: int ic_sub_black
 com.softenido.audible.R$drawable: int ic_volume_add
 com.softenido.audible.R$drawable: int ic_volume_sub
-com.softenido.audible.R$drawable: int install
 com.softenido.audible.R$drawable: int letter
 com.softenido.audible.R$drawable: int phrase
 com.softenido.audible.R$drawable: int theme
@@ -366,6 +366,7 @@ com.softenido.cafedroid.R$drawable: int ic_download
 com.softenido.cafedroid.R$drawable: int ic_folder
 com.softenido.cafedroid.R$drawable: int ic_home_black
 com.softenido.cafedroid.R$drawable: int ic_home_blue
+com.softenido.cafedroid.R$drawable: int ic_install_engine
 com.softenido.cafedroid.R$drawable: int ic_keyboard
 com.softenido.cafedroid.R$drawable: int ic_launcher
 com.softenido.cafedroid.R$drawable: int ic_menu_about
@@ -396,7 +397,6 @@ com.softenido.cafedroid.R$drawable: int ic_settings
 com.softenido.cafedroid.R$drawable: int ic_sub_black
 com.softenido.cafedroid.R$drawable: int ic_volume_add
 com.softenido.cafedroid.R$drawable: int ic_volume_sub
-com.softenido.cafedroid.R$drawable: int install
 com.softenido.cafedroid.R$drawable: int letter
 com.softenido.cafedroid.R$drawable: int phrase
 com.softenido.cafedroid.R$drawable: int theme
