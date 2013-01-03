@@ -62,6 +62,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         INIT, STOP, PLAY, PAUSE, PREV_ROW, PREV_COL, NEXT_ROW, NEXT_COL, EXIT;
     }
     private volatile Status status = Status.INIT;
+    private volatile boolean pending = false; // if there is a pending play,
 
     private final SpeechSpeaker speaker;
     private final LanguageClassifier classifier;
@@ -88,6 +89,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
     private volatile int minPhraseSize = 16;
 
     private static int WAIT_FOR_MILLIS = 12345;
+    private static int TOO_MANY_LOOPS  = 1234;
 
     public static interface OnStatusChangedListener
     {
@@ -174,9 +176,13 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
     {
         synchronized(lock)
         {
-            while(array[x]==null)
+            for(int i=0;array[x]==null;i++)
             {
                 lock.wait(WAIT_FOR_MILLIS);
+                if(i>=TOO_MANY_LOOPS)
+                {
+                    Log.w(SpeechPlayer.class.getSimpleName(),"SpeechPlayer.waitFor([][],"+x+") i="+i);
+                }
             }
         }
     }
@@ -184,9 +190,13 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
     {
         synchronized(lock)
         {
-            while(array[x]==null || array[x][y]==null)
+            for(int i=0;array[x]==null || array[x][y]==null;i++)
             {
                 lock.wait(WAIT_FOR_MILLIS);
+                if(i>=TOO_MANY_LOOPS)
+                {
+                    Log.w(SpeechPlayer.class.getSimpleName(),"SpeechPlayer.waitFor([][],"+x+","+y+") i="+i);
+                }
             }
         }
     }
@@ -196,9 +206,9 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
     {
         if(!firstSplit.compareAndSet(false, true))
             return;
-        Log.d(SpeechPlayer.class.getSimpleName(),"SpeechPlayer.split try");
         try
         {
+            Log.d(SpeechPlayer.class.getSimpleName(),"SpeechPlayer.split try");
             int counter=0;
             for(int i=0;i< phrases.length;i++)
             {
@@ -236,6 +246,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
             return;
         try
         {
+            Log.d(SpeechPlayer.class.getSimpleName(),"SpeechPlayer.split try");
             boolean first = true;
             while( first || reclassify )
             {
@@ -296,6 +307,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
     private final AtomicBoolean firstSpeak = new AtomicBoolean();
     private void speak()
     {
+        pending = true;
         if(!firstSpeak.compareAndSet(false, true))
             return;
 
@@ -304,103 +316,106 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
         this.speaker.registerOnSpeakingListener(this);
         try
         {
-            this.start();
-
-            this.speaker.waitForStarted(60000);
-            Log.d("SpeechPlayer", "speaker.getAvailableLocales()="+Arrays.toString(this.speaker.getAvailableLocales()));
-            Log.d("SpeechPlayer", "speaker.areDefaultsEnforced()="+speaker.areDefaultsEnforced());
-            Log.d("SpeechPlayer", "speaker.getDefaultEngine()="+speaker.getDefaultEngine());
-
-            boolean first = true;
-            for(;row<phrases.length && status==Status.PLAY;)
+            Log.d(SpeechPlayer.class.getSimpleName(),"SpeechPlayer.split try");
+            while( pending || reclassify )
             {
-                // wait for split task
-                waitFor(phrases, row);
-                for(;col<phrases[row].length && status==Status.PLAY;)
+                pending = false;
+
+                this.start();
+                this.speaker.waitForStarted(60000);
+
+                //mejorar el bucle
+                boolean first = true;
+                for(;row<phrases.length && status==Status.PLAY;)
                 {
-                    if(ignoreFirst && row==0)
-                        break;
-                    // wait for classify task
-                    if(detection)
-                        waitFor(langs, row, col);
-                    else
-                        waitFor(langs, row);
-
-                    if(status!=Status.PLAY)
-                        break;
-
-                    if(first)
+                    // wait for split task
+                    waitFor(phrases, row);
+                    for(;col<phrases[row].length && status==Status.PLAY;)
                     {
-                        first=false;
-                        onStatusPlay();
+                        if(ignoreFirst && row==0)
+                            break;
+                        // wait for classify task
+                        if(detection)
+                            waitFor(langs, row, col);
+                        else
+                            waitFor(langs, row);
+
+                        if(status!=Status.PLAY)
+                            break;
+
+                        if(first)
+                        {
+                            first=false;
+                            onStatusPlay();
+                        }
+
+                        loc = getLocaleFor(langs[row][col]);
+
+                        int ret = speaker.setLanguage(loc);
+                        Log.d("SpeechPlayer", "speaker.setLanguage("+loc+")="+ret);
+
+                        if(status!=Status.PLAY)
+                            break;
+
+                        utterance = lowerCase ? phrases[row][col].toLowerCase(loc) : phrases[row][col];
+                        synchronized(lock)
+                        {
+                            if(ignoreRegex!=null)
+                            {
+                                utterance = utterance.replaceAll(ignoreRegex,alternative).trim();
+                            }
+                        }
+                        empty[row][col] = (utterance.length()==0);
+
+                        Log.d("SpeechPlayer", "speaker.speak("+utterance+", false, true)");
+
+                        speaker.speak(utterance, false, true);
+                        if(status!=Status.PLAY)
+                            break;
+
+                        col++;
                     }
 
-                    loc = getLocaleFor(langs[row][col]);
-
-                    int ret = speaker.setLanguage(loc);
-                    Log.d("SpeechPlayer", "speaker.setLanguage("+loc+")="+ret);
-
-                    if(status!=Status.PLAY)
-                        break;
-
-                    utterance = lowerCase ? phrases[row][col].toLowerCase(loc) : phrases[row][col];
-                    synchronized(lock)
+                    synchronized (lock)
                     {
-                        if(ignoreRegex!=null)
+                        switch(status)
                         {
-                            utterance = utterance.replaceAll(ignoreRegex,alternative).trim();
+                            case PLAY:
+                                seek(false,false);
+                                break;
+                            case NEXT_ROW:
+                                seek(false,false);
+                                status=Status.PLAY;
+                                break;
+                            case NEXT_COL:
+                                seek(true,false);
+                                status=Status.PLAY;
+                                break;
+                            case PREV_ROW:
+                                seek(false,true);
+                                status=Status.PLAY;
+                                break;
+                            case PREV_COL:
+                                seek(true,true);
+                                status=Status.PLAY;
+                                break;
+                            case STOP:
+                            case PAUSE:
+                                break;
                         }
                     }
-                    empty[row][col] = (utterance.length()==0);
-
-                    Log.d("SpeechPlayer", "speaker.speak("+utterance+", false, true)");
-
-                    speaker.speak(utterance, false, true);
-                    if(status!=Status.PLAY)
-                        break;
-
-                    col++;
                 }
-
-                synchronized (lock)
+                if(status==Status.PAUSE)
                 {
-                    switch(status)
-                    {
-                        case PLAY:
-                            seek(false,false);
-                            break;
-                        case NEXT_ROW:
-                            seek(false,false);
-                            status=Status.PLAY;
-                            break;
-                        case NEXT_COL:
-                            seek(true,false);
-                            status=Status.PLAY;
-                            break;
-                        case PREV_ROW:
-                            seek(false,true);
-                            status=Status.PLAY;
-                            break;
-                        case PREV_COL:
-                            seek(true,true);
-                            status=Status.PLAY;
-                            break;
-                        case STOP:
-                        case PAUSE:
-                            break;
-                    }
+                    this.onStatusPause();
                 }
-            }
-            if(status==Status.PAUSE)
-            {
-                this.onStatusPause();
-            }
-            else if(status!=Status.INIT)
-            {
-                status=Status.STOP;
-                this.onStatusStop();
-                row=0;
-                col=0;
+                else if(status!=Status.INIT)
+                {
+                    status=Status.STOP;
+                    this.onStatusStop();
+                    row=0;
+                    col=0;
+                }
             }
         }
         catch (InterruptedException ex)
@@ -460,6 +475,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
     {
         synchronized(lock)
         {
+            pending = true;
             status = Status.PLAY;
             boolean ret = speaker.start();
             new Thread(new Runnable()
@@ -692,6 +708,7 @@ public class SpeechPlayer implements SpeechSpeaker.OnSpeakingListener
             //wake up classifier if sleeping
             synchronized (lock)
             {
+                pending = true;
                 reclassify=true;
                 lock.notifyAll();
             }
