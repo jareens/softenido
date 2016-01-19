@@ -1,0 +1,1 @@
+**tail4log** is a "tail -f" like command-line tool, not a replacement but just a complement with some useful enhancements..
